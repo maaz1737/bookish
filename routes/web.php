@@ -1,0 +1,134 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+// Storefront
+use App\Http\Controllers\Storefront\HomeController;
+use App\Http\Controllers\Storefront\SchoolController;
+use App\Http\Controllers\Storefront\BundleController as StoreBundleController;
+use App\Http\Controllers\Storefront\ProductController as StoreProductController;
+use App\Http\Controllers\Storefront\CartController;
+use App\Http\Controllers\Storefront\CheckoutController;
+use App\Http\Controllers\Storefront\OrderTrackController;
+
+// Auth
+use App\Http\Controllers\Auth\OtpAuthController;
+
+// Admin
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProductController as AdminProductController;
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SchoolController as AdminSchoolController;
+use App\Http\Controllers\Admin\ClassController;
+use App\Http\Controllers\Admin\BundleController as AdminBundleController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\PaymentVerificationController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\InventoryController;
+use App\Http\Controllers\Admin\FinanceController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\SettingController;
+
+/* ------------------------------ Storefront ------------------------------ */
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/schools', [SchoolController::class, 'index'])->name('schools.index');
+Route::get('/school/{school}', [SchoolController::class, 'show'])->name('schools.show');
+
+// SEO bundle route: /school/{school}/{class}/bundle
+Route::get('/school/{school}/{classSlug}/bundle', [StoreBundleController::class, 'show'])->name('bundle.show');
+
+Route::get('/category/{slug}', [StoreProductController::class, 'category'])->name('category.show');
+Route::get('/product/{product}', [StoreProductController::class, 'show'])->name('product.show');
+
+// Cart
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/product/{product}', [CartController::class, 'addProduct'])->name('cart.addProduct');
+Route::post('/cart/bundle/{bundle}', [CartController::class, 'addBundle'])->name('cart.addBundle');
+Route::delete('/cart/{key}', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+// Checkout (guest checkout always available)
+Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
+Route::post('/checkout', [CheckoutController::class, 'place'])->name('checkout.place');
+Route::get('/checkout/{orderNumber}/bank', [CheckoutController::class, 'bank'])->name('checkout.bank');
+Route::post('/checkout/{orderNumber}/proof', [CheckoutController::class, 'uploadProof'])->name('checkout.proof');
+
+// Order tracking
+Route::get('/track/{orderNumber}', [OrderTrackController::class, 'show'])->name('order.track');
+
+/* -------------------------------- Auth ---------------------------------- */
+Route::get('/login', [OtpAuthController::class, 'showLogin'])->name('login');
+Route::post('/login/send-otp', [OtpAuthController::class, 'sendOtp'])->name('login.sendOtp');
+Route::post('/login/verify-otp', [OtpAuthController::class, 'verifyOtp'])->name('login.verifyOtp');
+Route::post('/logout', [OtpAuthController::class, 'logout'])->name('logout');
+
+/* -------------------------------- Admin --------------------------------- */
+Route::prefix('admin')->name('admin.')
+    ->middleware(['auth', 'role:admin,super_admin'])
+    ->group(function () {
+
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+        // Module 1: Product CRUD
+        Route::resource('products', AdminProductController::class)->except('show');
+
+        // Module 2: Categories
+        Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
+        Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');
+        Route::put('categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+
+        // Module 3: Schools
+        Route::get('schools', [AdminSchoolController::class, 'index'])->name('schools.index');
+        Route::post('schools', [AdminSchoolController::class, 'store'])->name('schools.store');
+        Route::put('schools/{school}', [AdminSchoolController::class, 'update'])->name('schools.update');
+        Route::delete('schools/{school}', [AdminSchoolController::class, 'destroy'])->name('schools.destroy');
+
+        // Module 4: Classes
+        Route::get('classes', [ClassController::class, 'index'])->name('classes.index');
+        Route::post('classes', [ClassController::class, 'store'])->name('classes.store');
+        Route::delete('classes/{class}', [ClassController::class, 'destroy'])->name('classes.destroy');
+
+        // Module 5: Bundles
+        Route::get('bundles', [AdminBundleController::class, 'index'])->name('bundles.index');
+        Route::get('bundles/create', [AdminBundleController::class, 'create'])->name('bundles.create');
+        Route::post('bundles', [AdminBundleController::class, 'store'])->name('bundles.store');
+        Route::delete('bundles/{bundle}', [AdminBundleController::class, 'destroy'])->name('bundles.destroy');
+
+        // Module 6: Orders
+        Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
+        Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
+        Route::put('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.status');
+
+        // Module 7: Payment verification
+        Route::get('payments', [PaymentVerificationController::class, 'index'])->name('payments.index');
+        Route::get('payments/{proof}', [PaymentVerificationController::class, 'show'])->name('payments.show');
+        Route::post('payments/{proof}/approve', [PaymentVerificationController::class, 'approve'])->name('payments.approve');
+        Route::post('payments/{proof}/reject', [PaymentVerificationController::class, 'reject'])->name('payments.reject');
+
+        // Module 8: Customers
+        Route::get('customers', [CustomerController::class, 'index'])->name('customers.index');
+        Route::post('customers/{customer}/toggle-block', [CustomerController::class, 'toggleBlock'])->name('customers.toggleBlock');
+
+        // Module 9: Inventory
+        Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
+        Route::put('inventory/{product}', [InventoryController::class, 'updateStock'])->name('inventory.update');
+
+        // Modules 10 & 11 + Settings — Super Admin ONLY
+        Route::middleware('role:super_admin')->group(function () {
+            Route::get('finance', [FinanceController::class, 'index'])->name('finance.index');
+            Route::get('finance/export', [FinanceController::class, 'export'])->name('finance.export');
+
+            Route::get('admins', [AdminUserController::class, 'index'])->name('admins.index');
+            Route::post('admins', [AdminUserController::class, 'store'])->name('admins.store');
+            Route::put('admins/{admin}/role', [AdminUserController::class, 'updateRole'])->name('admins.updateRole');
+            Route::post('admins/{admin}/revoke', [AdminUserController::class, 'revoke'])->name('admins.revoke');
+
+            Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');
+            Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
+        });
+    });
+
+// Admin login uses a password (separate from customer OTP login)
+require __DIR__.'/admin-auth.php';
