@@ -30,7 +30,7 @@ class ProductController extends Controller
                 '@context'   => 'https://schema.org',
                 '@type'      => 'Product',
                 'name'       => $product->name,
-                'description'=> $product->description,
+                'description' => $product->description,
                 'offers'     => [
                     '@type'         => 'Offer',
                     'priceCurrency' => 'PKR',
