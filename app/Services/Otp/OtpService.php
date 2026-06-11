@@ -6,7 +6,8 @@ use App\Models\Otp;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use Twilio\Rest\Client;
+use App\Jobs\SendTwilioSms;
+
 
 /**
  * Passwordless OTP login (Section 5.2).
@@ -53,6 +54,10 @@ class OtpService
             'channel'    => $channel,
             'expires_at' => now()->addMinutes(5),
         ]);
+
+        if (app()->environment('production')) {
+            SendTwilioSms::dispatch($mobile, 'Your production verification code is' . $code);
+        }
 
         // In local/testing the code is returned so it can be auto-filled.
         return [

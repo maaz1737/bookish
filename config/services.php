@@ -34,5 +34,11 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'twilio' => [
+        'sid'    => env('TWILIO_SID'),
+        'key'    => env('TWILIO_API_KEY'),
+        'secret' => env('TWILIO_API_SECRET'),
+        'service_sid' => env('TWILIO_MESSAGING_SERVICE_SID'),
+    ],
 
 ];
