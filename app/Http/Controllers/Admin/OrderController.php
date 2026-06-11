@@ -12,7 +12,7 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $orders = Order::with('latestProof')
-            ->when($request->filled('status'), fn ($q) => $q->where('order_status', $request->status))
+            ->when($request->filled('status'), fn($q) => $q->where('order_status', $request->status))
             ->latest()->paginate(20);
 
         return view('admin.orders.index', compact('orders'));
