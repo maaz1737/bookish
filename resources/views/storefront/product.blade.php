@@ -5,8 +5,10 @@
 
     <div class="bg-white rounded-lg shadow p-8 grid sm:grid-cols-2 gap-8">
         <div class="rounded h-72 flex items-center justify-center text-gray-400">
-            <img src="{{ asset('public/storage/' . $product->images[0]) }}" alt="Image Not found"
-                class="w-full h-full object-cover block">
+            <img src="{{ app()->environment('local')
+                ? asset('storage/' . $product->images[0])
+                : asset('public/storage/' . $product->images[0]) }}"
+                alt="Image Not found" class="w-full h-full object-cover block">
         </div>
         <div>
             <span class="text-xs uppercase tracking-wide text-gray-400">{{ $product->category->name }}</span>
