@@ -69,8 +69,8 @@
 
                     <div class="h-60 bg-gray-100 flex items-center justify-center">
 
-                        @if ($product->image)
-                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}"
+                        @if (count($product->images))
+                            <img src="{{ asset('storage/' . $product->images[0]) }}" alt="{{ $product->name }}"
                                 class="h-full w-full object-cover group-hover:scale-105 transition duration-300">
                         @else
                             <div class="text-7xl">
