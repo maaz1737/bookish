@@ -19,16 +19,16 @@ class OtpService
         private SmsChannel $sms,
     ) {}
 
-    public function sendWhatsappNotification($otp,  $recipient)
-    {
-        $twilio_whatsapp_number = getenv("TWILIO_PHONE_NUMBER");
-        $account_sid = getenv("TWILIO_ACCOUNT_SID");
-        $auth_token = getenv("TWILIO_AUTH_TOKEN");
+    // public function sendWhatsappNotification($otp,  $recipient)
+    // {
+    //     $twilio_whatsapp_number = getenv("TWILIO_PHONE_NUMBER");
+    //     $account_sid = getenv("TWILIO_ACCOUNT_SID");
+    //     $auth_token = getenv("TWILIO_AUTH_TOKEN");
 
-        $client = new Client($account_sid, $auth_token);
-        $message = "Your otp to login to meezan account is {$otp}.";
-        return $client->messages->create("whatsapp:$recipient", array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
-    }
+    //     $client = new Client($account_sid, $auth_token);
+    //     $message = "Your otp to login to meezan account is {$otp}.";
+    //     return $client->messages->create("whatsapp:$recipient", array('from' => "whatsapp:$twilio_whatsapp_number", 'body' => $message));
+    // }
 
     public function request(string $mobile): array
     {
@@ -39,7 +39,7 @@ class OtpService
         $channel = 'whatsapp';
         $sent = $this->whatsapp->send($mobile, $message);
 
-        $this->sendWhatsappNotification($code, $mobile);
+        // $this->sendWhatsappNotification($code, $mobile);
 
 
         if (! $sent) {
