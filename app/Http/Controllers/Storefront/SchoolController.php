@@ -16,9 +16,10 @@ class SchoolController extends Controller
 
     public function show(School $school)
     {
-        $school->load(['classes' => fn($q) => $q->where('is_active', true)])->with('products', function ($q) {
-            $q->where('class_id', null);
-        });
+        $school->load([
+            'classes' => fn($q) => $q->where('is_active', true),
+            'products' => fn($q) => $q->whereNull('class_id'),
+        ]);
 
         return view('storefront.school', compact('school'));
     }
