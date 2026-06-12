@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->foreignId('school_id')->constrained('schools')->cascadeOnDelete();
             $table->foreignId('class_id')->constrained('school_classes')->cascadeOnDelete();
             $table->decimal('total_price', 10, 2)->default(0);   // sum of book prices
-            $table->decimal('discount', 5, 2)->default(0);       // percentage e.g. 10.00
+            $table->decimal('discount', 10, 2)->default(0);       // percentage e.g. 10.00
             $table->decimal('final_price', 10, 2)->default(0);   // computed
             $table->boolean('is_active')->default(true);
             $table->timestamps();
