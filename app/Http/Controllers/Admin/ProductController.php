@@ -51,27 +51,7 @@ class ProductController extends Controller
 
         $product = Product::create($data);
 
-        // If product belongs to a school class
-        if ($product->school_id && $product->class_id) {
-
-            $bundle = Bundle::firstOrCreate(
-                [
-                    'school_id' => $product->school_id,
-                    'class_id'  => $product->class_id,
-                ],
-                [
-                    'total_price' => $product->discount_price,
-                    'discount' => $product->discount_price,
-                    'final_price' => $product->discount_price,
-                    'is_active' => true
-                ]
-            );
-
-            $bundle->items()->create([
-                'product_id' => $product->id,
-                'quantity'   => 1,
-            ]);
-        }
+        $this->syncProductBundle($product);
 
         return redirect()
             ->route('admin.products.index')
@@ -96,7 +76,7 @@ class ProductController extends Controller
         $bundle = Bundle::firstOrCreate(
             [
                 'school_id' => $product->school_id,
-                'class_id' => $product->class_id,
+                'class_id'  => $product->class_id,
             ],
             [
                 'total_price' => 0,
@@ -106,19 +86,33 @@ class ProductController extends Controller
             ]
         );
 
-        $bundle->items()->create([
+        // Prevent duplicate bundle item
+        $bundle->items()->firstOrCreate([
             'product_id' => $product->id,
+        ], [
             'quantity' => 1,
         ]);
 
-        $totalPrice = $bundle->items()
-            ->with('product')
-            ->get()
-            ->sum(fn($item) => ($item->product->discount_price ?? $item->product->price) * $item->quantity);
+        $items = $bundle->items()->with('product')->get();
+
+        $totalPrice = 0;
+        $totalDiscountPrice = 0;
+
+        foreach ($items as $item) {
+
+            $price = $item->product->price * $item->quantity;
+
+            $discountPrice = ($item->product->discount_price ?? $item->product->price)
+                * $item->quantity;
+
+            $totalPrice += $price;
+            $totalDiscountPrice += $discountPrice;
+        }
 
         $bundle->update([
-            'total_price' => $totalPrice,
-            'final_price' => $totalPrice - $bundle->discount,
+            'total_price' => $totalPrice,             // sum of actual prices
+            'discount'    => $totalDiscountPrice,     // sum of discount prices
+            'final_price' => $totalDiscountPrice,     // final bundle amount
         ]);
     }
 
