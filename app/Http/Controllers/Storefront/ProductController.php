@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Storefront;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\SchoolClass;
 
 class ProductController extends Controller
 {
@@ -41,5 +42,9 @@ class ProductController extends Controller
                 ],
             ],
         ]);
+    }
+    public function getClasses($schoolId)
+    {
+        return SchoolClass::where('school_id', $schoolId)->get();
     }
 }

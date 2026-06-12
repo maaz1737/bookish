@@ -108,11 +108,10 @@ class ProductController extends Controller
             $totalPrice += $price;
             $totalDiscountPrice += $discountPrice;
         }
-
         $bundle->update([
-            'total_price' => $totalPrice,             // sum of actual prices
-            'discount'    => $totalDiscountPrice,     // sum of discount prices
-            'final_price' => $totalDiscountPrice,     // final bundle amount
+            'total_price' => $totalPrice,
+            'discount'    => $totalDiscountPrice,
+            'final_price' => $totalDiscountPrice,
         ]);
     }
 
@@ -146,7 +145,7 @@ class ProductController extends Controller
         return [
             'categories' => Category::where('is_active', true)->get(),
             'schools'    => School::where('is_active', true)->get(),
-            'classes'    => SchoolClass::where('is_active', true)->get(),
+            'classes'    =>  collect(),
         ];
     }
 

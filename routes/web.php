@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\SettingController;
 
 /* ------------------------------ Storefront ------------------------------ */
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/schools', [SchoolController::class, 'index'])->name('schools.index');
@@ -40,7 +41,7 @@ Route::get('/school/{school}/{classSlug}/bundle', [StoreBundleController::class,
 
 Route::get('/category/{slug}', [StoreProductController::class, 'category'])->name('category.show');
 Route::get('/product/{product}', [StoreProductController::class, 'show'])->name('product.show');
-
+Route::get('/get-classes/{school}', [StoreProductController::class, 'getClasses'])->name('get.Classes');
 // Cart
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/product/{product}', [CartController::class, 'addProduct'])->name('cart.addProduct');
@@ -131,4 +132,4 @@ Route::prefix('admin')->name('admin.')
     });
 
 // Admin login uses a password (separate from customer OTP login)
-require __DIR__.'/admin-auth.php';
+require __DIR__ . '/admin-auth.php';
