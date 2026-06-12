@@ -61,48 +61,60 @@
 <button class="mt-6 bg-indigo-600 text-white px-6 py-2 rounded">Save</button>
 
 
+
 <script>
-    document.getElementById('school_id').addEventListener('change', function() {
+    $(document).ready(function() {
 
-        let schoolId = this.value;
+        // When school changes
+        $('#school_id').on('change', function() {
 
-        let classSelect = document.getElementById('class_id');
+            let schoolId = $(this).val();
+            let classSelect = $('#class_id');
 
-        classSelect.innerHTML = '<option value="">Loading...</option>';
+            classSelect.html('<option value="">Loading...</option>');
 
-        fetch(`/get-classes/${schoolId}`)
-            .then(response => response.json())
-            .then(data => {
+            if (!schoolId) {
+                classSelect.html('<option value="">—</option>');
+                return;
+            }
 
-                classSelect.innerHTML = '<option value="">—</option>';
+            $.get(`/get-classes/${schoolId}`, function(data) {
 
-                data.forEach(cls => {
-                    classSelect.innerHTML += `
-                    <option value="${cls.id}">${cls.name}</option>
-                `;
+                classSelect.html('<option value="">—</option>');
+
+                $.each(data, function(index, cls) {
+                    classSelect.append(
+                        `<option value="${cls.id}">${cls.name}</option>`
+                    );
                 });
+
             });
-    });
-    window.addEventListener('load', function() {
-        const schoolId = document.getElementById('school_id').value;
+        });
+
+
+        // On page load (edit mode)
+        let schoolId = $('#school_id').val();
 
         if (schoolId) {
-            fetch(`/get-classes/${schoolId}`)
-                .then(res => res.json())
-                .then(data => {
-                    let classSelect = document.getElementById('class_id');
 
-                    classSelect.innerHTML = '<option value="">—</option>';
+            $.get(`/get-classes/${schoolId}`, function(data) {
 
-                    data.forEach(cls => {
-                        let selected = cls.id == "{{ $product->class_id ?? '' }}" ? 'selected' :
-                            '';
+                let selectedClass = "{{ $product->class_id ?? '' }}";
 
-                        classSelect.innerHTML += `
-<option value="${cls.id}" ${selected}>${cls.name}</option>
-`;
-                    });
+                let classSelect = $('#class_id');
+
+                classSelect.html('<option value="">—</option>');
+
+                $.each(data, function(index, cls) {
+
+                    let selected = (cls.id == selectedClass) ? 'selected' : '';
+
+                    classSelect.append(
+                        `<option value="${cls.id}" ${selected}>${cls.name}</option>`
+                    );
                 });
+            });
         }
+
     });
 </script>

@@ -12,6 +12,7 @@ use App\Models\School;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -44,18 +45,32 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
-        $data = $request->validated();
+        try {
 
-        $data['slug'] = Str::slug($data['name']) . '-' . Str::random(5);
-        $data['images'] = $this->storeImages($request);
+            DB::beginTransaction();
 
-        $product = Product::create($data);
+            $data = $request->validated();
 
-        $this->syncProductBundle($product);
+            $data['slug'] = Str::slug($data['name']) . '-' . Str::random(5);
+            $data['images'] = $this->storeImages($request);
 
-        return redirect()
-            ->route('admin.products.index')
-            ->with('success', 'Product created.');
+            $product = Product::create($data);
+
+            $this->syncProductBundle($product);
+
+            DB::commit();
+
+            return redirect()
+                ->route('admin.products.index')
+                ->with('success', 'Product created.');
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
     }
 
 

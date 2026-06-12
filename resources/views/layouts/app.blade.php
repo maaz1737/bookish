@@ -14,6 +14,7 @@
     <meta property="og:description" content="{{ $seo['description'] ?? '' }}">
     <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
+
 </head>
 
 <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
