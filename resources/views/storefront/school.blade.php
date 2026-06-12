@@ -119,9 +119,10 @@
                                 <div class="mt-4 flex justify-between items-center">
                                     <span class="font-bold">Rs. 2,500</span>
 
-                                    <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg">
+                                    <a href="{{ route('product.show', $product) }}"
+                                        class="bg-indigo-600 text-white px-4 py-2 rounded-lg">
                                         Add
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
