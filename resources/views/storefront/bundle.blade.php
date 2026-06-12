@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
-{{-- Core feature: school -> class -> bundle with per-book toggling --}}
+
+
 <nav class="text-sm text-gray-500 mb-4">
     <a href="{{ route('schools.show', $school) }}">{{ $school->name }}</a> / {{ $class->name }}
 </nav>
@@ -14,7 +15,6 @@
         @foreach ($bundle->items as $item)
             <label class="flex items-center justify-between py-3">
                 <span class="flex items-center gap-3">
-                    {{-- unchecked items get excluded from the cart --}}
                     <input type="checkbox" checked
                            onchange="this.checked ? this.nextElementSibling.remove() : null"
                            class="bundle-book" data-id="{{ $item->product_id }}">
@@ -39,7 +39,6 @@
 </form>
 
 <script>
-// Rebuild hidden exclude[] inputs from currently-unchecked books on submit.
 document.querySelector('form').addEventListener('submit', function () {
     const wrap = document.getElementById('exclude-fields');
     wrap.innerHTML = '';

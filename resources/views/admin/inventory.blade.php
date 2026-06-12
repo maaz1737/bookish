@@ -12,8 +12,8 @@
     <td colspan="3" class="p-3">
         <form method="POST" action="{{ route('admin.inventory.update', $p) }}" class="flex gap-2 items-center">
             @csrf @method('PUT')
-            <input name="stock" type="number" value="{{ $p->stock }}" class="border rounded px-2 py-1 w-24">
-            <input name="low_stock_threshold" type="number" value="{{ $p->low_stock_threshold }}" class="border rounded px-2 py-1 w-24">
+            <input name="stock" type="number" min="0" value="{{ $p->stock }}" class="border rounded px-2 py-1 w-24">
+            <input name="low_stock_threshold" min="0" type="number" value="{{ $p->low_stock_threshold }}" class="border rounded px-2 py-1 w-24">
             <button class="bg-indigo-600 text-white px-3 py-1 rounded text-xs">Update</button>
             @if($p->isLowStock())<span class="text-red-500 text-xs">Low stock</span>@endif
         </form>
