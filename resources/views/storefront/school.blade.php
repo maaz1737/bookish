@@ -100,8 +100,8 @@
 
                     @forelse ($school->products as $product)
                         <div class="bg-white rounded-2xl overflow-hidden shadow">
-                            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518"
-                                class="h-56 w-full object-cover">
+                            <img src="{{ asset((app()->environment('production') ? 'public/' : '') . 'storage/' . $product->images[0]) }}"
+                                class="h-56 w-full object-cover" alt="{{ $product->name }}">
 
                             <div class="p-5">
                                 <span class="bg-blue-100 text-blue-700 text-xs px-3 py-1 rounded-full">
