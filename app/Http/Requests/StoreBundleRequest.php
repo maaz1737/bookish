@@ -23,4 +23,14 @@ class StoreBundleRequest extends FormRequest
             'items.*.quantity'   => ['required', 'integer', 'min:1'],
         ];
     }
+    protected function prepareForValidation()
+    {
+        if ($this->has('items')) {
+            $this->merge([
+                'items' => array_values(array_filter($this->items, function ($item) {
+                    return isset($item['product_id']) && !is_null($item['product_id']);
+                }))
+            ]);
+        }
+    }
 }
