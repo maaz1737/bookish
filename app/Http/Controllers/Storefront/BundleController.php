@@ -18,6 +18,7 @@ class BundleController extends Controller
 
         $bundle = $class->bundle()->with('items.product.category')->firstOrFail();
 
+
         // Publisher is hidden automatically by the Product model's $hidden.
         return view('storefront.bundle', [
             'school' => $school,
