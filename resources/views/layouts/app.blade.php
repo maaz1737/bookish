@@ -22,11 +22,14 @@
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex justify-between items-center h-20">
 
-                <!-- Logo -->
                 <a href="{{ route('home') }}" class="text-3xl font-bold text-indigo-600">
-                    <img src="{{ asset('images/logo/Logo-Bookish.png') }}" alt="Bookish Logo" width="110px">
+                    <img src="{{ asset(
+                        app()->environment('local')
+                            ? 'images/logo/Logo-Bookish.png'
+                            : 'public/storage/images/logo/Logo-Bookish.png',
+                    ) }}"
+                        alt="Bookish Logo" width="110">
                 </a>
-
                 <!-- Navigation -->
                 <div class="hidden md:flex items-center gap-8 font-medium">
                     <a href="{{ route('home') }}" class="hover:text-indigo-600 transition">
