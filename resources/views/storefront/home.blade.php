@@ -61,7 +61,7 @@
 
             @foreach ($schools as $school)
                 <a href="{{ route('schools.show', $school) }}"
-                    class="bg-white rounded-2xl shadow hover:shadow-xl transition p-6">
+                    class="bg-white rounded-2xl shadow hover:shadow-xl transition p-6 flex flex-col">
 
                     <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center text-2xl">
                         🏫
@@ -75,7 +75,7 @@
                         Books & Uniforms Available
                     </p>
 
-                    <span class="text-indigo-600 font-semibold mt-4 inline-block">
+                    <span class="text-indigo-600 font-semibold mt-auto pt-4 inline-block">
                         View Classes →
                     </span>
 

@@ -24,11 +24,14 @@
 
                 <!-- Logo -->
                 <a href="{{ route('home') }}" class="text-3xl font-bold text-indigo-600">
-                    Bookish
+                    <img src="{{ asset('images/logo/Logo-Bookish.png') }}" alt="Bookish Logo" width="110px">
                 </a>
 
                 <!-- Navigation -->
                 <div class="hidden md:flex items-center gap-8 font-medium">
+                    <a href="{{ route('home') }}" class="hover:text-indigo-600 transition">
+                        Home
+                    </a>
                     <a href="{{ route('schools.index') }}" class="hover:text-indigo-600 transition">
                         Schools
                     </a>
@@ -40,7 +43,9 @@
                     <a href="{{ route('category.show', 'accessories') }}" class="hover:text-indigo-600 transition">
                         Accessories
                     </a>
-
+                    <a href="{{ route('category.show', 'accessories') }}" class="hover:text-indigo-600 transition">
+                        Contact
+                    </a>
                     <a href="{{ route('cart.index') }}" class="hover:text-indigo-600 transition">
                         Cart
                     </a>
@@ -119,7 +124,7 @@
 
                     <ul class="space-y-2 text-gray-400">
                         <li>support@bookish.pk</li>
-                        <li>+92 300 1234567</li>
+                        <li>+92320-4735908</li>
                         <li>Pakistan</li>
                     </ul>
                 </div>
