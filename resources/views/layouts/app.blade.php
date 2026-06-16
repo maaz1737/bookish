@@ -24,9 +24,7 @@
 
                 <a href="{{ route('home') }}" class="text-3xl font-bold text-indigo-600">
                     <img src="{{ asset(
-                        app()->environment('local')
-                            ? 'images/logo/Logo-Bookish.png'
-                            : 'public/storage/images/logo/Logo-Bookish.png',
+                        app()->environment('local') ? 'storage/logo/Logo_Bookish.png' : 'public/storage/logo/Logo_Bookish.png',
                     ) }}"
                         alt="Bookish Logo" width="110">
                 </a>
