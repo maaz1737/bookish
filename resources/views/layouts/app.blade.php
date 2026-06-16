@@ -23,10 +23,7 @@
             <div class="flex justify-between items-center h-20">
 
                 <a href="{{ route('home') }}" class="text-3xl font-bold text-indigo-600">
-                    <img src="{{ asset(
-                        app()->environment('local') ? 'storage/logo/Logo_Bookish.png' : 'public/storage/logo/Logo_Bookish.png',
-                    ) }}"
-                        alt="Bookish Logo" width="110">
+                    Bookish
                 </a>
                 <!-- Navigation -->
                 <div class="hidden md:flex items-center gap-8 font-medium">
