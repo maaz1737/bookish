@@ -7,7 +7,7 @@
         <div class="rounded h-72 flex items-center justify-center text-gray-400">
             <img src="{{ app()->environment('local')
                 ? asset('storage/' . $product->images[0])
-                : asset('storage/app/public/products' . $product->images[0]) }}"
+                : asset('storage/app/public' . $product->images[0]) }}"
                 alt="Image Not found" class="w-full h-full object-cover block">
         </div>
         <div>
