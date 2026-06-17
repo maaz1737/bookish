@@ -26,6 +26,8 @@ class SchoolController extends Controller
             ->whereHas('category', function ($q) {
                 $q->where('type', 'accessory');
             })
+            ->whereNull('school_id')
+            ->whereNull('class_id')
             ->get();
 
         return view('storefront.school', compact('school', 'products'));
