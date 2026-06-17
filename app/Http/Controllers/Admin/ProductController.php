@@ -13,6 +13,7 @@ use App\Models\SchoolClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -166,10 +167,16 @@ class ProductController extends Controller
 
     private function storeImages(Request $request): array
     {
+        if (! Storage::disk('public')->exists('products')) {
+            Storage::disk('public')->makeDirectory('products');
+        }
+
         $paths = [];
+
         foreach ((array) $request->file('images', []) as $file) {
             $paths[] = $file->store('products', 'public');
         }
+
         return $paths;
     }
 }
