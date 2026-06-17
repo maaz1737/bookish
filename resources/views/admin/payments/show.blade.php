@@ -6,7 +6,9 @@
         <div class="bg-white rounded-lg shadow p-4">
             <h2 class="font-semibold mb-2">Uploaded screenshot</h2>
             <img src="{{ asset(
-                app()->environment('local') ? 'storage/' . $proof->screenshot_path : 'public/storage/' . $proof->screenshot_path,
+                app()->environment('local')
+                    ? 'storage/' . $proof->screenshot_path
+                    : 'storage/app/public/' . $proof->screenshot_path,
             ) }}"
                 class="w-full rounded border">
         </div>

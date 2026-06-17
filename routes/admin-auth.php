@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
  */
 Route::get('/admin/login', function () {
     return view('admin.login');
-})->name('admin.login');
+})->name('login');
 
 Route::post('/admin/login', function (Request $request) {
     $creds = $request->validate([

@@ -25,7 +25,7 @@
 
             @if ($bundle)
                 <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm">
-                    {{ $bundle?->discount }}% Off
+                    {{ $bundle?->discount }}
                 </span>
             @endif
         </div>
@@ -51,7 +51,11 @@
                                     data-id="{{ $item->product_id }}">
 
                                 <!-- PRODUCT IMAGE -->
-                                <img src="{{ asset((app()->environment('production') ? '' : '') . 'storage/app/public/' . $item->product->images[0]) }}"
+                                <img src="{{ asset(
+                                    app()->environment('production')
+                                        ? 'storage/app/public/' . $item->product->images[0]
+                                        : 'storage/' . $item->product->images[0],
+                                ) }}"
                                     class="w-16 h-16 rounded-xl object-cover border"" alt="{{ $item->product->name }}">
 
                                 <!-- PRODUCT INFO -->
@@ -109,7 +113,7 @@
                             <div class="flex justify-between">
                                 <span class="text-gray-500">Discount</span>
                                 <span class="text-green-600 font-medium">
-                                    {{ $bundle->discount }}%
+                                    {{ $bundle->discount }}
                                 </span>
                             </div>
 
