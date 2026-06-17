@@ -2,172 +2,153 @@
 
 @section('content')
 
-    <!-- Category Hero Section -->
-    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-3xl p-10 mb-10">
+    <section
+        class="bg-gradient-to-br from-indigo-700 via-indigo-600 to-purple-700 text-white rounded-3xl p-8 sm:p-12 mb-10 shadow-xl relative overflow-hidden">
+        <div class="absolute right-0 top-0 opacity-10 translate-x-6 -translate-y-6 pointer-events-none">
+            <span class="text-[180px] font-bold">🛒</span>
+        </div>
 
-        <div class="flex items-center gap-5">
-
-            <div class="w-20 h-20 bg-white text-indigo-600 rounded-full flex items-center justify-center text-4xl shadow-lg">
-                🎒
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-6 relative z-10">
+            <div
+                class="w-20 h-20 bg-white/10 backdrop-blur-md text-white rounded-2xl flex items-center justify-center text-4xl shadow-inner border border-white/20 shrink-0">
+                @if (str_contains(strtolower($category->name), 'book'))
+                    📚
+                @elseif(str_contains(strtolower($category->name), 'uniform'))
+                    👕
+                @else
+                    🎒
+                @endif
             </div>
 
             <div>
-                <h1 class="text-4xl font-bold">
+                <span
+                    class="text-xs font-bold uppercase tracking-widest bg-yellow-400 text-indigo-950 px-2.5 py-1 rounded-md mb-2 inline-block">
+                    Category Collection
+                </span>
+                <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight">
                     {{ $category->name }}
                 </h1>
-
-                <p class="mt-2 text-indigo-100">
-                    Explore high-quality school essentials for students.
+                <p class="mt-2 text-indigo-100 max-w-xl text-sm sm:text-base opacity-90">
+                    Explore high-quality school essentials curated strictly according to standard campus requirements.
                 </p>
-
-                <div class="mt-4 inline-flex bg-white/20 px-4 py-2 rounded-full text-sm">
+                <div
+                    class="mt-4 inline-flex items-center gap-1.5 bg-indigo-950/30 border border-indigo-400/30 px-4 py-1.5 rounded-full text-xs font-medium backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     {{ $products->total() }} Products Available
                 </div>
             </div>
-
         </div>
-
     </section>
 
-
-    <!-- Category Description Banner -->
-
-    <div class="bg-white rounded-3xl shadow-sm p-6 mb-10">
-
+    <div
+        class="bg-gray-50 rounded-2xl border border-gray-100 p-6 mb-10 shadow-sm flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div class="flex items-center gap-4">
-
-            <div class="text-4xl">
-                📚
+            <div class="text-3xl bg-white p-3 rounded-xl shadow-sm border border-gray-100 shrink-0">
+                ✨
             </div>
-
             <div>
-                <h2 class="font-bold text-xl">
-                    School Essentials Collection
+                <h2 class="font-bold text-lg text-gray-800">
+                    Premium Quality School Supplies
                 </h2>
-
-                <p class="text-gray-500 mt-1">
-                    Find books, uniforms, bags, stationery and other school items
-                    carefully selected for students.
+                <p class="text-gray-500 text-sm mt-0.5">
+                    Every product is double-checked for durability, fine fabric quality, and precise publishing syllabus.
                 </p>
             </div>
-
         </div>
-
     </div>
 
-
-    <!-- Products -->
-
     @if ($products->count())
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 sm:gap-8">
             @foreach ($products as $product)
                 <a href="{{ route('product.show', $product) }}"
-                    class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition duration-300">
+                    class="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
 
-                    <!-- Product Image -->
-
-                    <div class="h-60 bg-gray-100 flex items-center justify-center">
-
-                        @if (count($product->images))
-                            <img src="{{ app()->environment('local')
-                                ? asset('storage/' . $product->images[0])
-                                : asset('public/storage/' . $product->images[0]) }}"
-                                alt="{{ $product->name }}"
-                                class="h-full w-full object-cover group-hover:scale-105 transition duration-300">
-                        @else
-                            <div class="text-7xl">
-                                🎒
-                            </div>
-                        @endif
-
-                    </div>
-
-                    <!-- Product Content -->
-
-                    <div class="p-5">
-
-                        <h3 class="font-bold text-lg text-gray-800 group-hover:text-indigo-600 transition">
-                            {{ $product->name }}
-                        </h3>
-
-                        <p class="text-gray-500 text-sm mt-2 line-clamp-2">
-                            School quality products for everyday student needs.
-                        </p>
-
-                        <div class="mt-5 flex items-center justify-between">
-
-                            <div>
-                                <span class="text-2xl font-bold text-indigo-600">
-                                    PKR {{ number_format($product->effectivePrice()) }}
-                                </span>
-                            </div>
-
-                            <span class="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-sm font-medium">
-                                View
-                            </span>
-
+                    <div>
+                        <div
+                            class="h-64 bg-gray-50 flex items-center justify-center overflow-hidden relative border-b border-gray-50">
+                            @if (count($product->images))
+                                <img src="{{ app()->environment('local')
+                                    ? asset('storage/' . $product->images[0])
+                                    : asset('public/storage/' . $product->images[0]) }}"
+                                    alt="{{ $product->name }}"
+                                    class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            @else
+                                <div
+                                    class="text-6xl filter grayscale opacity-40 group-hover:scale-110 transition-transform duration-300">
+                                    🎒
+                                </div>
+                            @endif
                         </div>
 
+                        <div class="p-5">
+                            <h3
+                                class="font-bold text-base sm:text-lg text-gray-800 group-hover:text-indigo-600 transition-colors line-clamp-2 min-h-[3.5rem] leading-snug">
+                                {{ $product->name }}
+                            </h3>
+                            <p class="text-gray-400 text-xs mt-1.5 flex items-center gap-1">
+                                <span>Grade Verified</span> • <span>In Stock</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="px-5 pb-5 pt-3 border-t border-gray-50 bg-gray-50/30 flex items-center justify-between">
+                        <div class="flex flex-col">
+                            <span class="text-xs text-gray-400 uppercase font-semibold tracking-wider">Price</span>
+                            <span class="text-xl font-black text-indigo-600">
+                                Rs. {{ number_format($product->effectivePrice()) }}
+                            </span>
+                        </div>
+                        <span
+                            class="bg-indigo-600 text-white group-hover:bg-indigo-700 px-4 py-2 rounded-xl text-xs font-bold transition-colors shadow-sm">
+                            Buy Now
+                        </span>
                     </div>
 
                 </a>
             @endforeach
-
         </div>
     @else
-        <!-- Empty State -->
-
-        <div class="bg-white rounded-3xl shadow p-12 text-center">
-
-            <div class="text-8xl mb-5">
-                📦
-            </div>
-
-            <h2 class="text-3xl font-bold mb-3">
+        <div class="bg-white rounded-3xl border border-gray-100 p-12 text-center shadow-sm max-w-xl mx-auto my-12">
+            <div class="text-6xl mb-4">📦</div>
+            <h2 class="text-2xl font-extrabold text-gray-800 mb-2">
                 No Products Found
             </h2>
-
-            <p class="text-gray-500 max-w-lg mx-auto">
-                Products for this category have not been added yet.
-                Please check back later.
+            <p class="text-gray-500 text-sm leading-relaxed">
+                We are currently uploading stock for <strong class="text-indigo-600">{{ $category->name }}</strong>. Please
+                check back in a few hours or contact support for manual ordering.
             </p>
-
         </div>
     @endif
-
-
-    <!-- Pagination -->
 
     @if ($products->hasPages())
-        <div class="mt-12 flex justify-center">
-            {{ $products->links() }}
+        <div class="mt-16 flex justify-center">
+            <div class="bg-white px-4 py-2 rounded-2xl shadow-sm border border-gray-100">
+                {{ $products->links() }}
+            </div>
         </div>
     @endif
 
+    <section class="mt-24">
+        <div
+            class="bg-gradient-to-br from-gray-900 to-indigo-950 text-white rounded-3xl p-8 sm:p-12 text-center shadow-xl relative overflow-hidden">
+            <div class="absolute -right-10 -bottom-10 opacity-5 pointer-events-none">
+                <span class="text-[160px]">🏫</span>
+            </div>
 
-    <!-- Bottom CTA -->
-
-    <section class="mt-16">
-
-        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-3xl p-10 text-white text-center">
-
-            <h2 class="text-3xl font-bold mb-3">
-                Everything Your Child Needs For School
-            </h2>
-
-            <p class="opacity-90 mb-6">
-                Books, uniforms, accessories and educational essentials
-                delivered directly to your doorstep.
-            </p>
-
-            <a href="{{ route('schools.index') }}"
-                class="inline-block bg-white text-indigo-600 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100">
-                Browse Schools
-            </a>
-
+            <div class="relative z-10 max-w-2xl mx-auto">
+                <h2 class="text-2xl sm:text-4xl font-extrabold mb-4 tracking-tight">
+                    Looking For Complete Bundles?
+                </h2>
+                <p class="text-gray-300 opacity-90 mb-8 text-sm sm:text-base max-w-lg mx-auto">
+                    Instead of buying single items, you can search your school directly to get the complete textbook
+                    packages instantly.
+                </p>
+                <a href="{{ route('schools.index') }}"
+                    class="inline-flex items-center justify-center bg-white text-indigo-950 px-7 py-3.5 rounded-xl font-bold hover:bg-indigo-50 hover:-translate-y-0.5 transition-all duration-200 transform shadow-md">
+                    Find My School Syllabus
+                </a>
+            </div>
         </div>
-
     </section>
 
 @endsection
