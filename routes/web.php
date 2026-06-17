@@ -10,7 +10,7 @@ use App\Http\Controllers\Storefront\ProductController as StoreProductController;
 use App\Http\Controllers\Storefront\CartController;
 use App\Http\Controllers\Storefront\CheckoutController;
 use App\Http\Controllers\Storefront\OrderTrackController;
-
+use App\Http\Controllers\ContactController;
 // Auth
 use App\Http\Controllers\Auth\OtpAuthController;
 
@@ -63,6 +63,13 @@ Route::get('/track/{orderNumber}', [OrderTrackController::class, 'show'])->name(
 // Route::post('/login/send-otp', [OtpAuthController::class, 'sendOtp'])->name('login.sendOtp');
 // Route::post('/login/verify-otp', [OtpAuthController::class, 'verifyOtp'])->name('login.verifyOtp');
 Route::post('/logout', [OtpAuthController::class, 'logout'])->name('logout');
+
+
+
+Route::get('/contact', [ContactController::class, 'show'])->name('contact');
+Route::post('/contact', [ContactController::class, 'submit'])->name('contact.submit');
+
+
 
 /* -------------------------------- Admin --------------------------------- */
 Route::prefix('admin')->name('admin.')
@@ -128,6 +135,9 @@ Route::prefix('admin')->name('admin.')
 
             Route::get('settings', [SettingController::class, 'edit'])->name('settings.edit');
             Route::put('settings', [SettingController::class, 'update'])->name('settings.update');
+
+
+            Route::get('/contacts', [App\Http\Controllers\Admin\ContactMessageController::class, 'index'])->name('contacts.index');
         });
     });
 
