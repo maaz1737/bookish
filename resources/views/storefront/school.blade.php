@@ -100,7 +100,7 @@
 
                     @forelse ($school->products as $product)
                         <div class="bg-white rounded-2xl overflow-hidden shadow">
-                            <img src="{{ asset((app()->environment('production') ? 'public/' : '') . 'storage/app/public/' . $product->images[0]) }}"
+                            <img src="{{ asset((app()->environment('production') ? '' : '') . 'storage/app/public/' . $product->images[0]) }}"
                                 class="h-56 w-full object-cover" alt="{{ $product->name }}">
 
                             <div class="p-5">
