@@ -26,7 +26,7 @@
             <div class="flex justify-between  items-center h-20">
 
                 <a href="{{ route('home') }}" class="">
-                    <img src="{{ asset(app()->environment('local') ? 'storage/logo/logo.png' : 'public/storage/logo/logo.png') }}"
+                    <img src="{{ asset(app()->environment('local') ? 'storage/logo.png' : 'public/storage/logo.png') }}"
                         alt="Bookish Logo" width="110">
                 </a>
                 <!-- Navigation -->
