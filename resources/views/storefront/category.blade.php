@@ -63,22 +63,25 @@
                 <a href="{{ route('product.show', $product) }}"
                     class="group bg-white rounded-3xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
 
-                    <div>
-                        <div
-                            class="h-64 bg-gray-50 flex items-center justify-center overflow-hidden relative border-b border-gray-50">
-                            @if (count($product->images))
-                                <img src="{{ app()->environment('local')
-                                    ? asset('storage/' . $product->images[0])
-                                    : asset('public/storage/' . $product->images[0]) }}"
-                                    alt="{{ $product->name }}"
-                                    class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500">
-                            @else
-                                <div
-                                    class="text-6xl filter grayscale opacity-40 group-hover:scale-110 transition-transform duration-300">
-                                    🎒
-                                </div>
-                            @endif
-                        </div>
+                    <!-- Product Image -->
+
+                    <div class="h-60 bg-gray-100 flex items-center justify-center">
+
+                        @if (count($product->images))
+                            <img src="{{ app()->environment('local')
+                                ? asset('storage/' . $product->images[0])
+                                : asset('storage/app/public/' . $product->images[0]) }}"
+                                alt="{{ $product->name }}"
+                                class="h-full w-full object-cover group-hover:scale-105 transition duration-300">
+                        @else
+                            <div class="text-7xl">
+                                🎒
+                            </div>
+                        @endif
+
+                    </div>
+
+                    <!-- Product Content -->
 
                         <div class="p-5">
                             <h3

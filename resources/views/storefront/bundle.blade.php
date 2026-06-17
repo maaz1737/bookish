@@ -51,7 +51,7 @@
                                     data-id="{{ $item->product_id }}">
 
                                 <!-- PRODUCT IMAGE -->
-                                <img src="{{ asset((app()->environment('production') ? 'public/' : '') . 'storage/' . $item->product->images[0]) }}"
+                                <img src="{{ asset((app()->environment('production') ? '' : '') . 'storage/app/public/' . $item->product->images[0]) }}"
                                     class="w-16 h-16 rounded-xl object-cover border"" alt="{{ $item->product->name }}">
 
                                 <!-- PRODUCT INFO -->
