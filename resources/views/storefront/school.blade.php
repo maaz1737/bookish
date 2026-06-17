@@ -161,56 +161,26 @@
 
                 <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-                    <div class="bg-white rounded-2xl p-5 shadow">
-                        <h3 class="font-semibold text-lg">
-                            School Bag
-                        </h3>
+                    @foreach ($products as $product)
+                        <a href="{{ route('product.show', $product) }}" class="bg-white rounded-2xl p-5 shadow">
+                            <h3 class="font-semibold text-lg">
+                                {{ $product->name }}
+                            </h3>
 
-                        <p class="text-gray-500 text-sm mt-2">
-                            Suitable for all schools.
-                        </p>
+                            <p class="text-gray-500 text-sm mt-2">
+                                Suitable for all schools.
+                            </p>
 
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="font-bold">Rs. 3,200</span>
-                            <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg">
-                                Add
-                            </button>
-                        </div>
-                    </div>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="font-bold">{{ $product->price }}</span>
+                                <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg">
+                                    Add
+                                </button>
+                            </div>
+                        </a>
+                    @endforeach
 
-                    <div class="bg-white rounded-2xl p-5 shadow">
-                        <h3 class="font-semibold text-lg">
-                            Water Bottle
-                        </h3>
 
-                        <p class="text-gray-500 text-sm mt-2">
-                            Suitable for all schools.
-                        </p>
-
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="font-bold">Rs. 850</span>
-                            <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg">
-                                Add
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="bg-white rounded-2xl p-5 shadow">
-                        <h3 class="font-semibold text-lg">
-                            Lunch Box
-                        </h3>
-
-                        <p class="text-gray-500 text-sm mt-2">
-                            Suitable for all schools.
-                        </p>
-
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="font-bold">Rs. 1,200</span>
-                            <button class="bg-indigo-600 text-white px-4 py-2 rounded-lg">
-                                Add
-                            </button>
-                        </div>
-                    </div>
 
                 </div>
 

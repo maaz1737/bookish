@@ -16,7 +16,7 @@ class BundleController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        $bundle = $class->bundle()->with('items.product.category')->firstOrFail();
+        $bundle = $class->bundle()->with('items.product.category')->first();
 
 
         // Publisher is hidden automatically by the Product model's $hidden.

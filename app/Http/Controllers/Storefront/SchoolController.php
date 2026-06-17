@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Storefront;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use App\Models\School;
 
 class SchoolController extends Controller
@@ -21,6 +22,12 @@ class SchoolController extends Controller
             'products' => fn($q) => $q->whereNull('class_id'),
         ]);
 
-        return view('storefront.school', compact('school'));
+        $products = Product::with('category')
+            ->whereHas('category', function ($q) {
+                $q->where('type', 'accessory');
+            })
+            ->get();
+
+        return view('storefront.school', compact('school', 'products'));
     }
 }

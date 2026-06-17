@@ -59,10 +59,10 @@ Route::post('/checkout/{orderNumber}/proof', [CheckoutController::class, 'upload
 Route::get('/track/{orderNumber}', [OrderTrackController::class, 'show'])->name('order.track');
 
 /* -------------------------------- Auth ---------------------------------- */
-Route::get('/login', [OtpAuthController::class, 'showLogin'])->name('login');
-Route::post('/login/send-otp', [OtpAuthController::class, 'sendOtp'])->name('login.sendOtp');
-Route::post('/login/verify-otp', [OtpAuthController::class, 'verifyOtp'])->name('login.verifyOtp');
-Route::post('/logout', [OtpAuthController::class, 'logout'])->name('logout');
+// Route::get('/login', [OtpAuthController::class, 'showLogin'])->name('login');
+// Route::post('/login/send-otp', [OtpAuthController::class, 'sendOtp'])->name('login.sendOtp');
+// Route::post('/login/verify-otp', [OtpAuthController::class, 'verifyOtp'])->name('login.verifyOtp');
+// Route::post('/logout', [OtpAuthController::class, 'logout'])->name('logout');
 
 /* -------------------------------- Admin --------------------------------- */
 Route::prefix('admin')->name('admin.')

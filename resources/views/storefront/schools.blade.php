@@ -25,7 +25,7 @@
 
         <div class="relative">
 
-            <input type="text" placeholder="Search School..."
+            <input id="search" type="text" placeholder="Search School..."
                 class="w-full border border-gray-200 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
 
         </div>
@@ -35,7 +35,7 @@
 
     <!-- Schools Grid -->
 
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div id="con" class=" grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
         @foreach ($schools as $school)
             <a href="{{ route('schools.show', $school) }}"
@@ -57,7 +57,7 @@
                 <!-- Content -->
                 <div class="p-6 pt-10">
 
-                    <h2 class="text-xl font-bold text-gray-800 group-hover:text-indigo-600 transition">
+                    <h2 class="school-name text-xl font-bold text-gray-800 group-hover:text-indigo-600 transition">
                         {{ $school->name }}
                     </h2>
 
@@ -123,4 +123,16 @@
         </div>
 
     </section>
+
+    <script>
+        $('#search').on('keyup', function() {
+            let value = $(this).val().toLowerCase();
+
+            $('#con > a').each(function() {
+                let schoolName = $(this).find('.school-name').text().toLowerCase();
+
+                $(this).toggle(schoolName.includes(value));
+            });
+        });
+    </script>
 @endsection

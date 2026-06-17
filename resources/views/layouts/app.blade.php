@@ -14,16 +14,20 @@
     <meta property="og:description" content="{{ $seo['description'] ?? '' }}">
     <meta property="og:type" content="website">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 </head>
 
 <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col">
     <nav class="bg-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex justify-between items-center h-20">
+        <div class="max-w-7xl px-3 mx-auto">
+            <div class="flex justify-between  items-center h-20">
 
-                <a href="{{ route('home') }}" class="text-3xl font-bold text-indigo-600">
-                    Bookish
+                <a href="{{ route('home') }}" class="">
+                    <img src="{{ asset(app()->environment('local') ? 'storage/logo/logo.png' : 'public/storage/logo/logo.png') }}"
+                        alt="Bookish Logo" width="110">
                 </a>
                 <!-- Navigation -->
                 <div class="hidden md:flex items-center gap-8 font-medium">
@@ -50,7 +54,7 @@
                 </div>
 
                 <!-- Login -->
-                <div>
+                {{-- <div>
                     @auth
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -64,7 +68,7 @@
                             Login
                         </a>
                     @endauth
-                </div>
+                </div> --}}
 
             </div>
         </div>
@@ -111,9 +115,9 @@
                     <h4 class="font-semibold mb-4">Categories</h4>
 
                     <ul class="space-y-2 text-gray-400">
-                        <li>Books</li>
-                        <li>Uniforms</li>
-                        <li>Accessories</li>
+                        <li> <a href="{{ route('category.show', 'books') }}">Books</a></li>
+                        <li> <a href="{{ route('category.show', 'uniforms') }}">Uniforms</a></li>
+                        <li> <a href="{{ route('category.show', 'accessories') }}">Accessories</a></li>
                     </ul>
                 </div>
 
