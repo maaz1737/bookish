@@ -40,7 +40,7 @@
                 <!-- Logo Area -->
                 <div class="flex-shrink-0">
                     <a href="{{ route('home') }}" class="block transform hover:scale-105 transition duration-200">
-                        <img src="{{ asset(app()->environment('local') ? 'storage/logo/logo.png' : 'public/storage/logo/logo.png') }}"
+                        <img src="{{ asset(app()->environment('local') ? 'storage/logo.png' : 'public/storage/logo.png') }}"
                             alt="Bookish Logo" class="w-28 sm:w-32 h-auto object-contain">
                     </a>
                 </div>
