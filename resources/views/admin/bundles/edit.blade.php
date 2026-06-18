@@ -6,8 +6,10 @@
     @endphp
     <h1 class="text-2xl font-bold mb-6">Build a Bundle</h1>
     <p class="text-sm text-gray-500 mb-4">Select School → Class → add books → discount auto-calculates the final price.</p>
-    <form method="POST" action="{{ route('admin.bundles.store') }}" class="bg-white p-6 rounded-lg shadow space-y-4">
+    <form method="POST" action="{{ route('admin.bundles.update', $bundle) }}"
+        class="bg-white p-6 rounded-lg shadow space-y-4">
         @csrf
+        @method('put')
         <div class="grid sm:grid-cols-3 gap-4">
             <label class="block"><span class="text-sm font-medium">School</span>
                 <select name="school_id" id="school" required class="w-full border rounded px-3 py-2 mt-1">
