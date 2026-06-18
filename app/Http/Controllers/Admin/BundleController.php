@@ -27,7 +27,7 @@ class BundleController extends Controller
         return view('admin.bundles.create', [
             'schools'  => School::with('classes')->get(),
             // Only book-category products belong in bundles
-            'products' => Product::active()->whereHas('category', fn ($q) => $q->where('type', 'book'))->get(),
+            'products' => Product::active()->whereHas('category', fn($q) => $q->where('type', 'book'))->get(),
         ]);
     }
 
@@ -56,6 +56,22 @@ class BundleController extends Controller
         return redirect()->route('admin.bundles.index')
             ->with('success', "Bundle saved. Final price: {$bundle->final_price} PKR.");
     }
+
+    public function edit(Bundle $bundle)
+    {
+
+        return view('admin.bundles.edit', [
+            'schools'  => School::with('classes')->get(),
+            'products' => Product::active()->whereHas('category', fn($q) => $q->where('type', 'book'))->get(),
+            'bundle' => $bundle->load([
+                'school',
+                'schoolClass',
+                'items'
+            ])->loadCount('items')
+
+        ]);
+    }
+
 
     public function destroy(Bundle $bundle)
     {
