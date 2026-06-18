@@ -13,7 +13,10 @@ class CategoryController extends Controller
     {
         return view('admin.categories', ['categories' => Category::withCount('products')->get()]);
     }
-
+    public function edit(Category $category)
+    {
+        return view('admin.categories.edit', compact('category'));
+    }
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -32,7 +35,7 @@ class CategoryController extends Controller
             'type'      => ['required', 'in:book,uniform,accessory'],
             'is_active' => ['boolean'],
         ]));
-        return back()->with('success', 'Category updated.');
+        return redirect()->route('admin.categories.index')->with('success', 'Category updated.');
     }
 
     public function destroy(Category $category)

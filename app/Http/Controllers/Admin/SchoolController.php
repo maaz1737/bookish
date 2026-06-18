@@ -18,21 +18,25 @@ class SchoolController extends Controller
     {
         $data = $request->validate([
             'name'        => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
+            // 'description' => ['nullable', 'string'],
         ]);
         $data['slug'] = Str::slug($data['name']);
         School::create($data);
         return back()->with('success', 'School created.');
     }
+    public function edit(School $school)
+    {
+        return view('admin.schools.edit', compact('school'));
+    }
 
     public function update(Request $request, School $school)
     {
         $school->update($request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
+            'name'  => ['required', 'string', 'max:255'],
+            // 'description' => ['nullable', 'string'],
             'is_active'   => ['boolean'],
         ]));
-        return back()->with('success', 'School updated.');
+        return redirect()->route('admin.schools.index')->with('success', 'School updated.');
     }
 
     public function destroy(School $school)

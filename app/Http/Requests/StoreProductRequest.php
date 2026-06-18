@@ -21,8 +21,16 @@ class StoreProductRequest extends FormRequest
         return [
             'name'                => ['required', 'string', 'max:255'],
             'category_id'         => ['required', 'exists:categories,id'],
-            'school_id'           => ['nullable', 'exists:schools,id'],
-            'class_id'            => ['nullable', 'exists:school_classes,id'],
+            'school_id' => [
+                'nullable',
+                'exists:schools,id',
+                'required_with:class_id',
+            ],
+
+            'class_id' => [
+                'nullable',
+                'exists:school_classes,id',
+            ],
             'price'               => ['required', 'numeric', 'min:0'],
             'discount_price'      => ['nullable', 'numeric', 'min:0', 'lt:price'],
             'stock'               => ['required', 'integer', 'min:0'],
@@ -35,6 +43,12 @@ class StoreProductRequest extends FormRequest
             'images'              => ['nullable', 'array'],
             'images.*'            => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'is_active'           => ['boolean'],
+        ];
+    }
+    public function messages(): array
+    {
+        return [
+            'school_id.required_with' => 'Please select a school before selecting a class.',
         ];
     }
 }

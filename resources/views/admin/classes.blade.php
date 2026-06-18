@@ -24,16 +24,19 @@
                     {{ $cl?->name ?? 'Unnamed Class' }}
                 </span>
 
-                <form method="POST" action="{{ route('admin.classes.destroy', $cl->id) }}"
-                    onsubmit="return confirm('Are you sure you want to delete this class? This action cannot be undone.')">
+                <div>
+                    <a href="{{ route('admin.classes.edit', $cl->id) }}">Edit</a>
+                    <form method="POST" action="{{ route('admin.classes.destroy', $cl->id) }}"
+                        onsubmit="return confirm('Are you sure you want to delete this class? This action cannot be undone.')">
 
-                    @csrf
-                    @method('DELETE')
+                        @csrf
+                        @method('DELETE')
 
-                    <button type="submit" class="text-red-500 hover:text-red-700 font-medium">
-                        Delete
-                    </button>
-                </form>
+                        <button type="submit" class="text-red-500 hover:text-red-700 font-medium">
+                            Delete
+                        </button>
+                    </form>
+                </div>
 
             </div>
         @endforeach
