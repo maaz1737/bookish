@@ -20,7 +20,7 @@ class CategoryController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'in:book,uniform,accessory'],
         ]);
-        $data['slug'] = Str::slug($data['name']);
+        $data['slug'] = Str::slug($data['type']);
         Category::create($data);
         return back()->with('success', 'Category created.');
     }
