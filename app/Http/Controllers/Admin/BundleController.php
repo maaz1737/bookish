@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\School;
 use App\Models\SchoolClass;
 use App\Services\BundlePricingService;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 
 class BundleController extends Controller
@@ -27,7 +28,7 @@ class BundleController extends Controller
         return view('admin.bundles.create', [
             'schools'  => School::with('classes')->get(),
             // Only book-category products belong in bundles
-            'products' => Product::active()->whereHas('category', fn ($q) => $q->where('type', 'book'))->get(),
+            'products' => Product::active()->whereHas('category', fn($q) => $q->where('type', 'book'))->get(),
         ]);
     }
 
@@ -56,6 +57,51 @@ class BundleController extends Controller
         return redirect()->route('admin.bundles.index')
             ->with('success', "Bundle saved. Final price: {$bundle->final_price} PKR.");
     }
+
+    public function edit(Bundle $bundle)
+    {
+
+        return view('admin.bundles.edit', [
+            'schools'  => School::with('classes')->get(),
+            'products' => Product::active()->whereHas('category', fn($q) => $q->where('type', 'book'))->get(),
+            'bundle' => $bundle->load([
+                'school',
+                'schoolClass',
+                'items'
+            ])->loadCount('items')
+
+        ]);
+    }
+
+    public function update(StoreBundleRequest $request, Bundle $bundle)
+    {
+        $bundle = DB::transaction(function () use ($request, $bundle) {
+
+            $bundle->update([
+                'school_id' => $request->school_id,
+                'class_id'  => $request->class_id,
+                'discount'  => $request->discount,
+                'is_active' => $request->boolean('is_active', true),
+            ]);
+
+            $bundle->items()->delete();
+
+            foreach ($request->items as $item) {
+                BundleItem::create([
+                    'bundle_id'  => $bundle->id,
+                    'product_id' => $item['product_id'],
+                    'quantity'   => $item['quantity'],
+                ]);
+            }
+
+            return $this->pricing->recalculate($bundle);
+        });
+
+        return redirect()
+            ->route('admin.bundles.index')
+            ->with('success', "Bundle updated. Final price: {$bundle->final_price} PKR.");
+    }
+
 
     public function destroy(Bundle $bundle)
     {

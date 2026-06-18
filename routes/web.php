@@ -107,6 +107,8 @@ Route::prefix('admin')->name('admin.')
         Route::get('bundles', [AdminBundleController::class, 'index'])->name('bundles.index');
         Route::get('bundles/create', [AdminBundleController::class, 'create'])->name('bundles.create');
         Route::post('bundles', [AdminBundleController::class, 'store'])->name('bundles.store');
+        Route::get('bundles/{bundle}/edit', [AdminBundleController::class, 'edit'])->name('bundles.edit');
+        Route::put('bundles/{bundle}/update', [AdminBundleController::class, 'update'])->name('bundles.update');
         Route::delete('bundles/{bundle}', [AdminBundleController::class, 'destroy'])->name('bundles.destroy');
 
         // Module 6: Orders

@@ -47,6 +47,7 @@
                             </td>
 
                             <td class="p-3">
+                                <a href="{{ route('admin.bundles.edit', $b) }}">Edit</a>
                                 <form method="POST" action="{{ route('admin.bundles.destroy', $b->id) }}"
                                     onsubmit="return confirm('Are you sure you want to delete this bundle? This action cannot be undone.')">
 
