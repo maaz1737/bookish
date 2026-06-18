@@ -20,7 +20,9 @@
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    <!-- Base Configuration Custom Styles -->
+    {{-- swiper cdns  --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
@@ -31,92 +33,126 @@
 </head>
 
 <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col antialiased">
+    <header class="border-b border-gray-200 bg-white">
 
-    <!-- NAVIGATION HEADER -->
-    <nav class="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-20">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-14">
 
-                <!-- Logo Area -->
-                <div class="flex-shrink-0">
-                    <a href="{{ route('home') }}" class="block transform hover:scale-105 transition duration-200">
-                        <img src="{{ asset(app()->environment('local') ? 'storage/logo.png' : 'public/storage/logo.png') }}"
-                            alt="Bookish Logo" class="w-28 sm:w-32 h-auto object-contain">
-                    </a>
-                </div>
+            <div>
+                <h1 class="text-2xl font-extrabold text-blue-900">
+                    Bookish <span class="italic text-yellow-500">& Beyond</span>
+                </h1>
+                <p class="text-xs text-gray-500">
+                    School Essentials, Baby Wear & Gifts
+                </p>
+            </div>
 
-                <!-- Desktop Navigation Links -->
-                <div class="hidden md:flex items-center gap-8 text-sm font-semibold tracking-wide">
-                    <a href="{{ route('home') }}"
-                        class="{{ request()->routeIs('home') ? 'text-indigo-600' : 'text-gray-600 hover:text-indigo-600' }} transition-colors duration-200">
-                        Home
-                    </a>
-                    <a href="{{ route('schools.index') }}"
-                        class="{{ request()->routeIs('schools.*') ? 'text-indigo-600' : 'text-gray-600 hover:text-indigo-600' }} transition-colors duration-200">
-                        Schools
-                    </a>
-                    <a href="{{ route('category.show', 'books') }}"
-                        class="text-gray-600 hover:text-indigo-600 transition-colors duration-200">
-                        Books
-                    </a>
-                    <a href="{{ route('category.show', 'uniforms') }}"
-                        class="text-gray-600 hover:text-indigo-600 transition-colors duration-200">
-                        Uniforms
-                    </a>
-                    <a href="{{ route('category.show', 'accessories') }}"
-                        class="text-gray-600 hover:text-indigo-600 transition-colors duration-200">
-                        Accessories
-                    </a>
-                    <a href="{{ Route::has('contact') ? route('contact') : '#contact' }}"
-                        class="{{ request()->routeIs('contact') ? 'text-indigo-600' : 'text-gray-600 hover:text-indigo-600' }} transition-colors duration-200">
-                        Contact
-                    </a>
-                </div>
+            <div class="hidden md:block flex-1">
+                <div class="relative">
 
-                <!-- Action Button Area (Cart & Mobile Toggle) -->
-                <div class="flex items-center gap-4">
-                    <!-- Cart Button Desktop/Mobile -->
-                    <a href="{{ route('cart.index') }}"
-                        class="relative p-2.5 text-gray-600 hover:text-indigo-600 bg-gray-50 hover:bg-indigo-50 rounded-xl transition duration-200 flex items-center justify-center">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path>
-                        </svg>
-                        <!-- Dynamic indicator badge context example -->
-                        <span
-                            class="absolute top-1 right-1 w-2.5 h-2.5 bg-indigo-600 border-2 border-white rounded-full"></span>
-                    </a>
+                    <input type="text" placeholder="Search books, uniforms, bags..."
+                        class="w-full border rounded-lg px-4 py-3">
 
-                    <!-- Mobile Menu Button Burger Toggle -->
-                    <button id="mobile-menu-btn" type="button"
-                        class="md:hidden p-2.5 rounded-xl text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 focus:outline-none transition duration-200">
-                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                        </svg>
+                    <button
+                        class="absolute right-2 top-1/2 -translate-y-1/2 bg-blue-900 text-white px-3 py-2 rounded-lg">
+                        🔍
                     </button>
+
                 </div>
+            </div>
+
+            <div class="flex items-center">
+
+                {{-- <a href="#" class="flex flex-col items-center text-navy text-xs font-medium hidden sm:flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mb-0.5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.121 17.804A7 7 0 0112 15a7 7 0 016.879 2.804M15 11a3 3 0 1 1-6 0 3 3 0 0 1 6 0z">
+                        </path>
+                    </svg>
+                    Login / Register
+                </a> --}}
+
+                <a href="{{ route('cart.index') }}" class="relative flex flex-col items-center  text-sm font-medium">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mb-0.5" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-1.5 6h13M7 13L5.4 5M10 21a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2z">
+                        </path>
+                    </svg>
+                    Cart
+                    <span
+                        class="absolute -top-1 -right-2 bg-gold text-navy text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center bg-yellow-500">0</span>
+                </a>
 
             </div>
+
         </div>
 
-        <!-- Mobile Dynamic Sidebar Drawer Content Layer -->
-        <div id="mobile-menu"
-            class="hidden md:hidden border-t border-gray-100 bg-white/95 backdrop-blur-md px-4 pt-2 pb-6 space-y-2 shadow-inner">
-            <a href="{{ route('home') }}"
-                class="block px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">Home</a>
-            <a href="{{ route('schools.index') }}"
-                class="block px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">Schools</a>
-            <a href="{{ route('category.show', 'books') }}"
-                class="block px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">Books</a>
-            <a href="{{ route('category.show', 'uniforms') }}"
-                class="block px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">Uniforms</a>
-            <a href="{{ route('category.show', 'accessories') }}"
-                class="block px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">Accessories</a>
-            <a href="{{ Route::has('contact') ? route('contact') : '#contact' }}"
-                class="block px-4 py-3 rounded-xl text-base font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition">Contact</a>
+    </header>
+
+    <!-- NAVIGATION -->
+
+    <nav class="border-b bg-white">
+
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center gap-6">
+
+            <button class="bg-blue-900 text-white px-5 py-3 rounded-lg font-medium shrink-0">
+                ☰ Shop By Category
+            </button>
+
+            <ul class="hidden lg:flex flex-1 justify-between gap-8 font-medium">
+
+                <li>
+                    <a href="{{ route('schools.index') }}" class="hover:text-blue-900 font-bold">
+                        Schools
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('category.show', 'books') }}" class="hover:text-blue-900 font-bold">
+                        Books
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('category.show', 'uniforms') }}" class="hover:text-blue-900 font-bold">
+                        Uniforms
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('category.show', 'uniforms') }}" class="hover:text-blue-900 font-bold">
+                        Bags & Bottles
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('category.show', 'uniforms') }}" class="hover:text-blue-900 font-bold">
+                        Baby Wear
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('category.show', 'uniforms') }}" class="hover:text-blue-900 font-bold">
+                        Gifts
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ route('category.show', 'accessories') }}" class="hover:text-blue-900 font-bold">
+                        Accessories
+                    </a>
+                </li>
+
+            </ul>
+
+            <button class="bg-yellow-400 text-blue-900 px-5 py-3 rounded-lg font-semibold shrink-0">
+                🎁 Offers
+            </button>
+
         </div>
+
     </nav>
+
 
     <!-- FLASH NOTIFICATION TOASTERS SYSTEM -->
     <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 mt-4">
@@ -150,78 +186,106 @@
         @yield('content')
     </main>
 
-    <!-- PREMIUM CONTEXTUAL FOOTER SECTION -->
-    <footer class="bg-gray-900 text-gray-300 border-t border-gray-800 mt-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <footer class="bg-blue-900 text-white mt-20">
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10 lg:gap-12">
-                <!-- Brand Profile info block -->
-                <div class="space-y-4">
-                    <h3
-                        class="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 tracking-tight">
-                        Bookish.
-                    </h3>
-                    <p class="text-sm text-gray-400 leading-relaxed">
-                        Pakistan's premium school resource marketplace. Ordering class-specific book sets, standard
-                        tailored uniforms, and student kits made effortless.
-                    </p>
-                </div>
+        <div class="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-5 gap-10">
 
-                <!-- Footer Quick Links -->
-                <div>
-                    <h4 class="font-bold text-white text-sm uppercase tracking-wider mb-5">Quick Links</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="{{ route('home') }}"
-                                class="hover:text-indigo-400 transition-colors duration-200 flex items-center gap-1">Home</a>
-                        </li>
-                        <li><a href="{{ route('schools.index') }}"
-                                class="hover:text-indigo-400 transition-colors duration-200">Partner Schools</a></li>
-                        <li><a href="{{ route('cart.index') }}"
-                                class="hover:text-indigo-400 transition-colors duration-200">Shopping Cart</a></li>
-                        <li><a href="{{ Route::has('contact') ? route('contact') : '#contact' }}"
-                                class="hover:text-indigo-400 transition-colors duration-200">Get Help Support</a></li>
-                    </ul>
-                </div>
+            <div class="md:col-span-2">
 
-                <!-- Footer Category Index Navigation -->
-                <div>
-                    <h4 class="font-bold text-white text-sm uppercase tracking-wider mb-5">Categories</h4>
-                    <ul class="space-y-3 text-sm">
-                        <li><a href="{{ route('category.show', 'books') }}"
-                                class="hover:text-indigo-400 transition-colors duration-200">Textbooks & Bundles</a>
-                        </li>
-                        <li><a href="{{ route('category.show', 'uniforms') }}"
-                                class="hover:text-indigo-400 transition-colors duration-200">Campus Uniforms</a></li>
-                        <li><a href="{{ route('category.show', 'accessories') }}"
-                                class="hover:text-indigo-400 transition-colors duration-200">Stationery Kits</a></li>
-                    </ul>
-                </div>
+                <h3 class="text-3xl font-bold">
+                    Bookish
+                    <span class="italic text-yellow-400">
+                        & Beyond
+                    </span>
+                </h3>
 
-                <!-- Contact details column panel -->
-                <div>
-                    <h4 class="font-bold text-white text-sm uppercase tracking-wider mb-5">Official Support</h4>
-                    <ul class="space-y-3 text-sm text-gray-400">
-                        <li class="flex items-center gap-2">📧 <span>support@bookish.pk</span></li>
-                        <li class="flex items-center gap-2">📞 <span>+92 320 4735908</span></li>
-                        <li class="flex items-center gap-2">📍 <span>Lahore, Pakistan</span></li>
-                    </ul>
-                </div>
+                <p class="mt-4 text-gray-300">
+                    Your one-stop destination for school books,
+                    uniforms and accessories.
+                </p>
+
             </div>
 
-            <!-- Bottom Intellectual property legal copyrights section line -->
-            <div
-                class="border-t border-gray-800/80 mt-16 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-                <p>© {{ date('Y') }} Bookish. Inc. All Rights Reserved.</p>
-                <div class="flex items-center gap-4">
-                    <span class="hover:text-gray-400 cursor-pointer">Privacy Policy</span>
-                    <span>•</span>
-                    <span class="hover:text-gray-400 cursor-pointer">Terms of Service</span>
-                </div>
+            <div>
+
+                <h4 class="font-bold mb-4">
+                    Quick Links
+                </h4>
+
+                <ul class="space-y-2 text-gray-300">
+
+                    <li>Home</li>
+                    <li>Schools</li>
+                    <li>Categories</li>
+                    <li>Contact Us</li>
+
+                </ul>
+
+            </div>
+
+            <div>
+
+                <h4 class="font-bold mb-4">
+                    Categories
+                </h4>
+
+                <ul class="space-y-2 text-gray-300">
+
+                    <li>Books</li>
+                    <li>Uniforms</li>
+                    <li>Accessories</li>
+
+                </ul>
+
+            </div>
+
+            <div>
+
+                <h4 class="font-bold mb-4">
+                    Contact Us
+                </h4>
+
+                <ul class="space-y-3 text-gray-300">
+
+                    <li>📞 +92 300 1234567</li>
+                    <li>✉️ support@bookish.pk</li>
+                    <li>📍 Lahore, Pakistan</li>
+
+                </ul>
+
             </div>
 
         </div>
-    </footer>
 
+        <div class="border-t border-white/10">
+
+            <div class="max-w-7xl mx-auto px-4 py-5 flex justify-between items-center text-sm text-gray-400">
+
+                <p>
+                    © {{ date('Y') }} Bookish & Beyond. All Rights Reserved.
+                </p>
+
+                <div class="flex gap-3">
+
+                    <span class="bg-white text-blue-900 px-2 py-1 rounded">
+                        VISA
+                    </span>
+
+                    <span class="bg-white text-red-600 px-2 py-1 rounded">
+                        Mastercard
+                    </span>
+
+                    <span class="bg-white text-green-600 px-2 py-1 rounded">
+                        Easypaisa
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
     <!-- Toggle Script Engine Module for Navigation Actions -->
     <script>
         $(document).ready(function() {
