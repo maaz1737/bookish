@@ -13,7 +13,7 @@ class HomeController extends Controller
     {
         return view('storefront.home', [
             'schools'    => School::where('is_active', true)->get(),
-            'categories' => Category::where('is_active', true)->get(),
+            'categories' => Category::where('is_active', true)->where('show_on_dashboard', true)->get(),
             'featured'   => Product::active()->latest()->take(8)->get(),
         ]);
     }

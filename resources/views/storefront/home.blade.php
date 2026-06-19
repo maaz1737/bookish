@@ -134,7 +134,10 @@
 
     <!-- CATEGORIES -->
     <section class="py-10">
-
+        <div class="mb-6 flex items-center justify-between">
+            <h2 class="flex items-center gap-2 text-2xl font-bold text-brand">🛍️ Shop by Category</h2>
+            <a href="#" class="text-sm font-medium text-brand">View All Categories →</a>
+        </div>
         <div class="relative max-w-7xl mx-auto px-4">
 
             <!-- Prev -->
@@ -151,18 +154,31 @@
                 <div class="swiper-wrapper">
 
                     @foreach ($categories as $category)
-                        <div class="swiper-slide">
+                        <div class="swiper-slide h-auto">
                             <div
-                                class="flex flex-col rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
+                                class="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
+
                                 <div class="mb-3 grid aspect-square place-items-center rounded-lg bg-brand-cream text-5xl">
                                     <img class="w-full h-full" src="{{ asset('storage/logo/paf-banner.png') }}"
                                         alt="">
                                 </div>
-                                <h3 class="font-bold">{{ $category->name }}</h3>
-                                <p class="mt-1 text-xs font-bold text-slate-500">Explore a wide range of books.</p><button
-                                    class="mt-3 bg-blue-900 text-white text-center rounded-md border border-slate-200 px-3 py-2 text-sm font-light text-brand hover:bg-brand-cream">Shop
-                                    {{ \Illuminate\Support\Str::limit($category->name, 9, '') }} →
-                                </button>
+
+                                <h3 class="font-bold">
+                                    {{ $category->name }}
+                                </h3>
+
+                                <p class="mt-1 text-xs font-bold text-slate-500">
+                                    {{ \Illuminate\Support\Str::limit($category->description, 60, '') }}
+                                </p>
+
+                                <!-- PUSH BUTTON TO BOTTOM -->
+                                <div class="mt-auto">
+                                    <button
+                                        class="mt-3 w-full bg-blue-900 text-white text-center rounded-md border border-slate-200 px-3 py-2 text-sm font-light hover:bg-brand-cream">
+                                        Shop {{ \Illuminate\Support\Str::limit($category->name, 9, '') }} →
+                                    </button>
+                                </div>
+
                             </div>
                         </div>
                     @endforeach
@@ -246,66 +262,6 @@
         </div>
     </section>
 
-
-    {{-- <section class="max-w-7xl mx-auto px-4 py-16">
-
-        <div class="bg-yellow-50 rounded-3xl p-10">
-
-            <div>
-
-                <div class="">
-
-                    <div class="">
-                        <div>
-                            <div class="text-4xl">🚚</div>
-                            <h3 class="font-bold mt-3">Fast Delivery</h3>
-                            <p class="text-gray-500 text-sm">
-                                Nationwide delivery across Pakistan.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="">
-                        <div>
-                            <div class="text-4xl">📦</div>
-                            <h3 class="font-bold mt-3">Complete Bundles</h3>
-                            <p class="text-gray-500 text-sm">
-                                Class-wise book packages.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="">
-                        <div>
-                            <div class="text-4xl">🔒</div>
-                            <h3 class="font-bold mt-3">Secure Payments</h3>
-                            <p class="text-gray-500 text-sm">
-                                Safe checkout experience.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="">
-                        <div>
-                            <div class="text-4xl">↩️</div>
-                            <h3 class="font-bold mt-3">Easy Returns</h3>
-                            <p class="text-gray-500 text-sm">
-                                Hassle-free returns.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="feature-prev"></div>
-                <div class="feature-next"></div>
-                <div class="feature-pagination"></div>
-
-            </div>
-
-        </div>
-
-    </section> --}}
     <script>
         function createSwiper(selector, config) {
             return new Swiper(selector, config);
