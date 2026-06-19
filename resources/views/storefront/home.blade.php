@@ -47,8 +47,10 @@
                             @if ($banner->link)
                                 <a href="{{ $banner->link }}">
                             @endif
-                            <img src="{{ asset('storage/' . $banner->image_path) }}" alt="{{ $banner->title ?? 'Banner' }}"
-                                class="w-full object-cover aspect-[3/1]">
+                            <img src="{{ app()->environment('production')
+                                ? asset('storage/app/public' . $banner->image_path)
+                                : asset('storage' . $banner->image_path) }}"
+                                alt="{{ $banner->title ?? 'Banner' }}" class="w-full object-cover aspect-[3/1]">
                             @if ($banner->link)
                                 </a>
                             @endif
