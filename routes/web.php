@@ -28,6 +28,7 @@ use App\Http\Controllers\Admin\InventoryController;
 use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\BannerController;
 
 /* ------------------------------ Storefront ------------------------------ */
 
@@ -147,6 +148,14 @@ Route::prefix('admin')->name('admin.')
 
 
             Route::get('/contacts', [App\Http\Controllers\Admin\ContactMessageController::class, 'index'])->name('contacts.index');
+            // Route::resource('banners', BannerController::class);
+
+            Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
+            Route::get('/banners/create', [BannerController::class, 'create'])->name('banners.create');
+            Route::post('/banners', [BannerController::class, 'store'])->name('banners.store');
+            Route::get('/banners/{banner}/edit', [BannerController::class, 'edit'])->name('banners.edit');
+            Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banners.update');
+            Route::delete('/banners/{banner}', [BannerController::class, 'destroy'])->name('banners.destroy');
         });
     });
 
