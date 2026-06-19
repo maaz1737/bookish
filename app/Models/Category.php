@@ -6,9 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
-    protected $fillable = ['name', 'slug', 'type', 'is_active'];
-
-    protected $casts = ['is_active' => 'boolean'];
+    protected $fillable = [
+        'name',
+        'slug',
+        'type',
+        'description',
+        'image',
+        'is_active',
+        'show_on_dashboard'
+    ];
+    protected $casts = [
+        'is_active' => 'boolean',
+        'show_on_dashboard' => 'boolean',
+    ];
 
     public function products()
     {

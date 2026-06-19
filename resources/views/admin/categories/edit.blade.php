@@ -1,19 +1,80 @@
 @extends('admin.layout')
-@section('title', 'Categories')
+
+@section('title', 'Edit Category')
+
 @section('content')
-    <h1 class="text-2xl font-bold mb-6">Categories</h1>
-    <form method="POST" action="{{ route('admin.categories.update', $category) }}"
-        class="bg-white p-4 rounded-lg shadow flex gap-2 mb-6">
+
+    <h1 class="text-2xl font-bold mb-6">Edit Category</h1>
+
+    <form method="POST" action="{{ route('admin.categories.update', $category) }}" enctype="multipart/form-data"
+        class="bg-white p-6 rounded-xl shadow-md border border-gray-100 space-y-5">
+
         @csrf
-        @method('put')
-        <input value="{{ $category->name }}" name="name" placeholder="Category name" required
-            class="border rounded px-3 py-2 flex-1">
-        <select name="type" class="border rounded px-3 py-2">
-            <option value="book" {{ old('type', $category->type) == 'book' ? 'selected' : '' }}>book</option>
-            <option value="uniform" {{ old('type', $category->type) == 'uniform' ? 'selected' : '' }}>uniform</option>
-            <option value="accessory" {{ old('type', $category->type) == 'accessory' ? 'selected' : '' }}>accessory</option>
-        </select>
-        <button class="bg-indigo-600 text-white px-4 rounded">Update</button>
+        @method('PUT')
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+                Category Name
+            </label>
+            <input type="text" name="name" value="{{ old('name', $category->name) }}" required
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none">
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+                Category Type
+            </label>
+            <select name="type"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                <option value="book" {{ old('type', $category->type) == 'book' ? 'selected' : '' }}>Book</option>
+                <option value="uniform" {{ old('type', $category->type) == 'uniform' ? 'selected' : '' }}>Uniform</option>
+                <option value="accessory" {{ old('type', $category->type) == 'accessory' ? 'selected' : '' }}>Accessory
+                </option>
+
+            </select>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+                Description
+            </label>
+            <textarea name="description" rows="4"
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none">{{ old('description', $category->description) }}</textarea>
+        </div>
+
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+                Category Image
+            </label>
+
+            @if ($category->image)
+                <div class="mb-2">
+                    <img src="{{ asset('storage/' . $category->image) }}" class="w-20 h-20 object-cover rounded-lg border">
+                </div>
+            @endif
+
+            <input type="file" name="image" accept="image/*"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2">
+        </div>
+
+        <div class="flex items-center gap-3">
+            <input type="checkbox" name="show_on_dashboard" value="1"
+                {{ old('show_on_dashboard', $category->show_on_dashboard) ? 'checked' : '' }}
+                class="w-4 h-4 text-indigo-600 border-gray-300 rounded">
+
+            <label class="text-sm font-medium text-gray-700">
+                Show on Dashboard
+            </label>
+        </div>
+
+        <!-- Submit -->
+        <div class="flex justify-end">
+            <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg transition">
+                Update Category
+            </button>
+        </div>
+
     </form>
 
 @endsection
