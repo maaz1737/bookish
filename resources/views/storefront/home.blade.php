@@ -159,7 +159,7 @@
                                 class="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
 
                                 <div class="mb-3 grid aspect-square place-items-center rounded-lg bg-brand-cream text-5xl">
-                                    <img class="w-full h-full" src="{{ asset('storage/logo/paf-banner.png') }}"
+                                    <img class="w-full h-full" src="{{ asset('storage/' . $category->image) }}"
                                         alt="">
                                 </div>
 
