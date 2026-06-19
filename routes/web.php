@@ -37,6 +37,16 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/schools', [SchoolController::class, 'index'])->name('schools.index');
 Route::get('/school/{school}', [SchoolController::class, 'show'])->name('schools.show');
 
+
+Route::get('/testing', function(){
+    return view('user.categories.categories');
+});
+
+Route::get('/testing2', function(){
+    return view('user.categories.categories_testing');
+});
+
+
 // SEO bundle route: /school/{school}/{class}/bundle
 Route::get('/school/{school}/{classSlug}/bundle', [StoreBundleController::class, 'show'])->name('bundle.show');
 

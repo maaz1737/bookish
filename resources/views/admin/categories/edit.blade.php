@@ -50,7 +50,10 @@
 
             @if ($category->image)
                 <div class="mb-2">
-                    <img src="{{ asset('storage/' . $category->image) }}" class="w-20 h-20 object-cover rounded-lg border">
+                    <img src="{{ app()->environment('production')
+                        ? url('storage/app/public/' . $category->image)
+                        : asset('storage/' . $category->image) }}"
+                        class="w-20 h-20 object-cover rounded-lg border">
                 </div>
             @endif
 

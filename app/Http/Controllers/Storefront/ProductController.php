@@ -13,9 +13,9 @@ class ProductController extends Controller
     public function category(string $slug)
     {
         $category = Category::where('slug', $slug)->where('is_active', true)->firstOrFail();
-        $products = Product::active()->where('category_id', $category->id)->paginate(24);
+        $products = Product::where('category_id', $category->id)->paginate(24);
 
-        return view('storefront.category', compact('category', 'products'));
+        return view('user.categories.categories', compact('category', 'products'));
     }
 
     // SEO route: /product/{product}
