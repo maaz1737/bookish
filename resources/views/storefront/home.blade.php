@@ -49,7 +49,7 @@
                             @endif
                             <img src="{{ app()->environment('production')
                                 ? asset('storage/app/public/' . $banner->image_path)
-                                : asset('storage' . $banner->image_path) }}"
+                                : asset('storage/' . $banner->image_path) }}"
                                 alt="{{ $banner->title ?? 'Banner' }}" class="w-full object-cover aspect-[3/1]">
                             @if ($banner->link)
                                 </a>
@@ -148,7 +148,10 @@
                                 class="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
 
                                 <div class="mb-3 grid aspect-square place-items-center rounded-lg bg-brand-cream text-5xl">
-                                    <img class="w-full h-full" src="{{ asset('storage/' . $category->image) }}"
+                                    <img class="w-full h-full"
+                                        src="{{ app()->environment('production')
+                                            ? url('storage/app/public/' . $category->image)
+                                            : asset('storage/' . $category->image) }}"
                                         alt="">
                                 </div>
 

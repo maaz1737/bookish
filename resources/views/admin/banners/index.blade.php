@@ -32,7 +32,7 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <img src="{{ app()->environment('production')
                                     ? asset('storage/app/public/' . $banner->image_path)
-                                    : asset('storage' . $banner->image_path) }}"
+                                    : asset('storage/' . $banner->image_path) }}"
                                     class="w-40 h-20 object-cover rounded border bg-gray-50">
                             </td>
                             <td class="px-6 py-4">
