@@ -186,7 +186,7 @@
         @yield('content')
     </main>
 
-    <footer class="bg-blue-900 text-white mt-20">
+    <footer class="bg-blue-900 text-white mt-2">
 
         <div class="max-w-7xl mx-auto px-4 py-12 grid md:grid-cols-5 gap-10">
 

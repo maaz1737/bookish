@@ -11,9 +11,13 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->string('slug')->unique();
-            // type drives product behaviour: book | uniform | accessory
-            $table->enum('type', ['book', 'uniform', 'accessory'])->default('accessory');
+            $table->string('image')->nullable();
+            $table->text('description')->nullable();
+            $table->enum('type', ['book', 'uniform', 'accessory'])
+                ->default('accessory');
             $table->boolean('is_active')->default(true);
+            $table->boolean('show_on_dashboard')
+                ->default(true);
             $table->timestamps();
         });
     }
