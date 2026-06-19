@@ -140,7 +140,10 @@
             <!-- Prev -->
             <button
                 class="category-prev absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white border border-gray-200 rounded-full w-9 h-9 flex items-center justify-center shadow hover:bg-gray-50">
-                ‹
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 18l-6-6 6-6" />
+                </svg>
             </button>
 
             <!-- Swiper -->
@@ -151,17 +154,18 @@
                     <div class="swiper-slide">
                         <div class="flex flex-col rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
                             <div class="mb-3 grid aspect-square place-items-center rounded-lg bg-brand-cream text-5xl">
-                                <img src="{{ asset('storage/logo/pdf-banner.png') }}" alt="">
+                                <img class="w-full h-full" src="{{ asset('storage/logo/paf-banner.png') }}" alt="">
                             </div>
                             <h3 class="font-bold">Books</h3>
-                            <p class="mt-1 text-xs text-slate-500">Explore a wide range of books.</p><button
-                                class="mt-3 rounded-md border border-slate-200 px-3 py-2 text-xs font-medium text-brand hover:bg-brand-cream">Shop
+                            <p class="mt-1 text-xs font-bold text-slate-500">Explore a wide range of books.</p><button
+                                class="mt-3 bg-blue-900 text-white text-center rounded-md border border-slate-200 px-3 py-2 text-sm font-light text-brand hover:bg-brand-cream">Shop
                                 Books →</button>
                         </div>
                     </div>
                     <div class="swiper-slide">
                         <div class="flex flex-col rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
-                            <div class="mb-3 grid aspect-square place-items-center rounded-lg bg-brand-cream text-5xl">📚
+                            <div class="mb-3 grid aspect-square place-items-center rounded-lg bg-brand-cream text-5xl">
+                                <img class="w-full h-full" src="{{ asset('storage/logo/paf-banner.png') }}" alt="">
                             </div>
                             <h3 class="font-bold">Books</h3>
                             <p class="mt-1 text-xs text-slate-500">Explore a wide range of books.</p><button
@@ -261,7 +265,11 @@
             <!-- Next -->
             <button
                 class="category-next absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white border border-gray-200 rounded-full w-9 h-9 flex items-center justify-center shadow hover:bg-gray-50">
-                ›
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round">
+                    <path d="M9 18l6-6-6-6" />
+                </svg>
             </button>
 
         </div>
