@@ -26,6 +26,7 @@
         'admin.payments.index' => 'Payment Verification',
         'admin.customers.index' => 'Customers',
         'admin.inventory.index' => 'Inventory',
+        'admin.banners.index' => 'Banners',
     ] as $route => $label)
                 <a href="{{ route($route) }}"
                     class="block px-3 py-2 rounded hover:bg-gray-800 {{ request()->routeIs($route) ? 'bg-gray-800 text-white' : '' }}">{{ $label }}</a>

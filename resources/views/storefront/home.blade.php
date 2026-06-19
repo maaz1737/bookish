@@ -2,6 +2,7 @@
 
 @section('content')
     <style>
+        .heroSwiper .swiper-pagination-bullet,
         .schoolSwiper .swiper-pagination-bullet {
             width: 10px;
             height: 10px;
@@ -9,6 +10,7 @@
             opacity: 1;
         }
 
+        .heroSwiper .swiper-pagination-bullet-active,
         .schoolSwiper .swiper-pagination-bullet-active {
             background: #1e3a8a;
             width: 28px;
@@ -35,35 +37,44 @@
             }
         }
     </style>
-    <section class="max-w-7xl mx-auto px-4 pt-6">
 
-        <section class="mx-auto max-w-7xl px-4 pt-6">
-            <div class="overflow-hidden rounded-2xl">
-                <img src="{{ asset('storage/logo/paf-banner.png') }}" alt="Everything for School &amp; Beyond" class="w-full">
+    <section class="max-w-7xl mx-auto px-4 pt-6 relative">
+        @if ($heroBanners->count() > 0)
+            <div class="swiper heroSwiper overflow-hidden rounded-2xl">
+                <div class="swiper-wrapper">
+                    @foreach ($heroBanners as $banner)
+                        <div class="swiper-slide">
+                            @if ($banner->link)
+                                <a href="{{ $banner->link }}">
+                            @endif
+                            <img src="{{ asset('storage/' . $banner->image_path) }}" alt="{{ $banner->title ?? 'Banner' }}"
+                                class="w-full object-cover aspect-[3/1]">
+                            @if ($banner->link)
+                                </a>
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+                <div class="swiper-pagination !bottom-4"></div>
             </div>
-        </section>
-
+        @else
+            <div class="overflow-hidden rounded-2xl">
+                <img src="{{ asset('storage/logo/paf-banner.png') }}" alt="Default Banner" class="w-full">
+            </div>
+        @endif
     </section>
 
-    <!-- POPULAR SCHOOLS -->
-
     <section class="max-w-7xl mx-auto px-4 py-16">
-
         <div class="flex justify-between items-center mb-8">
-
             <h2 class="text-3xl font-bold text-blue-900">
                 🏫 Popular Schools
             </h2>
-
             <a href="{{ route('schools.index') }}" class="font-semibold text-blue-900">
                 View All →
             </a>
-
         </div>
 
         <div class="relative">
-
-            <!-- Left Arrow -->
             <div
                 class="swiper-button-prev !text-blue-900 !w-12 !h-12 bg-white rounded-full shadow-lg border after:!text-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
@@ -72,75 +83,52 @@
                 </svg>
             </div>
 
-            <!-- Right Arrow -->
             <div
                 class="swiper-button-next !text-blue-900 !w-12 !h-12 bg-white rounded-full shadow-lg border after:!text-lg">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
                     stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 18l6-6-6-6" />
                 </svg>
-
             </div>
 
             <div class="swiper schoolSwiper">
-
                 <div class="swiper-wrapper mb-6">
-
                     @foreach ($schools as $school)
                         <div class="swiper-slide pb-4">
-
                             <a href="{{ route('schools.show', $school) }}"
                                 class="block bg-white rounded-2xl border p-6 shadow hover:shadow-xl transition h-full">
-
                                 <div class="flex gap-4 items-center">
-
                                     <div
                                         class="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center text-3xl">
                                         🏫
                                     </div>
-
                                     <div>
-
                                         <h3 class="font-bold text-lg">
                                             {{ $school->name }}
                                         </h3>
-
                                         <p class="text-gray-500 text-sm">
                                             Books & Uniforms Available
                                         </p>
-
                                     </div>
-
                                 </div>
-
                                 <div class="mt-5 bg-blue-900 text-white text-center py-3 rounded-lg font-medium">
                                     View Classes →
                                 </div>
-
                             </a>
-
                         </div>
                     @endforeach
-
                 </div>
-
-                <!-- Dots -->
                 <div class="swiper-pagination mt-8"></div>
-
             </div>
-
         </div>
     </section>
 
-    <!-- CATEGORIES -->
     <section class="py-10">
         <div class="mb-6 flex items-center justify-between">
             <h2 class="flex items-center gap-2 text-2xl font-bold text-brand">🛍️ Shop by Category</h2>
             <a href="#" class="text-sm font-medium text-brand">View All Categories →</a>
         </div>
         <div class="relative max-w-7xl mx-auto px-4">
-
-            <!-- Prev -->
             <button
                 class="category-prev absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white border border-gray-200 rounded-full w-9 h-9 flex items-center justify-center shadow hover:bg-gray-50">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
@@ -149,7 +137,6 @@
                 </svg>
             </button>
 
-            <!-- Swiper -->
             <div class="swiper categorySwiper">
                 <div class="swiper-wrapper">
 
@@ -183,10 +170,8 @@
                         </div>
                     @endforeach
                 </div>
-
             </div>
 
-            <!-- Next -->
             <button
                 class="category-next absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white border border-gray-200 rounded-full w-9 h-9 flex items-center justify-center shadow hover:bg-gray-50">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
@@ -194,7 +179,6 @@
                     <path d="M9 18l6-6-6-6" />
                 </svg>
             </button>
-
         </div>
     </section>
 
@@ -263,11 +247,22 @@
     </section>
 
     <script>
-        function createSwiper(selector, config) {
-            return new Swiper(selector, config);
-        }
+        // Hero Slider Initialization
+        new Swiper(".heroSwiper", {
+            slidesPerView: 1,
+            loop: true,
+            autoplay: {
+                delay: 2000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
 
-        createSwiper(".schoolSwiper", {
+        // Schools Slider Initialization
+        new Swiper(".schoolSwiper", {
             slidesPerView: 1,
             spaceBetween: 20,
             loop: true,
@@ -292,8 +287,8 @@
                 }
             }
         });
-    </script>
-    <script>
+
+        // Categories Slider Initialization
         new Swiper(".categorySwiper", {
             slidesPerView: 2,
             spaceBetween: 16,
@@ -302,12 +297,6 @@
                 nextEl: ".category-next",
                 prevEl: ".category-prev",
             },
-
-            pagination: {
-                el: ".category-pagination",
-                clickable: true,
-            },
-
             breakpoints: {
                 640: {
                     slidesPerView: 3
