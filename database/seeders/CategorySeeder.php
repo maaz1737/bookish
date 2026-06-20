@@ -14,12 +14,18 @@ class CategorySeeder extends Seeder
             ['Books', 'book'],
             ['Uniforms', 'uniform'],
             ['Accessories', 'accessory'],
+            // Book sub-categories
+            ['English', 'book'],
+            ['Urdu', 'book'],
+            ['Math', 'book'],
+            ['Science', 'book'],
             // Uniform sub-categories (Section 6.2)
             ['Shirts', 'uniform'], ['Pants', 'uniform'], ['Skirts', 'uniform'],
             ['Sweaters', 'uniform'], ['Shoes', 'uniform'], ['Ties', 'uniform'],
             // Accessory items (Section 6.3)
             ['Bags', 'accessory'], ['Bottles', 'accessory'],
             ['Lunch Boxes', 'accessory'], ['Gifts', 'accessory'],
+            ['Baby Wear', 'accessory'],
         ];
 
         foreach ($categories as [$name, $type]) {

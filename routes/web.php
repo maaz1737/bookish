@@ -58,7 +58,11 @@ Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/product/{product}', [CartController::class, 'addProduct'])->name('cart.addProduct');
 Route::post('/cart/bundle/{bundle}', [CartController::class, 'addBundle'])->name('cart.addBundle');
 Route::delete('/cart/{key}', [CartController::class, 'remove'])->name('cart.remove');
+Route::patch('/cart/{key}', [CartController::class, 'update'])->name('cart.update');
 Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+// Wishlist
+Route::post('/wishlist/{product}', [App\Http\Controllers\Storefront\WishlistController::class, 'toggle'])->name('wishlist.toggle');
 
 // Checkout (guest checkout always available)
 Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');

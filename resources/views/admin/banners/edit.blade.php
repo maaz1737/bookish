@@ -16,7 +16,7 @@
         <div>
             <label class="block text-sm font-semibold text-gray-700 mb-2">Current Banner Image</label>
             <div class="p-2 border rounded-lg bg-gray-50 mb-3">
-                <img src="{{ asset('storage/' . $banner->image_path) }}" class="w-full h-48 object-cover rounded">
+                <img src="{{ str_starts_with($banner->image_path, 'http') ? $banner->image_path : asset('storage/' . $banner->image_path) }}" class="w-full h-48 object-cover rounded">
             </div>
             
             <label class="block text-sm font-semibold text-gray-700 mb-1">Upload New Image (Leave empty to keep current)</label>

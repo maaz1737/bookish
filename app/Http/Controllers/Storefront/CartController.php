@@ -63,6 +63,21 @@ class CartController extends Controller
         return redirect()->route('cart.index')->with('success', 'Bundle added to cart.');
     }
 
+    public function update(Request $request, string $key)
+    {
+        $cart = $request->session()->get('cart', []);
+        if (isset($cart[$key])) {
+            $qty = (int) $request->input('quantity', 1);
+            if ($qty <= 0) {
+                unset($cart[$key]);
+            } else {
+                $cart[$key]['quantity'] = $qty;
+            }
+            $request->session()->put('cart', $cart);
+        }
+        return back()->with('success', 'Cart updated.');
+    }
+
     public function remove(Request $request, string $key)
     {
         $cart = $request->session()->get('cart', []);
