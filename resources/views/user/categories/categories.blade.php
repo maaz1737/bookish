@@ -193,15 +193,23 @@
 
                 @if($p->old)
                     <span class="text-xs text-slate-400 line-through">
-                        PKR {{ number_format($p->old) }}
+                        PKR {{ number_format($p->old) }}ss
                     </span>
                 @endif
             </div>
 
-            <button class="mt-3 w-full bg-navy text-white text-xs font-medium py-2 rounded flex items-center justify-center gap-2">
-                <i class="fa-solid fa-cart-shopping text-[10px]"></i>
-                Add to Cart
-            </button>
+              <div class="p-3 pt-0">
+              <form method="POST" action="{{ route('cart.addProduct', $p) }}">
+                @csrf
+                <button type="submit"
+                  class="w-full flex items-center justify-center gap-1.5 text-xs font-semibold py-2 rounded-lg transition-all
+                    {{ $p->stock > 0 ? 'bg-[#0B1B47] hover:bg-indigo-700 text-white cursor-pointer' : 'bg-slate-100 text-slate-400 cursor-not-allowed' }}"
+                  {{ $p->stock <= 0 ? 'disabled' : '' }}>
+                  <i class="fa-solid fa-cart-plus text-[11px]"></i>
+                  {{ $p->stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
+                </button>
+              </form>
+            </div>
         </div>
     </div>
 @endforeach
