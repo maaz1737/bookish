@@ -22,19 +22,23 @@
 
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
-                Category Type
+                Parent Category
             </label>
-            <select name="type"
-                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none">
 
-                <option value="book" {{ old('type', $category->type) == 'book' ? 'selected' : '' }}>Book</option>
-                <option value="uniform" {{ old('type', $category->type) == 'uniform' ? 'selected' : '' }}>Uniform</option>
-                <option value="accessory" {{ old('type', $category->type) == 'accessory' ? 'selected' : '' }}>Accessory
-                </option>
+            <select name="parent_id"
+                class="select2-single w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none">
+
+                <option value="">-- Root Category --</option>
+
+                @foreach ($categories as $cat)
+                    <option value="{{ $cat->id }}"
+                        {{ old('parent_id', $category->parent_id) == $cat->id ? 'selected' : '' }}>
+                        {{ $cat->name }}
+                    </option>
+                @endforeach
 
             </select>
         </div>
-
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
                 Description
@@ -50,7 +54,10 @@
 
             @if ($category->image)
                 <div class="mb-2">
-                    <img src="{{ asset('storage/' . $category->image) }}" class="w-20 h-20 object-cover rounded-lg border">
+                    <img src="{{ app()->environment('production')
+                        ? url('storage/app/public/' . $category->image)
+                        : asset('storage/' . $category->image) }}"
+                        class="w-20 h-20 object-cover rounded-lg border">
                 </div>
             @endif
 

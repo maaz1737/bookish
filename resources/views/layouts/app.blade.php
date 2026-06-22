@@ -20,6 +20,8 @@
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
     {{-- swiper cdns  --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -30,6 +32,9 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
     </style>
+
+
+
 </head>
 
 <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col antialiased">
@@ -182,7 +187,7 @@
     </div>
 
     <!-- MAIN VIEW CONTAINER CONTENT -->
-    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8">
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
         @yield('content')
     </main>
 

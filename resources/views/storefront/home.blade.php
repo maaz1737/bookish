@@ -43,14 +43,19 @@
             <div class="swiper heroSwiper overflow-hidden rounded-2xl">
                 <div class="swiper-wrapper">
                     @foreach ($heroBanners as $banner)
-                        <div class="swiper-slide">
+                        <div class="swiper-slide overflow-hidden rounded-xl">
                             @if ($banner->link)
                                 <a href="{{ $banner->link }}">
                             @endif
-                            <img src="{{ app()->environment('production')
-                                ? asset('storage/app/public/' . $banner->image_path)
-                                : asset('storage/' . $banner->image_path) }}"
-                                alt="{{ $banner->title ?? 'Banner' }}" class="w-full object-cover aspect-[3/1]">
+
+                            <div class="">
+                                <img src="{{ app()->environment('production')
+                                    ? asset('storage/app/public/' . $banner->image_path)
+                                    : asset('storage/' . $banner->image_path) }}"
+                                    alt="{{ $banner->title ?? 'Banner' }}"
+                                    class="w-full h-[400px] md:h-[500px] object-cover object-top">
+                            </div>
+
                             @if ($banner->link)
                                 </a>
                             @endif
@@ -143,7 +148,7 @@
                 <div class="swiper-wrapper">
 
                     @foreach ($categories as $category)
-                        <div class="swiper-slide h-auto">
+                        <a href="{{ route('category.show',$category->slug) }}" class="swiper-slide h-auto block">
                             <div
                                 class="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
 
@@ -172,7 +177,7 @@
                                 </div>
 
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             </div>
