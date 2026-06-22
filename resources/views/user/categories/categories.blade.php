@@ -75,7 +75,7 @@
         <i class="fa-solid fa-chevron-down text-xs text-slate-400"></i>
       </div>
       <div class="space-y-2 text-sm">
-        <label class="flex items-center gap-2"><input type="checkbox" class="checkbox" checked> All Bags</label>
+        <label class="flex items-center gap-2"><input type="checkbox" class="checkbox" checked disabled> {{$category->name}}</label>
 
                  @if ($category->allChildren->count())
     @foreach ($category->allChildren as $child)

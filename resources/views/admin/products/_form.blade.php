@@ -6,9 +6,7 @@
     <label class="block"><span class="text-sm font-medium">Category</span>
         <select name="category_id" required class="w-full border rounded px-3 py-2 mt-1">
             @foreach ($categories as $c)
-                <option value="{{ $c->id }}" @selected(old('category_id', $product->category_id ?? null) == $c->id)>{{ $c->name }}
-                    ({{ $c->type }})
-                </option>
+                <option value="{{ $c->id }}" @selected(old('category_id', $product->category_id ?? null) == $c->id)>{{ $c->name }}                </option>
             @endforeach
         </select></label>
     <label class="block"><span class="text-sm font-medium">School (optional)</span>
