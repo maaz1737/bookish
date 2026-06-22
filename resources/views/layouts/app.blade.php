@@ -86,7 +86,16 @@
                     </svg>
                     Cart
                     <span
-                        class="absolute -top-1 -right-2 bg-gold text-navy text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center bg-yellow-500">0</span>
+                        class="absolute -top-1 -right-2 bg-gold text-navy text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center bg-yellow-500">
+
+                        <?php
+                        $cart = session('cart', []);
+                        
+                        $totalQty = array_sum(array_column($cart, 'quantity'));
+                        ?>
+                        {{ $totalQty }}
+
+                    </span>
                 </a>
 
             </div>

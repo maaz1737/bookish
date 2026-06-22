@@ -23,9 +23,6 @@ class SchoolController extends Controller
         ]);
 
         $products = Product::with('category')
-            ->whereHas('category', function ($q) {
-                $q->where('type', 'accessory');
-            })
             ->whereNull('school_id')
             ->whereNull('class_id')
             ->get();
