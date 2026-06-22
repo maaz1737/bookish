@@ -20,7 +20,7 @@
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     {{-- swiper cdns  --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -32,6 +32,9 @@
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
     </style>
+
+
+
 </head>
 
 <body class="bg-gray-50 text-gray-900 min-h-screen flex flex-col antialiased">
@@ -83,7 +86,16 @@
                     </svg>
                     Cart
                     <span
-                        class="absolute -top-1 -right-2 bg-gold text-navy text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center bg-yellow-500">0</span>
+                        class="absolute -top-1 -right-2 bg-gold text-navy text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center bg-yellow-500">
+
+                        <?php
+                        $cart = session('cart', []);
+                        
+                        $totalQty = array_sum(array_column($cart, 'quantity'));
+                        ?>
+                        {{ $totalQty }}
+
+                    </span>
                 </a>
 
             </div>

@@ -24,8 +24,8 @@
 <section class="max-w-[1200px] mx-auto px-4 mt-6">
   <div class="rounded-xl bg-blue-100 px-5 py-6 sm:px-10 sm:py-8 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
     <div class="max-w-lg">
-      <h1 class="text-2xl sm:text-4xl font-extrabold text-navy">School Bags</h1>
-      <p class="mt-3 text-slate-600 text-sm">Durable, stylish &amp; comfortable school bags<br>for every student.</p>
+      <h1 class="text-2xl sm:text-4xl font-extrabold text-navy">{{ $category->name  }}</h1>
+      <p class="mt-3 text-slate-600 text-sm">{{ $category->description  }}</p>
       <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
         <div class="bg-white rounded-lg px-3 py-3 flex items-center gap-3 shadow-sm">
           <i class="fa-solid fa-shield-halved text-navy"></i>
@@ -76,10 +76,13 @@
       </div>
       <div class="space-y-2 text-sm">
         <label class="flex items-center gap-2"><input type="checkbox" class="checkbox" checked> All Bags</label>
-        <label class="flex items-center gap-2"><input type="checkbox" class="checkbox"> Backpacks</label>
-        <label class="flex items-center gap-2"><input type="checkbox" class="checkbox"> Trolley Bags</label>
-        <label class="flex items-center gap-2"><input type="checkbox" class="checkbox"> Lunch Bags</label>
-        <label class="flex items-center gap-2"><input type="checkbox" class="checkbox"> Sling Bags</label>
+
+                 @if ($category->allChildren->count())
+    @foreach ($category->allChildren as $child)
+                 @include('admin.categories.category_tree', ['cat' => $child])
+    @endforeach
+@endif
+
       </div>
     </div>
 
@@ -171,7 +174,9 @@
                 <i class="fa-regular fa-heart text-xs"></i>
             </button>
 
-            {{-- <img src="{{ $p->img }}" alt="{{ $p->name }}" class="w-full h-full object-contain p-3"> --}}
+            <img src="{{ app()->environment('production')
+        ? url('storage/app/public/' . $p->images[0])
+        : asset('storage/' . $p->images[0])}}" alt="{{ $p->name }}" class="w-full h-full object-contain p-3">
         </div>
 
         <div class="p-3">
@@ -193,10 +198,18 @@
                 @endif
             </div>
 
-            <button class="mt-3 w-full bg-navy text-white text-xs font-medium py-2 rounded flex items-center justify-center gap-2">
-                <i class="fa-solid fa-cart-shopping text-[10px]"></i>
-                Add to Cart
-            </button>
+              <div class="p-3 pt-0">
+              <form method="POST" action="{{ route('cart.addProduct', $p) }}">
+                @csrf
+                <button type="submit"
+                  class="w-full flex items-center justify-center gap-1.5 text-xs font-semibold py-2 rounded-lg transition-all
+                    {{ $p->stock > 0 ? 'bg-[#0B1B47] hover:bg-indigo-700 text-white cursor-pointer' : 'bg-slate-100 text-slate-400 cursor-not-allowed' }}"
+                  {{ $p->stock <= 0 ? 'disabled' : '' }}>
+                  <i class="fa-solid fa-cart-plus text-[11px]"></i>
+                  {{ $p->stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
+                </button>
+              </form>
+            </div>
         </div>
     </div>
 @endforeach
@@ -241,4 +254,4 @@
 </section>
 
 
-// @endsection
+@endsection

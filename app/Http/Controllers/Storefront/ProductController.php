@@ -12,9 +12,10 @@ class ProductController extends Controller
     // SEO route: /category/{type}
     public function category(string $slug)
     {
-        $category = Category::where('slug', $slug)->where('is_active', true)->firstOrFail();
-        $products = Product::where('category_id', $category->id)->paginate(24);
 
+        $category = Category::with('allChildren')->where('slug', $slug)->where('is_active', true)->firstOrFail();
+
+        $products = Product::where('category_id', $category->id)->paginate(24);
         return view('user.categories.categories', compact('category', 'products'));
     }
 

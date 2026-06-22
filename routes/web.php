@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\FinanceController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\AttributeController;
 
 /* ------------------------------ Storefront ------------------------------ */
 
@@ -38,11 +39,11 @@ Route::get('/schools', [SchoolController::class, 'index'])->name('schools.index'
 Route::get('/school/{school}', [SchoolController::class, 'show'])->name('schools.show');
 
 
-Route::get('/testing', function(){
+Route::get('/testing', function () {
     return view('user.categories.categories');
 });
 
-Route::get('/testing2', function(){
+Route::get('/testing2', function () {
     return view('user.categories.categories_testing');
 });
 
@@ -166,6 +167,19 @@ Route::prefix('admin')->name('admin.')
             Route::get('/banners/{banner}/edit', [BannerController::class, 'edit'])->name('banners.edit');
             Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('banners.update');
             Route::delete('/banners/{banner}', [BannerController::class, 'destroy'])->name('banners.destroy');
+
+            // attributes routes
+
+            Route::resource('attributes', AttributeController::class);
+
+            Route::get('/attribute/value/create/{attribute}', [AttributeController::class, 'attributeValue'])->name('attributes.value.create');
+            Route::post('/attribute/value/{attribute}', [AttributeController::class, 'attributeValueStore'])->name('attributes.value.store');
+
+
+            Route::delete('/attribute/value/{value}', [AttributeController::class, 'attributeValueDestroy'])->name('attributes.value.destroy');
+
+            Route::get('/attribute/{attribute}/value/{value}/edit', [AttributeController::class, 'attributeValueEdit'])->name('attributes.value.edit');
+            Route::put('/attribute/value/{value}/update', [AttributeController::class, 'attributeValueUpdate'])->name('attributes.value.update');
         });
     });
 

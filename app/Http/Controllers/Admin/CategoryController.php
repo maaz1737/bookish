@@ -19,17 +19,21 @@ class CategoryController extends Controller
     }
     public function create()
     {
-        return view("admin.categories.create");
+        $categories = Category::select('id', 'name')->get();
+        return view("admin.categories.create", compact('categories'));
     }
     public function edit(Category $category)
     {
-        return view('admin.categories.edit', compact('category'));
+        $categories = Category::select('id', 'name')->get();
+
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
     public function store(Request $request)
     {
+
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'in:book,uniform,accessory'],
+            'parent_id' => ['nullable', 'integer', 'exists:categories,id', 'different:id'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
@@ -47,7 +51,7 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'type' => ['required', 'in:book,uniform,accessory'],
+            'parent_id' => ['nullable', 'integer', 'exists:categories,id', 'different:id'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);

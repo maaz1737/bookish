@@ -5,9 +5,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bookish Admin — @yield('title', 'Dashboard')</title>
+    {{-- tailwind cdn --}}
     <script src="https://cdn.tailwindcss.com"></script>
+
+    {{-- jquery cdn --}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+    {{-- select two cdn --}}
+
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0/dist/js/select2.min.js"></script>
 </head>
 
 <body class="bg-gray-100 text-gray-900">
@@ -27,6 +34,7 @@
         'admin.customers.index' => 'Customers',
         'admin.inventory.index' => 'Inventory',
         'admin.banners.index' => 'Banners',
+        'admin.attributes.index' => 'Product Attribute',
     ] as $route => $label)
                 <a href="{{ route($route) }}"
                     class="block px-3 py-2 rounded hover:bg-gray-800 {{ request()->routeIs($route) ? 'bg-gray-800 text-white' : '' }}">{{ $label }}</a>
@@ -54,6 +62,14 @@
             @yield('content')
         </main>
     </div>
+
+
+    <script>
+        $(document).ready(function() {
+            $('.select2-single').select2();
+        });
+    </script>
+
 </body>
 
 </html>
