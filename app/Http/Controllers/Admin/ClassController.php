@@ -42,7 +42,7 @@ class ClassController extends Controller
         $data = $request->validate([
             'school_id' => ['required', 'exists:schools,id'],
             'name' => ['required', 'string', 'max:255'],
-            'sort_order' => ['nullable', 'integer'],
+            'sort_order' => ['required', 'integer'],
         ]);
 
         $data['slug'] = Str::slug($data['name']);
