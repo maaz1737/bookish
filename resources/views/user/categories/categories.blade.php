@@ -193,7 +193,7 @@
 
                 @if($p->old)
                     <span class="text-xs text-slate-400 line-through">
-                        PKR {{ number_format($p->old) }}ss
+                        PKR {{ number_format($p->old) }}
                     </span>
                 @endif
             </div>
@@ -254,4 +254,4 @@
 </section>
 
 
-// @endsection
+@endsection
