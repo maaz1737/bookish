@@ -43,12 +43,12 @@
         <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-14">
 
             <div>
-                <h1 class="text-2xl font-extrabold text-blue-900">
-                    Bookish <span class="italic text-yellow-500">& Beyond</span>
-                </h1>
-                <p class="text-xs text-gray-500">
-                    School Essentials, Baby Wear & Gifts
-                </p>
+                <a href="{{ route('home') }}" class="flex-shrink-0 flex flex-col leading-none">
+                    <span class="text-xl sm:text-2xl font-extrabold text-blue-900 tracking-tight">Bookish <span
+                            class="italic text-yellow-500">&amp; Beyond</span></span>
+                    <span class="text-[10px] text-slate-400 font-medium hidden sm:block">School Essentials, Baby Wear
+                        &amp; Gifts</span>
+                </a>
             </div>
 
             <div class="hidden md:block flex-1">
