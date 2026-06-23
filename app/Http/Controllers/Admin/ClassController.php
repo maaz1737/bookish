@@ -21,9 +21,9 @@ class ClassController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'school_id'  => ['required', 'exists:schools,id'],
-            'name'       => ['required', 'string', 'max:255'],
-            'sort_order' => ['nullable', 'integer'],
+            'school_id' => ['required', 'exists:schools,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'sort_order' => ['required', 'integer'],
         ]);
         $data['slug'] = Str::slug($data['name']);
         SchoolClass::create($data);
@@ -40,8 +40,8 @@ class ClassController extends Controller
     public function update(Request $request, SchoolClass $class)
     {
         $data = $request->validate([
-            'school_id'  => ['required', 'exists:schools,id'],
-            'name'       => ['required', 'string', 'max:255'],
+            'school_id' => ['required', 'exists:schools,id'],
+            'name' => ['required', 'string', 'max:255'],
             'sort_order' => ['nullable', 'integer'],
         ]);
 
