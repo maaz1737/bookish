@@ -11,7 +11,7 @@
             @endforeach
         </select>
         <input name="name" placeholder="Class name e.g. Class 6" required class="border rounded px-3 py-2 flex-1">
-        <input name="sort_order" type="number" placeholder="Order" class="border rounded px-3 py-2 w-24">
+        <input name="sort_order" type="number" placeholder="Order" class="border rounded px-3 py-2 w-24" required>
         <button class="bg-indigo-600 text-white px-4 rounded">Add</button>
     </form>
     <div class="bg-white rounded-lg shadow divide-y">
