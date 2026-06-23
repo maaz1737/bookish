@@ -62,8 +62,9 @@ class ProductController extends Controller
             DB::commit();
 
             return redirect()
-                ->route('admin.products.index')
+                ->route('admin.products.attribute.select', ['product' => $product->slug])
                 ->with('success', 'Product created.');
+
         } catch (\Exception $e) {
 
             DB::rollBack();
@@ -92,7 +93,7 @@ class ProductController extends Controller
         $bundle = Bundle::firstOrCreate(
             [
                 'school_id' => $product->school_id,
-                'class_id'  => $product->class_id,
+                'class_id' => $product->class_id,
             ],
             [
                 'total_price' => 0,
@@ -126,7 +127,7 @@ class ProductController extends Controller
         }
         $bundle->update([
             'total_price' => $totalPrice,
-            'discount'    => $totalDiscountPrice,
+            'discount' => $totalDiscountPrice,
             'final_price' => $totalDiscountPrice,
         ]);
     }
@@ -160,14 +161,14 @@ class ProductController extends Controller
     {
         return [
             'categories' => Category::where('is_active', true)->get(),
-            'schools'    => School::where('is_active', true)->get(),
-            'classes'    =>  collect(),
+            'schools' => School::where('is_active', true)->get(),
+            'classes' => collect(),
         ];
     }
 
     private function storeImages(Request $request): array
     {
-        if (! Storage::disk('public')->exists('products')) {
+        if (!Storage::disk('public')->exists('products')) {
             Storage::disk('public')->makeDirectory('products');
         }
 

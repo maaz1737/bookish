@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Attribute;
 use App\Models\AttributeValue;
+use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -119,5 +121,96 @@ class AttributeController extends Controller
         ]);
 
         return redirect()->route('admin.attributes.edit', $value->attribute->id);
+    }
+
+
+    public function attributeSelection(Product $product)
+    {
+        $attributes = Attribute::with('values')->get();
+
+        return view('admin.attribute.product_attribute_selection', compact('product', 'attributes'));
+
+    }
+    public function ProductAttributeStore(Product $product, Request $request)
+    {
+
+        $product->attributes()->sync($request->attribute_ids);
+
+        return redirect()->route('admin.products.attributes.value.select', $product->slug);
+
+    }
+    public function attributeValueSelection(Product $product)
+    {
+        $product->attributes;
+
+        return view('admin.attributeValue.attribute_value_select', compact('product'));
+
+
+    }
+
+    public function ProductVariantStore(Product $product, Request $request)
+    {
+        $attributes = $request->input('attribute_values');
+
+        $price = $request->input('price');
+        $stock = $request->input('stock');
+
+        $combinations = $this->buildCombinations($attributes);
+
+        // Get all value names in one query
+        $valueIds = collect($attributes)->flatten()->unique()->toArray();
+
+        $attributeValues = AttributeValue::whereIn('id', $valueIds)
+            ->pluck('value', 'id')
+            ->toArray();
+
+        $createdVariants = [];
+
+        foreach ($combinations as $combination) {
+
+            $skuParts = [];
+
+            foreach ($combination as $valueId) {
+                $skuParts[] = $attributeValues[$valueId] ?? $valueId;
+            }
+
+            // red-large
+            $sku = Str::slug(implode('-', $skuParts));
+
+            $variant = ProductVariant::create([
+                'product_id' => $product->id,
+                'sku' => $sku,
+                'price' => $price,
+                'stock' => $stock,
+            ]);
+
+            $createdVariants[] = $variant;
+        }
+
+        return redirect()
+            ->route('admin.products.index')
+            ->with('success', count($createdVariants) . ' variants created successfully.');
+    }
+
+    private function buildCombinations($arrays)
+    {
+        $result = [[]];
+
+        foreach ($arrays as $values) {
+
+            $tmp = [];
+
+            foreach ($result as $resultItem) {
+
+                foreach ($values as $value) {
+
+                    $tmp[] = array_merge($resultItem, [$value]);
+                }
+            }
+
+            $result = $tmp;
+        }
+
+        return $result;
     }
 }

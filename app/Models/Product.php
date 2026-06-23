@@ -7,15 +7,27 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'name', 'slug', 'category_id', 'school_id', 'class_id',
-        'price', 'discount_price', 'stock', 'low_stock_threshold',
-        'publisher', 'size', 'gender', 'description', 'images', 'is_active',
+        'name',
+        'slug',
+        'category_id',
+        'school_id',
+        'class_id',
+        'price',
+        'discount_price',
+        'stock',
+        'low_stock_threshold',
+        'publisher',
+        'size',
+        'gender',
+        'description',
+        'images',
+        'is_active',
     ];
 
     protected $casts = [
-        'images'         => 'array',
-        'is_active'      => 'boolean',
-        'price'          => 'decimal:2',
+        'images' => 'array',
+        'is_active' => 'boolean',
+        'price' => 'decimal:2',
         'discount_price' => 'decimal:2',
     ];
 
@@ -58,4 +70,15 @@ class Product extends Model
     {
         return $query->where('is_active', true);
     }
+
+    public function attributes()
+    {
+        return $this->belongsToMany(
+            Attribute::class,
+            'product_attributes',
+            'product_id',
+            'attribute_id'
+        );
+    }
+
 }

@@ -160,7 +160,7 @@ Route::prefix('admin')->name('admin.')
 
             Route::get('/contacts', [App\Http\Controllers\Admin\ContactMessageController::class, 'index'])->name('contacts.index');
             // Route::resource('banners', BannerController::class);
-
+    
             Route::get('/banners', [BannerController::class, 'index'])->name('banners.index');
             Route::get('/banners/create', [BannerController::class, 'create'])->name('banners.create');
             Route::post('/banners', [BannerController::class, 'store'])->name('banners.store');
@@ -169,7 +169,7 @@ Route::prefix('admin')->name('admin.')
             Route::delete('/banners/{banner}', [BannerController::class, 'destroy'])->name('banners.destroy');
 
             // attributes routes
-
+    
             Route::resource('attributes', AttributeController::class);
 
             Route::get('/attribute/value/create/{attribute}', [AttributeController::class, 'attributeValue'])->name('attributes.value.create');
@@ -180,6 +180,15 @@ Route::prefix('admin')->name('admin.')
 
             Route::get('/attribute/{attribute}/value/{value}/edit', [AttributeController::class, 'attributeValueEdit'])->name('attributes.value.edit');
             Route::put('/attribute/value/{value}/update', [AttributeController::class, 'attributeValueUpdate'])->name('attributes.value.update');
+
+
+            //attribute selection for product
+    
+            Route::get('/products/{product}/attribute', [AttributeController::class, 'attributeSelection'])->name('products.attribute.select');
+            Route::post('/products/{product}/attribute', [AttributeController::class, 'ProductAttributeStore'])->name('products.attributes.store');
+            // attribute value slection
+            Route::get('/products/{product}/attribute/value', [AttributeController::class, 'attributeValueSelection'])->name('products.attributes.value.select');
+            Route::post('/products/{product}/variant/store', [AttributeController::class, 'ProductVariantStore'])->name('product.variants.store');
         });
     });
 

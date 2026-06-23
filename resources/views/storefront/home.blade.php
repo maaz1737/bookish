@@ -37,6 +37,12 @@
             }
         }
     </style>
+    <style>
+        .category-prev.swiper-button-disabled,
+        .category-next.swiper-button-disabled {
+            display: none;
+        }
+    </style>
 
     <section class="max-w-7xl mx-auto px-4 pt-6 relative">
         @if ($heroBanners->count() > 0)
@@ -48,17 +54,16 @@
                                 <a href="{{ $banner->link }}">
                             @endif
 
-                            <div class="">
-                                <img src="{{ app()->environment('production')
-                                    ? asset('storage/app/public/' . $banner->image_path)
-                                    : asset('storage/' . $banner->image_path) }}"
-                                    alt="{{ $banner->title ?? 'Banner' }}"
-                                    class="w-full h-[400px] md:h-[500px] object-cover object-top">
-                            </div>
+                                <div class="">
+                                    <img src="{{ app()->environment('production')
+                        ? asset('storage/app/public/' . $banner->image_path)
+                        : asset('storage/' . $banner->image_path) }}" alt="{{ $banner->title ?? 'Banner' }}"
+                                        class="w-full h-[400px] md:h-[500px] object-cover object-top">
+                                </div>
 
-                            @if ($banner->link)
-                                </a>
-                            @endif
+                                @if ($banner->link)
+                                    </a>
+                                @endif
                         </div>
                     @endforeach
                 </div>
@@ -105,8 +110,7 @@
                             <a href="{{ route('schools.show', $school) }}"
                                 class="block bg-white rounded-2xl border p-6 shadow hover:shadow-xl transition h-full">
                                 <div class="flex gap-4 items-center">
-                                    <div
-                                        class="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center text-3xl">
+                                    <div class="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center text-3xl">
                                         🏫
                                     </div>
                                     <div>
@@ -148,36 +152,34 @@
                 <div class="swiper-wrapper">
 
                     @foreach ($categories as $category)
-                        <a href="{{ route('category.show',$category->slug) }}" class="swiper-slide h-auto block">
-                            <div
-                                class="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
+                                <a href="{{ route('category.show', $category->slug) }}" class="swiper-slide h-auto block">
+                                    <div
+                                        class="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
 
-                                <div class="mb-3 grid aspect-square place-items-center rounded-lg bg-brand-cream text-5xl">
-                                    <img class="w-full h-full"
-                                        src="{{ app()->environment('production')
-                                            ? url('storage/app/public/' . $category->image)
-                                            : asset('storage/' . $category->image) }}"
-                                        alt="">
-                                </div>
+                                        <div class="mb-3 grid aspect-square place-items-center rounded-lg bg-brand-cream text-5xl">
+                                            <img class="w-full h-full" src="{{ app()->environment('production')
+                        ? url('storage/app/public/' . $category->image)
+                        : asset('storage/' . $category->image) }}" alt="">
+                                        </div>
 
-                                <h3 class="font-bold">
-                                    {{ $category->name }}
-                                </h3>
+                                        <h3 class="font-bold">
+                                            {{ $category->name }}
+                                        </h3>
 
-                                <p class="mt-1 text-xs font-bold text-slate-500">
-                                    {{ \Illuminate\Support\Str::limit($category->description, 60, '') }}
-                                </p>
+                                        <p class="mt-1 text-xs font-bold text-slate-500">
+                                            {{ \Illuminate\Support\Str::limit($category->description, 60, '') }}
+                                        </p>
 
-                                <!-- PUSH BUTTON TO BOTTOM -->
-                                <div class="mt-auto">
-                                    <button
-                                        class="mt-3 w-full bg-blue-900 text-white text-center rounded-md border border-slate-200 px-3 py-2 text-sm font-light hover:bg-brand-cream">
-                                        Shop {{ \Illuminate\Support\Str::limit($category->name, 9, '') }} →
-                                    </button>
-                                </div>
+                                        <!-- PUSH BUTTON TO BOTTOM -->
+                                        <div class="mt-auto">
+                                            <button
+                                                class="mt-3 w-full bg-blue-900 text-white text-center rounded-md border border-slate-200 px-3 py-2 text-sm font-light hover:bg-brand-cream">
+                                                Shop {{ \Illuminate\Support\Str::limit($category->name, 9, '') }} →
+                                            </button>
+                                        </div>
 
-                            </div>
-                        </a>
+                                    </div>
+                                </a>
                     @endforeach
                 </div>
             </div>
@@ -307,6 +309,8 @@
                 nextEl: ".category-next",
                 prevEl: ".category-prev",
             },
+            watchOverflow: true,
+
             breakpoints: {
                 640: {
                     slidesPerView: 3
