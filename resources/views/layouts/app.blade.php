@@ -108,7 +108,7 @@
 
             <form action="#" class="flex-1 hidden md:flex border border-slate-300 rounded-lg overflow-hidden">
                 <input type="text" placeholder="Search books, uniforms, bags, accessories..."
-                    class="flex-1 px-4 py-2 text-sm outline-none">
+                    class="filter-search flex-1 px-4 py-2 text-sm outline-none">
                 <select class="border-l border-slate-300 px-3 text-sm bg-white">
                     <option>All Categories</option>
                 </select>
@@ -137,11 +137,13 @@ $totalQty = array_sum(array_column($cart, 'quantity'));
             <button class="bg-navy-800 text-white px-5 py-2.5 rounded-md text-sm font-semibold flex items-center gap-2">
                 <i class="fa-solid fa-bars"></i> Shop All Categories <i class="fa-solid fa-arrow-right ml-2"></i>
             </button>
-            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
+            <a href="#school-section" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
                     class="fa-solid fa-school text-navy-600 mr-1"></i> Shop by School</a>
-            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
+            <a href="{{ route('category.show', 'books') }}"
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
                     class="fa-solid fa-book text-navy-600 mr-1"></i> Books</a>
-            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
+            <a href="{{ route('category.show', 'uniforms') }}"
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
                     class="fa-solid fa-shirt text-navy-600 mr-1"></i> Uniforms</a>
             <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
                     class="fa-solid fa-bag-shopping text-navy-600 mr-1"></i> Bags & Bottles</a>

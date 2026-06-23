@@ -226,7 +226,7 @@
       <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4" id="product-grid">
 
         @foreach($products as $p)
-            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden group">
+            <div class="bg-white rounded-lg border border-slate-200 overflow-hidden group filter-con">
               <div class="relative aspect-square flex items-center justify-center card-img-box bg-slate-50">
 
                 {{-- @if($p->off)
@@ -248,7 +248,7 @@
               <div class="p-3">
                 <div class="flex gap-1.5 mb-2"></div>
 
-                <h4 class="text-sm font-semibold text-navy">
+                <h4 class="text-sm font-semibold text-navy filter-name">
                   {{ $p->name }}
                 </h4>
 
@@ -269,7 +269,7 @@
                     @csrf
                     <button type="submit"
                       class="w-full flex items-center justify-center gap-1.5 text-xs font-semibold py-2 rounded-lg transition-all
-                                      {{ $p->stock > 0 ? 'bg-[#0B1B47] hover:bg-indigo-700 text-white cursor-pointer' : 'bg-slate-100 text-slate-400 cursor-not-allowed' }}"
+                                                                                                        {{ $p->stock > 0 ? 'bg-[#0B1B47] hover:bg-indigo-700 text-white cursor-pointer' : 'bg-slate-100 text-slate-400 cursor-not-allowed' }}"
                       {{ $p->stock <= 0 ? 'disabled' : '' }}>
                       <i class="fa-solid fa-cart-plus text-[11px]"></i>
                       {{ $p->stock > 0 ? 'Add to Cart' : 'Out of Stock' }}
@@ -371,5 +371,27 @@
     </div>
   </section>
 
+
+  <script>
+    $(document).ready(function () {
+
+      $(".filter-search").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+
+        $(".filter-con").each(function () {
+
+          let text = $(this).find(".filter-name").text().toLowerCase();
+
+          if (text.indexOf(value) > -1) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+
+        });
+      });
+
+    });
+  </script>
 
 @endsection

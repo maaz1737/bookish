@@ -19,8 +19,8 @@
                                     </h2>
                                     <p class="mt-4 text-slate-600 max-w-md">Books, Uniforms, Bags, Baby Wear & Thoughtful Gifts – All Handpicked for Quality You Can Trust.</p>
                                     <div class="flex gap-3 mt-6">
-                                        <a href="#" class="bg-navy-800 text-white px-5 py-3 rounded-md font-semibold text-sm">Shop by School <i class="fa-solid fa-arrow-right ml-1"></i></a>
-                                        <a href="#" class="border border-navy-800 text-navy-800 px-5 py-3 rounded-md font-semibold text-sm">Shop All Categories <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                                        <a href="#school-section" class="bg-navy-800 text-white px-5 py-3 rounded-md font-semibold text-sm">Shop by School <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                                        <a href="#category-section" class="border border-navy-800 text-navy-800 px-5 py-3 rounded-md font-semibold text-sm">Shop All Categories <i class="fa-solid fa-arrow-right ml-1"></i></a>
                                     </div>
                                     <div class="flex flex-wrap gap-6 mt-8 text-sm">
                                         <div><i class="fa-solid fa-shield-halved text-navy-700"></i> <b>100% Original</b><br><span class="text-xs text-slate-500">Authentic Products</span></div>
@@ -44,7 +44,7 @@
     @endif
 
     {{-- ===== POPULAR SCHOOLS ===== --}}
-    <section class="mb-12">
+    <section class="mb-12" id="school-section">
         <div class="flex items-center justify-between mb-5">
             <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i class="fa-solid fa-bag-shopping text-navy-700"></i> Popular Schools</h2>
             <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Schools <i class="fa-solid fa-arrow-right ml-1"></i></a>
@@ -63,7 +63,7 @@
                             @endif
                         </div>
                         <div class="flex-1">
-                            <h3 class="font-bold text-navy-900">{{ $school->name }}</h3>
+                            <h3 class="font-bold text-navy-900 filter-name">{{ $school->name }}</h3>
                             <ul class="text-sm text-slate-600 mt-2 space-y-1">
                                 <li><i class="fa-solid fa-book text-navy-600 mr-1"></i> Books</li>
                                 <li><i class="fa-solid fa-shirt text-navy-600 mr-1"></i> Uniforms</li>
@@ -78,7 +78,7 @@
     </section>
 
     {{-- ===== SHOP BY CATEGORY ===== --}}
-    <section class="mb-12">
+    <section class="mb-12" id="category-section">
         <div class="flex items-center justify-between mb-5">
             <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i class="fa-solid fa-bag-shopping text-navy-700"></i> Shop by Category</h2>
             <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Categories <i class="fa-solid fa-arrow-right ml-1"></i></a>
@@ -86,7 +86,7 @@
 
         <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
             @foreach ($categories as $category)
-                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition">
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition filter-con">
                     {{-- FIXED IMAGE BOX: all category images render at same size --}}
                     <div class="card-img-box bg-slate-50">
                         <img class="card-img" src="{{ app()->environment('production')
@@ -94,13 +94,27 @@
                         : asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
                     </div>
                     <div class="p-4">
-                        <div class="flex items-center gap-2">
-                            <span class="w-9 h-9 rounded-full bg-navy-50 flex items-center justify-center text-navy-700"><i class="fa-solid fa-book"></i></span>
-                            <div>
-                                <h3 class="font-bold text-navy-900">{{ $category->name }}</h3>
-                                <p class="text-xs text-slate-500">{{ \Illuminate\Support\Str::limit($category->description, 30, '') }}</p>
-                            </div>
-                        </div>
+                     <div class="flex items-center gap-2">
+    <span class="w-9 h-9 rounded-full bg-navy-50 flex items-center justify-center text-navy-700">
+        <i class="fa-solid fa-book"></i>
+    </span>
+
+    <div class="w-full">
+        <div class="flex items-start justify-between gap-2">
+            <h3 class="font-bold text-navy-900 leading-tight filter-name">
+                {{ $category->name }}
+            </h3>
+        </div>
+
+        <span class="inline-flex mt-1 text-xs bg-gray-100 rounded-full px-2 py-1 w-fit">
+            Total Products: {{ $category->products_count }}
+        </span>
+
+        <p class="text-xs text-slate-500 mt-1">
+            {{ \Illuminate\Support\Str::limit($category->description, 30, '') }}
+        </p>
+    </div>
+</div>
                         <div class="flex items-center justify-center">
                          <a href="{{ route('category.show', $category->slug) }}" class="mt-3 inline-flex items-center text-sm font-semibold text-navy-700">Explore Now <i class="fa-solid fa-arrow-right ml-1"></i></a>
                         </div>
@@ -157,14 +171,14 @@ $bestSellers = collect([
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
                 @foreach ($bestSellers as $product)
-                    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition relative">
+                    <div class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition relative filter-con">
                         <button class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center text-slate-400 hover:text-rose-500 z-10"><i class="fa-regular fa-heart"></i></button>
                         {{-- FIXED IMAGE BOX --}}
                         <div class="card-img-box p-5 bg-slate-50">
                             <img class="card-img" src="{{ asset( $product->image) }}" alt="{{ $product->name }}">
                         </div>
                         <div class="p-4">
-                            <h3 class="font-semibold text-navy-900 text-sm">{{ $product->name }}</h3>
+                            <h3 class="font-semibold text-navy-900 text-sm filter-name">{{ $product->name }}</h3>
                             <div class="flex items-center gap-1 text-gold-500 text-xs mt-1">
                                 <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
                                 <span class="text-slate-500 ml-1">({{ $product->reviews_count ?? 0 }})</span>
@@ -196,4 +210,27 @@ $bestSellers = collect([
             autoplay: { delay: 4500 },
         });
     </script>
+
+
+<script>
+$(document).ready(function () {
+
+$(".filter-search").on("keyup", function () {
+    var value = $(this).val().toLowerCase();
+
+    $(".filter-con").each(function () {
+
+        let text = $(this).find(".filter-name").text().toLowerCase();
+
+        if (text.indexOf(value) > -1) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+
+    });
+});
+
+});
+</script>
 @endsection
