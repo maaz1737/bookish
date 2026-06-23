@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-
+use Illuminate\Validation\Rule;
 class SchoolController extends Controller
 {
     public function index()
@@ -31,10 +31,14 @@ class SchoolController extends Controller
     public function update(Request $request, School $school)
     {
         $school->update($request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            // 'description' => ['nullable', 'string'],
-            'is_active' => ['boolean'],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('schools', 'name')->ignore($school->id),
+            ],
         ]));
+
         return redirect()->route('admin.schools.index')->with('success', 'School updated.');
     }
 
