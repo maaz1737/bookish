@@ -73,7 +73,7 @@ class CheckoutController extends Controller
             return $order;
         });
 
-        $request->session()->forget('cart');
+        // $request->session()->forget('cart');
 
         return redirect()->route('checkout.bank', $order->order_number);
     }
