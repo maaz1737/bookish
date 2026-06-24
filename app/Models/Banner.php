@@ -9,6 +9,9 @@ class Banner extends Model
     use HasFactory;
     protected $fillable = [
         'tittle',
+        'top_tagline',
+        'main_headline',
+        'subheadline',
         'image_path',
         'link',
         'is_active',

@@ -18,10 +18,23 @@
             theme: {
                 extend: {
                     colors: {
-                        navy: { 50: '#f0f4fa', 100: '#dbe4f3', 600: '#1e3a8a', 700: '#172f6e', 800: '#0f2350', 900: '#0a1a3d' },
-                        gold: { 400: '#f5b942', 500: '#f59e0b', 600: '#d97706' },
+                        navy: {
+                            50: '#f0f4fa',
+                            100: '#dbe4f3',
+                            600: '#1e3a8a',
+                            700: '#172f6e',
+                            800: '#0f2350',
+                            900: '#0a1a3d'
+                        },
+                        gold: {
+                            400: '#f5b942',
+                            500: '#f59e0b',
+                            600: '#d97706'
+                        },
                     },
-                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] }
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    }
                 }
             }
         }
@@ -116,16 +129,17 @@
             </form>
 
             <div class="flex items-center gap-6 text-slate-700">
-                <a href="#" class="flex flex-col items-center text-xs"><i class="fa-regular fa-user text-lg"></i>Login /
+                <a href="#" class="flex flex-col items-center text-xs"><i
+                        class="fa-regular fa-user text-lg"></i>Login /
                     Register</a>
                 <a href="#" class="relative flex flex-col items-center text-xs"><i
                         class="fa-regular fa-heart text-lg"></i>Wishlist<span
                         class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">0</span></a>
                 <?php
-$cart = session('cart', []);
-
-$totalQty = array_sum(array_column($cart, 'quantity'));
-                        ?>
+                $cart = session('cart', []);
+                
+                $totalQty = array_sum(array_column($cart, 'quantity'));
+                ?>
                 <a href="#" class="relative flex flex-col items-center text-xs"><i
                         class="fa-solid fa-cart-shopping text-lg"></i>Cart<span
                         class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">{{ $totalQty ?? 0 }}</span></a>
@@ -133,26 +147,78 @@ $totalQty = array_sum(array_column($cart, 'quantity'));
         </div>
 
         {{-- nav --}}
-        <nav class="max-w-7xl mx-auto px-4 pb-4 flex items-center gap-2 flex-wrap">
-            <button class="bg-navy-800 text-white px-5 py-2.5 rounded-md text-sm font-semibold flex items-center gap-2">
-                <i class="fa-solid fa-bars"></i> Shop All Categories <i class="fa-solid fa-arrow-right ml-2"></i>
-            </button>
-            <a href="#school-section" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
-                    class="fa-solid fa-school text-navy-600 mr-1"></i> Shop by School</a>
+        <nav class="max-w-7xl mx-auto px-4 pb-4 flex items-center gap-2 flex-wrap relative">
+
+            {{-- Shop All Categories Dropdown Wrapper --}}
+            <div class="relative z-50">
+                {{-- Trigger Button --}}
+                <button id="categoryDropdownBtn" type="button"
+                    class="text-white bg-navy-800 px-5 py-2.5 rounded-md text-sm font-semibold flex items-center gap-2 transition duration-200 cursor-pointer select-none">
+                    <i id="categoryBtnIcon" class="fa-solid fa-bars transition-transform duration-200"></i>
+                    <span>Shop All Categories</span>
+                    <i id="categoryChevronIcon"
+                        class="fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+                </button>
+
+                {{-- Dropdown Menu Panel --}}
+                <div id="categoryDropdownMenu"
+                    class="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 hidden opacity-0 transition-all duration-200 -translate-y-2">
+
+                    <div class="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
+                        Available Categories
+                    </div>
+
+                    <div class="max-h-80 overflow-y-auto">
+                        @if (isset($categories) && $categories->count() > 0)
+                            @foreach ($categories as $category)
+                                <a href="{{ route('category.show', $category->slug) }}"
+                                    class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-blue-900 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
+                                    <span
+                                        class="w-7 h-7 shrink-0 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100">
+                                        <i class="fa-solid fa-book text-xs"></i>
+                                    </span>
+                                    <span
+                                        class="font-semibold leading-tight text-slate-800">{{ $category->name }}</span>
+                                </a>
+                            @endforeach
+                        @else
+                            <div class="px-4 py-3 text-xs text-slate-400 italic">No categories found</div>
+                        @endif
+                    </div>
+
+                    <div class="border-t border-slate-100 mt-1 pt-1">
+                        <a href="#categories-section"
+                            class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-950 hover:bg-slate-50 transition w-full">
+                            View All Categories &nbsp;→
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            {{-- Rest of the Nav Links --}}
+            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+                <i class="fa-solid fa-school text-navy-600 mr-1"></i> Shop by School
+            </a>
             <a href="{{ route('category.show', 'books') }}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
-                    class="fa-solid fa-book text-navy-600 mr-1"></i> Books</a>
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+                <i class="fa-solid fa-book text-navy-600 mr-1"></i> Books
+            </a>
             <a href="{{ route('category.show', 'uniforms') }}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
-                    class="fa-solid fa-shirt text-navy-600 mr-1"></i> Uniforms</a>
-            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
-                    class="fa-solid fa-bag-shopping text-navy-600 mr-1"></i> Bags & Bottles</a>
-            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800"><i
-                    class="fa-solid fa-gift text-navy-600 mr-1"></i> Gifts</a>
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+                <i class="fa-solid fa-shirt text-navy-600 mr-1"></i> Uniforms
+            </a>
+            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+                <i class="fa-solid fa-bag-shopping text-navy-600 mr-1"></i> Bags & Bottles
+            </a>
+            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+                <i class="fa-solid fa-gift text-navy-600 mr-1"></i> Gifts
+            </a>
             <a href="#"
-                class="ml-auto bg-gold-500 hover:bg-gold-600 text-white px-5 py-2.5 rounded-md text-sm font-semibold"><i
-                    class="fa-solid fa-tag mr-1"></i> Offers</a>
+                class="ml-auto bg-amber-500 hover:bg-amber-600 text-white px-5 py-2.5 rounded-md text-sm font-semibold transition">
+                <i class="fa-solid fa-tag mr-1"></i> Offers
+            </a>
         </nav>
+
     </header>
 
     {{-- ===== FLASH MESSAGES ===== --}}
@@ -163,7 +229,8 @@ $totalQty = array_sum(array_column($cart, 'quantity'));
         </div>
     @endif
     @if (session('error'))
-        <div class="max-w-7xl mx-auto w-full px-4 mt-4 bg-red-50 border border-red-200 text-red-800 rounded-md p-3 text-sm">
+        <div
+            class="max-w-7xl mx-auto w-full px-4 mt-4 bg-red-50 border border-red-200 text-red-800 rounded-md p-3 text-sm">
             ⚠️ {{ session('error') }}
         </div>
     @endif
@@ -233,6 +300,70 @@ $totalQty = array_sum(array_column($cart, 'quantity'));
             </div>
         </div>
     </footer>
+    <<<<<<< Updated upstream {{-- Plain Vanilla JavaScript Logic --}} <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btn = document.getElementById('categoryDropdownBtn');
+            const menu = document.getElementById('categoryDropdownMenu');
+            const icon = document.getElementById('categoryBtnIcon');
+            const chevron = document.getElementById('categoryChevronIcon');
+
+            if (btn && menu) {
+                // Toggle dropdown open/close
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const isHidden = menu.classList.contains('hidden');
+
+                    if (isHidden) {
+                        openMenu();
+                    } else {
+                        closeMenu();
+                    }
+                });
+
+                // Close when clicking anywhere outside the dropdown
+                document.addEventListener('click', function(e) {
+                    if (!menu.contains(e.target) && !btn.contains(e.target)) {
+                        closeMenu();
+                    }
+                });
+
+                // Close on ESC keypress
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        closeMenu();
+                    }
+                });
+            }
+
+            function openMenu() {
+                menu.classList.remove('hidden');
+                btn.classList.add('bg-navy-900', 'shadow-md');
+                icon.classList.add('rotate-90');
+                chevron.classList.add('rotate-180');
+
+                // Fast timeout to let browser register the layout change for transition
+                setTimeout(() => {
+                    menu.classList.remove('opacity-0', '-translate-y-2');
+                    menu.classList.add('opacity-100', 'translate-y-0');
+                }, 10);
+            }
+
+            function closeMenu() {
+                menu.classList.remove('opacity-100', 'translate-y-0');
+                menu.classList.add('opacity-0', '-translate-y-2');
+                btn.classList.remove('bg-navy-900', 'shadow-md');
+                icon.classList.remove('rotate-90');
+                chevron.classList.remove('rotate-180');
+
+                // Wait for tailwind transition animation before hiding complete display
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                }, 200);
+            }
+        });
+    </script>
+    =======
+    >>>>>>> Stashed changes
 </body>
 
 </html>

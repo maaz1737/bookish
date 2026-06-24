@@ -18,9 +18,25 @@
             <p class="text-xs text-gray-400 mt-1">Recommended dimension: 1200x400px (Aspect ratio 3:1). Formats: PNG, JPG, WEBP.</p>
         </div>
 
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Internal Title (Admin Only)</label>
+                <input type="text" name="title" placeholder="e.g., Summer Sale Slider" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Top Tagline</label>
+                <input type="text" name="top_tagline" placeholder="e.g., NEW ARRIVALS" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900">
+            </div>
+        </div>
+
         <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">Title (Optional)</label>
-            <input type="text" name="title" placeholder="e.g., Back to School Sale" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Main Headline</label>
+            <input type="text" name="main_headline" placeholder="e.g., Up To 50% Off On School Essentials" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900">
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Subheadline</label>
+            <textarea name="subheadline" rows="2" placeholder="e.g., Premium quality books, uniforms, and stationary right at your doorstep." class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900"></textarea>
         </div>
 
         <div>
@@ -33,7 +49,7 @@
             <div>
                 <label class="block text-sm font-semibold text-gray-700 mb-1">Sort Order</label>
                 <input type="number" name="order" value="0" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900">
-                <p class="text-xs text-gray-400 mt-1">Lower numbers display first (e.g., 0, 1, 2).</p>
+                <p class="text-xs text-gray-400 mt-1">Lower numbers display first.</p>
             </div>
             
             <div class="flex items-center pt-6">
