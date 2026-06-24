@@ -15,15 +15,21 @@ class CategorySeeder extends Seeder
             ['Uniforms', 'uniform'],
             ['Accessories', 'accessory'],
             // Uniform sub-categories (Section 6.2)
-            ['Shirts', 'uniform'], ['Pants', 'uniform'], ['Skirts', 'uniform'],
-            ['Sweaters', 'uniform'], ['Shoes', 'uniform'], ['Ties', 'uniform'],
+            ['Shirts', 'uniform'],
+            ['Pants', 'uniform'],
+            ['Skirts', 'uniform'],
+            ['Sweaters', 'uniform'],
+            ['Shoes', 'uniform'],
+            ['Ties', 'uniform'],
             // Accessory items (Section 6.3)
-            ['Bags', 'accessory'], ['Bottles', 'accessory'],
-            ['Lunch Boxes', 'accessory'], ['Gifts', 'accessory'],
+            ['Bags', 'accessory'],
+            ['Bottles', 'accessory'],
+            ['Lunch Boxes', 'accessory'],
+            ['Gifts', 'accessory'],
         ];
 
         foreach ($categories as [$name, $type]) {
-            Category::firstOrCreate(['slug' => Str::slug($name)], ['name' => $name, 'type' => $type]);
+            Category::firstOrCreate(['slug' => Str::slug($name)], ['name' => $name]);
         }
     }
 }

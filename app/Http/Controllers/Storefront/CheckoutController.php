@@ -17,7 +17,7 @@ class CheckoutController extends Controller
     // Step 1: shipping form (guest checkout always available)
     public function show(Request $request)
     {
-        $cart = $request->session()->get('cart', []);
+        $cart = $this->carts($request);
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
         }
@@ -29,8 +29,8 @@ class CheckoutController extends Controller
     {
         $data = $request->validate([
             'customer_name' => ['required', 'string', 'max:255'],
-            'mobile'        => ['required', 'string', 'max:50'],
-            'address'       => ['required', 'string', 'max:1000'],
+            'mobile' => ['required', 'string', 'max:50'],
+            'address' => ['required', 'string', 'max:1000'],
         ]);
 
         $cart = $request->session()->get('cart', []);
@@ -40,19 +40,19 @@ class CheckoutController extends Controller
             $total = 0;
 
             $order = Order::create([
-                'order_number'   => 'BK-'.now()->format('Y').'-'.Str::upper(Str::random(6)),
-                'user_id'        => $request->user()?->id,   // null for guests
-                'customer_name'  => $data['customer_name'],
-                'mobile'         => $data['mobile'],
-                'address'        => $data['address'],
-                'total_amount'   => 0,
+                'order_number' => 'BK-' . now()->format('Y') . '-' . Str::upper(Str::random(6)),
+                'user_id' => $request->user()?->id,   // null for guests
+                'customer_name' => $data['customer_name'],
+                'mobile' => $data['mobile'],
+                'address' => $data['address'],
+                'total_amount' => 0,
                 'payment_status' => 'pending',
-                'order_status'   => 'pending_payment',
+                'order_status' => 'pending_payment',
             ]);
 
             foreach ($cart as $line) {
                 $product = Product::find($line['id']);
-                if (! $product) {
+                if (!$product) {
                     continue;
                 }
                 $unit = $product->effectivePrice();
@@ -60,11 +60,11 @@ class CheckoutController extends Controller
                 $total += $lineTotal;
 
                 OrderItem::create([
-                    'order_id'   => $order->id,
+                    'order_id' => $order->id,
                     'product_id' => $product->id,
-                    'name'       => $product->name,
+                    'name' => $product->name,
                     'unit_price' => $unit,
-                    'quantity'   => $line['quantity'],
+                    'quantity' => $line['quantity'],
                     'line_total' => $lineTotal,
                 ]);
             }
@@ -78,6 +78,13 @@ class CheckoutController extends Controller
         return redirect()->route('checkout.bank', $order->order_number);
     }
 
+
+    
+
+    
+
+
+
     // Step 3: display bank details + active timeline (Section 8)
     public function bank(string $orderNumber)
     {
@@ -85,12 +92,12 @@ class CheckoutController extends Controller
 
         return view('storefront.bank-details', [
             'order' => $order,
-            'bank'  => [
-                'bank_name'     => Setting::get('bank_name', 'Meezan Bank'),
+            'bank' => [
+                'bank_name' => Setting::get('bank_name', 'Meezan Bank'),
                 'account_title' => Setting::get('account_title', 'Bookish Store'),
-                'iban'          => Setting::get('bank_iban', 'PK00XXXX0000000000000000'),
-                'account_no'    => Setting::get('bank_account_no', '0000-0000000-0'),
-                'raast_id'      => Setting::get('raast_id', '03000000000'),
+                'iban' => Setting::get('bank_iban', 'PK00XXXX0000000000000000'),
+                'account_no' => Setting::get('bank_account_no', '0000-0000000-0'),
+                'raast_id' => Setting::get('raast_id', '03000000000'),
             ],
         ]);
     }
@@ -107,10 +114,10 @@ class CheckoutController extends Controller
         $path = $request->file('screenshot')->store('payment-proofs', 'public');
 
         PaymentProof::create([
-            'order_id'        => $order->id,
+            'order_id' => $order->id,
             'screenshot_path' => $path,
-            'source'          => 'web',
-            'status'          => 'submitted',
+            'source' => 'web',
+            'status' => 'submitted',
         ]);
 
         // Move payment status forward -> admin gets notified queue (Stage 02)
@@ -118,5 +125,26 @@ class CheckoutController extends Controller
 
         return redirect()->route('checkout.bank', $order->order_number)
             ->with('success', 'Payment proof submitted. Our team will verify it shortly.');
+    }
+
+    private function carts(Request $request): array
+    {
+        $items = $request->session()->get('cart', []);
+
+        $productIds = collect($items)->pluck('id');
+
+        $products = Product::whereIn('id', $productIds)
+            ->pluck('images', 'id');
+
+        foreach ($items as &$item) {
+            $item['image'] = $products[$item['id']] ?? null;
+        }
+
+        $total = collect($items)->sum(fn($i) => $i['price'] * $i['quantity']);
+
+        return [
+            'items' => $items,
+            'total' => $total
+        ];
     }
 }
