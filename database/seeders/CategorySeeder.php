@@ -17,7 +17,6 @@ class CategorySeeder extends Seeder
             // Uniform sub-categories (Section 6.2)
             ['Shirts', 'uniform'],
             ['Pants', 'uniform'],
-            ['Skirts', 'uniform'],
             ['Sweaters', 'uniform'],
             ['Shoes', 'uniform'],
             ['Ties', 'uniform'],
