@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\DB;
 
 class BundleController extends Controller
 {
-    public function __construct(private BundlePricingService $pricing) {}
+    public function __construct(private BundlePricingService $pricing)
+    {
+    }
 
     public function index()
     {
@@ -26,9 +28,9 @@ class BundleController extends Controller
     public function create()
     {
         return view('admin.bundles.create', [
-            'schools'  => School::with('classes')->get(),
+            'schools' => School::with('classes')->get(),
             // Only book-category products belong in bundles
-            'products' => Product::active()->whereHas('category', fn($q) => $q->where('type', 'book'))->get(),
+            'products' => Product::active()->get(),
         ]);
     }
 
@@ -44,9 +46,9 @@ class BundleController extends Controller
             $bundle->items()->delete();
             foreach ($request->items as $item) {
                 BundleItem::create([
-                    'bundle_id'  => $bundle->id,
+                    'bundle_id' => $bundle->id,
                     'product_id' => $item['product_id'],
-                    'quantity'   => $item['quantity'],
+                    'quantity' => $item['quantity'],
                 ]);
             }
 
@@ -62,7 +64,7 @@ class BundleController extends Controller
     {
 
         return view('admin.bundles.edit', [
-            'schools'  => School::with('classes')->get(),
+            'schools' => School::with('classes')->get(),
             'products' => Product::active()->whereHas('category', fn($q) => $q->where('type', 'book'))->get(),
             'bundle' => $bundle->load([
                 'school',
@@ -79,8 +81,8 @@ class BundleController extends Controller
 
             $bundle->update([
                 'school_id' => $request->school_id,
-                'class_id'  => $request->class_id,
-                'discount'  => $request->discount,
+                'class_id' => $request->class_id,
+                'discount' => $request->discount,
                 'is_active' => $request->boolean('is_active', true),
             ]);
 
@@ -88,9 +90,9 @@ class BundleController extends Controller
 
             foreach ($request->items as $item) {
                 BundleItem::create([
-                    'bundle_id'  => $bundle->id,
+                    'bundle_id' => $bundle->id,
                     'product_id' => $item['product_id'],
-                    'quantity'   => $item['quantity'],
+                    'quantity' => $item['quantity'],
                 ]);
             }
 
