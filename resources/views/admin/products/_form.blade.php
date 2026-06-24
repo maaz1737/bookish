@@ -6,7 +6,7 @@
     <label class="block"><span class="text-sm font-medium">Category</span>
         <select name="category_id" required class="w-full border rounded px-3 py-2 mt-1">
             @foreach ($categories as $c)
-                <option value="{{ $c->id }}" @selected(old('category_id', $product->category_id ?? null) == $c->id)>{{ $c->name }}                </option>
+                <option value="{{ $c->id }}" @selected(old('category_id', $product->category_id ?? null) == $c->id)>{{ $c->name }} </option>
             @endforeach
         </select></label>
     <label class="block"><span class="text-sm font-medium">School (optional)</span>
@@ -53,8 +53,14 @@
     </label>
     <label class="block sm:col-span-2"><span class="text-sm font-medium">Images</span>
         <input name="images[]" type="file" multiple accept="image/*" class="w-full mt-1"></label>
-    <label class="flex items-center gap-2 sm:col-span-2"><input type="checkbox" name="is_active" value="1"
-            @checked(old('is_active', $product->is_active ?? true))> Active</label>
+    <label class="flex items-center gap-2 sm:col-span-2">
+        <input type="checkbox" name="is_active" value="1" @checked(old('is_active', $product->is_active ?? true))>
+        Active
+    </label>
+    <label class="flex items-center gap-2 sm:col-span-2">
+        <input type="checkbox" name="has_variant" value="1" @checked(old('has_variant', $product->has_variant ?? true))>
+        Product Has Variant
+    </label>
 </div>
 <button class="mt-6 bg-indigo-600 text-white px-6 py-2 rounded">Save</button>
 

@@ -61,9 +61,16 @@ class ProductController extends Controller
 
             DB::commit();
 
-            return redirect()
-                ->route('admin.products.attribute.select', ['product' => $product->slug])
-                ->with('success', 'Product created.');
+            if ($request->input('has_variant')) {
+
+                return redirect()
+                    ->route('admin.products.attribute.select', ['product' => $product->slug])
+                    ->with('success', 'Product created.');
+            } else {
+                return redirect()->route('admin.products.index')->with('success', 'Product created.');
+            }
+
+
 
         } catch (\Exception $e) {
 
