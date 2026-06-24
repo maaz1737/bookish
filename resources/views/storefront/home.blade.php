@@ -180,12 +180,6 @@
                 'reviews_count' => 12,
                 'image' => 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600',
             ],
-            (object) [
-                'name' => 'Lunch Box',
-                'price' => 1500,
-                'reviews_count' => 27,
-                'image' => 'https://images.unsplash.com/photo-1553531889-56cc480ac5cb?w=600',
-            ],
         ]);
     @endphp
 
