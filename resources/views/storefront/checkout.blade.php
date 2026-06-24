@@ -105,8 +105,10 @@
                         @foreach ($cart['items'] as $p)
                             <div class="flex gap-3">
                                 <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
-                                    <img src="{{ asset('storage/' . $p['image'][0]) }}" alt=""
-                                        class="w-full h-full object-cover">
+                                    <img src="{{ app()->environment('local')
+                                        ? asset('storage/' . $p['image'][0])
+                                        : asset('storage/app/public/' . $p['image'][0]) }}"
+                                        alt="" class="w-full h-full object-cover">
                                 </div>
                                 <div class="flex-1">
                                     <p class="font-semibold text-sm text-[#0a1f44]">{{ $p['name'] }}</p>
