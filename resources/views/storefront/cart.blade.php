@@ -1,39 +1,26 @@
 @extends('layouts.app')
 @section('content')
-    <div class="bg-gray-50 py-10">
+    <div class="bg-gray-50 py-8">
         <div class="max-w-7xl mx-auto px-4">
 
             {{-- Progress Steps --}}
-            <div class="flex items-center justify-center mb-10">
-                @php
-                    $steps = [
-                        ['label' => 'Cart', 'icon' => '🛒', 'active' => true],
-                        ['label' => 'Checkout', 'icon' => '🚚', 'active' => false],
-                        ['label' => 'Payment', 'icon' => '💳', 'active' => false],
-                        ['label' => 'Confirmation', 'icon' => '✓', 'active' => false],
-                    ];
-                @endphp
-                @foreach ($steps as $i => $step)
-                    <div class="flex items-center">
-                        <div class="flex flex-col items-center">
+            <div class="max-w-4xl mx-auto px-4 pt-2">
+                <div class="flex items-center justify-between text-xs text-gray-500">
+                    @foreach ([['🛒', 'Cart', true], ['🚚', 'Checkout', false], ['💳', 'Payment', false], ['✓', 'Confirmation', false]] as $i => $s)
+                        <div class="flex flex-col items-center flex-1">
                             <div
-                                class="w-12 h-12 rounded-full flex items-center justify-center text-lg
-                            {{ $step['active'] ? 'bg-[#0a1f44] text-white' : 'bg-white border-2 border-gray-300 text-gray-400' }}">
-                                {{ $step['icon'] }}
-                            </div>
-                            <span
-                                class="mt-2 text-sm font-medium {{ $step['active'] ? 'text-[#0a1f44]' : 'text-gray-400' }}">
-                                {{ $step['label'] }}
-                            </span>
+                                class="w-10 h-10 rounded-full border-2 flex items-center justify-center {{ $s[2] ? 'bg-[#0a1f44] text-white border-[#0a1f44]' : 'bg-white text-gray-400 border-gray-300' }}">
+                                {{ $s[0] }}</div>
+                            <div class="mt-2 {{ $s[2] ? 'text-[#0a1f44] font-semibold' : '' }}">{{ $s[1] }}</div>
                         </div>
-                        @if ($i < count($steps) - 1)
-                            <div class="w-16 md:w-32 h-px bg-gray-300 mx-2 mb-6"></div>
+                        @if ($i < 3)
+                            <div class="flex-1 h-px bg-gray-300 -mt-6"></div>
                         @endif
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
 
-            <h1 class="text-4xl font-bold text-[#0a1f44] mb-8">Your Cart</h1>
+            <h1 class="text-4xl font-bold text-[#0a1f44] my-8">Your Cart</h1>
 
             @if (empty($cart['items']))
                 {{-- Empty State --}}
