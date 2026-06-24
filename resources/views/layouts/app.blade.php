@@ -140,7 +140,7 @@
                 
                 $totalQty = array_sum(array_column($cart, 'quantity'));
                 ?>
-                <a href="#" class="relative flex flex-col items-center text-xs"><i
+                <a href="{{ route('cart.index') }}" class="relative flex flex-col items-center text-xs"><i
                         class="fa-solid fa-cart-shopping text-lg"></i>Cart<span
                         class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">{{ $totalQty ?? 0 }}</span></a>
             </div>
@@ -300,7 +300,7 @@
             </div>
         </div>
     </footer>
-    <<<<<<< Updated upstream {{-- Plain Vanilla JavaScript Logic --}} <script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
             const btn = document.getElementById('categoryDropdownBtn');
             const menu = document.getElementById('categoryDropdownMenu');
@@ -362,8 +362,6 @@
             }
         });
     </script>
-    =======
-    >>>>>>> Stashed changes
 </body>
 
 </html>

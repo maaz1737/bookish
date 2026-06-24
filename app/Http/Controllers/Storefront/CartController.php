@@ -21,14 +21,14 @@ class CartController extends Controller
     public function addProduct(Request $request, Product $product)
     {
         $cart = $request->session()->get('cart', []);
-        $key  = "product:{$product->id}";
-        $qty  = max(1, (int) $request->input('quantity', 1));
+        $key = "product:{$product->id}";
+        $qty = max(1, (int) $request->input('quantity', 1));
 
         $cart[$key] = [
-            'type'     => 'product',
-            'id'       => $product->id,
-            'name'     => $product->name,
-            'price'    => $product->effectivePrice(),
+            'type' => 'product',
+            'id' => $product->id,
+            'name' => $product->name,
+            'price' => $product->effectivePrice(),
             'quantity' => ($cart[$key]['quantity'] ?? 0) + $qty,
         ];
 
@@ -51,10 +51,10 @@ class CartController extends Controller
             }
             $key = "product:{$item->product_id}";
             $cart[$key] = [
-                'type'     => 'product',
-                'id'       => $item->product_id,
-                'name'     => $item->product->name,
-                'price'    => $item->product->effectivePrice(),
+                'type' => 'product',
+                'id' => $item->product_id,
+                'name' => $item->product->name,
+                'price' => $item->product->effectivePrice(),
                 'quantity' => ($cart[$key]['quantity'] ?? 0) + $item->quantity,
             ];
         }
@@ -80,7 +80,21 @@ class CartController extends Controller
     private function cart(Request $request): array
     {
         $items = $request->session()->get('cart', []);
-        $total = collect($items)->sum(fn ($i) => $i['price'] * $i['quantity']);
-        return ['items' => $items, 'total' => $total];
+
+        $productIds = collect($items)->pluck('id');
+
+        $products = Product::whereIn('id', $productIds)
+            ->pluck('images', 'id');
+
+        foreach ($items as &$item) {
+            $item['image'] = $products[$item['id']] ?? null;
+        }
+
+        $total = collect($items)->sum(fn($i) => $i['price'] * $i['quantity']);
+
+        return [
+            'items' => $items,
+            'total' => $total
+        ];
     }
 }
