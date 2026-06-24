@@ -1,327 +1,291 @@
 @extends('layouts.app')
 
 @section('content')
-    <style>
-        .heroSwiper .swiper-pagination-bullet,
-        .schoolSwiper .swiper-pagination-bullet {
-            width: 10px;
-            height: 10px;
-            background: #cbd5e1;
-            opacity: 1;
-        }
 
-        .heroSwiper .swiper-pagination-bullet-active,
-        .schoolSwiper .swiper-pagination-bullet-active {
-            background: #1e3a8a;
-            width: 28px;
-            border-radius: 999px;
-        }
-
-        .swiper-button-prev {
-            left: -35px;
-            top: 50% !important;
-            transform: translate(0%, -50%);
-        }
-
-        .swiper-button-next {
-            right: -35px;
-            top: 50% !important;
-            transform: translate(0%, -50%);
-        }
-
-        @media (max-width: 768px) {
-
-            .swiper-button-prev,
-            .swiper-button-next {
-                display: none;
-            }
-        }
-    </style>
-    <style>
-        .category-prev.swiper-button-disabled,
-        .category-next.swiper-button-disabled {
-            display: none;
-        }
-    </style>
-
-    <section class="max-w-7xl mx-auto px-4 pt-6 relative">
-        @if ($heroBanners->count() > 0)
-            <div class="swiper heroSwiper overflow-hidden rounded-2xl">
+    {{-- ===== HERO ===== --}}
+    @if ($heroBanners->count() > 0)
+        <section class="rounded-2xl overflow-hidden bg-gradient-to-br from-navy-50 to-slate-100 mb-10">
+            <div class="swiper heroSwiper">
                 <div class="swiper-wrapper">
                     @foreach ($heroBanners as $banner)
-                        <div class="swiper-slide overflow-hidden rounded-xl">
+                        <div class="swiper-slide">
                             @if ($banner->link)
                                 <a href="{{ $banner->link }}">
                             @endif
-
-                                <div class="">
-                                    <img src="{{ app()->environment('production')
-                        ? asset('storage/app/public/' . $banner->image_path)
-                        : asset('storage/' . $banner->image_path) }}" alt="{{ $banner->title ?? 'Banner' }}"
-                                        class="w-full h-[400px] md:h-[500px] object-cover object-top">
+                            <div class="grid md:grid-cols-2 gap-6 items-center p-8 md:p-12">
+                                <div>
+                                    <span class="text-gold-500 text-sm font-semibold"><i class="fa-solid fa-star"></i> WELCOME
+                                        TO BOOKISH & BEYOND</span>
+                                    <h2 class="text-3xl md:text-5xl font-extrabold text-navy-900 mt-3 leading-tight">
+                                        Everything Your Family Needs, <br>
+                                        In <span class="text-gold-500">One Place</span>
+                                    </h2>
+                                    <p class="mt-4 text-slate-600 max-w-md">Books, Uniforms, Bags, Baby Wear & Thoughtful
+                                        Gifts – All Handpicked for Quality You Can Trust.</p>
+                                    <div class="flex gap-3 mt-6">
+                                        <a href="#school-section"
+                                            class="bg-navy-800 text-white px-5 py-3 rounded-md font-semibold text-sm">Shop
+                                            by School <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                                        <a href="#category-section"
+                                            class="border border-navy-800 text-navy-800 px-5 py-3 rounded-md font-semibold text-sm">Shop
+                                            All Categories <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                                    </div>
+                                    <div class="flex flex-wrap gap-6 mt-8 text-sm">
+                                        <div><i class="fa-solid fa-shield-halved text-navy-700"></i> <b>100%
+                                                Original</b><br><span class="text-xs text-slate-500">Authentic
+                                                Products</span></div>
+                                        <div><i class="fa-solid fa-truck text-navy-700"></i> <b>Fast Delivery</b><br><span
+                                                class="text-xs text-slate-500">Across Pakistan</span></div>
+                                        <div><i class="fa-solid fa-rotate-left text-navy-700"></i> <b>Easy
+                                                Returns</b><br><span class="text-xs text-slate-500">Within 7 Days</span>
+                                        </div>
+                                    </div>
                                 </div>
-
-                                @if ($banner->link)
-                                    </a>
-                                @endif
+                                <div class="card-img-box" style="aspect-ratio: 5/4; background: transparent;">
+                                    <img class=""
+                                        src="{{ app()->environment('production')
+                                            ? asset('storage/app/public/' . $banner->image_path)
+                                            : asset('storage/banners/paf-banner-removebg.png') }}"
+                                        alt="">
+                                </div>
+                            </div>
+                            @if ($banner->link)
+                                </a>
+                            @endif
                         </div>
                     @endforeach
                 </div>
                 <div class="swiper-pagination !bottom-4"></div>
             </div>
-        @else
-            <div class="overflow-hidden rounded-2xl">
-                <img src="{{ asset('storage/logo/paf-banner.png') }}" alt="Default Banner" class="w-full">
-            </div>
-        @endif
-    </section>
+        </section>
+    @endif
 
-    <section class="max-w-7xl mx-auto px-4 py-16">
-        <div class="flex justify-between items-center mb-8">
-            <h2 class="text-3xl font-bold text-blue-900">
-                🏫 Popular Schools
-            </h2>
-            <a href="{{ route('schools.index') }}" class="font-semibold text-blue-900">
-                View All →
-            </a>
+    {{-- ===== POPULAR SCHOOLS ===== --}}
+    <section class="mb-12" id="school-section">
+        <div class="flex items-center justify-between mb-5">
+            <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
+                    class="fa-solid fa-bag-shopping text-navy-700"></i> Popular Schools</h2>
+            <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Schools <i
+                    class="fa-solid fa-arrow-right ml-1"></i></a>
         </div>
 
-        <div class="relative">
-            <div
-                class="swiper-button-prev !text-blue-900 !w-12 !h-12 bg-white rounded-full shadow-lg border after:!text-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 18l-6-6 6-6" />
-                </svg>
-            </div>
-
-            <div
-                class="swiper-button-next !text-blue-900 !w-12 !h-12 bg-white rounded-full shadow-lg border after:!text-lg">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 18l6-6-6-6" />
-                </svg>
-            </div>
-
-            <div class="swiper schoolSwiper">
-                <div class="swiper-wrapper mb-6">
-                    @foreach ($schools as $school)
-                        <div class="swiper-slide pb-4">
-                            <a href="{{ route('schools.show', $school) }}"
-                                class="block bg-white rounded-2xl border p-6 shadow hover:shadow-xl transition h-full">
-                                <div class="flex gap-4 items-center">
-                                    <div class="w-16 h-16 rounded-full bg-yellow-100 flex items-center justify-center text-3xl">
-                                        🏫
-                                    </div>
-                                    <div>
-                                        <h3 class="font-bold text-lg">
-                                            {{ $school->name }}
-                                        </h3>
-                                        <p class="text-gray-500 text-sm">
-                                            Books & Uniforms Available
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="mt-5 bg-blue-900 text-white text-center py-3 rounded-lg font-medium">
-                                    View Classes →
-                                </div>
-                            </a>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            @foreach ($schools as $i => $school)
+                @php $bg = ['bg-navy-50', 'bg-amber-50', 'bg-rose-50'][$i % 3]; @endphp
+                <a href="{{ route('schools.show', $school) }}" class="{{ $bg }} rounded-xl p-5">
+                    <div class="flex items-start gap-4">
+                        <div class="logo-box">
+                            @if ($school->logo ?? false)
+                                <img src="{{ asset('storage/' . $school->logo) }}" alt="{{ $school->name }}">
+                            @else
+                                <i class="fa-solid fa-school text-2xl text-navy-700"></i>
+                            @endif
                         </div>
-                    @endforeach
-                </div>
-                <div class="swiper-pagination mt-8"></div>
-            </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-navy-900 filter-name">{{ $school->name }}</h3>
+                            <ul class="text-sm text-slate-600 mt-2 space-y-1">
+                                <li><i class="fa-solid fa-book text-navy-600 mr-1"></i> Books</li>
+                                <li><i class="fa-solid fa-shirt text-navy-600 mr-1"></i> Uniforms</li>
+                                <li><i class="fa-solid fa-bag-shopping text-navy-600 mr-1"></i> Accessories</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <span href="#"
+                        class="mt-5 block text-center bg-navy-800 text-white py-2.5 rounded-md text-sm font-semibold">View
+                        Classes <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                </a>
+            @endforeach
         </div>
     </section>
 
-    <section class="py-10">
-        <div class="mb-6 flex items-center justify-between">
-            <h2 class="flex items-center gap-2 text-2xl font-bold text-brand">🛍️ Shop by Category</h2>
-            <a href="#" class="text-sm font-medium text-brand">View All Categories →</a>
+    {{-- ===== SHOP BY CATEGORY ===== --}}
+    <section class="mb-12" id="category-section">
+        <div class="flex items-center justify-between mb-5">
+            <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
+                    class="fa-solid fa-bag-shopping text-navy-700"></i> Shop by Category</h2>
+            <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Categories <i
+                    class="fa-solid fa-arrow-right ml-1"></i></a>
         </div>
-        <div class="relative max-w-7xl mx-auto px-4">
-            <button
-                class="category-prev absolute -left-4 top-1/2 -translate-y-1/2 z-20 bg-white border border-gray-200 rounded-full w-9 h-9 flex items-center justify-center shadow hover:bg-gray-50">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M15 18l-6-6 6-6" />
-                </svg>
-            </button>
 
-            <div class="swiper categorySwiper">
-                <div class="swiper-wrapper">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+            @foreach ($categories as $category)
+                <div
+                    class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition filter-con">
+                    {{-- FIXED IMAGE BOX: all category images render at same size --}}
+                    <div class="card-img-box bg-slate-50">
+                        <img class="card-img"
+                            src="{{ app()->environment('production')
+                                ? url('storage/app/public/' . $category->image)
+                                : asset('storage/' . $category->image) }}"
+                            alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-9 h-9 rounded-full bg-navy-50 flex items-center justify-center text-navy-700">
+                                <i class="fa-solid fa-book"></i>
+                            </span>
 
-                    @foreach ($categories as $category)
-                                <a href="{{ route('category.show', $category->slug) }}" class="swiper-slide h-auto block">
-                                    <div
-                                        class="flex h-full flex-col rounded-xl border border-slate-200 bg-white p-4 text-center shadow-sm">
+                            <div class="w-full">
+                                <div class="flex items-start justify-between gap-2">
+                                    <h3 class="font-bold text-navy-900 leading-tight filter-name">
+                                        {{ $category->name }}
+                                    </h3>
+                                </div>
 
-                                        <div class="mb-3 grid aspect-square place-items-center rounded-lg bg-brand-cream text-5xl">
-                                            <img class="w-full h-full" src="{{ app()->environment('production')
-                        ? url('storage/app/public/' . $category->image)
-                        : asset('storage/' . $category->image) }}" alt="">
-                                        </div>
+                                <span class="inline-flex mt-1 text-xs bg-gray-100 rounded-full px-2 py-1 w-fit">
+                                    Total Products: {{ $category->products_count }}
+                                </span>
 
-                                        <h3 class="font-bold">
-                                            {{ $category->name }}
-                                        </h3>
-
-                                        <p class="mt-1 text-xs font-bold text-slate-500">
-                                            {{ \Illuminate\Support\Str::limit($category->description, 60, '') }}
-                                        </p>
-
-                                        <!-- PUSH BUTTON TO BOTTOM -->
-                                        <div class="mt-auto">
-                                            <button
-                                                class="mt-3 w-full bg-blue-900 text-white text-center rounded-md border border-slate-200 px-3 py-2 text-sm font-light hover:bg-brand-cream">
-                                                Shop {{ \Illuminate\Support\Str::limit($category->name, 9, '') }} →
-                                            </button>
-                                        </div>
-
-                                    </div>
-                                </a>
-                    @endforeach
+                                <p class="text-xs text-slate-500 mt-1">
+                                    {{ \Illuminate\Support\Str::limit($category->description, 30, '') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <a href="{{ route('category.show', $category->slug) }}"
+                                class="mt-3 inline-flex items-center text-sm font-semibold text-navy-700">Explore Now <i
+                                    class="fa-solid fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-
-            <button
-                class="category-next absolute -right-4 top-1/2 -translate-y-1/2 z-20 bg-white border border-gray-200 rounded-full w-9 h-9 flex items-center justify-center shadow hover:bg-gray-50">
-                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M9 18l6-6-6-6" />
-                </svg>
-            </button>
+            @endforeach
         </div>
     </section>
 
-    <section class="mx-auto max-w-7xl px-4 py-4">
-        <div class="grid grid-cols-2 gap-4 rounded-2xl bg-red-100 p-6 md:grid-cols-4">
-            <div class="flex items-start gap-3">
-                <div class="rounded-lg bg-white p-2 text-2xl">🚚</div>
-                <div>
-                    <p class="font-bold text-brand">Fast Delivery</p>
-                    <p class="text-xs text-slate-500">Nationwide delivery across Pakistan</p>
-                </div>
+
+
+    @php
+        $bestSellers = collect([
+            (object) [
+                'name' => 'School Backpack',
+                'price' => 3500,
+                'reviews_count' => 24,
+                'image' => 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600',
+            ],
+            (object) [
+                'name' => 'Kids Water Bottle',
+                'price' => 1200,
+                'reviews_count' => 18,
+                'image' => 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600',
+            ],
+            (object) [
+                'name' => 'Color Pencil Pack',
+                'price' => 850,
+                'reviews_count' => 31,
+                'image' => 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600',
+            ],
+            (object) [
+                'name' => 'School Uniform',
+                'price' => 2800,
+                'reviews_count' => 12,
+                'image' => 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600',
+            ],
+        ]);
+    @endphp
+
+    {{-- ===== BEST SELLERS ===== --}}
+    @if (isset($bestSellers) && $bestSellers->count())
+        <section class="mb-12">
+            <div class="flex items-center justify-between mb-5">
+                <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
+                        class="fa-solid fa-star text-gold-500"></i> Best Sellers</h2>
+                <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Products <i
+                        class="fa-solid fa-arrow-right ml-1"></i></a>
             </div>
-            <div class="flex items-start gap-3">
-                <div class="rounded-lg bg-white p-2 text-2xl">📦</div>
-                <div>
-                    <p class="font-bold text-brand">Complete Bundles</p>
-                    <p class="text-xs text-slate-500">Class-wise book packages &amp; uniform sets</p>
-                </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+                @foreach ($bestSellers as $product)
+                    <div
+                        class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition relative filter-con">
+                        <button
+                            class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center text-slate-400 hover:text-rose-500 z-10"><i
+                                class="fa-regular fa-heart"></i></button>
+                        {{-- FIXED IMAGE BOX --}}
+                        <div class="card-img-box p-5 bg-slate-50">
+                            <img class="card-img" src="{{ asset($product->image) }}" alt="{{ $product->name }}">
+                        </div>
+                        <div class="p-4">
+                            <h3 class="font-semibold text-navy-900 text-sm filter-name">{{ $product->name }}</h3>
+                            <div class="flex items-center gap-1 text-gold-500 text-xs mt-1">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                    class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                    class="fa-solid fa-star-half-stroke"></i>
+                                <span class="text-slate-500 ml-1">({{ $product->reviews_count ?? 0 }})</span>
+                            </div>
+                            <p class="mt-2 font-bold text-navy-900">PKR {{ number_format($product->price) }}</p>
+                            <button
+                                class="mt-3 w-full border border-navy-200 text-navy-800 py-2 rounded-md text-sm font-semibold hover:bg-navy-50">
+                                <i class="fa-solid fa-cart-shopping mr-1"></i> Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                @endforeach
             </div>
-            <div class="flex items-start gap-3">
-                <div class="rounded-lg bg-white p-2 text-2xl">🔒</div>
-                <div>
-                    <p class="font-bold text-brand">Secure Payments</p>
-                    <p class="text-xs text-slate-500">100% secure checkout experience</p>
-                </div>
-            </div>
-            <div class="flex items-start gap-3">
-                <div class="rounded-lg bg-white p-2 text-2xl">📞</div>
-                <div>
-                    <p class="font-bold text-brand">Easy Returns</p>
-                    <p class="text-xs text-slate-500">Hassle-free returns within 7 days</p>
-                </div>
+        </section>
+    @endif
+
+    {{-- ===== TRUST BAR ===== --}}
+    <section class="bg-white rounded-xl border border-slate-200 p-6 grid grid-cols-2 md:grid-cols-5 gap-6 text-sm">
+        <div class="flex gap-3"><i class="fa-solid fa-shield-halved text-2xl text-navy-700"></i>
+            <div><b>100% Original Products</b>
+                <p class="text-xs text-slate-500">Sourced from authorized suppliers</p>
             </div>
         </div>
-    </section>
-
-    <section class="mx-auto max-w-7xl px-4 pt-6">
-        <div class="flex flex-col items-center gap-4 rounded-xl bg-blue-100 p-6 md:flex-row">
-            <div class="flex items-center gap-3">
-                <div class="grid h-10 w-10 place-items-center rounded-full bg-white text-brand">✉️</div>
-                <div>
-                    <p class="font-semibold">Subscribe to our newsletter</p>
-                    <p class="text-xs text-slate-500">Get updates on new arrivals, offers and more.</p>
-                </div>
+        <div class="flex gap-3"><i class="fa-solid fa-truck text-2xl text-navy-700"></i>
+            <div><b>Fast & Reliable Delivery</b>
+                <p class="text-xs text-slate-500">Across Pakistan</p>
             </div>
-            <div class="flex flex-1 gap-2 md:ml-6">
-                <input type="email" placeholder="Enter your email"
-                    class="flex-1 rounded-md border border-slate-300 bg-white px-4 py-2.5 text-sm outline-none focus:border-brand">
-                <div class="bg-blue-700 rounded-lg px-4">
-                    <button class="rounded-md bg-brand px-5 py-2.5 text-sm font-semibold text-white">Subscribe</button>
-                </div>
+        </div>
+        <div class="flex gap-3"><i class="fa-solid fa-lock text-2xl text-navy-700"></i>
+            <div><b>Secure Payments</b>
+                <p class="text-xs text-slate-500">Multiple payment options</p>
             </div>
-            <div class="flex items-center gap-3">
-                <span class="text-sm font-medium text-brand">Follow Us</span>
-                <div class="bg-blue-700 rounded-full">
-                    <a class="grid h-8 w-8 place-items-center rounded-full bg-brand text-white">f</a>
-                </div>
-                <div class="bg-blue-700 rounded-full">
-                    <a class="grid h-8 w-8 place-items-center rounded-full bg-brand text-white">ig</a>
-                </div>
-                <div class="bg-blue-700 rounded-full">
-                    <a class="grid h-8 w-8 place-items-center rounded-full bg-brand text-white">w</a>
-                </div>
+        </div>
+        <div class="flex gap-3"><i class="fa-solid fa-rotate-left text-2xl text-navy-700"></i>
+            <div><b>Easy Returns</b>
+                <p class="text-xs text-slate-500">Hassle-free returns within 7 days</p>
+            </div>
+        </div>
+        <div class="flex gap-3"><i class="fa-solid fa-headset text-2xl text-navy-700"></i>
+            <div><b>Dedicated Support</b>
+                <p class="text-xs text-slate-500">We're here to help you anytime</p>
             </div>
         </div>
     </section>
 
     <script>
-        // Hero Slider Initialization
-        new Swiper(".heroSwiper", {
-            slidesPerView: 1,
+        new Swiper('.heroSwiper', {
             loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true
+            },
             autoplay: {
-                delay: 2000,
-                disableOnInteraction: false,
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
+                delay: 4500
             },
         });
+    </script>
 
-        // Schools Slider Initialization
-        new Swiper(".schoolSwiper", {
-            slidesPerView: 1,
-            spaceBetween: 20,
-            loop: true,
-            // autoplay: {
-            //     delay: 4000,
-            //     disableOnInteraction: false,
-            // },
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev",
-            },
-            pagination: {
-                el: ".swiper-pagination",
-                clickable: true,
-            },
-            breakpoints: {
-                640: {
-                    slidesPerView: 2
-                },
-                1024: {
-                    slidesPerView: 3
-                }
-            }
-        });
 
-        // Categories Slider Initialization
-        new Swiper(".categorySwiper", {
-            slidesPerView: 2,
-            spaceBetween: 16,
-            loop: false,
-            navigation: {
-                nextEl: ".category-next",
-                prevEl: ".category-prev",
-            },
-            watchOverflow: true,
+    <script>
+        $(document).ready(function() {
 
-            breakpoints: {
-                640: {
-                    slidesPerView: 3
-                },
-                768: {
-                    slidesPerView: 4
-                },
-                1024: {
-                    slidesPerView: 6
-                }
-            }
+            $(".filter-search").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+
+                $(".filter-con").each(function() {
+
+                    let text = $(this).find(".filter-name").text().toLowerCase();
+
+                    if (text.indexOf(value) > -1) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+
+                });
+            });
+
         });
     </script>
 @endsection

@@ -16,16 +16,32 @@
         <div>
             <label class="block text-sm font-semibold text-gray-700 mb-2">Current Banner Image</label>
             <div class="p-2 border rounded-lg bg-gray-50 mb-3">
-                <img src="{{ asset('storage/' . $banner->image_path) }}" class="w-full h-48 object-cover rounded">
+                <img src="{{ app()->environment('production') ? asset('storage/app/public/' . $banner->image_path) : asset('storage/' . $banner->image_path) }}" class="w-full h-48 object-cover rounded">
             </div>
             
             <label class="block text-sm font-semibold text-gray-700 mb-1">Upload New Image (Leave empty to keep current)</label>
             <input type="file" name="image" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:text-sm file:font-semibold file:bg-gray-900 file:text-white hover:file:bg-gray-800 border rounded p-1">
         </div>
 
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Internal Title</label>
+                <input type="text" name="title" value="{{ $banner->title }}" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900">
+            </div>
+            <div>
+                <label class="block text-sm font-semibold text-gray-700 mb-1">Top Tagline</label>
+                <input type="text" name="top_tagline" value="{{ $banner->top_tagline }}" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900">
+            </div>
+        </div>
+
         <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-1">Title (Optional)</label>
-            <input type="text" name="title" value="{{ $banner->title }}" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900">
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Main Headline</label>
+            <input type="text" name="main_headline" value="{{ $banner->main_headline }}" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900">
+        </div>
+
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-1">Subheadline</label>
+            <textarea name="subheadline" rows="2" class="w-full border border-gray-300 rounded p-2 text-sm focus:outline-none focus:border-gray-900">{{ $banner->subheadline }}</textarea>
         </div>
 
         <div>
