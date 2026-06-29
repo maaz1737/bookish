@@ -77,7 +77,7 @@
 <div class="max-w-[1200px] mx-auto px-4 text-xs text-slate-500 flex items-center gap-2">
   <span>Home</span><i class="fa-solid fa-chevron-right text-[8px]"></i>
   <span>Accessories</span><i class="fa-solid fa-chevron-right text-[8px]"></i>
-  <span class="text-navy font-medium">School Bags</span>
+  <span class="text-navy font-medium">{{ Str::title($category->name)  }}</span>
 </div>
 
 <section class="max-w-[1200px] mx-auto px-4 mt-6">
@@ -240,9 +240,18 @@
             <i class="fa-regular fa-heart text-xs"></i>
           </button>
 
-          <img class="card-img" src="{{ app()->environment('production')
-          ? url('storage/app/public/' . $p->images[0])
-          : asset('storage/' . $p->images[0])}}" alt="{{ $p->name }}" class="w-full h-full object-contain p-3">
+      @if(isset($p->images[0]))
+    <img
+        class="card-img w-full h-full object-contain"
+        src="{{ app()->environment('production')
+            ? asset('storage/app/public/' . $p->images[0])
+            : asset('storage/' . $p->images[0]) }}"
+        alt="{{ $p->name }}">
+@else
+    <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 text-sm border rounded">
+        No Image
+    </div>
+@endif
         </div>
 
         <div class="p-4 flex flex-col flex-grow">
