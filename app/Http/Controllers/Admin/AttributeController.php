@@ -127,7 +127,6 @@ class AttributeController extends Controller
     public function attributeSelection(Product $product)
     {
         $attributes = Attribute::with('values')->get();
-
         return view('admin.attribute.product_attribute_selection', compact('product', 'attributes'));
 
     }
