@@ -154,69 +154,67 @@
 
 
 
-    @php
-        $bestSellers = collect([
-            (object) [
-                'name' => 'School Backpack',
-                'price' => 3500,
-                'reviews_count' => 24,
-                'image' => 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600',
-            ],
-            (object) [
-                'name' => 'Kids Water Bottle',
-                'price' => 1200,
-                'reviews_count' => 18,
-                'image' => 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?w=600',
-            ],
-            (object) [
-                'name' => 'Color Pencil Pack',
-                'price' => 850,
-                'reviews_count' => 31,
-                'image' => 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600',
-            ],
-            (object) [
-                'name' => 'School Uniform',
-                'price' => 2800,
-                'reviews_count' => 12,
-                'image' => 'https://images.unsplash.com/photo-1521572267360-ee0c2909d518?w=600',
-            ],
-        ]);
-    @endphp
-
     {{-- ===== BEST SELLERS ===== --}}
     @if (isset($bestSellers) && $bestSellers->count())
         <section class="mb-12">
             <div class="flex items-center justify-between mb-5">
                 <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
                         class="fa-solid fa-star text-gold-500"></i> Best Sellers</h2>
-                <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Products <i
+                <a href="{{ route('products.index') }}" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Products <i
                         class="fa-solid fa-arrow-right ml-1"></i></a>
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
                 @foreach ($bestSellers as $product)
                     <div
-                        class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition relative filter-con">
+                        class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition relative filter-con flex flex-col h-full">
                         <button
                             class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center text-slate-400 hover:text-rose-500 z-10"><i
                                 class="fa-regular fa-heart"></i></button>
+                        
                         {{-- FIXED IMAGE BOX --}}
-                        <div class="card-img-box p-5 bg-slate-50">
-                            <img class="card-img" src="{{ asset($product->image) }}" alt="{{ $product->name }}">
-                        </div>
-                        <div class="p-4">
-                            <h3 class="font-semibold text-navy-900 text-sm filter-name">{{ $product->name }}</h3>
+                        <a href="{{ route('product.show', $product) }}" class="block">
+                            <div class="card-img-box p-5 bg-slate-50">
+                                @if (isset($product->images) && count($product->images) > 0)
+                                    <img class="card-img" src="{{ app()->environment('production') ? asset('storage/app/public/' . $product->images[0]) : asset('storage/' . $product->images[0]) }}" alt="{{ $product->name }}">
+                                @else
+                                    <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 text-sm border rounded">
+                                        No Image
+                                    </div>
+                                @endif
+                            </div>
+                        </a>
+                        <div class="p-4 flex flex-col flex-grow">
+                            <a href="{{ route('product.show', $product) }}" class="hover:text-gold-500 transition">
+                                <h3 class="font-semibold text-navy-900 text-sm filter-name line-clamp-2" style="min-height: 10px;">{{ $product->name }}</h3>
+                            </a>
                             <div class="flex items-center gap-1 text-gold-500 text-xs mt-1">
                                 <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
                                     class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
                                     class="fa-solid fa-star-half-stroke"></i>
-                                <span class="text-slate-500 ml-1">({{ $product->reviews_count ?? 0 }})</span>
+                                <span class="text-slate-500 ml-1">(0)</span>
                             </div>
-                            <p class="mt-2 font-bold text-navy-900">PKR {{ number_format($product->price) }}</p>
-                            <button
-                                class="mt-3 w-full border border-navy-200 text-navy-800 py-2 rounded-md text-sm font-semibold hover:bg-navy-50">
-                                <i class="fa-solid fa-cart-shopping mr-1"></i> Add to Cart
-                            </button>
+                            
+                            <div class="mt-2 flex items-center gap-2 flex-wrap">
+                                <span class="font-bold text-navy-900">
+                                    PKR {{ number_format($product->discount_price ?? $product->price) }}
+                                </span>
+                                @if($product->discount_price && $product->price)
+                                    <span class="text-xs text-slate-400 line-through">
+                                        PKR {{ number_format($product->price) }}
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="mt-auto pt-3">
+                                <form action="{{ route('cart.addProduct', $product) }}" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        class="w-full border border-navy-200 text-navy-800 py-2 rounded-md text-sm font-semibold hover:bg-navy-50">
+                                        <i class="fa-solid fa-cart-shopping mr-1"></i> Add to Cart
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 @endforeach

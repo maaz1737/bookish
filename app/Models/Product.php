@@ -22,11 +22,13 @@ class Product extends Model
         'description',
         'images',
         'is_active',
+        'is_best_seller',
     ];
 
     protected $casts = [
         'images' => 'array',
         'is_active' => 'boolean',
+        'is_best_seller' => 'boolean',
         'price' => 'decimal:2',
         'discount_price' => 'decimal:2',
     ];

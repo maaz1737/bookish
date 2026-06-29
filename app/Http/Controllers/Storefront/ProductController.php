@@ -9,10 +9,15 @@ use App\Models\SchoolClass;
 
 class ProductController extends Controller
 {
+    public function index()
+    {
+        $products = Product::active()->latest()->paginate(24);
+        return view('storefront.products', compact('products'));
+    }
+
     // SEO route: /category/{type}
     public function category(string $slug)
     {
-
         $category = Category::with('allChildren')->where('slug', $slug)->where('is_active', true)->firstOrFail();
 
         $products = Product::where('category_id', $category->id)->paginate(24);
