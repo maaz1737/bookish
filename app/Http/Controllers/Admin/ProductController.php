@@ -184,7 +184,6 @@ class ProductController extends Controller
         foreach ((array) $request->file('images', []) as $file) {
             $paths[] = $file->store('products', 'public');
         }
-
         return $paths;
     }
 }

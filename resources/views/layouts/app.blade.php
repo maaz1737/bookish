@@ -140,7 +140,8 @@
                 
                 $totalQty = array_sum(array_column($cart, 'quantity'));
                 ?>
-                <a href="{{ route('cart.index') }}" class="relative flex flex-col items-center text-xs"><i
+                {{-- {{ route('cart.index') }} --}}
+                <a href="#" class="cart relative flex flex-col items-center text-xs"><i
                         class="fa-solid fa-cart-shopping text-lg"></i>Cart<span
                         class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">{{ $totalQty ?? 0 }}</span></a>
             </div>
@@ -239,6 +240,28 @@
     <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-8">
         @yield('content')
     </main>
+
+    <!-- Overlay -->
+    <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-40">
+    </div>
+
+    <!-- Cart Sidebar -->
+    <div id="cartDrawer"
+        class="fixed top-0 right-0 h-screen w-[40%] bg-white shadow-xl
+           translate-x-full transition-transform duration-300 ease-in-out
+           z-50">
+
+        <div class="p-6">
+            <button id="closeCart" class="mb-4 text-gray-500">✕</button>
+
+            <h2 class="text-xl font-bold mb-4">Shopping Cart</h2>
+
+            <div>
+                hello
+            </div>
+        </div>
+    </div>
+
 
     {{-- ===== FOOTER ===== --}}
     <footer class="bg-navy-900 text-slate-300 mt-12">
@@ -361,6 +384,31 @@
                 }, 200);
             }
         });
+
+
+
+
+
+        const cartBtn = document.querySelector('.cart');
+        const cartDrawer = document.getElementById('cartDrawer');
+        const overlay = document.getElementById('cartOverlay');
+        const closeBtn = document.getElementById('closeCart');
+
+        cartBtn.addEventListener('click', () => {
+            overlay.classList.remove('hidden');
+            cartDrawer.classList.remove('translate-x-full');
+        });
+
+        function closeCart() {
+            cartDrawer.classList.add('translate-x-full');
+
+            setTimeout(() => {
+                overlay.classList.add('hidden');
+            }, 300);
+        }
+
+        closeBtn.addEventListener('click', closeCart);
+        overlay.addEventListener('click', closeCart);
     </script>
 </body>
 
