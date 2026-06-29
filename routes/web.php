@@ -68,6 +68,7 @@ Route::post('/checkout', [CheckoutController::class, 'place'])->name('checkout.p
 Route::post('/checkout/{order}', [CheckoutController::class, 'statusUpdate'])->name('checkout.update');
 Route::get('/checkout/{orderNumber}/bank', [CheckoutController::class, 'bank'])->name('checkout.bank');
 Route::post('/checkout/{orderNumber}/proof', [CheckoutController::class, 'uploadProof'])->name('checkout.proof');
+Route::get('/checkout/{order}/confirmation', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
 
 // Order tracking
 Route::get('/track/{orderNumber}', [OrderTrackController::class, 'show'])->name('order.track');
