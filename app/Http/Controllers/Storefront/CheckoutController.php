@@ -154,14 +154,23 @@ class CheckoutController extends Controller
     {
         $order = Order::where('order_number', $order)->firstOrFail();
 
-        if ($request->has('cash_on_delivery')) {
+        if ($request->pay == 'cash_on_delivery') {
             $order->update([
                 'order_status' => 'delivered',
                 'payment_method' => 'cash_on_delivery',
             ]);
         }
         $request->session()->forget('cart');
-        return back()->with('success', 'Order status updated successfully.');
+        return redirect()->route('checkout.confirmation', $order->order_number)->with('success', 'Order status updated successfully.');
+    }
+
+    public function confirmation($order)
+    {
+        $order = Order::where('order_number', $order)->firstOrFail();
+
+        return view('storefront.OrderComplete.order_complete', compact('order'));
+
+
     }
 
 }
