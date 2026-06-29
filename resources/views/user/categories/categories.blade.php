@@ -75,8 +75,7 @@
 
 
 <div class="max-w-[1200px] mx-auto px-4 text-xs text-slate-500 flex items-center gap-2">
-  <span>Home</span><i class="fa-solid fa-chevron-right text-[8px]"></i>
-  <span>Accessories</span><i class="fa-solid fa-chevron-right text-[8px]"></i>
+  <a class="" href="{{route('home')}}">Home</a><i class="fa-solid fa-chevron-right text-[8px]"></i>
   <span class="text-navy font-medium">{{ Str::title($category->name)  }}</span>
 </div>
 
