@@ -65,6 +65,7 @@ Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear')
 // Checkout (guest checkout always available)
 Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
 Route::post('/checkout', [CheckoutController::class, 'place'])->name('checkout.place');
+Route::post('/checkout/{order}', [CheckoutController::class, 'statusUpdate'])->name('checkout.update');
 Route::get('/checkout/{orderNumber}/bank', [CheckoutController::class, 'bank'])->name('checkout.bank');
 Route::post('/checkout/{orderNumber}/proof', [CheckoutController::class, 'uploadProof'])->name('checkout.proof');
 

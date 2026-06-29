@@ -79,16 +79,18 @@ class CheckoutController extends Controller
     }
 
 
-    
 
-    
+
+
 
 
 
     // Step 3: display bank details + active timeline (Section 8)
     public function bank(string $orderNumber)
     {
-        $order = Order::where('order_number', $orderNumber)->firstOrFail();
+        $order = Order::where('order_number', $orderNumber)
+            ->with('items.product')
+            ->firstOrFail();
 
         return view('storefront.bank-details', [
             'order' => $order,
@@ -147,4 +149,19 @@ class CheckoutController extends Controller
             'total' => $total
         ];
     }
+
+    public function statusUpdate(Request $request, $order)
+    {
+        $order = Order::where('order_number', $order)->firstOrFail();
+
+        if ($request->has('cash_on_delivery')) {
+            $order->update([
+                'order_status' => 'delivered',
+                'payment_method' => 'cash_on_delivery',
+            ]);
+        }
+        $request->session()->forget('cart');
+        return back()->with('success', 'Order status updated successfully.');
+    }
+
 }
