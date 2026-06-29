@@ -29,8 +29,10 @@
             <div class="mt-6 grid grid-cols-1 items-center gap-8 md:grid-cols-2">
                 <!-- Illustration -->
                 <div class="flex justify-center">
-                    <img src="{{ asset('storage/banners/order-success.png') }}" alt="Order placed successfully"
-                        class="h-48 w-auto object-contain sm:h-56" />
+                    <img src="{{ app()->environment('production')
+                        ? asset('storage/app/public/banners/order-success.png')
+                        : asset('storage/banners/order-success.png') }}"
+                        alt="Order placed successfully" class="h-48 w-auto object-contain sm:h-56" />
                 </div>
 
                 <!-- Order details -->
