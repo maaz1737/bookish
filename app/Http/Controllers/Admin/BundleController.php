@@ -65,7 +65,7 @@ class BundleController extends Controller
 
         return view('admin.bundles.edit', [
             'schools' => School::with('classes')->get(),
-            'products' => Product::active()->whereHas('category', fn($q) => $q->where('type', 'book'))->get(),
+            'products' => Product::active()->get(),
             'bundle' => $bundle->load([
                 'school',
                 'schoolClass',
