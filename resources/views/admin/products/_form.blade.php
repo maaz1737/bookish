@@ -58,6 +58,10 @@
         Active
     </label>
     <label class="flex items-center gap-2 sm:col-span-2">
+        <input type="checkbox" name="is_best_seller" value="1" @checked(old('is_best_seller', $product->is_best_seller ?? false))>
+        Best Seller Product
+    </label>
+    <label class="flex items-center gap-2 sm:col-span-2">
         <input type="checkbox" name="has_variant" value="1" @checked(old('has_variant', $product->has_variant ?? true))>
         Product Has Variant
     </label>

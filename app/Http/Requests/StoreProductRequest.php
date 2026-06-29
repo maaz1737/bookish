@@ -43,8 +43,18 @@ class StoreProductRequest extends FormRequest
             'images'              => ['nullable', 'array'],
             'images.*'            => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'is_active'           => ['boolean'],
+            'is_best_seller'      => ['boolean'],
         ];
     }
+
+    protected function prepareForValidation(): void
+    {
+        $this->merge([
+            'is_active' => $this->has('is_active'),
+            'is_best_seller' => $this->has('is_best_seller'),
+        ]);
+    }
+
     public function messages(): array
     {
         return [

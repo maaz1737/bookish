@@ -32,11 +32,18 @@ class HomeController extends Controller
             ->take(8)
             ->get();
 
+        $bestSellers = Product::active()
+            ->where('is_best_seller', true)
+            ->latest()
+            ->take(4)
+            ->get();
+
         return view('storefront.home', compact(
             'heroBanners',
             'schools',
             'categories',
-            'featured'
+            'featured',
+            'bestSellers'
         ));
     }
 }
