@@ -102,14 +102,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div
-                            class="hidden md:block absolute -right-3 md:-right-4 -bottom-1 lg:-right-2 lg:bottom-1 w-[240px] lg:w-[310px] xl:w-[340px] h-auto z-20 pointer-events-none select-none transform -translate-y-6 lg:-translate-y-8">
-                            <div class="w-full h-full flex items-end justify-center bg-transparent">
-                                <img src="{{ asset('storage/images/school-bag-bundle-mockup.png') }}" alt="Class Bundle Kit"
-                                    class="w-full h-auto object-contain object-bottom mix-blend-darken filter brightness-105 contrast-105">
-                            </div>
-                        </div>
                     </div>
 
                     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
@@ -150,9 +142,16 @@
 
                                             <td class="py-4 px-4">
                                                 <div class="flex items-center gap-3">
-                                                    <img src="{{ asset(app()->environment('production') ? 'storage/app/public/' . $item->product->images[0] : 'storage/' . $item->product->images[0]) }}"
-                                                        class="w-10 h-12 rounded object-cover shadow-sm bg-gray-50 border border-gray-100 flex-shrink-0"
-                                                        alt="{{ $item->product->name }}">
+                                                    @if (!empty($item->product->images) && isset($item->product->images[0]))
+                                                        <img src="{{ asset(app()->environment('production') ? 'storage/app/public/' . $item->product->images[0] : 'storage/' . $item->product->images[0]) }}"
+                                                            class="w-10 h-12 rounded object-cover shadow-sm bg-gray-50 border border-gray-100 flex-shrink-0"
+                                                            alt="{{ $item->product->name }}">
+                                                    @else
+                                                        <div
+                                                            class="w-10 h-12 rounded bg-gray-100 border border-gray-200 flex items-center justify-center text-[10px] text-gray-500 text-center flex-shrink-0">
+                                                            No Image
+                                                        </div>
+                                                    @endif
                                                     <div>
                                                         <span
                                                             class="font-medium text-gray-900 block group-hover:text-indigo-600 transition-colors">
