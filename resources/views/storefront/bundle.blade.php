@@ -135,8 +135,7 @@
                                                 <div class="flex items-center justify-center">
                                                     <input type="checkbox" checked
                                                         class="w-4 h-4 rounded text-indigo-600 accent-indigo-600 border-gray-300 focus:ring-indigo-500 bundle-book cursor-pointer"
-                                                        data-id="{{ $item->product_id }}"
-                                                        data-price="{{ $itemPrice }}">
+                                                        data-id="{{ $item->product_id }}" data-price="{{ $itemPrice }}">
                                                 </div>
                                             </td>
 
