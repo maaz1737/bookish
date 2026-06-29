@@ -1,11 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="flex items-center justify-center">
+    <div class="max-w-4xl mx-auto px-4 pt-8">
+        <div class="flex items-center justify-between text-xs text-gray-500">
+            @foreach ([['🛒', 'Cart', false], ['🚚', 'Checkout', false], ['💳', 'Payment', false], ['✓', 'Confirmation', true]] as $i => $s)
+                <div class="flex flex-col items-center flex-1">
+                    <div
+                        class="w-10 h-10 rounded-full border-2 flex items-center justify-center {{ $s[2] ? 'bg-[#0a1f44] text-white border-[#0a1f44]' : 'bg-white text-gray-400 border-gray-300' }}">
+                        {{ $s[0] }}</div>
+                    <div class="mt-2 {{ $s[2] ? 'text-[#0a1f44] font-semibold' : '' }}">{{ $s[1] }}</div>
+                </div>
+                @if ($i < 3)
+                    <div class="flex-1 h-px bg-gray-300 -mt-6"></div>
+                @endif
+            @endforeach
+        </div>
+    </div>
+    <div class="flex items-center justify-center mt-8">
         <div class="w-full max-w-4xl rounded-2xl bg-white p-8 shadow-lg sm:p-12">
             <!-- Success icon -->
             <div class="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center">
-                <svg class="h-20 w-20 text-emerald-500" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg class="h-20 w-20 text-emerald-500" viewBox="0 0 80 80" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
                     <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="3" />
                     <path d="M26 42L35 51L54 32" stroke="currentColor" stroke-width="4" stroke-linecap="round"
                         stroke-linejoin="round" />
@@ -29,7 +45,7 @@
             <div class="mt-6 grid grid-cols-1 items-center gap-8 md:grid-cols-2">
                 <!-- Illustration -->
                 <div class="flex justify-center">
-                    <img src="{{ asset('storage/banners/order-success.png') }}" alt="Order placed successfully"
+                    <img src="{{ asset('storage/app/public/order-success.png') }}" alt="Order placed successfully"
                         class="h-48 w-auto object-contain sm:h-56" />
                 </div>
 
