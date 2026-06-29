@@ -60,101 +60,7 @@
         </section>
     @endif
 
-    {{-- ===== POPULAR SCHOOLS ===== --}}
-    <section class="mb-12" id="school-section">
-        <div class="flex items-center justify-between mb-5">
-            <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
-                    class="fa-solid fa-bag-shopping text-navy-700"></i> Popular Schools</h2>
-            <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Schools <i
-                    class="fa-solid fa-arrow-right ml-1"></i></a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            @foreach ($schools as $i => $school)
-                @php $bg = ['bg-navy-50', 'bg-amber-50', 'bg-rose-50'][$i % 3]; @endphp
-                <a href="{{ route('schools.show', $school) }}" class="{{ $bg }} rounded-xl p-5">
-                    <div class="flex items-start gap-4">
-                        <div class="logo-box">
-                            @if ($school->logo ?? false)
-                                <img src="{{ asset('storage/' . $school->logo) }}" alt="{{ $school->name }}">
-                            @else
-                                <i class="fa-solid fa-school text-2xl text-navy-700"></i>
-                            @endif
-                        </div>
-                        <div class="flex-1">
-                            <h3 class="font-bold text-navy-900 filter-name">{{ $school->name }}</h3>
-                            <ul class="text-sm text-slate-600 mt-2 space-y-1">
-                                <li><i class="fa-solid fa-book text-navy-600 mr-1"></i> Books</li>
-                                <li><i class="fa-solid fa-shirt text-navy-600 mr-1"></i> Uniforms</li>
-                                <li><i class="fa-solid fa-bag-shopping text-navy-600 mr-1"></i> Accessories</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <span href="#"
-                        class="mt-5 block text-center bg-navy-800 text-white py-2.5 rounded-md text-sm font-semibold">View
-                        Classes <i class="fa-solid fa-arrow-right ml-1"></i></span>
-                </a>
-            @endforeach
-        </div>
-    </section>
-
-    {{-- ===== SHOP BY CATEGORY ===== --}}
-    <section class="mb-12" id="category-section">
-        <div class="flex items-center justify-between mb-5">
-            <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
-                    class="fa-solid fa-bag-shopping text-navy-700"></i> Shop by Category</h2>
-            <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Categories <i
-                    class="fa-solid fa-arrow-right ml-1"></i></a>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
-            @foreach ($categories as $category)
-                <div
-                    class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition filter-con">
-                    {{-- FIXED IMAGE BOX: all category images render at same size --}}
-                    <div class="card-img-box bg-slate-50">
-                        <img class="card-img"
-                            src="{{ app()->environment('production')
-                                ? url('storage/app/public/' . $category->image)
-                                : asset('storage/' . $category->image) }}"
-                            alt="{{ $category->name }}">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center gap-2">
-                            <span class="w-9 h-9 rounded-full bg-navy-50 flex items-center justify-center text-navy-700">
-                                <i class="fa-solid fa-book"></i>
-                            </span>
-
-                            <div class="w-full">
-                                <div class="flex items-start justify-between gap-2">
-                                    <h3 class="font-bold text-navy-900 leading-tight filter-name">
-                                        {{ $category->name }}
-                                    </h3>
-                                </div>
-
-                                <span class="inline-flex mt-1 text-xs bg-gray-100 rounded-full px-2 py-1 w-fit">
-                                    Total Products: {{ $category->products_count }}
-                                </span>
-
-                                <p class="text-xs text-slate-500 mt-1">
-                                    {{ \Illuminate\Support\Str::limit($category->description, 30, '') }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <a href="{{ route('category.show', $category->slug) }}"
-                                class="mt-3 inline-flex items-center text-sm font-semibold text-navy-700">Explore Now <i
-                                    class="fa-solid fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </section>
-
-
-
-    {{-- ===== BEST SELLERS ===== --}}
+        {{-- ===== BEST SELLERS ===== --}}
     @if (isset($bestSellers) && $bestSellers->count())
         <section class="mb-12">
             <div class="flex items-center justify-between mb-5">
@@ -221,6 +127,98 @@
             </div>
         </section>
     @endif
+
+    {{-- ===== SHOP BY CATEGORY ===== --}}
+    <section class="mb-12" id="category-section">
+        <div class="flex items-center justify-between mb-5">
+            <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
+                    class="fa-solid fa-bag-shopping text-navy-700"></i> Shop by Category</h2>
+            <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Categories <i
+                    class="fa-solid fa-arrow-right ml-1"></i></a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+            @foreach ($categories as $category)
+                <div
+                    class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition filter-con">
+                    {{-- FIXED IMAGE BOX: all category images render at same size --}}
+                    <div class="card-img-box bg-slate-50">
+                        <img class="card-img"
+                            src="{{ app()->environment('production')
+                                ? url('storage/app/public/' . $category->image)
+                                : asset('storage/' . $category->image) }}"
+                            alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-9 h-9 rounded-full bg-navy-50 flex items-center justify-center text-navy-700">
+                                <i class="fa-solid fa-book"></i>
+                            </span>
+
+                            <div class="w-full">
+                                <div class="flex items-start justify-between gap-2">
+                                    <h3 class="font-bold text-navy-900 leading-tight filter-name">
+                                        {{ $category->name }}
+                                    </h3>
+                                </div>
+
+                                <span class="inline-flex mt-1 text-xs bg-gray-100 rounded-full px-2 py-1 w-fit">
+                                    Total Products: {{ $category->products_count }}
+                                </span>
+
+                                <p class="text-xs text-slate-500 mt-1">
+                                    {{ \Illuminate\Support\Str::limit($category->description, 30, '') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <a href="{{ route('category.show', $category->slug) }}"
+                                class="mt-3 inline-flex items-center text-sm font-semibold text-navy-700">Explore Now <i
+                                    class="fa-solid fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </section>
+
+        {{-- ===== POPULAR SCHOOLS ===== --}}
+    <section class="mb-12" id="school-section">
+        <div class="flex items-center justify-between mb-5">
+            <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
+                    class="fa-solid fa-bag-shopping text-navy-700"></i> Popular Schools</h2>
+            <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Schools <i
+                    class="fa-solid fa-arrow-right ml-1"></i></a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            @foreach ($schools as $i => $school)
+                @php $bg = ['bg-navy-50', 'bg-amber-50', 'bg-rose-50'][$i % 3]; @endphp
+                <a href="{{ route('schools.show', $school) }}" class="{{ $bg }} rounded-xl p-5">
+                    <div class="flex items-start gap-4">
+                        <div class="logo-box">
+                            @if ($school->logo ?? false)
+                                <img src="{{ asset('storage/' . $school->logo) }}" alt="{{ $school->name }}">
+                            @else
+                                <i class="fa-solid fa-school text-2xl text-navy-700"></i>
+                            @endif
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="font-bold text-navy-900 filter-name">{{ $school->name }}</h3>
+                            <ul class="text-sm text-slate-600 mt-2 space-y-1">
+                                <li><i class="fa-solid fa-book text-navy-600 mr-1"></i> Books</li>
+                                <li><i class="fa-solid fa-shirt text-navy-600 mr-1"></i> Uniforms</li>
+                                <li><i class="fa-solid fa-bag-shopping text-navy-600 mr-1"></i> Accessories</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <span href="#"
+                        class="mt-5 block text-center bg-navy-800 text-white py-2.5 rounded-md text-sm font-semibold">View
+                        Classes <i class="fa-solid fa-arrow-right ml-1"></i></span>
+                </a>
+            @endforeach
+        </div>
+    </section>
 
     {{-- ===== TRUST BAR ===== --}}
     <section class="bg-white rounded-xl border border-slate-200 p-6 grid grid-cols-2 md:grid-cols-5 gap-6 text-sm">
