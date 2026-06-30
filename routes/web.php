@@ -35,6 +35,7 @@ use App\Http\Controllers\Admin\AttributeController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/bundles', [StoreBundleController::class, 'index'])->name('bundles.index');
 Route::get('/schools', [SchoolController::class, 'index'])->name('schools.index');
 Route::get('/school/{school}', [SchoolController::class, 'show'])->name('schools.show');
 
@@ -94,6 +95,10 @@ Route::prefix('admin')->name('admin.')
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
         // Module 1: Product CRUD
+        Route::get('products/bulk', [AdminProductController::class, 'bulkUploadShow'])->name('products.bulk.show');
+        Route::post('products/bulk', [AdminProductController::class, 'bulkUploadPost'])->name('products.bulk.post');
+        Route::post('products/bulk/import', [AdminProductController::class, 'bulkUploadImport'])->name('products.bulk.import');
+        Route::get('products/bulk/template', [AdminProductController::class, 'bulkUploadTemplate'])->name('products.bulk.template');
         Route::resource('products', AdminProductController::class)->except('show');
 
         // Module 2: Categories

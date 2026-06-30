@@ -60,7 +60,198 @@
         </section>
     @endif
 
-        {{-- ===== BEST SELLERS ===== --}}
+
+    {{-- ===== SHOP BY CATEGORY ===== --}}
+    <section class="mb-12" id="category-section">
+        <div class="flex items-center justify-between mb-5">
+            <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
+                    class="fa-solid fa-bag-shopping text-navy-700"></i> Shop by Category</h2>
+            <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Categories <i
+                    class="fa-solid fa-arrow-right ml-1"></i></a>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
+            @foreach ($categories as $category)
+                <div
+                    class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition filter-con">
+                    {{-- FIXED IMAGE BOX: all category images render at same size --}}
+                    <div class="card-img-box bg-slate-50">
+                        <img class="card-img"
+                            src="{{ app()->environment('production')
+                                ? url('storage/app/public/' . $category->image)
+                                : asset('storage/' . $category->image) }}"
+                            alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-9 h-9 rounded-full bg-navy-50 flex items-center justify-center text-navy-700">
+                                <i class="fa-solid fa-book"></i>
+                            </span>
+
+                            <div class="w-full">
+                                <div class="flex items-start justify-between gap-2">
+                                    <h3 class="font-bold text-navy-900 leading-tight filter-name">
+                                        {{ $category->name }}
+                                    </h3>
+                                </div>
+
+                                <span class="inline-flex mt-1 text-xs bg-gray-100 rounded-full px-2 py-1 w-fit">
+                                    Total Products: {{ $category->products_count }}
+                                </span>
+
+                                <p class="text-xs text-slate-500 mt-1">
+                                    {{ \Illuminate\Support\Str::limit($category->description, 30, '') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-center">
+                            <a href="{{ route('category.show', $category->slug) }}"
+                                class="mt-3 inline-flex items-center text-sm font-semibold text-navy-700">Explore Now <i
+                                    class="fa-solid fa-arrow-right ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </section>
+
+    {{-- ===== SMART SAVER BUNDLES ===== --}}
+    @if (isset($bundles) && $bundles->count())
+        <section class="mb-12">
+            <div class="flex items-center justify-between mb-5">
+                <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2">
+                    <i class="fa-solid fa-boxes-stacked text-[#0a1f44]"></i> Smart Saver Bundles
+                </h2>
+                <a href="{{ route('bundles.index') }}" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm transition hover:bg-navy-700">
+                    View All Bundles <i class="fa-solid fa-arrow-right ml-1"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @foreach ($bundles as $bundle)
+                    @php
+                        $discount = (float) ($bundle->discount ?? 0);
+                        $products = $bundle->products;
+                        $prodImages = $products->filter(fn($p) => !empty($p->images))->take(4)->values();
+                        $imgCount = $prodImages->count();
+                        $includedNames = $products->pluck('name')->join(' + ');
+                        $imgHelper = fn($path) => app()->environment('production')
+                            ? asset('storage/app/public/' . $path)
+                            : asset('storage/' . $path);
+                    @endphp
+                    <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group">
+
+                        {{-- ===== BUNDLE COLLAGE IMAGE AREA ===== --}}
+                        <div class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50 h-[200px]">
+
+                            {{-- Discount Badge --}}
+                            @if ($discount > 0)
+                                <div class="absolute top-3 left-3 z-20 bg-gradient-to-r from-amber-400 to-orange-400 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+                                    <i class="fa-solid fa-bolt text-[9px]"></i> Save {{ rtrim(rtrim($discount, '0'), '.') }}%
+                                </div>
+                            @endif
+
+                            {{-- Bundle count pill --}}
+                            @if ($products->count() > 0)
+                                <div class="absolute top-3 right-3 z-20 bg-white/80 backdrop-blur-sm text-[#0a1f44] text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-slate-200">
+                                    {{ $products->count() }} items
+                                </div>
+                            @endif
+
+                            @if ($imgCount === 0)
+                                {{-- No images placeholder --}}
+                                <div class="w-full h-full flex flex-col items-center justify-center gap-2 opacity-30">
+                                    <i class="fa-solid fa-boxes-stacked text-5xl text-slate-400"></i>
+                                    <span class="text-xs text-slate-400 font-medium">Bundle</span>
+                                </div>
+
+                            @elseif ($imgCount === 1)
+                                {{-- Single product: centered full image --}}
+                                <div class="w-full h-full flex items-center justify-center p-6">
+                                    <img src="{{ $imgHelper($prodImages[0]->images[0]) }}"
+                                        class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500"
+                                        alt="{{ $prodImages[0]->name }}"
+                                        onerror="this.onerror=null;this.src='{{ asset('images/no-image.png') }}'">
+                                </div>
+
+                            @elseif ($imgCount === 2)
+                                {{-- Two products: equal halves with divider --}}
+                                <div class="flex h-full">
+                                    @foreach ($prodImages as $prod)
+                                        <div class="flex-1 flex items-center justify-center p-4 {{ !$loop->last ? 'border-r border-white/60' : '' }}">
+                                            <img src="{{ $imgHelper($prod->images[0]) }}"
+                                                class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+                                                alt="{{ $prod->name }}"
+                                                onerror="this.onerror=null;this.src='{{ asset('images/no-image.png') }}'">
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                            @elseif ($imgCount === 3)
+                                {{-- Three products: equal 3-column row --}}
+                                <div class="flex h-full">
+                                    @foreach ($prodImages as $prod)
+                                        <div class="flex-1 flex items-center justify-center p-3 {{ !$loop->last ? 'border-r border-white/60' : '' }}">
+                                            <img src="{{ $imgHelper($prod->images[0]) }}"
+                                                class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+                                                alt="{{ $prod->name }}"
+                                                onerror="this.onerror=null;this.src='{{ asset('images/no-image.png') }}'">
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                            @else
+                                {{-- Four products: 2×2 grid --}}
+                                <div class="grid grid-cols-2 grid-rows-2 h-full">
+                                    @foreach ($prodImages as $prod)
+                                        <div class="flex items-center justify-center p-3
+                                            {{ $loop->index === 0 ? 'border-r border-b' : '' }}
+                                            {{ $loop->index === 1 ? 'border-b' : '' }}
+                                            {{ $loop->index === 2 ? 'border-r' : '' }}
+                                            border-white/60">
+                                            <img src="{{ $imgHelper($prod->images[0]) }}"
+                                                class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+                                                alt="{{ $prod->name }}"
+                                                onerror="this.onerror=null;this.src='{{ asset('images/no-image.png') }}'">
+                                        </div>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+
+                        {{-- Card Content --}}
+                        <div class="p-4 flex flex-col flex-grow">
+                            <h3 class="font-bold text-[#0a1f44] text-base leading-tight">{{ $bundle->name }}</h3>
+                            <p class="text-xs text-slate-400 mt-1 line-clamp-2">{{ $includedNames }}</p>
+
+                            <div class="mt-3 flex items-baseline gap-2 flex-wrap">
+                                <span class="font-extrabold text-[#0a1f44] text-xl">
+                                    PKR {{ number_format($bundle->final_price) }}
+                                </span>
+                                @if ($bundle->total_price > 0 && $bundle->total_price != $bundle->final_price)
+                                    <span class="text-xs text-slate-400 line-through">
+                                        PKR {{ number_format($bundle->total_price) }}
+                                    </span>
+                                @endif
+                            </div>
+
+                            <div class="mt-auto pt-3">
+                                <form action="{{ route('cart.addBundle', $bundle) }}" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        class="w-full bg-[#0a1f44] hover:bg-[#0d2a5c] text-white py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center justify-center gap-2 shadow-sm hover:shadow-md">
+                                        <i class="fa-solid fa-cart-shopping"></i> Add Bundle to Cart
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+    @endif
+
+    {{-- ===== BEST SELLERS ===== --}}
     @if (isset($bestSellers) && $bestSellers->count())
         <section class="mb-12">
             <div class="flex items-center justify-between mb-5">
@@ -70,7 +261,7 @@
                         class="fa-solid fa-arrow-right ml-1"></i></a>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
                 @foreach ($bestSellers as $product)
                     <div
                         class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition relative filter-con flex flex-col h-full">
@@ -128,59 +319,6 @@
         </section>
     @endif
 
-    {{-- ===== SHOP BY CATEGORY ===== --}}
-    <section class="mb-12" id="category-section">
-        <div class="flex items-center justify-between mb-5">
-            <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
-                    class="fa-solid fa-bag-shopping text-navy-700"></i> Shop by Category</h2>
-            <a href="#" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All Categories <i
-                    class="fa-solid fa-arrow-right ml-1"></i></a>
-        </div>
-
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-12">
-            @foreach ($categories as $category)
-                <div
-                    class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition filter-con">
-                    {{-- FIXED IMAGE BOX: all category images render at same size --}}
-                    <div class="card-img-box bg-slate-50">
-                        <img class="card-img"
-                            src="{{ app()->environment('production')
-                                ? url('storage/app/public/' . $category->image)
-                                : asset('storage/' . $category->image) }}"
-                            alt="{{ $category->name }}">
-                    </div>
-                    <div class="p-4">
-                        <div class="flex items-center gap-2">
-                            <span class="w-9 h-9 rounded-full bg-navy-50 flex items-center justify-center text-navy-700">
-                                <i class="fa-solid fa-book"></i>
-                            </span>
-
-                            <div class="w-full">
-                                <div class="flex items-start justify-between gap-2">
-                                    <h3 class="font-bold text-navy-900 leading-tight filter-name">
-                                        {{ $category->name }}
-                                    </h3>
-                                </div>
-
-                                <span class="inline-flex mt-1 text-xs bg-gray-100 rounded-full px-2 py-1 w-fit">
-                                    Total Products: {{ $category->products_count }}
-                                </span>
-
-                                <p class="text-xs text-slate-500 mt-1">
-                                    {{ \Illuminate\Support\Str::limit($category->description, 30, '') }}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <a href="{{ route('category.show', $category->slug) }}"
-                                class="mt-3 inline-flex items-center text-sm font-semibold text-navy-700">Explore Now <i
-                                    class="fa-solid fa-arrow-right ml-1"></i></a>
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </section>
 
         {{-- ===== POPULAR SCHOOLS ===== --}}
     <section class="mb-12" id="school-section">

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Storefront;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product;
+use App\Models\Bundle;
 use App\Models\School;
 
 class SchoolController extends Controller
@@ -18,15 +18,15 @@ class SchoolController extends Controller
     public function show(School $school)
     {
         $school->load([
-            'classes' => fn($q) => $q->where('is_active', true),
-            'products' => fn($q) => $q->whereNull('class_id'),
+            'classes' => fn($q) => $q->where('is_active', true)->withCount('products'),
+            'classes.products',
         ]);
 
-        $products = Product::with('category')
-            ->whereNull('school_id')
-            ->whereNull('class_id')
+        $bundles = Bundle::where('school_id', $school->id)
+            ->where('is_active', true)
+            ->with(['schoolClass', 'products'])
             ->get();
 
-        return view('storefront.school', compact('school', 'products'));
+        return view('storefront.school', compact('school', 'bundles'));
     }
 }
