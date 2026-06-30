@@ -445,7 +445,7 @@
     </script>
 
 
-    <script src="/js/cart.js"></script>
+    <script src="/public/js/cart.js"></script>
     <script>
         < script >
             const storageUrl =
