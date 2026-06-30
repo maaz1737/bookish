@@ -3,7 +3,12 @@
 @section('content')
     <div class="flex justify-between mb-6">
         <h1 class="text-2xl font-bold">Products</h1>
-        <a href="{{ route('admin.products.create') }}" class="bg-indigo-600 text-white px-4 py-2 rounded">+ New Product</a>
+        <div class="flex gap-2">
+            <a href="{{ route('admin.products.bulk.show') }}" class="bg-gray-800 text-white px-4 py-2 rounded flex items-center gap-1.5 hover:bg-gray-700">
+                <i class="fa-solid fa-file-csv"></i> Bulk Upload
+            </a>
+            <a href="{{ route('admin.products.create') }}" class="bg-indigo-600 text-white px-4 py-2 rounded">+ New Product</a>
+        </div>
     </div>
     <div class="bg-white rounded-lg shadow overflow-x-auto">
         <table class="w-full text-sm">

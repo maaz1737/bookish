@@ -8,6 +8,16 @@ use App\Models\SchoolClass;
 
 class BundleController extends Controller
 {
+    public function index()
+    {
+        $bundles = \App\Models\Bundle::where('is_active', true)
+            ->with(['products', 'schoolClass'])
+            ->latest()
+            ->paginate(12);
+
+        return view('storefront.bundles', compact('bundles'));
+    }
+
     // SEO route: /school/{school}/{class}/bundle
     public function show(School $school, string $classSlug)
     {

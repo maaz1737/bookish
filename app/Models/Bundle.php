@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bundle extends Model
 {
-    protected $fillable = ['school_id', 'class_id', 'total_price', 'discount', 'final_price', 'is_active'];
+    protected $fillable = ['name', 'school_id', 'class_id', 'total_price', 'discount', 'final_price', 'is_active'];
 
     protected $casts = [
         'is_active'   => 'boolean',

@@ -77,11 +77,16 @@ class CartController extends Controller
                 continue;
             }
             $key = "product:{$item->product_id}";
+            
+            $discountPct = (float) ($bundle->discount ?? 0);
+            $originalPrice = (float) $item->product->effectivePrice();
+            $discountedPrice = $originalPrice - ($originalPrice * ($discountPct / 100));
+
             $cart[$key] = [
                 'type' => 'product',
                 'id' => $item->product_id,
                 'name' => $item->product->name,
-                'price' => $item->product->effectivePrice(),
+                'price' => round($discountedPrice, 2),
                 'quantity' => ($cart[$key]['quantity'] ?? 0) + $item->quantity,
             ];
         }

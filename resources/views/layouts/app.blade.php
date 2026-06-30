@@ -194,7 +194,7 @@
             </div>
 
             {{-- Rest of the Nav Links --}}
-            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+            <a href="{{ route('schools.index', 'schools')}}" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
                 <i class="fa-solid fa-school text-navy-600 mr-1"></i> Shop by School
             </a>
             <a href="{{ route('category.show', 'books') }}"
