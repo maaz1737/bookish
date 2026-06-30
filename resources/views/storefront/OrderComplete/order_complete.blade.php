@@ -37,8 +37,13 @@
                 Order Placed Successfully!
             </h1>
             <p class="mx-auto mt-3 max-w-xl text-center text-sm text-gray-500 sm:text-base">
-                You selected Cash on Delivery. Your order has been placed successfully.
-                Our representative will contact you shortly for order confirmation and processing.
+                @if ($order->payment_method == 'cash_on_delivery')
+                    You selected Cash on Delivery. Your order has been placed successfully.
+                    Our representative will contact you shortly for order confirmation and processing.
+                @else
+                    You selected Bank Transfer / Easypaisa / JazzCash. Your order has been placed successfully.
+                    Our team will verify your payment proof and begin processing your order shortly.
+                @endif
             </p>
 
             <!-- Content grid -->

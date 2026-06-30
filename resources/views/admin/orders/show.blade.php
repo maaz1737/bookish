@@ -6,8 +6,17 @@
     <div class="grid sm:grid-cols-3 gap-6">
         <div class="sm:col-span-2 bg-white rounded-lg shadow p-6">
             <h2 class="font-semibold mb-3">Items</h2>
+            @if ($order->paymentProofs->count() > 0)
+                @php $proof = $order->paymentProofs->first(); @endphp
+                @if ($proof->source === 'whatsapp' || $proof->screenshot_path === 'whatsapp')
+                    <div class="flex items-center gap-2 bg-green-50 border border-green-200 rounded-lg px-3 py-2 text-green-700 text-xs mb-3">
+                        <i class="fa-brands fa-whatsapp"></i> Customer shared receipt via WhatsApp
+                    </div>
+                @else
+                    <img src="{{ asset('storage/' . $proof->screenshot_path) }}" alt="Payment proof" class="w-full rounded border mb-3">
+                @endif
+            @endif
             <ul class="divide-y text-sm">
-                <img src="{{ asset('storage/' . $order->paymentProofs[0]->screenshot_path) }}" alt="">
                 @foreach ($order->items as $item)
                     <li class="py-2 flex justify-between"><span>{{ $item->name }}
                             ×{{ $item->quantity }}</span><span>{{ number_format($item->line_total) }} PKR</span></li>
