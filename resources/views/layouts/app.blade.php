@@ -444,14 +444,12 @@
         });
     </script>
 
-
-    <script src="/public/js/cart.js"></script>
     <script>
-        < script >
-            const storageUrl =
-                "{{ app()->environment('production') ? asset('storage/app/public/') : asset('storage/') }}";
+        const storageUrl =
+            "{{ app()->environment('production') ? asset('storage/app/public/') : asset('storage/') }}";
     </script>
-    </script>
+    <script src="/public/js/cart.js"></script>
+
 </body>
 
 </html>
