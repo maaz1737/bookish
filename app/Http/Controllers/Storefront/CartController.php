@@ -23,17 +23,44 @@ class CartController extends Controller
         $cart = $request->session()->get('cart', []);
         $key = "product:{$product->id}";
         $qty = max(1, (int) $request->input('quantity', 1));
+        $action = $request->input('action', 'add');
 
-        $cart[$key] = [
-            'type' => 'product',
-            'id' => $product->id,
-            'name' => $product->name,
-            'price' => $product->effectivePrice(),
-            'quantity' => ($cart[$key]['quantity'] ?? 0) + $qty,
-        ];
+        if ($action === 'increase') {
+
+            if (isset($cart[$key])) {
+                $cart[$key]['quantity']++;
+            }
+
+        } elseif ($action === 'decrease') {
+
+            if (isset($cart[$key])) {
+                $cart[$key]['quantity']--;
+
+                if ($cart[$key]['quantity'] <= 0) {
+                    unset($cart[$key]);
+                }
+            }
+
+        } else {
+
+            $cart[$key] = [
+                'type' => 'product',
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => $product->effectivePrice(),
+                'quantity' => ($cart[$key]['quantity'] ?? 0) + $qty,
+                'slug' => $product->slug,
+            ];
+
+        }
 
         $request->session()->put('cart', $cart);
-        return back()->with('success', 'Added to cart.');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product added to cart successfully.',
+            'cart_count' => count(session('cart', []))
+        ]);
     }
 
     public function addBundle(Request $request, Bundle $bundle)
@@ -82,24 +109,140 @@ class CartController extends Controller
         return back();
     }
 
-    private function cart(Request $request): array
+    public function cart(Request $request): array
     {
         $items = $request->session()->get('cart', []);
 
         $productIds = collect($items)->pluck('id');
 
         $products = Product::whereIn('id', $productIds)
-            ->pluck('images', 'id');
+            ->get(['id', 'images', 'price', 'discount_price'])
+            ->keyBy('id');
 
         foreach ($items as &$item) {
-            $item['image'] = $products[$item['id']] ?? null;
+            $product = $products->get($item['id']);
+
+            if ($product) {
+                $item['image'] = $product->images;
+                $item['price'] = $product->price;
+                $item['discount_price'] = $product->discount_price;
+            }
         }
 
-        $total = collect($items)->sum(fn($i) => $i['price'] * $i['quantity']);
+        $total = collect($items)->sum(function ($item) {
+            $price = $item['discount_price'] ?? $item['price'];
+            return $price * $item['quantity'];
+        });
 
         return [
             'items' => $items,
-            'total' => $total
+            'total' => $total,
         ];
+    }
+
+
+
+    public function json(Request $request)
+    {
+        $cart = $request->session()->get('cart', []);
+
+        if (empty($cart)) {
+            return response()->json([
+                'items' => [],
+                'total' => 0
+            ]);
+        }
+
+        $productIds = collect($cart)->pluck('id');
+
+        $products = Product::whereIn('id', $productIds)
+            ->get()
+            ->keyBy('id');
+
+
+
+        $items = [];
+        $total = 0;
+
+        foreach ($cart as $key => $item) {
+
+            $product = $products[$item['id']] ?? null;
+            if (!$product)
+                continue;
+
+            $qty = $item['quantity'];
+            $price = $product->discount_price ?? $product->price;
+
+            $items[] = [
+                'key' => $key,
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => $product->price,
+                'discount_price' => $product->discount_price,
+                'quantity' => $qty,
+                'image' => $product->images[0] ?? null,
+                'subtotal' => $price * $qty,
+            ];
+
+            $total += $price * $qty;
+        }
+
+                $cart = session('cart', []);
+                
+                $totalQty = array_sum(array_column($cart, 'quantity'));
+
+        return response()->json([
+            'items' => $items,
+            'total' => $total,
+            'total_count'=>$totalQty
+        ]);
+    }
+    public function update(Request $request)
+    {
+        $cart = session()->get('cart', []);
+
+
+        $key = $request->key;
+        $action = $request->action;
+
+        if (!isset($cart[$key])) {
+            return response()->json(['success' => false]);
+        }
+
+        if ($action === 'increase') {
+            $cart[$key]['quantity']++;
+        }
+
+        if ($action === 'decrease') {
+            $cart[$key]['quantity']--;
+
+            if ($cart[$key]['quantity'] <= 0) {
+                unset($cart[$key]);
+            }
+        }
+
+        session()->put('cart', $cart);
+
+        return response()->json(['success' => true]);
+    }
+
+
+    public function removeCartItem(Request $request)
+    {
+        $request->validate([
+            'key' => 'required|string',
+        ]);
+
+        $cart = $request->session()->get('cart', []);
+
+        if (isset($cart[$request->key])) {
+            unset($cart[$request->key]);
+            $request->session()->put('cart', $cart);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Item removed successfully.',
+        ]);
     }
 }
