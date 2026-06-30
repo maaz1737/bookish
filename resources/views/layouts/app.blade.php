@@ -135,11 +135,12 @@
                 <a href="#" class="relative flex flex-col items-center text-xs"><i
                         class="fa-regular fa-heart text-lg"></i>Wishlist<span
                         class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">0</span></a>
-            
+
                 {{-- {{ route('cart.index') }} --}}
                 <a href="#" class="cart relative flex flex-col items-center text-xs"><i
                         class="fa-solid fa-cart-shopping text-lg"></i>Cart<span
-                        class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center" id="cart_count">0</span></a>
+                        class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center"
+                        id="cart_count">0</span></a>
             </div>
         </div>
 
@@ -308,9 +309,10 @@
 
                 <!-- Checkout -->
                 <div class="px-3 pb-3">
-                    <button class="w-full h-10 rounded bg-[#6C63FF] hover:bg-[#5e54f6] text-white text-sm font-medium">
+                    <a href="{{ url('/checkout') }}"
+                        class="w-full block h-10 rounded bg-[#6C63FF] hover:bg-[#5e54f6] text-white text-sm font-medium flex items-center justify-center">
                         🛒 Checkout
-                    </button>
+                    </a>
                 </div>
 
             </div>
