@@ -41,7 +41,7 @@
 
     <!-- Products Grid -->
     @if ($products->count())
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             @foreach ($products as $product)
                 <div class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition duration-300 border border-slate-200 flex flex-col h-full relative">
                     <!-- Wishlist Button -->

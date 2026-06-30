@@ -8,9 +8,7 @@ use App\Models\Bundle;
 use App\Models\BundleItem;
 use App\Models\Product;
 use App\Models\School;
-use App\Models\SchoolClass;
 use App\Services\BundlePricingService;
-use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\DB;
 
 class BundleController extends Controller
@@ -29,30 +27,29 @@ class BundleController extends Controller
     {
         return view('admin.bundles.create', [
             'schools' => School::with('classes')->get(),
-            // Only book-category products belong in bundles
             'products' => Product::active()->get(),
         ]);
     }
 
-    // UI Sequence: Select School -> Select Class -> Add Books -> Auto-Calculate
     public function store(StoreBundleRequest $request)
     {
         $bundle = DB::transaction(function () use ($request) {
-            $bundle = Bundle::updateOrCreate(
-                ['school_id' => $request->school_id, 'class_id' => $request->class_id],
-                ['discount' => $request->discount, 'is_active' => $request->boolean('is_active', true)]
-            );
+            $bundle = Bundle::create([
+                'name'      => $request->name,
+                'school_id' => $request->school_id ?: null,
+                'class_id'  => $request->class_id ?: null,
+                'discount'  => $request->discount,
+                'is_active' => $request->boolean('is_active', true),
+            ]);
 
-            $bundle->items()->delete();
             foreach ($request->items as $item) {
                 BundleItem::create([
-                    'bundle_id' => $bundle->id,
+                    'bundle_id'  => $bundle->id,
                     'product_id' => $item['product_id'],
-                    'quantity' => $item['quantity'],
+                    'quantity'   => $item['quantity'],
                 ]);
             }
 
-            // Auto-calculate total + discounted final price
             return $this->pricing->recalculate($bundle);
         });
 
@@ -62,27 +59,25 @@ class BundleController extends Controller
 
     public function edit(Bundle $bundle)
     {
-
         return view('admin.bundles.edit', [
-            'schools' => School::with('classes')->get(),
+            'schools'  => School::with('classes')->get(),
             'products' => Product::active()->get(),
-            'bundle' => $bundle->load([
+            'bundle'   => $bundle->load([
                 'school',
                 'schoolClass',
                 'items'
             ])->loadCount('items')
-
         ]);
     }
 
     public function update(StoreBundleRequest $request, Bundle $bundle)
     {
         $bundle = DB::transaction(function () use ($request, $bundle) {
-
             $bundle->update([
-                'school_id' => $request->school_id,
-                'class_id' => $request->class_id,
-                'discount' => $request->discount,
+                'name'      => $request->name,
+                'school_id' => $request->school_id ?: null,
+                'class_id'  => $request->class_id ?: null,
+                'discount'  => $request->discount,
                 'is_active' => $request->boolean('is_active', true),
             ]);
 
@@ -90,9 +85,9 @@ class BundleController extends Controller
 
             foreach ($request->items as $item) {
                 BundleItem::create([
-                    'bundle_id' => $bundle->id,
+                    'bundle_id'  => $bundle->id,
                     'product_id' => $item['product_id'],
-                    'quantity' => $item['quantity'],
+                    'quantity'   => $item['quantity'],
                 ]);
             }
 
@@ -103,7 +98,6 @@ class BundleController extends Controller
             ->route('admin.bundles.index')
             ->with('success', "Bundle updated. Final price: {$bundle->final_price} PKR.");
     }
-
 
     public function destroy(Bundle $bundle)
     {
