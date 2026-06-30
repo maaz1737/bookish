@@ -30,7 +30,9 @@ class AppServiceProvider extends ServiceProvider
         });
 
         View::composer('*', function ($view) {
-            $view->with('cart', app(CartController::class)->cart(request()));
+
+            $cart = app(CartController::class)->cart(request());
+            $view->with('carts', $cart);
         });
     }
 }

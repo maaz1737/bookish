@@ -33,6 +33,13 @@ use App\Http\Controllers\Admin\AttributeController;
 
 /* ------------------------------ Storefront ------------------------------ */
 
+
+
+Route::get('/cart/json', [CartController::class, 'json']);
+Route::post('/cart/update', [CartController::class, 'update']);
+Route::post('/cart/remove', [CartController::class, 'removeCartItem']);
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/schools', [SchoolController::class, 'index'])->name('schools.index');
