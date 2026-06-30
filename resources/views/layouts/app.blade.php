@@ -141,7 +141,7 @@
                 $totalQty = array_sum(array_column($cart, 'quantity'));
                 ?>
                 {{-- {{ route('cart.index') }} --}}
-                <a href="{{ route('cart.index') }}" class=" relative flex flex-col items-center text-xs"><i
+                <a href="" class="cart relative flex flex-col items-center text-xs"><i
                         class="fa-solid fa-cart-shopping text-lg"></i>Cart<span
                         class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">{{ $totalQty ?? 0 }}</span></a>
             </div>
@@ -241,6 +241,8 @@
         @yield('content')
     </main>
 
+    @dd($cart)
+
     <!-- Overlay -->
     <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-40">
     </div>
@@ -257,7 +259,11 @@
             <h2 class="text-xl font-bold mb-4">Shopping Cart</h2>
 
             <div>
-                hello
+                @foreach ($cart['items'] as $item)
+                    <div>
+                        hellow
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

@@ -77,7 +77,7 @@ class CartController extends Controller
         return back();
     }
 
-    private function cart(Request $request): array
+    public function cart(Request $request): array
     {
         $items = $request->session()->get('cart', []);
 
