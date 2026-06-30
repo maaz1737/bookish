@@ -445,9 +445,12 @@
     </script>
 
 
-    <script src="{{ asset('js/cart.js') }}"></script>
+    <script src="/js/cart.js"></script>
     <script>
-        const storageUrl = "{{ asset('storage') }}";
+        < script >
+            const storageUrl =
+                "{{ app()->environment('production') ? asset('storage/app/public/') : asset('storage/') }}";
+    </script>
     </script>
 </body>
 
