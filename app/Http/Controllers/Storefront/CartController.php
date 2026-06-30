@@ -182,14 +182,14 @@ class CartController extends Controller
             $total += $price * $qty;
         }
 
-                $cart = session('cart', []);
-                
-                $totalQty = array_sum(array_column($cart, 'quantity'));
+        $cart = session('cart', []);
+
+        $totalQty = array_sum(array_column($cart, 'quantity'));
 
         return response()->json([
             'items' => $items,
             'total' => $total,
-            'total_count'=>$totalQty
+            'total_count' => $totalQty ?? 0,
         ]);
     }
     public function update(Request $request)
