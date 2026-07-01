@@ -182,7 +182,7 @@ async function loadCart() {
 
     document.getElementById('cart_total').innerHTML = data.total
 
-    if (data.total_count) {
+    if (data.total_count != undefined) {
         document.getElementById('cart_count').innerHTML = data.total_count ?? 0;
     }
     else {
