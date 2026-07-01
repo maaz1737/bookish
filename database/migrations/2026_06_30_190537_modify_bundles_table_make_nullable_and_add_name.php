@@ -8,43 +8,100 @@ return new class extends Migration
 {
     public function up(): void
     {
+        try {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->dropForeign('bundles_school_id_foreign');
+            });
+        } catch (\Throwable $e) {
+            // Already dropped or doesn't exist
+        }
+
+        try {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->dropForeign('bundles_class_id_foreign');
+            });
+        } catch (\Throwable $e) {
+            // Already dropped or doesn't exist
+        }
+
+        try {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->dropUnique('bundles_school_id_class_id_unique');
+            });
+        } catch (\Throwable $e) {
+            // Already dropped or doesn't exist
+        }
+
+        // Make columns nullable
         Schema::table('bundles', function (Blueprint $table) {
-            // Drop foreign keys first
-            $table->dropForeign('bundles_school_id_foreign');
-            $table->dropForeign('bundles_class_id_foreign');
-            
-            // Drop unique constraint
-            $table->dropUnique('bundles_school_id_class_id_unique');
-            
-            // Make school_id and class_id nullable
             $table->unsignedBigInteger('school_id')->nullable()->change();
             $table->unsignedBigInteger('class_id')->nullable()->change();
-            
-            // Re-add foreign keys and individual indexes
-            $table->foreign('school_id')->references('id')->on('schools')->cascadeOnDelete();
-            $table->foreign('class_id')->references('id')->on('school_classes')->cascadeOnDelete();
-            
-            // Add name column
-            $table->string('name')->nullable()->after('id');
         });
+
+        try {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->foreign('school_id')->references('id')->on('schools')->cascadeOnDelete();
+            });
+        } catch (\Throwable $e) {
+            // Already exists or couldn't add
+        }
+
+        try {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->foreign('class_id')->references('id')->on('school_classes')->cascadeOnDelete();
+            });
+        } catch (\Throwable $e) {
+            // Already exists or couldn't add
+        }
+
+        if (!Schema::hasColumn('bundles', 'name')) {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->string('name')->nullable()->after('id');
+            });
+        }
     }
 
     public function down(): void
     {
+        if (Schema::hasColumn('bundles', 'name')) {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->dropColumn('name');
+            });
+        }
+
+        try {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->dropForeign('bundles_school_id_foreign');
+            });
+        } catch (\Throwable $e) {}
+
+        try {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->dropForeign('bundles_class_id_foreign');
+            });
+        } catch (\Throwable $e) {}
+
         Schema::table('bundles', function (Blueprint $table) {
-            $table->dropColumn('name');
-            
-            $table->dropForeign(['school_id']);
-            $table->dropForeign(['class_id']);
-            
-            // Re-add unique constraint (which requires values to be non-nullable)
             $table->unsignedBigInteger('school_id')->nullable(false)->change();
             $table->unsignedBigInteger('class_id')->nullable(false)->change();
-            
-            $table->unique(['school_id', 'class_id']);
-            
-            $table->foreign('school_id')->references('id')->on('schools')->cascadeOnDelete();
-            $table->foreign('class_id')->references('id')->on('school_classes')->cascadeOnDelete();
         });
+
+        try {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->unique(['school_id', 'class_id']);
+            });
+        } catch (\Throwable $e) {}
+
+        try {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->foreign('school_id')->references('id')->on('schools')->cascadeOnDelete();
+            });
+        } catch (\Throwable $e) {}
+
+        try {
+            Schema::table('bundles', function (Blueprint $table) {
+                $table->foreign('class_id')->references('id')->on('school_classes')->cascadeOnDelete();
+            });
+        } catch (\Throwable $e) {}
     }
 };
