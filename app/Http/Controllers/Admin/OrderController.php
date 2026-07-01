@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
@@ -31,9 +32,9 @@ class OrderController extends Controller
             'payment_status' => ['required', Rule::in(['pending', 'paid'])],
         ]);
 
-        $newStatus     = $data['order_status'];
-        $isOut         = in_array($newStatus, ['shipped', 'delivered']);
-        $alreadyAdj    = $order->stock_adjusted;
+        $newStatus = $data['order_status'];
+        $isOut = in_array($newStatus, ['shipped', 'delivered']);
+        $alreadyAdj = $order->stock_adjusted;
 
         if ($isOut && !$alreadyAdj) {
             foreach ($order->items as $item) {
@@ -54,5 +55,13 @@ class OrderController extends Controller
 
         $order->update($data);
         return back()->with('success', 'Order status updated.');
+    }
+    public function pdf(Order $order)
+    {
+        $order->load('items', 'paymentProofs');
+
+        $pdf = Pdf::loadView('admin.orders.pdf', compact('order'));
+
+        return $pdf->download("Order-{$order->order_number}.pdf");
     }
 }

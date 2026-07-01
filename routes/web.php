@@ -144,7 +144,8 @@ Route::prefix('admin')->name('admin.')
         Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
         Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::put('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.status');
-
+        Route::get('orders/{order}/pdf', [AdminOrderController::class, 'pdf'])
+            ->name('orders.pdf');
         // Module 7: Payment verification
         Route::get('payments', [PaymentVerificationController::class, 'index'])->name('payments.index');
         Route::get('payments/{proof}', [PaymentVerificationController::class, 'show'])->name('payments.show');
