@@ -129,8 +129,7 @@
             </form>
 
             <div class="flex items-center gap-6 text-slate-700">
-                <a href="#" class="flex flex-col items-center text-xs"><i
-                        class="fa-regular fa-user text-lg"></i>Login /
+                <a href="#" class="flex flex-col items-center text-xs"><i class="fa-regular fa-user text-lg"></i>Login /
                     Register</a>
                 <a href="#" class="relative flex flex-col items-center text-xs"><i
                         class="fa-regular fa-heart text-lg"></i>Wishlist<span
@@ -175,8 +174,7 @@
                                         class="w-7 h-7 shrink-0 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100">
                                         <i class="fa-solid fa-book text-xs"></i>
                                     </span>
-                                    <span
-                                        class="font-semibold leading-tight text-slate-800">{{ $category->name }}</span>
+                                    <span class="font-semibold leading-tight text-slate-800">{{ $category->name }}</span>
                                 </a>
                             @endforeach
                         @else
@@ -194,7 +192,8 @@
             </div>
 
             {{-- Rest of the Nav Links --}}
-            <a href="{{ route('schools.index', 'schools')}}" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+            <a href="{{ route('schools.index', 'schools')}}"
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
                 <i class="fa-solid fa-school text-navy-600 mr-1"></i> Shop by School
             </a>
             <a href="{{ route('category.show', 'books') }}"
@@ -227,8 +226,7 @@
         </div>
     @endif
     @if (session('error'))
-        <div
-            class="max-w-7xl mx-auto w-full px-4 mt-4 bg-red-50 border border-red-200 text-red-800 rounded-md p-3 text-sm">
+        <div class="max-w-7xl mx-auto w-full px-4 mt-4 bg-red-50 border border-red-200 text-red-800 rounded-md p-3 text-sm">
             ⚠️ {{ session('error') }}
         </div>
     @endif
@@ -244,8 +242,7 @@
     </div>
 
     <!-- Cart Sidebar -->
-    <div id="cartDrawer"
-        class="fixed top-0 right-0 h-screen w-[35%] bg-white shadow-xl
+    <div id="cartDrawer" class="fixed top-0 right-0 h-screen w-[35%] bg-white shadow-xl
            translate-x-full transition-transform duration-300 ease-in-out
            z-[999999]">
 
@@ -382,7 +379,7 @@
         </div>
     </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             const btn = document.getElementById('categoryDropdownBtn');
             const menu = document.getElementById('categoryDropdownMenu');
             const icon = document.getElementById('categoryBtnIcon');
@@ -390,7 +387,7 @@
 
             if (btn && menu) {
                 // Toggle dropdown open/close
-                btn.addEventListener('click', function(e) {
+                btn.addEventListener('click', function (e) {
                     e.stopPropagation();
                     const isHidden = menu.classList.contains('hidden');
 
@@ -402,14 +399,14 @@
                 });
 
                 // Close when clicking anywhere outside the dropdown
-                document.addEventListener('click', function(e) {
+                document.addEventListener('click', function (e) {
                     if (!menu.contains(e.target) && !btn.contains(e.target)) {
                         closeMenu();
                     }
                 });
 
                 // Close on ESC keypress
-                document.addEventListener('keydown', function(e) {
+                document.addEventListener('keydown', function (e) {
                     if (e.key === 'Escape') {
                         closeMenu();
                     }
@@ -449,6 +446,8 @@
             "{{ app()->environment('production') ? asset('storage/app/public/') : asset('storage/') }}";
     </script>
     <script src="/public/js/cart.js"></script>
+    {{-- <script src="/js/cart.js"></script> --}}
+
 
 </body>
 
