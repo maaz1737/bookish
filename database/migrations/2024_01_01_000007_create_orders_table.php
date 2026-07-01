@@ -20,10 +20,10 @@ return new class extends Migration {
             $table->decimal('total_amount', 10, 2);
 
             // Payment lifecycle (Section 8) + Order workflow (Section 9)
-            $table->enum('payment_status', ['pending', 'proof_submitted', 'verifying', 'paid'])
-                  ->default('pending');
-            $table->enum('order_status', ['pending_payment', 'processing', 'shipped', 'delivered', 'cancelled'])
-                  ->default('pending_payment');
+            $table->enum('payment_status', ['pending', 'paid'])
+                ->default('pending');
+            $table->enum('order_status', ['pending', 'shipped', 'delivered', 'returned'])
+                ->default('pending');
 
             $table->timestamp('paid_at')->nullable();
             $table->timestamps();

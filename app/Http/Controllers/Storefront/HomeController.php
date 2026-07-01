@@ -22,7 +22,7 @@ class HomeController extends Controller
             ->whereNull('parent_id')
             ->where('show_on_dashboard', true)
             ->withCount('products')
-            ->limit(4)
+            ->limit(3)
             ->get();
         $bestSellers = Product::active()
             ->where('is_best_seller', true)

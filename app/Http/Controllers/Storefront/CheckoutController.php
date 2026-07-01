@@ -47,7 +47,7 @@ class CheckoutController extends Controller
                 'address' => $data['address'],
                 'total_amount' => 0,
                 'payment_status' => 'pending',
-                'order_status' => 'pending_payment',
+                'order_status' => 'pending',
             ]);
 
             foreach ($cart as $line) {
