@@ -30,24 +30,25 @@ class OrderController extends Controller
             'order_status' => ['required', Rule::in(['pending_payment', 'processing', 'shipped', 'delivered', 'cancelled'])],
         ]);
 
-        $oldStatus = $order->order_status;
-        $newStatus = $data['order_status'];
+        $newStatus     = $data['order_status'];
+        $isOut         = in_array($newStatus, ['shipped', 'delivered']);
+        $alreadyAdj    = $order->stock_adjusted;
 
-        $wasOut = in_array($oldStatus, ['shipped', 'delivered']);
-        $isOut = in_array($newStatus, ['shipped', 'delivered']);
-
-        if (!$wasOut && $isOut) {
+        if ($isOut && !$alreadyAdj) {
             foreach ($order->items as $item) {
                 if ($item->product) {
                     $item->product->decrement('stock', $item->quantity);
                 }
             }
-        } elseif ($wasOut && !$isOut) {
+            $data['stock_adjusted'] = true;
+
+        } elseif (!$isOut && $alreadyAdj) {
             foreach ($order->items as $item) {
                 if ($item->product) {
                     $item->product->increment('stock', $item->quantity);
                 }
             }
+            $data['stock_adjusted'] = false;
         }
 
         $order->update($data);

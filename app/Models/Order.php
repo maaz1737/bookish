@@ -16,12 +16,14 @@ class Order extends Model
         'payment_status',
         'order_status',
         'paid_at',
-        'payment_method'
+        'payment_method',
+        'stock_adjusted',
     ];
 
     protected $casts = [
         'paid_at' => 'datetime',
         'total_amount' => 'decimal:2',
+        'stock_adjusted' => 'boolean',
     ];
 
     public function user()
