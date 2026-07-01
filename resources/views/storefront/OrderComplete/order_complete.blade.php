@@ -7,7 +7,8 @@
                 <div class="flex flex-col items-center flex-1">
                     <div
                         class="w-10 h-10 rounded-full border-2 flex items-center justify-center {{ $s[2] ? 'bg-[#0a1f44] text-white border-[#0a1f44]' : 'bg-white text-gray-400 border-gray-300' }}">
-                        {{ $s[0] }}</div>
+                        {{ $s[0] }}
+                    </div>
                     <div class="mt-2 {{ $s[2] ? 'text-[#0a1f44] font-semibold' : '' }}">{{ $s[1] }}</div>
                 </div>
                 @if ($i < 3)
@@ -20,8 +21,7 @@
         <div class="w-full max-w-4xl rounded-2xl bg-white p-8 shadow-lg sm:p-12">
             <!-- Success icon -->
             <div class="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center">
-                <svg class="h-20 w-20 text-emerald-500" viewBox="0 0 80 80" fill="none"
-                    xmlns="http://www.w3.org/2000/svg">
+                <svg class="h-20 w-20 text-emerald-500" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="40" cy="40" r="36" stroke="currentColor" stroke-width="3" />
                     <path d="M26 42L35 51L54 32" stroke="currentColor" stroke-width="4" stroke-linecap="round"
                         stroke-linejoin="round" />
@@ -114,7 +114,7 @@
 
             <!-- Actions -->
             <div class="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
-                <button
+                {{-- <button
                     class="inline-flex items-center justify-center gap-2 rounded-lg bg-slate-900 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-slate-800">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -124,8 +124,8 @@
                         <circle cx="18.5" cy="18.5" r="2.5" />
                     </svg>
                     Track Order
-                </button>
-                <button
+                </button> --}}
+                <a href="{{ route('home') }}"
                     class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-50">
                     <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round">
@@ -134,7 +134,7 @@
                         <path d="M16 10a4 4 0 0 1-8 0" />
                     </svg>
                     Continue Shopping
-                </button>
+                </a>
             </div>
         </div>
     </div>

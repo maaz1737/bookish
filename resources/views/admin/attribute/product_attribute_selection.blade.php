@@ -59,7 +59,6 @@
             </div>
 
             <form action="{{ route('admin.products.attributes.store', $product->slug) }}" method="POST">
-
                 @csrf
 
                 <div class="grid gap-4">
