@@ -96,9 +96,40 @@
             object-fit: contain;
         }
     </style>
+
+    <style>
+        /* From Uiverse.io by xXJollyHAKERXx */
+        .spinner {
+            width: 18px;
+            height: 18px;
+            background-image: linear-gradient(rgb(186, 66, 255) 35%, rgb(0, 225, 255));
+            border-radius: 50%;
+            animation: spinning82341 1.2s linear infinite;
+            box-shadow:
+                0 -1px 4px rgb(186, 66, 255),
+                0 1px 4px rgb(0, 225, 255);
+        }
+
+        .spinner1 {
+            width: 14px;
+            height: 14px;
+            margin: 2px;
+            background: white;
+            /* or your button background */
+            border-radius: 50%;
+        }
+
+        @keyframes spinning82341 {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+
 </head>
 
 <body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
 
     {{-- ===== TOP UTILITY BAR ===== --}}
     <div class="bg-navy-800 text-white text-xs">
@@ -242,7 +273,7 @@
     </div>
 
     <!-- Cart Sidebar -->
-    <div id="cartDrawer" class="fixed top-0 right-0 h-screen w-[35%] bg-white shadow-xl
+    <div id="cartDrawer" class="fixed top-0 right-0 h-screen w-[380px] bg-white shadow-xl
            translate-x-full transition-transform duration-300 ease-in-out
            z-[999999]">
 
@@ -262,7 +293,7 @@
             <!-- Cart Items -->
             <div class="flex-1 overflow-y-auto">
 
-                <div class="px-3 py-3" id="cart-container">
+                <div class="px-3 py-3 h-full" id="cart-container">
                 </div>
 
             </div>
@@ -446,7 +477,7 @@
             "{{ app()->environment('production') ? asset('storage/app/public/') : asset('storage/') }}";
     </script>
     <script src="/public/js/cart.js"></script>
-    {{-- <script src="/js/cart.js"></script> --}}
+    <script src="/js/cart.js"></script>
 
 
 </body>
