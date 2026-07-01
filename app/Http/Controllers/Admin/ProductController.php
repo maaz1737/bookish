@@ -123,6 +123,10 @@ class ProductController extends Controller
         $totalDiscountPrice = 0;
 
         foreach ($items as $item) {
+            if (!$item->product) {
+                $item->delete();
+                continue;
+            }
 
             $price = $item->product->price * $item->quantity;
 
