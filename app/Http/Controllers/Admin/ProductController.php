@@ -214,7 +214,7 @@ class ProductController extends Controller
         $callback = function () use ($headers) {
             $file = fopen('php://output', 'w');
             fputcsv($file, $headers);
-            
+
             // Add a sample row
             fputcsv($file, [
                 'Class 5 Mathematics Book',
@@ -228,16 +228,16 @@ class ProductController extends Controller
                 '5',
                 'Official textbook recommended by Fazaia.'
             ]);
-            
+
             fclose($file);
         };
 
         return response()->stream($callback, 200, [
-            "Content-type"        => "text/csv",
+            "Content-type" => "text/csv",
             "Content-Disposition" => "attachment; filename=products_bulk_template.csv",
-            "Pragma"              => "no-cache",
-            "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
-            "Expires"             => "0"
+            "Pragma" => "no-cache",
+            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
+            "Expires" => "0"
         ]);
     }
 
@@ -253,40 +253,40 @@ class ProductController extends Controller
         $rows = [];
         $errors = [];
         $validRows = [];
-        
+
         if (($handle = fopen($path, 'r')) !== false) {
             $headers = fgetcsv($handle, 1000, ',');
-            
+
             if ($headers) {
-                $headers = array_map(function($h) {
+                $headers = array_map(function ($h) {
                     return trim(strtolower(str_replace([' ', '_', '-'], '', $h)));
                 }, $headers);
             }
 
             $expected = [
-                'productname'       => 'Product Name',
-                'category'          => 'Category',
-                'school'            => 'School',
-                'class'             => 'Class',
-                'publisher'         => 'Publisher',
-                'baseprice'         => 'Base Price',
-                'discountprice'     => 'Discount Price',
-                'stock'             => 'Stock',
+                'productname' => 'Product Name',
+                'category' => 'Category',
+                'school' => 'School',
+                'class' => 'Class',
+                'publisher' => 'Publisher',
+                'baseprice' => 'Base Price',
+                'discountprice' => 'Discount Price',
+                'stock' => 'Stock',
                 'lowstockthreshold' => 'Low Stock Threshold',
-                'description'       => 'Description'
+                'description' => 'Description'
             ];
 
             $rowCount = 1;
             while (($data = fgetcsv($handle, 1000, ',')) !== false) {
                 $rowCount++;
-                
+
                 if (count($headers) !== count($data)) {
                     $errors[] = "Row {$rowCount}: Column count mismatch. Expected " . count($headers) . " columns.";
                     continue;
                 }
 
                 $rowRaw = array_combine($headers, $data);
-                
+
                 $row = [];
                 foreach ($expected as $key => $label) {
                     $row[$key] = isset($rowRaw[$key]) ? trim($rowRaw[$key]) : null;
@@ -383,7 +383,8 @@ class ProductController extends Controller
                     }
 
                     foreach ($validRows as $vr) {
-                        if ($vr['name'] === $name &&
+                        if (
+                            $vr['name'] === $name &&
                             $vr['school_id'] === ($school ? $school->id : null) &&
                             $vr['class_id'] === ($schoolClass ? $schoolClass->id : null)
                         ) {
@@ -394,21 +395,21 @@ class ProductController extends Controller
                 }
 
                 $rowObj = [
-                    'row_num'             => $rowCount,
-                    'name'                => $name,
-                    'category_name'       => $categoryName,
-                    'category_id'         => $category ? $category->id : null,
-                    'school_name'         => $schoolName,
-                    'school_id'           => $school ? $school->id : null,
-                    'class_name'          => $className,
-                    'class_id'            => $schoolClass ? $schoolClass->id : null,
-                    'publisher'           => $row['publisher'],
-                    'price'               => (float) $basePrice,
-                    'discount_price'      => !empty($discountPrice) ? (float) $discountPrice : null,
-                    'stock'               => (int) $stock,
+                    'row_num' => $rowCount,
+                    'name' => $name,
+                    'category_name' => $categoryName,
+                    'category_id' => $category ? $category->id : null,
+                    'school_name' => $schoolName,
+                    'school_id' => $school ? $school->id : null,
+                    'class_name' => $className,
+                    'class_id' => $schoolClass ? $schoolClass->id : null,
+                    'publisher' => $row['publisher'],
+                    'price' => (float) $basePrice,
+                    'discount_price' => !empty($discountPrice) ? (float) $discountPrice : null,
+                    'stock' => (int) $stock,
                     'low_stock_threshold' => (int) $lowStock,
-                    'description'         => $row['description'],
-                    'errors'              => $rowErrors
+                    'description' => $row['description'],
+                    'errors' => $rowErrors
                 ];
 
                 $rows[] = $rowObj;
@@ -429,7 +430,7 @@ class ProductController extends Controller
         }
 
         return view('admin.products.bulk', [
-            'rows'       => $rows,
+            'rows' => $rows,
             'bulkErrors' => $errors
         ]);
     }
@@ -437,7 +438,7 @@ class ProductController extends Controller
     public function bulkUploadImport(Request $request)
     {
         $products = session()->get('bulk_import_products');
-        
+
         if (empty($products)) {
             return redirect()->route('admin.products.bulk.show')->with('error', 'No valid products found to import. Please upload a valid CSV first.');
         }
@@ -447,30 +448,30 @@ class ProductController extends Controller
 
             foreach ($products as $p) {
                 $slug = Str::slug($p['name']) . '-' . Str::random(5);
-                
+
                 $product = Product::create([
-                    'name'                => $p['name'],
-                    'slug'                => $slug,
-                    'category_id'         => $p['category_id'],
-                    'school_id'           => $p['school_id'],
-                    'class_id'            => $p['class_id'],
-                    'price'               => $p['price'],
-                    'discount_price'      => $p['discount_price'],
-                    'stock'               => $p['stock'],
+                    'name' => $p['name'],
+                    'slug' => $slug,
+                    'category_id' => $p['category_id'],
+                    'school_id' => $p['school_id'],
+                    'class_id' => $p['class_id'],
+                    'price' => $p['price'],
+                    'discount_price' => $p['discount_price'],
+                    'stock' => $p['stock'],
                     'low_stock_threshold' => $p['low_stock_threshold'],
-                    'publisher'           => $p['publisher'],
-                    'description'         => $p['description'],
-                    'images'              => [],
-                    'is_active'           => true
+                    'publisher' => $p['publisher'],
+                    'description' => $p['description'],
+                    'images' => [],
+                    'is_active' => true
                 ]);
 
                 $this->syncProductBundle($product);
             }
 
             DB::commit();
-            
+
             session()->forget('bulk_import_products');
-            
+
             return redirect()->route('admin.products.index')
                 ->with('success', count($products) . ' products imported successfully.');
 

@@ -132,6 +132,13 @@ class AttributeController extends Controller
     }
     public function ProductAttributeStore(Product $product, Request $request)
     {
+        $request->validate([
+            'attribute_ids' => ['required', 'array', 'min:1'],
+            'attribute_ids.*' => ['integer', 'exists:attributes,id'],
+        ], [
+            'attribute_ids.required' => 'Please select at least one attribute.',
+            'attribute_ids.min' => 'Please select at least one attribute.',
+        ]);
 
         $product->attributes()->sync($request->attribute_ids);
 
@@ -140,6 +147,9 @@ class AttributeController extends Controller
     }
     public function attributeValueSelection(Product $product)
     {
+
+
+
         $product->attributes;
 
         return view('admin.attributeValue.attribute_value_select', compact('product'));
@@ -150,6 +160,15 @@ class AttributeController extends Controller
     public function ProductVariantStore(Product $product, Request $request)
     {
         $attributes = $request->input('attribute_values');
+        $request->validate([
+            'attribute_values' => ['required', 'array'],
+            'attribute_values.*' => ['required', 'array', 'min:1'],
+            'attribute_values.*.*' => ['integer', 'exists:attribute_values,id'],
+        ], [
+            'attribute_values.required' => 'Please select values for all attributes.',
+            'attribute_values.*.required' => 'Please select at least one value for each attribute.',
+            'attribute_values.*.min' => 'Please select at least one value for each attribute.',
+        ]);
 
         $price = $request->input('price');
         $stock = $request->input('stock');
