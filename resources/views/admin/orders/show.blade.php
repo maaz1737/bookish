@@ -28,7 +28,7 @@
             <p class="text-sm text-gray-500 mt-4">Shipping: {{ $order->address }}</p>
         </div>
         <div class="bg-white rounded-lg shadow p-6">
-            <h2 class="font-semibold mb-3">Order status</h2>
+            <h2 class="font-semibold mb-3">Order Status</h2>
             <form method="POST" action="{{ route('admin.orders.status', $order) }}">
                 @csrf @method('PUT')
                 <select name="order_status" class="w-full border rounded px-3 py-2 mb-3">
@@ -38,6 +38,7 @@
                         </option>
                     @endforeach
                 </select>
+                <h2 class="font-semibold my-2">Payment Status</h2>
                 <select name="payment_status" class="w-full border rounded px-3 py-2 mb-3">
                     @foreach (['pending', 'paid'] as $s)
                         <option value="{{ $s }}" @selected($order->payment_status == $s)>
