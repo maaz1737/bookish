@@ -3,6 +3,10 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 document.addEventListener('DOMContentLoaded', loadCart);
 
 
+let loader = ` <div class="spinner">
+           <div class="spinner1"></div>
+            </div>`;
+
 const $cartDrawer = $('#cartDrawer');
 const $overlay = $('#cartOverlay');
 
@@ -17,8 +21,9 @@ function open_cart() {
 // Open Cart side bar
 $(document).on('click', '.cart', function (e) {
     e.preventDefault();
-    open_cart();
     loadCart();
+    open_cart();
+
 });
 
 // Close Cart
@@ -57,17 +62,20 @@ $(document).on('submit', '.cart-form', function (e) {
         data: form.serialize(),
 
         beforeSend: function () {
+            button
+                .prop('disabled', true);
+
             button.html(`
-        <svg class="animate-spin h-4 w-4" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" fill="none"></circle>
-        </svg>
+        <span class="inline-flex items-center gap-2">
+            <span class="">${originalHtml}</span>
+            ${loader}
+        </span>
     `);
-            button.prop('disabled', true);
         },
 
-        success: function (response) {
+        success: async function (response) {
+            await loadCart();
             open_cart();
-            loadCart();
 
             button.html(`
                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -108,78 +116,94 @@ async function loadCart() {
 
     let html = '';
 
-    data.items.forEach(item => {
+    if (data.items.length === 0) {
+        html = `
+        <div class="flex flex-col items-center justify-center h-full py-20 text-center">
+            <i class="fa-solid fa-cart-shopping text-5xl text-gray-400 mb-4"></i>
 
-        let savePercent = '';
-        if (item.price && item.discount_price && item.discount_price < item.price) {
-            let percent = Math.round(((item.price - item.discount_price) / item.price) * 100);
-            savePercent = `
-    <div class="text-[10px] text-green-600">
-        Save ${percent}%
-    </div>
-    `;
-        }
+            <h3 class="text-xl font-medium text-gray-800">
+                Your Cart is Empty
+            </h3>
 
-        html += `
-    <div class="flex gap-2 mb-4">
+            <p class="text-gray-500 mt-2 font-normal">
+                Fill your cart with amazing items
+            </p>
 
-        <div class="relative shrink-0">
-            <button onclick="removeItem('${item.key}')"
-                class="absolute -left-1 -top-1 w-3.5 h-3.5 rounded-full border bg-white text-[10px] text-gray-500 flex items-center justify-center">
-                ×
-            </button>
-
-           <img src="${storageUrl}/${item.image}"
-     class="w-[50px] h-[50px] border rounded object-cover">
+            <a href="/shop"
+                class="mt-6 inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-white font-medium hover:bg-blue-700 transition">
+                Shop Now
+            </a>
         </div>
+    `;
+    } else {
+        data.items.forEach(item => {
 
-        <div class="flex-1">
-
-            <div class="flex justify-between">
-                <h3 class="text-[13px] font-semibold text-gray-800 leading-4">
-                    ${item.name}
-                </h3>
-
-                <div class="text-right">
-                    <span class="text-[10px] text-red-400 line-through mr-2">
-                        Rs ${item.price}
-                    </span>
-                    <span class="text-[13px] font-semibold">
-                        Rs ${item.discount_price ?? item.price}
-                    </span>
+            let savePercent = '';
+            if (item.price && item.discount_price && item.discount_price < item.price) {
+                let percent = Math.round(((item.price - item.discount_price) / item.price) * 100);
+                savePercent = `
+                <div class="text-[10px] text-green-600">
+                    Save ${percent}%
                 </div>
+            `;
+            }
+
+            html += `
+        <div class="flex gap-2 mb-4 cart-item-container">
+
+            <div class="relative shrink-0 cart-loader">
+                <button onclick="removeItem('${item.key}',this)"
+                    class="absolute -left-1 -top-1 w-3.5 h-3.5 rounded-full border bg-white text-[10px] text-gray-500 flex items-center justify-center">
+                    ×
+                </button>
+
+                <img src="${storageUrl}/${item.image}"
+                    class="w-[50px] h-[50px] border rounded object-cover">
             </div>
 
-            <div class="flex items-top justify-between mt-1">
+            <div class="flex-1">
 
-                <div class="inline-flex h-6 overflow-hidden rounded border border-gray-300">
+                <div class="flex justify-between">
+                    <h3 class="text-[13px] font-semibold text-gray-800 leading-4">
+                        ${item.name}
+                    </h3>
 
-                    <button onclick="updateQty('${item.key}', 'decrease')"
-                        class="flex h-6 w-6 items-center justify-center text-sm text-gray-600 hover:bg-gray-100">
-                        −
-                    </button>
-
-                    <span class="flex h-6 w-6 items-center justify-center border-x text-xs">
-                        ${item.quantity}
-                    </span>
-
-                    <button onclick="updateQty('${item.key}', 'increase')"
-                        class="flex h-6 w-6 items-center justify-center text-sm text-gray-600 hover:bg-gray-100">
-                        +
-                    </button>
-
+                    <div class="text-right">
+                        <span class="text-[10px] text-red-400 line-through mr-2">
+                            Rs ${item.price}
+                        </span>
+                        <span class="text-[13px] font-semibold">
+                            Rs ${item.discount_price ?? item.price}
+                        </span>
+                    </div>
                 </div>
 
-                ${savePercent}
+                <div class="flex items-top justify-between mt-1">
 
+                    <div class="inline-flex h-6 overflow-hidden rounded border border-gray-300">
+                        <button onclick="updateQty('${item.key}', 'decrease',this)"
+                            class="flex h-6 w-6 items-center justify-center text-sm text-gray-600 hover:bg-gray-100">
+                            −
+                        </button>
+
+                        <span class="flex h-6 w-6 items-center justify-center border-x text-xs">
+                            ${item.quantity}
+                        </span>
+
+                        <button onclick="updateQty('${item.key}', 'increase',this)"
+                            class="flex h-6 w-6 items-center justify-center text-sm text-gray-600 hover:bg-gray-100">
+                            +
+                        </button>
+                    </div>
+
+                    ${savePercent}
+
+                </div>
             </div>
         </div>
-    </div>
-    `;
-    });
-
-    console.log(data.total_count);
-
+        `;
+        });
+    }
     document.getElementById('cart_total').innerHTML = data.total
     document.getElementById('cart_count').innerHTML = data.total_count ?? 0;
 
@@ -188,7 +212,19 @@ async function loadCart() {
 
 
 
-async function updateQty(key, action) {
+async function updateQty(key, action, ele) {
+
+    let image = $(ele).closest(".cart-item-container").find('.cart-loader');
+    let originalHtml = image.html();
+    image.html(`<span class="relative">
+        ${originalHtml}
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        ${loader}
+    </div>
+</span>
+        `)
+
+
     await fetch('/cart/update', {
         method: 'POST',
         headers: {
@@ -207,16 +243,41 @@ async function updateQty(key, action) {
 
 
 
-async function removeItem(key) {
-    await fetch('/cart/remove', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken,
-            'Accept': 'application/json'
-        },
-        body: JSON.stringify({ key })
-    });
+async function removeItem(key, ele) {
 
-    loadCart();
+    // before send message
+    let image = $(ele).closest(".cart-loader");
+    let originalHtml = image.html();
+    image.html(`<span class="relative">
+        ${originalHtml}
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        ${loader}
+    </div>
+</span>
+        `)
+
+    try {
+        const response = await fetch('/cart/remove', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken,
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify({ key })
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to remove item');
+        }
+
+        // Reload cart
+        await loadCart();
+
+        // Success message
+
+    } catch (error) {
+        showToast('Something went wrong.', 'error');
+        console.error(error);
+    }
 }
