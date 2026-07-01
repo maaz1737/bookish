@@ -76,6 +76,10 @@ class CartController extends Controller
             if (in_array($item->product_id, $excluded)) {
                 continue;
             }
+            if (!$item->product) {
+                $item->delete();
+                continue;
+            }
             $key = "product:{$item->product_id}";
             
             $discountPct = (float) ($bundle->discount ?? 0);

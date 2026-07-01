@@ -40,7 +40,8 @@ class HomeController extends Controller
             'heroBanners',
             'schools',
             'categories',
-            'bestSellers'
+            'bestSellers',
+            'bundles'
         ));
     }
 }
