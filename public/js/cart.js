@@ -179,7 +179,7 @@ async function loadCart() {
     });
 
     document.getElementById('cart_total').innerHTML = data.total
-    document.getElementById('cart_count').innerHTML = data.total_count
+    document.getElementById('cart_count').innerHTML = data.total_count ?? 0;
 
     document.getElementById('cart-container').innerHTML = html;
 }
