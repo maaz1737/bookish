@@ -149,7 +149,8 @@ class CartController extends Controller
         if (empty($cart)) {
             return response()->json([
                 'items' => [],
-                'total' => 0
+                'total' => 0,
+                'total_count' => 0,
             ]);
         }
 

@@ -181,13 +181,7 @@ async function loadCart() {
     console.log(data.total_count);
 
     document.getElementById('cart_total').innerHTML = data.total
-
-    if (data.total_count != undefined) {
-        document.getElementById('cart_count').innerHTML = data.total_count ?? 0;
-    }
-    else {
-        document.getElementById('cart_count').innerHTML = 0;
-    }
+    document.getElementById('cart_count').innerHTML = data.total_count ?? 0;
 
     document.getElementById('cart-container').innerHTML = html;
 }
