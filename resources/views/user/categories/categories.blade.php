@@ -289,12 +289,12 @@
     </div>
 
       <div class="mt-auto pt-4">
-        <form method="POST" action="{{ route('cart.addProduct', $p) }}">
+        <form method="POST" action="{{ route('cart.addProduct', $p) }}" class="cart-form">
             @csrf
 
             <button
                 type="submit"
-                class="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300
+                class="cart-add w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300
                 {{ $p->stock > 0
                     ? 'bg-[#0B1B47] text-white hover:bg-indigo-700 hover:-translate-y-0.5 hover:shadow-lg'
                     : 'bg-slate-100 text-slate-400 cursor-not-allowed' }}"

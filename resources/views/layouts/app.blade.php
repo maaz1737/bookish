@@ -11,7 +11,7 @@
     <meta property="og:title" content="{{ $seo['title'] ?? 'Bookish & Beyond' }}">
     <meta property="og:description" content="{{ $seo['description'] ?? '' }}">
     <meta property="og:type" content="website">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -135,15 +135,12 @@
                 <a href="#" class="relative flex flex-col items-center text-xs"><i
                         class="fa-regular fa-heart text-lg"></i>Wishlist<span
                         class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">0</span></a>
-                <?php
-                $cart = session('cart', []);
-                
-                $totalQty = array_sum(array_column($cart, 'quantity'));
-                ?>
+
                 {{-- {{ route('cart.index') }} --}}
                 <a href="#" class="cart relative flex flex-col items-center text-xs"><i
                         class="fa-solid fa-cart-shopping text-lg"></i>Cart<span
-                        class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">{{ $totalQty ?? 0 }}</span></a>
+                        class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center"
+                        id="cart_count">0</span></a>
             </div>
         </div>
 
@@ -241,24 +238,85 @@
         @yield('content')
     </main>
 
+
     <!-- Overlay -->
-    <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-40">
+    <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-[99999]">
     </div>
 
     <!-- Cart Sidebar -->
     <div id="cartDrawer"
-        class="fixed top-0 right-0 h-screen w-[40%] bg-white shadow-xl
+        class="fixed top-0 right-0 h-screen w-[35%] bg-white shadow-xl
            translate-x-full transition-transform duration-300 ease-in-out
-           z-50">
+           z-[999999]">
 
-        <div class="p-6">
-            <button id="closeCart" class="mb-4 text-gray-500">✕</button>
+        <div class="flex flex-col h-full bg-white">
 
-            <h2 class="text-xl font-bold mb-4">Shopping Cart</h2>
+            <!-- Header -->
+            <div class="flex items-center justify-between px-4 py-3 border-b">
+                <h2 class="text-[15px] font-semibold text-gray-800">
+                    Review Your Cart ({{ count($carts['items']) }})
+                </h2>
 
-            <div>
-                hello
+                <button id="closeCart" class="text-gray-500 text-xl leading-none">
+                    ×
+                </button>
             </div>
+
+            <!-- Cart Items -->
+            <div class="flex-1 overflow-y-auto">
+
+                <div class="px-3 py-3" id="cart-container">
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="border-t bg-white">
+
+                <!-- Discount -->
+                <button class="w-full flex items-center justify-between px-4 py-3 text-[13px] text-gray-700">
+
+                    <span>Got a discount code?</span>
+
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+
+                </button>
+
+                <div class="border-t"></div>
+
+                <!-- Total -->
+                <div class="px-4 py-3 flex justify-between items-start">
+
+                    <div>
+
+                        <p class="font-semibold text-[13px]">
+                            Subtotal
+                        </p>
+
+                        <p class="text-[10px] text-gray-500 mt-1">
+                            Shipping & taxes may be re-calculated at checkout
+                        </p>
+
+                    </div>
+
+                    <div class="font-semibold text-[13px]" id="cart_total">
+                        Rs {{ $carts['total'] }}
+                    </div>
+
+                </div>
+
+                <!-- Checkout -->
+                <div class="px-3 pb-3">
+                    <a href="{{ url('/checkout') }}"
+                        class="w-full block h-10 rounded bg-[#6C63FF] hover:bg-[#5e54f6] text-white text-sm font-medium flex items-center justify-center">
+                        🛒 Checkout
+                    </a>
+                </div>
+
+            </div>
+
         </div>
     </div>
 
@@ -384,32 +442,14 @@
                 }, 200);
             }
         });
-
-
-
-
-
-        const cartBtn = document.querySelector('.cart');
-        const cartDrawer = document.getElementById('cartDrawer');
-        const overlay = document.getElementById('cartOverlay');
-        const closeBtn = document.getElementById('closeCart');
-
-        cartBtn.addEventListener('click', () => {
-            overlay.classList.remove('hidden');
-            cartDrawer.classList.remove('translate-x-full');
-        });
-
-        function closeCart() {
-            cartDrawer.classList.add('translate-x-full');
-
-            setTimeout(() => {
-                overlay.classList.add('hidden');
-            }, 300);
-        }
-
-        closeBtn.addEventListener('click', closeCart);
-        overlay.addEventListener('click', closeCart);
     </script>
+
+    <script>
+        const storageUrl =
+            "{{ app()->environment('production') ? asset('storage/app/public/') : asset('storage/') }}";
+    </script>
+    <script src="/public/js/cart.js"></script>
+
 </body>
 
 </html>

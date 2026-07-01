@@ -15,23 +15,15 @@ class HomeController extends Controller
         $heroBanners = Banner::where('is_active', true)
             ->orderBy('order', 'asc')
             ->get();
-
         $schools = School::where('is_active', true)
             ->limit(3)
             ->get();
-
         $categories = Category::where('is_active', true)
             ->whereNull('parent_id')
             ->where('show_on_dashboard', true)
             ->withCount('products')
             ->limit(4)
             ->get();
-
-        $featured = Product::active()
-            ->latest()
-            ->take(8)
-            ->get();
-
         $bestSellers = Product::active()
             ->where('is_best_seller', true)
             ->latest()
@@ -48,9 +40,7 @@ class HomeController extends Controller
             'heroBanners',
             'schools',
             'categories',
-            'featured',
-            'bestSellers',
-            'bundles'
+            'bestSellers'
         ));
     }
 }
