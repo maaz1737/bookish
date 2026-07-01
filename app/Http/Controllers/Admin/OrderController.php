@@ -27,7 +27,8 @@ class OrderController extends Controller
     public function updateStatus(Request $request, Order $order)
     {
         $data = $request->validate([
-            'order_status' => ['required', Rule::in(['pending_payment', 'processing', 'shipped', 'delivered', 'cancelled'])],
+            'order_status' => ['required', Rule::in(['pending', 'shipped', 'delivered', 'returned'])],
+            'payment_status' => ['required', Rule::in(['pending', 'paid'])],
         ]);
 
         $oldStatus = $order->order_status;
