@@ -54,7 +54,19 @@ $(document).on('submit', '.cart-form', function (e) {
 
     let form = $(this);
     let button = form.find('button');
-    let originalHtml = button.html();
+
+    // Prevent duplicate requests
+    if (button.prop('disabled')) {
+        return;
+    }
+
+    let originalHtml = button.data('original-html');
+
+    // Store the original HTML only once
+    if (!originalHtml) {
+        originalHtml = button.html();
+        button.data('original-html', originalHtml);
+    }
 
     $.ajax({
         url: form.attr('action'),
@@ -62,15 +74,14 @@ $(document).on('submit', '.cart-form', function (e) {
         data: form.serialize(),
 
         beforeSend: function () {
-            button
-                .prop('disabled', true);
+            button.prop('disabled', true);
 
             button.html(`
-        <span class="inline-flex items-center gap-2">
-            <span class="">${originalHtml}</span>
-            ${loader}
-        </span>
-    `);
+                <span class="inline-flex items-center gap-2">
+                    <span>${originalHtml}</span>
+                    ${loader}
+                </span>
+            `);
         },
 
         success: async function (response) {
@@ -91,15 +102,18 @@ $(document).on('submit', '.cart-form', function (e) {
                 Added to Cart
             `);
 
-            console.log(response.message);
+            // Restore the original button after 2 seconds
+            // setTimeout(() => {
+            //     button.html(originalHtml);
+            // }, 2000);
         },
 
         error: function (xhr) {
             console.log(xhr.responseText);
+            button.html(originalHtml);
         },
 
         complete: function () {
-            // button.html(originalHtml);
             button.prop('disabled', false);
         }
     });
@@ -129,7 +143,7 @@ async function loadCart() {
                 Fill your cart with amazing items
             </p>
 
-            <a href="/shop"
+            <a href="/"
                 class="mt-6 inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-white font-medium hover:bg-blue-700 transition">
                 Shop Now
             </a>
