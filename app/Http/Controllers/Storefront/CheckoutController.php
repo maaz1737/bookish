@@ -173,9 +173,18 @@ class CheckoutController extends Controller
 
         if ($request->pay == 'cash_on_delivery') {
             $order->update([
-                'order_status' => 'delivered',
-                'payment_method' => 'cash_on_delivery',
+                'order_status'    => 'delivered',
+                'payment_method'  => 'cash_on_delivery',
+                'stock_adjusted'  => true,
             ]);
+
+            // Decrement stock immediately for COD since it goes straight to delivered
+            foreach ($order->items as $item) {
+                if ($item->product) {
+                    $item->product->decrement('stock', $item->quantity);
+                }
+            }
+
             $request->session()->forget('cart');
             return redirect()->route('checkout.confirmation', $order->order_number)->with('success', 'Order placed successfully using Cash on Delivery.');
         } elseif ($request->pay == 'bank_transfer') {
