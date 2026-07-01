@@ -77,7 +77,7 @@ class CartController extends Controller
                 continue;
             }
             $key = "product:{$item->product_id}";
-            
+
             $discountPct = (float) ($bundle->discount ?? 0);
             $originalPrice = (float) $item->product->effectivePrice();
             $discountedPrice = $originalPrice - ($originalPrice * ($discountPct / 100));
@@ -189,12 +189,12 @@ class CartController extends Controller
 
         $cart = session('cart', []);
 
-        $totalQty = array_sum(array_column($cart, 'quantity'));
+        $totalQty = array_sum(array_column($cart, 'quantity')) ?? null;
 
         return response()->json([
             'items' => $items,
             'total' => $total,
-            'total_count' => $totalQty ?? 0,
+            'total_count' => $totalQty ?? null,
         ]);
     }
     public function update(Request $request)
