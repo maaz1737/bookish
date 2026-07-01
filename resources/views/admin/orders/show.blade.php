@@ -1,8 +1,17 @@
 @extends('admin.layout')
 @section('title', 'Order')
 @section('content')
-    <h1 class="text-2xl font-bold mb-1">{{ $order->order_number }}</h1>
-    <p class="text-gray-500 mb-6">{{ $order->customer_name }} · {{ $order->mobile }}</p>
+
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold mb-1">{{ $order->order_number }}</h1>
+            <p class="text-gray-500 mb-6">{{ $order->customer_name }} · {{ $order->mobile }}</p>
+        </div>
+        <a href="{{ route('admin.orders.pdf', $order) }}" target="_blank"
+            class="bg-indigo-950 hover:bg-indigo-950/90 py-2 px-4 text-white rounded">
+            Generate PDF
+        </a>
+    </div>
     <div class="grid sm:grid-cols-3 gap-6">
         <div class="sm:col-span-2 bg-white rounded-lg shadow p-6">
             <h2 class="font-semibold mb-3">Items</h2>
@@ -14,8 +23,11 @@
                         <i class="fa-brands fa-whatsapp"></i> Customer shared receipt via WhatsApp
                     </div>
                 @else
-                    <img src="{{ asset('storage/' . $proof->screenshot_path) }}" alt="Payment proof"
-                        class="w-full rounded border mb-3">
+                    <img src="{{ asset(
+                        app()->environment('production')
+                        ? 'storage/app/public/' . $proof->screenshot_path
+                        : 'storage/' . $proof->screenshot_path
+                    ) }}" alt="Payment proof" class="h-16 w-16 rounded border mb-3">
                 @endif
             @endif
             <ul class="divide-y text-sm">

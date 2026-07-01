@@ -121,7 +121,7 @@ class CheckoutController extends Controller
                 'status' => 'submitted',
             ]);
 
-            $order->update(['payment_status' => 'proof_submitted']);
+            $order->update(['payment_status' => 'paid']);
 
             return redirect()->route('checkout.confirmation', $order->order_number)
                 ->with('success', 'Order payment confirmation received via WhatsApp. Our team will verify it shortly.');
@@ -139,7 +139,7 @@ class CheckoutController extends Controller
                 'status' => 'submitted',
             ]);
 
-            $order->update(['payment_status' => 'proof_submitted']);
+            $order->update(['payment_status' => 'paid']);
 
             return redirect()->route('checkout.confirmation', $order->order_number)
                 ->with('success', 'Payment proof submitted. Our team will verify it shortly.');
@@ -173,9 +173,9 @@ class CheckoutController extends Controller
 
         if ($request->pay == 'cash_on_delivery') {
             $order->update([
-                'order_status'    => 'delivered',
-                'payment_method'  => 'cash_on_delivery',
-                'stock_adjusted'  => true,
+                'order_status' => 'delivered',
+                'payment_method' => 'cash_on_delivery',
+                'stock_adjusted' => true,
             ]);
 
             // Decrement stock immediately for COD since it goes straight to delivered
