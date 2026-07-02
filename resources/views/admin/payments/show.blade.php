@@ -17,7 +17,7 @@
                 <img src="{{ asset(
                     app()->environment('local')
                         ? 'storage/' . $proof->screenshot_path
-                        : 'storage/app/public/' . $proof->screenshot_path,
+                        : 'storage/' . $proof->screenshot_path,
                 ) }}"
                     class="w-full rounded border">
             @endif

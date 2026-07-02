@@ -434,7 +434,7 @@
                                     $image = $item->product?->images[0] ?? null;
                                 @endphp
                                 @if ($image)
-                                    <img src="{{ app()->environment('production') ? asset('storage/app/public/' . $image) : asset('storage/' . $image) }}"
+                                    <img src="{{ app()->environment('production') ? asset('storage/' . $image) : asset('storage/' . $image) }}"
                                         alt="{{ $item->product?->name ?? 'Product' }}"
                                         class="w-full h-full object-contain rounded-md"
                                         onerror="this.onerror=null;this.src='{{ asset('images/no-image.png') }}';">

@@ -60,7 +60,7 @@
                                     @if (!empty($item['image']))
                                         <img src="{{ app()->environment('local')
                                             ? asset('storage/' . $item['image'][0])
-                                            : asset('storage/app/public/' . $item['image'][0]) }}"
+                                            : asset('storage/' . $item['image'][0]) }}"
                                             alt="{{ $item['name'] }}" class="w-full h-full object-cover">
                                     @else
                                         <div class="w-full h-full flex items-center justify-center text-2xl">📦</div>

@@ -25,7 +25,7 @@
                 @else
                     <img src="{{ asset(
                         app()->environment('production')
-                        ? 'storage/app/public/' . $proof->screenshot_path
+                        ? 'storage/' . $proof->screenshot_path
                         : 'storage/' . $proof->screenshot_path
                     ) }}" alt="Payment proof" class="h-16 w-16 rounded border mb-3">
                 @endif
