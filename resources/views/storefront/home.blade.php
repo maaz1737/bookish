@@ -43,7 +43,7 @@
                                     </div>
                                     <div class="card-img-box" style="aspect-ratio: 5/4; background: transparent;">
                                         <img class="" src="{{ app()->environment('production')
-                        ? asset('storage/app/public/' . $banner->image_path)
+                        ? asset('storage/' . $banner->image_path)
                         : asset('storage/banners/paf-banner-removebg.png') }}" alt="">
                                     </div>
                                 </div>
