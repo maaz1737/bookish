@@ -243,7 +243,7 @@
                         $imgCount = $prodImages->count();
                         $includedNames = $products->pluck('name')->join(' + ');
                         $imgHelper = fn($path) => app()->environment('production')
-                            ? asset('storage/app/public/' . $path)
+                            ? asset('storage/' . $path)
                             : asset('storage/' . $path);
                     @endphp
                     <div
