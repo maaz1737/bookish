@@ -185,7 +185,7 @@
                     {{-- FIXED IMAGE BOX: all category images render at same size --}}
                     <div class="card-img-box bg-slate-50">
                         <img class="card-img" src="{{ app()->environment('production')
-                ? url('storage/app/public/' . $category->image)
+                ? url('storage/' . $category->image)
                 : asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
                     </div>
                     <div class="p-4">
