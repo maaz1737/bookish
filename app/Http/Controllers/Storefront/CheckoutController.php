@@ -8,6 +8,8 @@ use App\Models\OrderItem;
 use App\Models\PaymentProof;
 use App\Models\Product;
 use App\Models\Setting;
+use App\Models\ShippingRate;
+use App\Models\ShippingZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -21,7 +23,8 @@ class CheckoutController extends Controller
         if (empty($cart)) {
             return redirect()->route('cart.index')->with('error', 'Your cart is empty.');
         }
-        return view('storefront.checkout', ['cart' => $cart]);
+        $zones = ShippingZone::where('status', 'active')->get();
+        return view('storefront.checkout', ['cart' => $cart, 'zones' => $zones]);
     }
 
     // Step 2: create the order, then redirect to bank details page
@@ -206,6 +209,16 @@ class CheckoutController extends Controller
         return view('storefront.OrderComplete.order_complete', compact('order'));
 
 
+    }
+
+
+    public function getShippingRates($zoneId)
+    {
+        $rates = ShippingRate::where('shipping_zone_id', $zoneId)
+            ->where('status', 1)
+            ->get();
+
+        return view('partials.shipping_rates', compact('rates'));
     }
 
 }
