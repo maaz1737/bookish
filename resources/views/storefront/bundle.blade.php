@@ -142,7 +142,7 @@
                                             <td class="py-4 px-4">
                                                 <div class="flex items-center gap-3">
                                                     @if (!empty($item->product->images) && isset($item->product->images[0]))
-                                                        <img src="{{ asset(app()->environment('production') ? 'storage/app/public/' . $item->product->images[0] : 'storage/' . $item->product->images[0]) }}"
+                                                        <img src="{{ asset(app()->environment('production') ? 'storage/' . $item->product->images[0] : 'storage/' . $item->product->images[0]) }}"
                                                             class="w-10 h-12 rounded object-cover shadow-sm bg-gray-50 border border-gray-100 flex-shrink-0"
                                                             alt="{{ $item->product->name }}">
                                                     @else

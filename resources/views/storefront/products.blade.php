@@ -54,7 +54,7 @@
                         <div class="card-img-box bg-slate-50">
                             @if (isset($product->images) && count($product->images) > 0)
                                 <img src="{{ app()->environment('production')
-                                    ? asset('storage/app/public/' . $product->images[0])
+                                    ? asset('storage/' . $product->images[0])
                                     : asset('storage/' . $product->images[0]) }}"
                                     alt="{{ $product->name }}"
                                     class="card-img">
