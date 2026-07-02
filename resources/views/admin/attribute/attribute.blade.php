@@ -60,7 +60,7 @@
                             </span>
                         @empty
                             <span class="text-gray-400 text-sm">
-                                No values added
+                                No value added
                             </span>
                         @endforelse
 
