@@ -30,49 +30,134 @@ class CheckoutController extends Controller
     // Step 2: create the order, then redirect to bank details page
     public function place(Request $request)
     {
+
         $data = $request->validate([
-            'customer_name' => ['required', 'string', 'max:255'],
-            'mobile' => ['required', 'string', 'max:50'],
-            'address' => ['required', 'string', 'max:1000'],
+            'customer_name' => [
+                'required',
+                'string',
+                'max:255',
+            ],
+
+            'email' => [
+                'required',
+                'email:rfc,dns',
+                'max:255',
+            ],
+
+            'mobile' => [
+                'required',
+                'regex:/^(03[0-9]{9}|\+923[0-9]{9})$/',
+            ],
+
+            'shipping_zone_id' => [
+                'required',
+                'exists:shipping_zones,id',
+            ],
+
+            'shipping_rate_id' => [
+                'required',
+                'exists:shipping_rates,id',
+            ],
+
+            'address' => [
+                'required',
+                'string',
+                'min:10',
+                'max:1000',
+            ],
+
+        ], [
+
+            'customer_name.required' => 'Please enter your full name.',
+
+            'email.required' => 'Please enter your email address.',
+            'email.email' => 'Please enter a valid email address.',
+
+            'mobile.required' => 'Please enter your mobile number.',
+            'mobile.regex' => 'Please enter a valid Pakistani mobile number (e.g. 03XXXXXXXXX).',
+
+            'shipping_zone_id.required' => 'Please select your province.',
+            'shipping_zone_id.exists' => 'The selected province is invalid.',
+
+            'shipping_rate_id.required' => 'Please select a shipping method.',
+            'shipping_rate_id.exists' => 'The selected shipping method is invalid.',
+
+            'address.required' => 'Please enter your complete address.',
+            'address.min' => 'Please enter a more complete delivery address.',
         ]);
 
         $cart = $request->session()->get('cart', []);
         abort_if(empty($cart), 422, 'Cart is empty.');
+        $shippingRate = ShippingRate::where('id', $data['shipping_rate_id'])
+            ->where('shipping_zone_id', $data['shipping_zone_id'])
+            ->firstOrFail();
+        $order = DB::transaction(function () use ($data, $cart, $request, $shippingRate) {
 
-        $order = DB::transaction(function () use ($data, $cart, $request) {
-            $total = 0;
+            $subtotal = 0;
 
             $order = Order::create([
                 'order_number' => 'BK-' . now()->format('Y') . '-' . Str::upper(Str::random(6)),
-                'user_id' => $request->user()?->id,   // null for guests
+                'user_id' => $request->user()?->id,
+
                 'customer_name' => $data['customer_name'],
+                'email' => $data['email'],
                 'mobile' => $data['mobile'],
                 'address' => $data['address'],
+
+                'shipping_zone_id' => $shippingRate->shipping_zone_id,
+                'shipping_rate_id' => $shippingRate->id,
+                'shipping_method' => $shippingRate->name,
+
+                'shipping_cost' => 0,
+                'subtotal' => 0,
                 'total_amount' => 0,
+
                 'payment_status' => 'pending',
                 'order_status' => 'pending',
             ]);
 
             foreach ($cart as $line) {
+
                 $product = Product::find($line['id']);
+
                 if (!$product) {
                     continue;
                 }
-                $unit = $product->effectivePrice();
-                $lineTotal = $unit * $line['quantity'];
-                $total += $lineTotal;
+
+                $unitPrice = $product->effectivePrice();
+
+                $lineTotal = $unitPrice * $line['quantity'];
+
+                $subtotal += $lineTotal;
 
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $product->id,
                     'name' => $product->name,
-                    'unit_price' => $unit,
+                    'unit_price' => $unitPrice,
                     'quantity' => $line['quantity'],
                     'line_total' => $lineTotal,
                 ]);
             }
 
-            $order->update(['total_amount' => $total]);
+            // Calculate shipping
+            $shippingCost = $shippingRate->price;
+
+            if (
+                $shippingRate->free_shipping &&
+                $subtotal >= $shippingRate->min_order_amount
+            ) {
+                $shippingCost = 0;
+            }
+
+            $totalAmount = $subtotal + $shippingCost;
+
+            $order->update([
+                'subtotal' => $subtotal,
+                'shipping_cost' => $shippingCost,
+                'total_amount' => $totalAmount,
+            ]);
+
             return $order;
         });
 
@@ -110,6 +195,7 @@ class CheckoutController extends Controller
     // Step 4: customer uploads receipt screenshot (web form)
     public function uploadProof(Request $request, string $orderNumber)
     {
+
         $order = Order::where('order_number', $orderNumber)->firstOrFail();
 
         if ($request->input('confirm_method') === 'whatsapp') {
@@ -176,7 +262,7 @@ class CheckoutController extends Controller
 
         if ($request->pay == 'cash_on_delivery') {
             $order->update([
-                'order_status' => 'delivered',
+                'order_status' => 'pending',
                 'payment_method' => 'cash_on_delivery',
                 'stock_adjusted' => true,
             ]);
