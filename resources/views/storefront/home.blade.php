@@ -56,7 +56,7 @@
                                     <div class="flex justify-center md:justify-end">
                                         <div class="w-full max-w-[480px] aspect-[5/4] flex items-center justify-center p-4">
                                             <img class="max-h-full max-w-full object-contain"
-                                                src="{{ url('storage/banners/paf-banner-removebg.png') }}"
+                                                src="{{ asset('storage/' . $banner->image_path) }}"
                                                 alt="Everything Your Family Needs, In One Place" loading="eager">
                                         </div>
                                     </div>
