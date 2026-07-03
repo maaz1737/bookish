@@ -32,36 +32,38 @@
                                                 Shop All Categories
                                             </a>
                                         </div>
-                                        
-                                        {{-- Hero Bottom Trust Strip - Inline Horizontal Line --}}
+
+                                        {{-- Hero Bottom Trust Strip --}}
                                         <div class="flex flex-wrap gap-x-6 gap-y-2 mt-10 text-xs md:text-sm text-slate-700">
                                             <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-shield-halved text-[#001F54]"></i> 
+                                                <i class="fa-solid fa-shield-halved text-[#001F54]"></i>
                                                 <span><b>100% Original</b></span>
                                             </div>
                                             <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-truck text-[#001F54]"></i> 
+                                                <i class="fa-solid fa-truck text-[#001F54]"></i>
                                                 <span><b>Fast Delivery</b></span>
                                             </div>
                                             <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-rotate-left text-[#001F54]"></i> 
+                                                <i class="fa-solid fa-rotate-left text-[#001F54]"></i>
                                                 <span><b>Easy Returns</b></span>
                                             </div>
                                             <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-lock text-[#001F54]"></i> 
+                                                <i class="fa-solid fa-lock text-[#001F54]"></i>
                                                 <span><b>Secure Payments</b></span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-img-box" style="aspect-ratio: 5/4; background: transparent;">
-                                        <img class="" src="{{ app()->environment('production')
-                        ? asset('storage/' . $banner->image_path)
-                        : asset('storage/banners/paf-banner-removebg.png') }}" alt="">
+                                    <div class="flex justify-center md:justify-end">
+                                        <div class="w-full max-w-[480px] aspect-[5/4] flex items-center justify-center p-4">
+                                            <img class="max-h-full max-w-full object-contain"
+                                                src="{{ url('storage/banners/paf-banner-removebg.png') }}"
+                                                alt="Everything Your Family Needs, In One Place" loading="eager">
+                                        </div>
                                     </div>
                                 </div>
-                                @if ($banner->link)
-                                    </a>
-                                @endif
+                            @if ($banner->link)
+                                </a>
+                            @endif
                         </div>
                     @endforeach
                 </div>
@@ -86,9 +88,9 @@
             @foreach ($schools as $school)
                 <div class="school-card card p-6 flex flex-col justify-between h-full group filter-con">
                     <div>
-                        <div class="school-logo w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
+                        <div class="w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
                             @if ($school->logo ?? false)
-                                <img src="{{ asset('storage/' . $school->logo) }}" alt="{{ $school->name }} emblem" loading="lazy" />
+                                <img src="{{ url('storage/' . $school->logo) }}" alt="{{ $school->name }} emblem" class="max-w-full max-h-full object-contain" loading="lazy" />
                             @else
                                 <i class="fa-solid fa-school text-3xl text-[#001F54]"></i>
                             @endif
@@ -124,75 +126,73 @@
             <div class="grid-4">
                 @foreach ($bestSellers as $index => $product)
                     @php
-                        $badgeText = '';
                         $badgeClass = 'badge';
-                        if ($product->is_best_seller) {
-                            $badgeText = 'Best Seller';
-                            $badgeClass = 'badge';
-                        } elseif ($product->discount_price && $product->price > 0) {
+                        if ($product->discount_price && $product->price > 0) {
                             $pct = round((($product->price - $product->discount_price) / $product->price) * 100);
                             $badgeText = "Save {$pct}%";
                             $badgeClass = 'badge badge-orange';
+                        } elseif ($product->is_best_seller) {
+                            $badgeText = 'Best Seller';
                         } else {
                             $badgeText = $index % 2 === 0 ? 'New Arrival' : 'Top Trend';
-                            $badgeClass = 'badge';
                         }
                     @endphp
-                    <div class="product-card card p-5 flex flex-col justify-between relative group h-full filter-con">
-                        
+
+                    <div class="product-card card flex flex-col relative group h-full filter-con">
+
                         <!-- Badge -->
-                        @if ($badgeText)
-                            <span class="{{ $badgeClass }} absolute top-4 left-4 z-10 shadow-sm">{{ $badgeText }}</span>
-                        @endif
+                        <span class="{{ $badgeClass }} absolute top-4 left-4 z-10 shadow-sm">{{ $badgeText }}</span>
 
                         <!-- Wishlist -->
-                        <button class="wishlist-btn absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center text-slate-400 hover:text-rose-500 z-10 transition-colors" aria-label="Add {{ $product->name }} to wishlist">
+                        <button class="wishlist-btn absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center text-slate-400 hover:text-rose-500 z-10 transition-colors"
+                            aria-label="Add {{ $product->name }} to wishlist">
                             <i class="fa-regular fa-heart"></i>
                         </button>
 
                         <!-- Product Image -->
-                        <a href="{{ route('product.show', $product) }}" class="block mb-4">
-                            <div class="product-image w-full aspect-square bg-slate-50 rounded-2xl overflow-hidden p-3 relative flex items-center justify-center border border-slate-100">
-                                @if (isset($product->images) && count($product->images) > 0)
-                                    <img class="card-img"
-                                        src="{{ app()->environment('production') ? asset('storage/' . $product->images[0]) : asset('storage/' . $product->images[0]) }}"
-                                        alt="{{ $product->name }}">
+                        <a href="{{ route('product.show', $product) }}" class="block">
+                            <div class="w-full aspect-square bg-slate-50 overflow-hidden flex items-center justify-center p-4 border-b border-slate-100">
+                                @if (!empty($product->images) && count($product->images) > 0)
                                     <img class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
-                                        src="{{ app()->environment('production') ? asset('storage/app/public/' . $product->images[0]) : asset('storage/' . $product->images[0]) }}"
-                                        alt="{{ $product->name }}" loading="lazy" />
+                                        src="{{ url('storage/' . $product->images[0]) }}"
+                                        alt="{{ $product->name }}"
+                                        loading="lazy" />
                                 @else
-                                    <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400 text-sm rounded-lg">
-                                        No Image
+                                    <div class="w-full h-full flex items-center justify-center text-gray-300 text-sm">
+                                        <i class="fa-solid fa-image text-4xl"></i>
                                     </div>
                                 @endif
                             </div>
                         </a>
 
                         <!-- Name & Price -->
-                        <div class="flex-grow flex flex-col justify-between">
+                        <div class="p-5 flex flex-col flex-grow justify-between">
                             <div>
-                                <a href="{{ route('product.show', $product) }}" class="hover:no-underline">
-                                    <h3 class="text-sm font-bold text-[#001F54] hover:text-[#003B7A] transition-colors leading-tight line-clamp-2 mb-2 filter-name">
+                                <a href="{{ route('product.show', $product) }}">
+                                    <h3 class="text-sm font-bold text-[#001F54] hover:text-[#003B7A] transition-colors leading-tight line-clamp-2 mb-3 filter-name">
                                         {{ $product->name }}
                                     </h3>
                                 </a>
+                                <div class="price-row mb-4">
+                                    <span class="text-lg font-bold text-[#001F54]">
+                                        PKR {{ number_format($product->discount_price ?? $product->price) }}
+                                    </span>
+                                    @if ($product->discount_price && $product->price)
+                                        <span class="text-xs text-slate-400 line-through ml-2">
+                                            PKR {{ number_format($product->price) }}
+                                        </span>
+                                    @endif
+                                </div>
                             </div>
 
-                            <div class="price-row mb-4">
-                                <span class="price text-lg font-bold text-[#001F54]">PKR {{ number_format($product->discount_price ?? $product->price) }}</span>
-                                @if ($product->discount_price && $product->price)
-                                    <span class="old-price text-xs text-slate-400 line-through ml-2">PKR {{ number_format($product->price) }}</span>
-                                @endif
-                            </div>
+                            <!-- Add to Cart -->
+                            <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form w-full">
+                                @csrf
+                                <button type="submit" class="primary-btn w-full justify-center">
+                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                </button>
+                            </form>
                         </div>
-
-                        <!-- CTA Button -->
-                        <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form w-full">
-                            @csrf
-                            <button type="submit" class="primary-btn w-full justify-center">
-                                <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                            </button>
-                        </form>
                     </div>
                 @endforeach
             </div>
@@ -213,22 +213,29 @@
 
         <div class="grid-4">
             @foreach ($categories as $category)
-                <div class="category-card card p-6 flex flex-col justify-between h-full group filter-con">
+                <div class="category-card card flex flex-col justify-between h-full group filter-con">
                     <div>
-                        <div class="category-image w-full aspect-square bg-slate-50 rounded-2xl p-4 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
+                        <div class="w-full aspect-square bg-slate-50 overflow-hidden flex items-center justify-center p-4 border-b border-slate-100">
                             @if ($category->image ?? false)
-                                <img src="{{ app()->environment('production') ? url('storage/app/public/' . $category->image) : asset('storage/' . $category->image) }}" alt="{{ $category->name }} category" loading="lazy" />
+                                <img src="{{ url('storage/' . $category->image) }}"
+                                    alt="{{ $category->name }} category"
+                                    class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                                    loading="lazy" />
                             @else
-                                <i class="fa-solid fa-book text-4xl text-[#001F54] opacity-35"></i>
+                                <i class="fa-solid fa-book text-4xl text-[#001F54] opacity-30"></i>
                             @endif
                         </div>
-                        <h3 class="text-lg font-bold text-[#001F54] text-center mb-6 filter-name">
-                            {{ $category->name }}
-                        </h3>
+                        <div class="p-5 pb-2">
+                            <h3 class="text-base font-bold text-[#001F54] text-center filter-name">
+                                {{ $category->name }}
+                            </h3>
+                        </div>
                     </div>
-                    <a href="{{ route('category.show', $category->slug) }}" class="primary-btn w-full justify-center">
-                        Explore Now →
-                    </a>
+                    <div class="px-5 pb-5">
+                        <a href="{{ route('category.show', $category->slug) }}" class="primary-btn w-full justify-center">
+                            Explore Now →
+                        </a>
+                    </div>
                 </div>
             @endforeach
         </div>
@@ -250,78 +257,100 @@
             <div class="grid-4">
                 @foreach ($bundles as $bundle)
                     @php
-                        $discount = (float) ($bundle->discount ?? 0);
-                        $products = $bundle->products;
+                        $discount   = (float) ($bundle->discount ?? 0);
+                        $products   = $bundle->products;
                         $prodImages = $products->filter(fn($p) => !empty($p->images))->take(4)->values();
-                        $imgCount = $prodImages->count();
-                        $includedNames = $products->pluck('name')->join(' + ');
-                        $imgHelper = fn($path) => app()->environment('production')
-                            ? asset('storage/' . $path)
-                            : asset('storage/' . $path);
+                        $imgCount   = $prodImages->count();
+                        $imgSrc     = fn($path) => url('storage/' . $path);
                     @endphp
-                    <div class="bundle-card card flex flex-col justify-between relative group h-full filter-con">
-                        
-                        <!-- Badges (Save Left, Items Right) -->
+
+                    <div class="bundle-card card flex flex-col relative group h-full filter-con">
+
+                        <!-- Badges -->
                         @if ($discount > 0)
-                            <span class="badge badge-orange absolute top-4 left-4 z-20 shadow-md">Save {{ rtrim(rtrim($discount, '0'), '.') }}%</span>
+                            <span class="badge badge-orange absolute top-4 left-4 z-20 shadow-md">
+                                Save {{ rtrim(rtrim($discount, '0'), '.') }}%
+                            </span>
                         @endif
                         @if ($products->count() > 0)
-                            <span class="badge bg-white/80 backdrop-blur-sm text-[#001F54] absolute top-4 right-4 z-20 shadow-sm border border-slate-200/50 font-bold text-[11px] px-2.5 py-1 rounded-full">{{ $products->count() }} Items</span>
+                            <span class="absolute top-4 right-4 z-20 bg-white/90 text-[#001F54] text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-slate-200">
+                                {{ $products->count() }} Items
+                            </span>
                         @endif
 
-                        <!-- Bundle Image Area (Full bleed top image with light background) -->
-                        <div class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50 h-[200px] w-full flex items-center justify-center">
+                        <!-- Bundle Collage Image Area -->
+                        <div class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50 h-[200px] w-full">
                             @if ($imgCount === 0)
-                                <div class="w-full h-full flex flex-col items-center justify-center gap-2 opacity-35">
+                                <div class="w-full h-full flex items-center justify-center opacity-30">
                                     <i class="fa-solid fa-boxes-stacked text-5xl text-[#001F54]"></i>
                                 </div>
+
                             @elseif ($imgCount === 1)
-                                <img src="{{ $imgHelper($prodImages[0]->images[0]) }}" class="max-h-[85%] max-w-[85%] object-contain group-hover:scale-105 transition-transform duration-300" alt="{{ $bundle->name }} bundle image" loading="lazy" />
+                                <div class="w-full h-full flex items-center justify-center p-6">
+                                    <img src="{{ $imgSrc($prodImages[0]->images[0]) }}"
+                                        class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+                                        alt="{{ $prodImages[0]->name }}" loading="lazy" />
+                                </div>
+
                             @elseif ($imgCount === 2)
-                                <div class="flex h-full w-full">
+                                <div class="flex h-full">
                                     @foreach ($prodImages as $prod)
                                         <div class="flex-1 flex items-center justify-center p-4 {{ !$loop->last ? 'border-r border-white/60' : '' }}">
-                                            <img src="{{ $imgHelper($prod->images[0]) }}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" alt="{{ $prod->name }}" loading="lazy" />
+                                            <img src="{{ $imgSrc($prod->images[0]) }}"
+                                                class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+                                                alt="{{ $prod->name }}" loading="lazy" />
                                         </div>
                                     @endforeach
                                 </div>
+
                             @elseif ($imgCount === 3)
-                                <div class="flex h-full w-full">
+                                <div class="flex h-full">
                                     @foreach ($prodImages as $prod)
                                         <div class="flex-1 flex items-center justify-center p-3 {{ !$loop->last ? 'border-r border-white/60' : '' }}">
-                                            <img src="{{ $imgHelper($prod->images[0]) }}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" alt="{{ $prod->name }}" loading="lazy" />
+                                            <img src="{{ $imgSrc($prod->images[0]) }}"
+                                                class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+                                                alt="{{ $prod->name }}" loading="lazy" />
                                         </div>
                                     @endforeach
                                 </div>
+
                             @else
-                                <div class="grid grid-cols-2 grid-rows-2 h-full w-full">
+                                <div class="grid grid-cols-2 grid-rows-2 h-full">
                                     @foreach ($prodImages as $prod)
                                         <div class="flex items-center justify-center p-3 border-white/60
                                             {{ $loop->index === 0 ? 'border-r border-b' : '' }}
                                             {{ $loop->index === 1 ? 'border-b' : '' }}
                                             {{ $loop->index === 2 ? 'border-r' : '' }}">
-                                            <img src="{{ $imgHelper($prod->images[0]) }}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" alt="{{ $prod->name }}" loading="lazy" />
+                                            <img src="{{ $imgSrc($prod->images[0]) }}"
+                                                class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+                                                alt="{{ $prod->name }}" loading="lazy" />
                                         </div>
                                     @endforeach
                                 </div>
                             @endif
                         </div>
 
-                        <!-- Card Content (Padded Content Section) -->
+                        <!-- Bundle Card Content -->
                         <div class="p-5 flex flex-col flex-grow justify-between">
                             <div>
-                                <h3 class="text-[#001F54] font-bold text-base leading-tight mb-1 group-hover:text-[#003B7A] transition-colors filter-name">{{ $bundle->name }}</h3>
-                                <p class="text-xs text-slate-400 mb-3 line-clamp-1">{{ $includedNames }}</p>
+                                <h3 class="text-[#001F54] font-bold text-base leading-tight mb-1 filter-name">
+                                    {{ $bundle->name }}
+                                </h3>
+                                <p class="text-xs text-slate-400 mb-3 line-clamp-1">
+                                    {{ $products->pluck('name')->join(' + ') }}
+                                </p>
                             </div>
-                            
-                            <div class="price-row mb-4">
-                                <span class="price text-lg font-bold text-[#001F54]">PKR {{ number_format($bundle->final_price) }}</span>
+                            <div class="mb-4">
+                                <span class="text-lg font-bold text-[#001F54]">
+                                    PKR {{ number_format($bundle->final_price) }}
+                                </span>
                                 @if ($bundle->total_price > 0 && $bundle->total_price != $bundle->final_price)
-                                    <span class="old-price text-xs text-slate-400 line-through ml-2">PKR {{ number_format($bundle->total_price) }}</span>
+                                    <span class="text-xs text-slate-400 line-through ml-2">
+                                        PKR {{ number_format($bundle->total_price) }}
+                                    </span>
                                 @endif
                             </div>
 
-                            <!-- Add Bundle to Cart Button -->
                             <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class="w-full mt-auto">
                                 @csrf
                                 <button type="submit" class="primary-btn w-full justify-center">
@@ -386,25 +415,19 @@
     </section>
 
 
-    {{-- Swiper initialization --}}
+    {{-- Swiper --}}
     <script>
         new Swiper('.heroSwiper', {
             loop: true,
-            pagination: {
-                el: '.swiper-pagination',
-                clickable: true
-            },
-            autoplay: {
-                delay: 4500
-            },
+            pagination: { el: '.swiper-pagination', clickable: true },
+            autoplay: { delay: 4500 },
         });
     </script>
 
-
-    {{-- Category/Product Live Filter Search JS --}}
+    {{-- Live Search Filter --}}
     <script>
         $(document).ready(function () {
-            // Prevent search form submission to avoid page reloading
+            // Prevent form submit from reloading the page
             $(".filter-search").closest("form").on("submit", function (e) {
                 e.preventDefault();
             });
@@ -412,12 +435,8 @@
             $(".filter-search").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $(".filter-con").each(function () {
-                    let text = $(this).find(".filter-name").text().toLowerCase();
-                    if (text.indexOf(value) > -1) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
+                    var text = $(this).find(".filter-name").text().toLowerCase();
+                    $(this).toggle(text.indexOf(value) > -1);
                 });
             });
         });
