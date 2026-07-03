@@ -200,22 +200,29 @@
 
         const subtotal = {{ $cart['total'] }};
 
+        let testid = $("#shipping_zone").val();
+
         // Province Changed
         $('#shipping_zone').change(function () {
 
             let zoneId = $(this).val();
 
             if (!zoneId) {
-
                 $('#shipping-method-container').addClass('hidden');
                 $('#shipping-methods').html('');
 
                 $('#shipping-charge').text('PKR 0');
                 $('#grand-total').text('PKR ' + subtotal.toLocaleString());
-
                 return;
             }
 
+            getRates(zoneId);
+
+        });
+
+
+
+        function getRates(zoneId) {
             $.ajax({
 
                 url: '/shipping-rates/' + zoneId,
@@ -235,8 +242,12 @@
                 }
 
             });
+        }
 
-        });
+
+        if (testid) {
+            getRates(testid);
+        }
 
 
         // Shipping Method Changed
