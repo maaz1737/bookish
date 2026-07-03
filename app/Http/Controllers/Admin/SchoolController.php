@@ -18,8 +18,14 @@ class SchoolController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:schools,name'],
+            'logo' => ['nullable', 'image', 'max:2048'],
         ]);
         $data['slug'] = Str::slug($data['name']);
+        
+        if ($request->hasFile('logo')) {
+            $data['logo'] = $request->file('logo')->store('schools', 'public');
+        }
+        
         School::create($data);
         return back()->with('success', 'School created.');
     }
@@ -30,14 +36,24 @@ class SchoolController extends Controller
 
     public function update(Request $request, School $school)
     {
-        $school->update($request->validate([
+        $data = $request->validate([
             'name' => [
                 'required',
                 'string',
                 'max:255',
                 Rule::unique('schools', 'name')->ignore($school->id),
             ],
-        ]));
+            'logo' => ['nullable', 'image', 'max:2048'],
+        ]);
+        
+        if ($request->hasFile('logo')) {
+            if ($school->logo) {
+                \Illuminate\Support\Facades\Storage::disk('public')->delete($school->logo);
+            }
+            $data['logo'] = $request->file('logo')->store('schools', 'public');
+        }
+
+        $school->update($data);
 
         return redirect()->route('admin.schools.index')->with('success', 'School updated.');
     }
