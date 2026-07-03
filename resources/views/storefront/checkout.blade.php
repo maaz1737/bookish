@@ -197,22 +197,61 @@
 
 
     <script>
+        const subtotal = Number({{ $cart['total'] }});
 
-        const subtotal = {{ $cart['total'] }};
+        const $shippingZone = $('#shipping_zone');
+        const $shippingContainer = $('#shipping-method-container');
+        const $shippingMethods = $('#shipping-methods');
+        const $shippingCharge = $('#shipping-charge');
+        const $grandTotal = $('#grand-total');
 
-        let testid = $("#shipping_zone").val();
+        function formatPrice(price) {
+            return 'PKR ' + price.toLocaleString();
+        }
+
+        function resetTotals() {
+            $shippingCharge.text(formatPrice(0));
+            $grandTotal.text(formatPrice(subtotal));
+        }
+
+        function getRates(zoneId) {
+
+            $shippingMethods.html('<p>Loading...</p>');
+
+            $.ajax({
+                url: '/shipping-rates/' + zoneId,
+                type: 'GET',
+
+                success: function (response) {
+
+                    $shippingContainer.removeClass('hidden');
+                    $shippingMethods.html(response);
+
+                    resetTotals();
+                },
+
+                error: function () {
+
+                    $shippingMethods.html(
+                        '<p class="text-red-500">Unable to load shipping methods.</p>'
+                    );
+
+                }
+            });
+        }
 
         // Province Changed
-        $('#shipping_zone').change(function () {
+        $shippingZone.change(function () {
 
             let zoneId = $(this).val();
 
             if (!zoneId) {
-                $('#shipping-method-container').addClass('hidden');
-                $('#shipping-methods').html('');
 
-                $('#shipping-charge').text('PKR 0');
-                $('#grand-total').text('PKR ' + subtotal.toLocaleString());
+                $shippingContainer.addClass('hidden');
+                $shippingMethods.empty();
+
+                resetTotals();
+
                 return;
             }
 
@@ -220,50 +259,20 @@
 
         });
 
-
-
-        function getRates(zoneId) {
-            $.ajax({
-
-                url: '/shipping-rates/' + zoneId,
-
-                type: 'GET',
-
-                success: function (response) {
-
-                    $('#shipping-method-container').removeClass('hidden');
-
-                    $('#shipping-methods').html(response);
-
-                    // Reset summary
-                    $('#shipping-charge').text('PKR 0');
-                    $('#grand-total').text('PKR ' + subtotal.toLocaleString());
-
-                }
-
-            });
+        // Load shipping methods on page load if already selected
+        if ($shippingZone.val()) {
+            getRates($shippingZone.val());
         }
-
-
-        if (testid) {
-            getRates(testid);
-        }
-
 
         // Shipping Method Changed
         $(document).on('change', '.shipping-rate', function () {
 
-            let shippingPrice = parseFloat($(this).data('price'));
+            let shippingPrice = Number($(this).data('price'));
 
             let total = subtotal + shippingPrice;
 
-            $('#shipping-charge').text(
-                'PKR ' + shippingPrice.toLocaleString()
-            );
-
-            $('#grand-total').text(
-                'PKR ' + total.toLocaleString()
-            );
+            $shippingCharge.text(formatPrice(shippingPrice));
+            $grandTotal.text(formatPrice(total));
 
         });
 

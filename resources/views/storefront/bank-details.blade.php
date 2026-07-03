@@ -183,7 +183,7 @@
                                             <span class="font-mono text-base font-bold text-[#0a1f44]">0320-4735908</span>
                                         </div>
                                         <button type="button" id="copy-whatsapp" onclick="copyToClipboard('03204735908','copy-whatsapp')" class="bg-white border border-gray-200 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm transition hover:border-gray-300 shrink-0">
-                                            <i class="fa-regular fa-copy"></i> Copy Number
+                                            <i class="fa-regular fa-copy"></i>
                                         </button>
                                     </div>
 
@@ -294,7 +294,7 @@
                                     <i class="fa-regular fa-copy"></i> Copy
                                 </button>
                             </div>
-                            <div class="flex items-center justify-between gap-4 p-4 bg-slate-50 border border-gray-100 rounded-xl">
+                            {{-- <div class="flex items-center justify-between gap-4 p-4 bg-slate-50 border border-gray-100 rounded-xl">
                                 <div class="flex items-center gap-4">
                                     <div class="w-11 h-11 rounded-xl bg-green-50 flex items-center justify-center shrink-0">
                                         <i class="fa-solid fa-mobile-screen-button text-green-600 text-lg"></i>
@@ -307,8 +307,8 @@
                                 <button id="copy-ep" onclick="copyToClipboard('{{ $bank['raast_id'] }}','copy-ep')" class="bg-white border border-gray-200 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition shrink-0 hover:border-gray-300">
                                     <i class="fa-regular fa-copy"></i> Copy
                                 </button>
-                            </div>
-                            <div class="flex items-center justify-between gap-4 p-4 bg-slate-50 border border-gray-100 rounded-xl">
+                            </div> --}}
+                            {{-- <div class="flex items-center justify-between gap-4 p-4 bg-slate-50 border border-gray-100 rounded-xl">
                                 <div class="flex items-center gap-4">
                                     <div class="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
                                         <i class="fa-solid fa-mobile-screen-button text-red-500 text-lg"></i>
@@ -321,7 +321,7 @@
                                 <button id="copy-jc" onclick="copyToClipboard('{{ $bank['raast_id'] }}','copy-jc')" class="bg-white border border-gray-200 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition shrink-0 hover:border-gray-300">
                                     <i class="fa-regular fa-copy"></i> Copy
                                 </button>
-                            </div>
+                            </div> --}}
                         </div>
 
                         {{-- Info notice --}}
@@ -524,7 +524,7 @@
             navigator.clipboard.writeText(text).then(function() {
                 const btn = document.getElementById(buttonId);
                 const originalHtml = btn.innerHTML;
-                btn.innerHTML = '<i class="fa-solid fa-check text-green-500"></i> Copied!';
+                btn.innerHTML = '<i class="fa-solid fa-check text-green-500"></i>';
                 setTimeout(() => { btn.innerHTML = originalHtml; }, 2000);
             }, function(err) {
                 console.error('Could not copy text: ', err);
