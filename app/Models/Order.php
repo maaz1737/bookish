@@ -57,4 +57,8 @@ class Order extends Model
     {
         return $this->belongsTo(ShippingZone::class, 'shipping_zone_id');
     }
+    public function shippingRate()
+    {
+        return $this->belongsTo(ShippingRate::class, 'shipping_rate_id');
+    }
 }

@@ -457,17 +457,17 @@
                 <div class="border-t border-gray-200 mt-5 pt-4 space-y-2">
                     <div class="flex justify-between text-sm">
                         <span class="text-gray-600">Subtotal ({{ count($order->items) }} items)</span>
-                        <span class="font-semibold text-[#0a1f44]">PKR {{ number_format($order->total_amount) }}</span>
+                        <span class="font-semibold text-[#0a1f44]">PKR {{ number_format($order->subtotal) }}</span>
                     </div>
                     <div class="flex justify-between text-sm">
                         <span class="text-gray-600 flex items-center gap-1">Delivery Charges <i class="fa-regular fa-circle-question text-xs"></i></span>
-                        <span class="font-semibold text-[#0a1f44]">PKR 150</span>
+                        <span class="font-semibold text-[#0a1f44]">PKR {{ number_format($order->shippingRate->price) }}</span>
                     </div>
                 </div>
 
                 <div class="bg-gray-50 -mx-6 px-6 py-4 mt-4 flex justify-between items-center rounded-b-xl">
                     <span class="text-lg font-bold text-[#0a1f44]">Total Amount</span>
-                    <span class="text-xl font-extrabold text-[#0a1f44]">PKR {{ number_format($order->total_amount + 150) }}</span>
+                    <span class="text-xl font-extrabold text-[#0a1f44]">PKR {{ number_format($order->total_amount) }}</span>
                 </div>
 
                 <div class="mt-4 bg-blue-50 border border-blue-100 rounded-lg p-3 text-xs text-gray-500 flex items-start gap-2">
