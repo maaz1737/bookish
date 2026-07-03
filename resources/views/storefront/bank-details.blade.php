@@ -240,7 +240,7 @@
                         {{-- Tab Buttons --}}
                         <div class="flex mt-4 bg-slate-100 rounded-xl p-1 gap-1">
                             <button type="button" id="tab-qr"
-                                class="flex-1 py-2.5 px-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition duration-200 text-gray-500 hover:text-[#0a1f44]"
+                                class="flex-1 py-2.5 px-3 rounded-lg font-bold text-sm flex items-center justify-center gap-2 transition duration-200 text-gray-500"
                                 onclick="switchTab('qr')">
                                 <i class="fa-solid fa-qrcode"></i> Method 1 — QR Code
                             </button>
