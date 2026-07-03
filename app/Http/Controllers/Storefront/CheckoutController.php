@@ -69,19 +69,14 @@ class CheckoutController extends Controller
         ], [
 
             'customer_name.required' => 'Please enter your full name.',
-
             'email.required' => 'Please enter your email address.',
             'email.email' => 'Please enter a valid email address.',
-
             'mobile.required' => 'Please enter your mobile number.',
             'mobile.regex' => 'Please enter a valid Pakistani mobile number (e.g. 03XXXXXXXXX).',
-
             'shipping_zone_id.required' => 'Please select your province.',
             'shipping_zone_id.exists' => 'The selected province is invalid.',
-
             'shipping_rate_id.required' => 'Please select a shipping method.',
             'shipping_rate_id.exists' => 'The selected shipping method is invalid.',
-
             'address.required' => 'Please enter your complete address.',
             'address.min' => 'Please enter a more complete delivery address.',
         ]);
@@ -195,55 +190,51 @@ class CheckoutController extends Controller
     // Step 4: customer uploads receipt screenshot (web form)
     public function uploadProof(Request $request, string $orderNumber)
     {
-
         $order = Order::where('order_number', $orderNumber)->firstOrFail();
 
-        if ($request->input('confirm_method') === 'whatsapp') {
+        if ($request->confirm_method === 'whatsapp') {
+
             $request->validate([
                 'whatsapp_agree' => ['required', 'accepted'],
             ]);
 
-            PaymentProof::create([
-                'order_id' => $order->id,
-                'screenshot_path' => 'whatsapp',
-                'source' => 'whatsapp',
-                'status' => 'submitted',
-            ]);
+            $path = 'whatsapp';
+            $source = 'whatsapp';
+            $message = 'Order payment confirmation received via WhatsApp. Our team will verify it shortly.';
 
-            $order->update(['payment_status' => 'paid']);
-
-            return redirect()->route('checkout.confirmation', $order->order_number)
-                ->with('success', 'Order payment confirmation received via WhatsApp. Our team will verify it shortly.');
         } else {
+
             $request->validate([
                 'screenshot' => ['required', 'file', 'mimes:jpg,jpeg,png,webp,pdf', 'max:5120'],
             ]);
 
             $path = $request->file('screenshot')->store('payment-proofs', 'public');
-
-            PaymentProof::create([
-                'order_id' => $order->id,
-                'screenshot_path' => $path,
-                'source' => 'web',
-                'status' => 'submitted',
-            ]);
-
-            $order->update(['payment_status' => 'paid']);
-
-            return redirect()->route('checkout.confirmation', $order->order_number)
-                ->with('success', 'Payment proof submitted. Our team will verify it shortly.');
+            $source = 'web';
+            $message = 'Payment proof submitted. Our team will verify it shortly.';
         }
+
+        PaymentProof::create([
+            'order_id' => $order->id,
+            'screenshot_path' => $path,
+            'source' => $source,
+            'status' => 'submitted',
+        ]);
+
+        $order->update([
+            'payment_status' => 'paid',
+        ]);
+
+        return redirect()
+            ->route('checkout.confirmation', $order->order_number)
+            ->with('success', $message);
     }
 
     private function carts(Request $request): array
     {
         $items = $request->session()->get('cart', []);
-
         $productIds = collect($items)->pluck('id');
-
         $products = Product::whereIn('id', $productIds)
             ->pluck('images', 'id');
-
         foreach ($items as &$item) {
             $item['image'] = $products[$item['id']] ?? null;
         }
@@ -258,34 +249,24 @@ class CheckoutController extends Controller
 
     public function statusUpdate(Request $request, $order)
     {
+        $request->validate([
+            'pay' => 'required|in:cash_on_delivery,bank_transfer',
+        ]);
+
         $order = Order::where('order_number', $order)->firstOrFail();
 
+        $order->update(['payment_method' => $request->pay]);
+
         if ($request->pay == 'cash_on_delivery') {
-            $order->update([
-                'order_status' => 'pending',
-                'payment_method' => 'cash_on_delivery',
-                'stock_adjusted' => true,
-            ]);
-
-            // Decrement stock immediately for COD since it goes straight to delivered
-            foreach ($order->items as $item) {
-                if ($item->product) {
-                    $item->product->decrement('stock', $item->quantity);
-                }
-            }
-
-            $request->session()->forget('cart');
-            return redirect()->route('checkout.confirmation', $order->order_number)->with('success', 'Order placed successfully using Cash on Delivery.');
+            $route = 'checkout.confirmation';
+            $message = 'Order placed successfully using Cash on Delivery.';
         } elseif ($request->pay == 'bank_transfer') {
-            $order->update([
-                'payment_method' => 'bank_transfer',
-            ]);
-            $request->session()->forget('cart');
-            return redirect()->route('checkout.bank', $order->order_number)->with('success', 'Payment method selected. Please transfer payment and upload proof.');
-        }
 
+            $route = 'checkout.bank';
+            $message = 'Payment method selected. Please transfer payment and upload proof.';
+        }
         $request->session()->forget('cart');
-        return redirect()->route('checkout.confirmation', $order->order_number)->with('success', 'Order status updated successfully.');
+        return redirect()->route($route, $order->order_number)->with('success', $message);
     }
 
     public function confirmation($order)
