@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreProductRequest;
+use App\Models\Attribute;
 use App\Models\Bundle;
 use App\Models\BundleItem;
 use App\Models\Category;
@@ -48,6 +49,8 @@ class ProductController extends Controller
     {
         try {
 
+            $attribute = Attribute::all();
+
             DB::beginTransaction();
 
             $data = $request->validated();
@@ -61,7 +64,7 @@ class ProductController extends Controller
 
             DB::commit();
 
-            if ($request->input('has_variant')) {
+            if ($request->input('has_variant') && count($attribute) > 0) {
 
                 return redirect()
                     ->route('admin.products.attribute.select', ['product' => $product->slug])
