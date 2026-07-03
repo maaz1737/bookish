@@ -90,7 +90,7 @@
                     <div>
                         <div class="w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
                             @if ($school->logo ?? false)
-                                <img src="{{ url('storage/' . $school->logo) }}" alt="{{ $school->name }} emblem" class="max-w-full max-h-full object-contain" loading="lazy" />
+                                <img src="{{ asset('storage/' . $school->logo) }}" alt="{{ $school->name }} emblem" class="max-w-full max-h-full object-contain" loading="lazy" />
                             @else
                                 <i class="fa-solid fa-school text-3xl text-[#001F54]"></i>
                             @endif
@@ -154,7 +154,7 @@
                             <div class="w-full aspect-square bg-slate-50 overflow-hidden flex items-center justify-center p-4 border-b border-slate-100">
                                 @if (!empty($product->images) && count($product->images) > 0)
                                     <img class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
-                                        src="{{ url('storage/' . $product->images[0]) }}"
+                                        src="{{ asset('storage/' . $product->images[0]) }}"
                                         alt="{{ $product->name }}"
                                         loading="lazy" />
                                 @else
@@ -217,7 +217,7 @@
                     <div>
                         <div class="w-full aspect-square bg-slate-50 overflow-hidden flex items-center justify-center p-4 border-b border-slate-100">
                             @if ($category->image ?? false)
-                                <img src="{{ url('storage/' . $category->image) }}"
+                                <img src="{{ asset('storage/' . $category->image) }}"
                                     alt="{{ $category->name }} category"
                                     class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
                                     loading="lazy" />
