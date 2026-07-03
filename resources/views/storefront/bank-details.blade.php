@@ -254,7 +254,7 @@
                         {{-- QR Code Tab --}}
                         <div id="content-qr" class="hidden text-center py-8">
                             <div class="max-w-[220px] mx-auto border-4 border-[#0a1f44] rounded-2xl p-3 bg-white shadow-lg">
-                                <img src="{{ asset('storage/payment_qr.png') }}" alt="Payment QR Code" class="w-full h-auto object-contain rounded-xl" />
+                                <img src="{{ asset('storage/'.$bank['qr_image']) }}" alt="Payment QR Code" class="w-full h-auto object-contain rounded-xl" />
                             </div>
                             <h4 class="text-base font-bold text-[#0a1f44] mt-5">Scan QR Code to Pay</h4>
                             <p class="text-xs text-gray-500 mt-1 max-w-xs mx-auto">Use Easypaisa, JazzCash, or any Pakistani banking app to scan and transfer the payment.</p>

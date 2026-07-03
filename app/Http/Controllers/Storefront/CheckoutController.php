@@ -138,6 +138,8 @@ class CheckoutController extends Controller
                 'iban' => Setting::get('bank_iban', 'PK00XXXX0000000000000000'),
                 'account_no' => Setting::get('bank_account_no', '0000-0000000-0'),
                 'raast_id' => Setting::get('raast_id', '03000000000'),
+                'qr_image' => Setting::get('qr_image'),
+
             ],
         ]);
     }
