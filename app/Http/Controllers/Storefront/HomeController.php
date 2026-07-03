@@ -22,18 +22,18 @@ class HomeController extends Controller
             ->whereNull('parent_id')
             ->where('show_on_dashboard', true)
             ->withCount('products')
-            ->limit(3)
+            ->limit(4)
             ->get();
         $bestSellers = Product::active()
             ->where('is_best_seller', true)
             ->latest()
-            ->take(3)
+            ->take(4)
             ->get();
 
         $bundles = \App\Models\Bundle::where('is_active', true)
             ->with(['products', 'schoolClass'])
             ->latest()
-            ->take(3)
+            ->take(4)
             ->get();
 
         return view('storefront.home', compact(
