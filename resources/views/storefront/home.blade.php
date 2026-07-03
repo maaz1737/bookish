@@ -86,7 +86,7 @@
 
         <div class="grid-3">
             @foreach ($schools as $school)
-                <div class="school-card card p-6 flex flex-col justify-between h-full group">
+                <div class="school-card card p-6 flex flex-col justify-between h-full group filter-con">
                     <div>
                         <div class="school-logo w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
                             @if ($school->logo ?? false)
@@ -140,7 +140,7 @@
                             $badgeClass = 'badge';
                         }
                     @endphp
-                    <div class="product-card card p-5 flex flex-col justify-between relative group h-full">
+                    <div class="product-card card p-5 flex flex-col justify-between relative group h-full filter-con">
                         
                         <!-- Badge -->
                         @if ($badgeText)
@@ -212,7 +212,7 @@
 
         <div class="grid-4">
             @foreach ($categories as $category)
-                <div class="category-card card p-6 flex flex-col justify-between h-full group">
+                <div class="category-card card p-6 flex flex-col justify-between h-full group filter-con">
                     <div>
                         <div class="category-image w-full aspect-square bg-slate-50 rounded-2xl p-4 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
                             @if ($category->image ?? false)
@@ -258,7 +258,7 @@
                             ? asset('storage/app/public/' . $path)
                             : asset('storage/' . $path);
                     @endphp
-                    <div class="bundle-card card flex flex-col justify-between relative group h-full">
+                    <div class="bundle-card card flex flex-col justify-between relative group h-full filter-con">
                         
                         <!-- Badges (Save Left, Items Right) -->
                         @if ($discount > 0)
@@ -309,7 +309,7 @@
                         <!-- Card Content (Padded Content Section) -->
                         <div class="p-5 flex flex-col flex-grow justify-between">
                             <div>
-                                <h3 class="text-[#001F54] font-bold text-base leading-tight mb-1 group-hover:text-[#003B7A] transition-colors">{{ $bundle->name }}</h3>
+                                <h3 class="text-[#001F54] font-bold text-base leading-tight mb-1 group-hover:text-[#003B7A] transition-colors filter-name">{{ $bundle->name }}</h3>
                                 <p class="text-xs text-slate-400 mb-3 line-clamp-1">{{ $includedNames }}</p>
                             </div>
                             
@@ -403,6 +403,11 @@
     {{-- Category/Product Live Filter Search JS --}}
     <script>
         $(document).ready(function () {
+            // Prevent search form submission to avoid page reloading
+            $(".filter-search").closest("form").on("submit", function (e) {
+                e.preventDefault();
+            });
+
             $(".filter-search").on("keyup", function () {
                 var value = $(this).val().toLowerCase();
                 $(".filter-con").each(function () {
