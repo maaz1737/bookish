@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Storefront;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\OrderCheckoutRequest;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\PaymentProof;
@@ -28,61 +29,15 @@ class CheckoutController extends Controller
     }
 
     // Step 2: create the order, then redirect to bank details page
-    public function place(Request $request)
+    public function place(OrderCheckoutRequest $request)
     {
 
-        $data = $request->validate([
-            'customer_name' => [
-                'required',
-                'string',
-                'max:255',
-            ],
-
-            'email' => [
-                'required',
-                'email:rfc,dns',
-                'max:255',
-            ],
-
-            'mobile' => [
-                'required',
-                'regex:/^(03[0-9]{9}|\+923[0-9]{9})$/',
-            ],
-
-            'shipping_zone_id' => [
-                'required',
-                'exists:shipping_zones,id',
-            ],
-
-            'shipping_rate_id' => [
-                'required',
-                'exists:shipping_rates,id',
-            ],
-
-            'address' => [
-                'required',
-                'string',
-                'min:10',
-                'max:1000',
-            ],
-
-        ], [
-
-            'customer_name.required' => 'Please enter your full name.',
-            'email.required' => 'Please enter your email address.',
-            'email.email' => 'Please enter a valid email address.',
-            'mobile.required' => 'Please enter your mobile number.',
-            'mobile.regex' => 'Please enter a valid Pakistani mobile number (e.g. 03XXXXXXXXX).',
-            'shipping_zone_id.required' => 'Please select your province.',
-            'shipping_zone_id.exists' => 'The selected province is invalid.',
-            'shipping_rate_id.required' => 'Please select a shipping method.',
-            'shipping_rate_id.exists' => 'The selected shipping method is invalid.',
-            'address.required' => 'Please enter your complete address.',
-            'address.min' => 'Please enter a more complete delivery address.',
-        ]);
+        $data = $request->validated();
 
         $cart = $request->session()->get('cart', []);
-        abort_if(empty($cart), 422, 'Cart is empty.');
+        if (empty($cart)) {
+            return redirect()->back()->with('error', 'Cart is empty.');
+        }
         $shippingRate = ShippingRate::where('id', $data['shipping_rate_id'])
             ->where('shipping_zone_id', $data['shipping_zone_id'])
             ->firstOrFail();
