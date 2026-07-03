@@ -72,7 +72,7 @@
                         @if (count($product->images))
                             <img src="{{ app()->environment('local')
                                 ? asset('storage/' . $product->images[0])
-                                : asset('storage/app/public/' . $product->images[0]) }}"
+                                : asset('storage/' . $product->images[0]) }}"
                                 alt="{{ $product->name }}"
                                 class="h-full w-full object-cover group-hover:scale-105 transition duration-300">
                         @else

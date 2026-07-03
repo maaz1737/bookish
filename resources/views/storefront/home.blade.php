@@ -53,12 +53,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="flex justify-center md:justify-end">
-                                        <div class="w-full max-w-[480px] aspect-[5/4] flex items-center justify-center p-4">
-                                            <img class="max-h-full max-w-full object-contain" src="{{ app()->environment('production')
-                            ? asset('storage/app/public/' . $banner->image_path)
-                            : asset('storage/banners/paf-banner-removebg.png') }}" alt="Everything Your Family Needs, In One Place" loading="eager">
-                                        </div>
+                                    <div class="card-img-box" style="aspect-ratio: 5/4; background: transparent;">
+                                        <img class="" src="{{ app()->environment('production')
+                        ? asset('storage/' . $banner->image_path)
+                        : asset('storage/banners/paf-banner-removebg.png') }}" alt="">
                                     </div>
                                 </div>
                                 @if ($banner->link)
@@ -114,13 +112,11 @@
     {{-- ===== TRENDING NOW ===== --}}
     @if (isset($bestSellers) && $bestSellers->count())
         <section class="mb-12">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
-                    <i class="fa-solid fa-fire text-[#ff7a00]"></i> Trending Now
-                </h2>
-                <a href="{{ route('products.index') }}" class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
-                    View All Products <i class="fa-solid fa-arrow-right text-xs"></i>
-                </a>
+            <div class="flex items-center justify-between mb-5">
+                <h2 class="text-2xl font-bold text-navy-900 flex items-center gap-2"><i
+                        class="fa-solid fa-star text-gold-500"></i> Best Sellers</h2>
+                <a href="{{ route('products.index') }}" class="bg-navy-800 text-white px-4 py-2 rounded-md text-sm">View All
+                    Products <i class="fa-solid fa-arrow-right ml-1"></i></a>
             </div>
 
             <div class="grid-4">
@@ -156,9 +152,9 @@
                         <a href="{{ route('product.show', $product) }}" class="block mb-4">
                             <div class="product-image w-full aspect-square bg-slate-50 rounded-2xl overflow-hidden p-3 relative flex items-center justify-center border border-slate-100">
                                 @if (isset($product->images) && count($product->images) > 0)
-                                    <img class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                                    <img class="card-img"
                                         src="{{ app()->environment('production') ? asset('storage/app/public/' . $product->images[0]) : asset('storage/' . $product->images[0]) }}"
-                                        alt="{{ $product->name }}" loading="lazy" />
+                                        alt="{{ $product->name }}">
                                 @else
                                     <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400 text-sm rounded-lg">
                                         No Image
@@ -212,14 +208,34 @@
 
         <div class="grid-4">
             @foreach ($categories as $category)
-                <div class="category-card card p-6 flex flex-col justify-between h-full group filter-con">
-                    <div>
-                        <div class="category-image w-full aspect-square bg-slate-50 rounded-2xl p-4 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
-                            @if ($category->image ?? false)
-                                <img src="{{ app()->environment('production') ? url('storage/app/public/' . $category->image) : asset('storage/' . $category->image) }}" alt="{{ $category->name }} category" loading="lazy" />
-                            @else
-                                <i class="fa-solid fa-book text-4xl text-[#001F54] opacity-35"></i>
-                            @endif
+                <div class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-md transition filter-con">
+                    {{-- FIXED IMAGE BOX: all category images render at same size --}}
+                    <div class="card-img-box bg-slate-50">
+                        <img class="card-img" src="{{ app()->environment('production')
+                ? url('storage/app/public/' . $category->image)
+                : asset('storage/' . $category->image) }}" alt="{{ $category->name }}">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-9 h-9 rounded-full bg-navy-50 flex items-center justify-center text-navy-700">
+                                <i class="fa-solid fa-book"></i>
+                            </span>
+
+                            <div class="w-full">
+                                <div class="flex items-start justify-between gap-2">
+                                    <h3 class="font-bold text-navy-900 leading-tight filter-name">
+                                        {{ $category->name }}
+                                    </h3>
+                                </div>
+
+                                <span class="inline-flex mt-1 text-xs bg-gray-100 rounded-full px-2 py-1 w-fit">
+                                    Total Products: {{ $category->products_count }}
+                                </span>
+
+                                <p class="text-xs text-slate-500 mt-1">
+                                    {{ \Illuminate\Support\Str::limit($category->description, 30, '') }}
+                                </p>
+                            </div>
                         </div>
                         <h3 class="text-lg font-bold text-[#001F54] text-center mb-6 filter-name">
                             {{ $category->name }}
@@ -255,7 +271,7 @@
                         $imgCount = $prodImages->count();
                         $includedNames = $products->pluck('name')->join(' + ');
                         $imgHelper = fn($path) => app()->environment('production')
-                            ? asset('storage/app/public/' . $path)
+                            ? asset('storage/' . $path)
                             : asset('storage/' . $path);
                     @endphp
                     <div class="bundle-card card flex flex-col justify-between relative group h-full filter-con">
@@ -295,11 +311,16 @@
                             @else
                                 <div class="grid grid-cols-2 grid-rows-2 h-full w-full">
                                     @foreach ($prodImages as $prod)
-                                        <div class="flex items-center justify-center p-3 border-white/60
-                                            {{ $loop->index === 0 ? 'border-r border-b' : '' }}
-                                            {{ $loop->index === 1 ? 'border-b' : '' }}
-                                            {{ $loop->index === 2 ? 'border-r' : '' }}">
-                                            <img src="{{ $imgHelper($prod->images[0]) }}" class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300" alt="{{ $prod->name }}" loading="lazy" />
+                                        <div
+                                            class="flex items-center justify-center p-3
+                                                                                                                                                                                                                                {{ $loop->index === 0 ? 'border-r border-b' : '' }}
+                                                                                                                                                                                                                                {{ $loop->index === 1 ? 'border-b' : '' }}
+                                                                                                                                                                                                                                {{ $loop->index === 2 ? 'border-r' : '' }}
+                                                                                                                                                                                                                                border-white/60">
+                                            <img src="{{ $imgHelper($prod->images[0]) }}"
+                                                class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
+                                                alt="{{ $prod->name }}"
+                                                onerror="this.onerror=null;this.src='{{ asset('images/no-image.png') }}'">
                                         </div>
                                     @endforeach
                                 </div>

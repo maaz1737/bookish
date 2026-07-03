@@ -50,7 +50,7 @@
             <div class="mt-6 grid grid-cols-1 items-center gap-8 md:grid-cols-2">
                 <!-- Illustration -->
                 <div class="flex justify-center">
-                    <img src="{{ asset('storage/app/public/order-success.png') }}" alt="Order placed successfully"
+                    <img src="{{ asset('storage/order-success.png') }}" alt="Order placed successfully"
                         class="h-48 w-auto object-contain sm:h-56" />
                 </div>
 
@@ -105,9 +105,9 @@
                                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
                                 <circle cx="12" cy="10" r="3" />
                             </svg>
-                            <span class="text-sm">Delivery City</span>
+                            <span class="text-sm">Delivery Location</span>
                         </div>
-                        <span class="text-sm text-gray-900">Lahore</span>
+                        <span class="text-sm text-gray-900">{{ $order->shippingArea->name }}</span>
                     </div>
                 </div>
             </div>

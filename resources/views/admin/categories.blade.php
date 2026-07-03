@@ -20,7 +20,7 @@
                     <!-- Image -->
                     <div class="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                         @if ($c->image)
-                            <img src="{{ app()->environment('production') ? url('storage/app/public/' . $c->image) : asset('storage/' . $c->image) }}"
+                            <img src="{{ app()->environment('production') ? url('storage/' . $c->image) : asset('storage/' . $c->image) }}"
                                 class="w-full h-full object-cover" alt="{{ $c->name }}">
                         @else
                             <div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">

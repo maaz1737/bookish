@@ -8,7 +8,8 @@
                     <div class="flex flex-col items-center flex-1">
                         <div
                             class="w-10 h-10 rounded-full border-2 flex items-center justify-center {{ $s[2] ? 'bg-[#0a1f44] text-white border-[#0a1f44]' : 'bg-white text-gray-400 border-gray-300' }}">
-                            {{ $s[0] }}</div>
+                            {{ $s[0] }}
+                        </div>
                         <div class="mt-2 {{ $s[2] ? 'text-[#0a1f44] font-semibold' : '' }}">{{ $s[1] }}</div>
                     </div>
                     @if ($i < 3)
@@ -51,6 +52,20 @@
                             </div>
 
                             <div>
+                                <label class="block text-sm text-gray-700 mb-1">
+                                    Email
+                                    <span class="text-red-500">*</span>
+                                </label>
+
+                                <input type="email" name="email" value="{{ old('email') }}" placeholder="ahmad@example.com"
+                                    class="w-full border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:border-[#0a1f44]">
+
+                                @error('email')
+                                    <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                                @enderror
+                            </div>
+
+                            <div>
                                 <label class="block text-sm text-gray-700 mb-1">Phone Number <span
                                         class="text-red-500">*</span></label>
                                 <input type="text" name="mobile" value="{{ old('mobile') }}" placeholder="0321 1234567"
@@ -59,6 +74,30 @@
                                     <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div class="md:col-span-2 mt-4">
+                            <label class="block text-sm text-gray-700 mb-1">
+                                Province
+                                <span class="text-red-500">*</span>
+                            </label>
+
+                            <select name="shipping_zone_id" id="shipping_zone"
+                                class="w-full border border-gray-200 rounded-md px-3 py-2 focus:outline-none focus:border-[#0a1f44]">
+
+                                <option value="">Select Province</option>
+
+                                @foreach($zones as $zone)
+                                    <option value="{{ $zone->id }}" {{ old('shipping_zone_id') == $zone->id ? 'selected' : '' }}>
+                                        {{ $zone->name }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+
+                            @error('shipping_zone_id')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
                         </div>
 
                         <div class="mt-4">
@@ -77,7 +116,19 @@
                             class="mt-6 bg-blue-50 border border-blue-100 text-sm text-[#0a1f44] rounded-md px-4 py-3 flex items-center gap-2">
                             🛡️ Your information is safe with us. We never share your details with third parties.
                         </div>
+                        <div id="shipping-method-container" class="hidden mt-6 border rounded-lg p-4 bg-gray-50">
 
+                            <h3 class="font-semibold text-[#0a1f44] mb-3">
+                                Select Shipping Method
+                            </h3>
+
+                            <div id="shipping-methods">
+
+                                {{-- AJAX will append radio buttons here --}}
+
+                            </div>
+
+                        </div>
                         <button type="submit"
                             class="mt-6 w-full bg-[#0a1f44] hover:bg-[#0a1f44]/90 text-white font-semibold py-3 rounded-md flex items-center justify-center gap-2">
                             🔒 Place Order →
@@ -103,20 +154,19 @@
                         {{-- Replace with your @foreach ($cartItems as $item) loop --}}
                         @php $sample = [['School Backpack (Navy Blue)', 'Premium Quality · 18 inch', 2250], ['School Uniform Set', 'Boys · Grade 6 · White', 1500], ['Class 5 Complete Book Bundle', 'Includes All Subjects', 2450]]; @endphp
                         @foreach ($cart['items'] as $p)
-                            <div class="flex gap-3">
-                                <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
-                                    <img src="{{ app()->environment('local')
-                                        ? asset('storage/' . $p['image'][0])
-                                        : asset('storage/app/public/' . $p['image'][0]) }}"
-                                        alt="" class="w-full h-full object-cover">
-                                </div>
-                                <div class="flex-1">
-                                    <p class="font-semibold text-sm text-[#0a1f44]">{{ $p['name'] }}</p>
-                                    <p class="text-xs text-gray-500">Premium Quality · 18 inch</p>
-                                    <p class="text-xs text-gray-500">Qty: {{ $p['quantity'] }}</p>
-                                </div>
-                                <p class="text-sm font-semibold text-[#0a1f44]">PKR {{ $p['price'] }}</p>
-                            </div>
+                                        <div class="flex gap-3">
+                                            <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
+                                                <img src="{{ app()->environment('local')
+                            ? asset('storage/' . $p['image'][0])
+                            : asset('storage/' . $p['image'][0]) }}" alt="" class="w-full h-full object-cover">
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="font-semibold text-sm text-[#0a1f44]">{{ $p['name'] }}</p>
+                                                <p class="text-xs text-gray-500">Premium Quality · 18 inch</p>
+                                                <p class="text-xs text-gray-500">Qty: {{ $p['quantity'] }}</p>
+                                            </div>
+                                            <p class="text-sm font-semibold text-[#0a1f44]">PKR {{ $p['price'] }}</p>
+                                        </div>
                         @endforeach
                     </div>
 
@@ -124,11 +174,18 @@
                         <div class="flex justify-between"><span class="text-gray-600">Subtotal ({{ count($cart['items']) }}
                                 items)</span><span>PKR
                                 {{ $cart['total'] }}</span></div>
-                        <div class="flex justify-between"><span class="text-gray-600">Delivery Charges</span><span>PKR
-                                150</span></div>
+                        <div class="flex justify-between"><span class="text-gray-600">Delivery Charges</span>
+                            <span id="shipping-charge">
+                                PKR 0
+                            </span>
+                        </div>
+
                     </div>
                     <div class="bg-amber-50 mt-3 px-3 py-3 rounded-md flex justify-between font-bold text-[#0a1f44]">
-                        <span>Total Amount</span><span>PKR {{ $cart['total'] + 150 }}</span>
+                        <span>Total Amount</span>
+                        <span id="grand-total">
+                            PKR {{ number_format($cart['total']) }}
+                        </span>
                     </div>
 
                     <p class="text-center text-xs text-gray-500 mt-4">🛡️ Secure payments. Multiple payment options
@@ -137,4 +194,70 @@
             </div>
         </div>
     </div>
+
+
+    <script>
+
+        const subtotal = {{ $cart['total'] }};
+
+        // Province Changed
+        $('#shipping_zone').change(function () {
+
+            let zoneId = $(this).val();
+
+            if (!zoneId) {
+
+                $('#shipping-method-container').addClass('hidden');
+                $('#shipping-methods').html('');
+
+                $('#shipping-charge').text('PKR 0');
+                $('#grand-total').text('PKR ' + subtotal.toLocaleString());
+
+                return;
+            }
+
+            $.ajax({
+
+                url: '/shipping-rates/' + zoneId,
+
+                type: 'GET',
+
+                success: function (response) {
+
+                    $('#shipping-method-container').removeClass('hidden');
+
+                    $('#shipping-methods').html(response);
+
+                    // Reset summary
+                    $('#shipping-charge').text('PKR 0');
+                    $('#grand-total').text('PKR ' + subtotal.toLocaleString());
+
+                }
+
+            });
+
+        });
+
+
+        // Shipping Method Changed
+        $(document).on('change', '.shipping-rate', function () {
+
+            let shippingPrice = parseFloat($(this).data('price'));
+
+            let total = subtotal + shippingPrice;
+
+            $('#shipping-charge').text(
+                'PKR ' + shippingPrice.toLocaleString()
+            );
+
+            $('#grand-total').text(
+                'PKR ' + total.toLocaleString()
+            );
+
+        });
+
+    </script>
+
+
+
 @endsection

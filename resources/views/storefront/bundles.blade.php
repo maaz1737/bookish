@@ -38,7 +38,7 @@
                     $imgCount = $prodImages->count();
                     $includedNames = $products->pluck('name')->join(' + ');
                     $imgHelper = fn($path) => app()->environment('production')
-                        ? asset('storage/app/public/' . $path)
+                        ? asset('storage/' . $path)
                         : asset('storage/' . $path);
                 @endphp
                 <div class="bg-white rounded-2xl border border-slate-200 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col h-full group">

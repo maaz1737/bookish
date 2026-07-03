@@ -164,7 +164,7 @@
                     $imgCount   = $prodImages->count();
                     $included   = $allProds->pluck('name')->map(fn($n) => \Illuminate\Support\Str::limit($n, 20))->join(' + ');
                     $imgHelper  = fn($path) => app()->environment('production')
-                        ? asset('storage/app/public/' . $path)
+                        ? asset('storage/' . $path)
                         : asset('storage/' . $path);
                 @endphp
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden group flex flex-col">

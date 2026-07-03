@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ShippingRateController;
 use Illuminate\Support\Facades\Route;
 
 // Storefront
@@ -38,6 +39,14 @@ use App\Http\Controllers\Admin\AttributeController;
 Route::get('/cart/json', [CartController::class, 'json']);
 Route::post('/cart/update', [CartController::class, 'update']);
 Route::post('/cart/remove', [CartController::class, 'removeCartItem']);
+
+
+
+
+
+Route::get('/shipping-rates/{zone}', [CheckoutController::class, 'getShippingRates'])
+    ->name('shipping-rates.by-zone');
+
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -144,7 +153,8 @@ Route::prefix('admin')->name('admin.')
         Route::get('orders', [AdminOrderController::class, 'index'])->name('orders.index');
         Route::get('orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
         Route::put('orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.status');
-
+        Route::get('orders/{order}/pdf', [AdminOrderController::class, 'pdf'])
+            ->name('orders.pdf');
         // Module 7: Payment verification
         Route::get('payments', [PaymentVerificationController::class, 'index'])->name('payments.index');
         Route::get('payments/{proof}', [PaymentVerificationController::class, 'show'])->name('payments.show');
@@ -158,6 +168,22 @@ Route::prefix('admin')->name('admin.')
         // Module 9: Inventory
         Route::get('inventory', [InventoryController::class, 'index'])->name('inventory.index');
         Route::put('inventory/{product}', [InventoryController::class, 'updateStock'])->name('inventory.update');
+
+
+
+        Route::get('/shipping', [ShippingRateController::class, 'index'])->name('shipping.index');
+        Route::get('/shipping/create', [ShippingRateController::class, 'create'])->name('shipping.create');
+        Route::post('/shipping', [ShippingRateController::class, 'store'])->name('shipping.store');
+        Route::get('/shipping/{zone}', [ShippingRateController::class, 'show'])->name('shipping.show');
+        Route::get('/shipping/{zone}/edit', [ShippingRateController::class, 'edit'])->name('shipping.edit');
+        Route::put('/shipping/{zone}', [ShippingRateController::class, 'update'])->name('shipping.update');
+        Route::delete('/shipping/{zone}', [ShippingRateController::class, 'destroy'])->name('shipping.destroy');
+
+
+
+        Route::get('/shipping/{zone}/rate', [ShippingRateController::class, 'shippingRateCreate'])->name('rates.create');
+        Route::post('/shipping/rate', [ShippingRateController::class, 'shippingRateStore'])->name('rates.store');
+
 
         // Modules 10 & 11 + Settings — Super Admin ONLY
         Route::middleware('role:super_admin')->group(function () {
@@ -204,6 +230,8 @@ Route::prefix('admin')->name('admin.')
             // attribute value slection
             Route::get('/products/{product}/attribute/value', [AttributeController::class, 'attributeValueSelection'])->name('products.attributes.value.select');
             Route::post('/products/{product}/variant/store', [AttributeController::class, 'ProductVariantStore'])->name('product.variants.store');
+
+
         });
     });
 

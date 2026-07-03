@@ -241,7 +241,7 @@
 
                 @if(isset($p->images[0]))
                       <img class="card-img w-full h-full object-contain" src="{{ app()->environment('production')
-                  ? asset('storage/app/public/' . $p->images[0])
+                  ? asset('storage/' . $p->images[0])
                   : asset('storage/' . $p->images[0]) }}" alt="{{ $p->name }}">
                 @else
                   <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 text-sm border rounded">

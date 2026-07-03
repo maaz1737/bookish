@@ -576,9 +576,8 @@
 
     <script>
         const storageUrl =
-            "{{ app()->environment('production') ? asset('storage/app/public/') : asset('storage/') }}";
+            "{{ app()->environment('production') ? asset('storage/') : asset('storage/') }}";
     </script>
-    <script src="/public/js/cart.js"></script>
     <script src="/js/cart.js"></script>
 
 
