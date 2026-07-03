@@ -52,9 +52,112 @@
             background: #f8fafc;
         }
 
-        /* ===== FIXED IMAGE CARD CONTAINER =====
-           Any image (large or small) is centered and scaled to fit the same box.
-           Use class="card-img-box" on the wrapper and class="card-img" on <img>. */
+        /* ===== PREMIUM CARD STYLING ===== */
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 8px 24px rgba(0, 31, 84, 0.08);
+            border: 1px solid rgba(0, 31, 84, 0.06);
+            overflow: hidden;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 31, 84, 0.12);
+        }
+
+        /* ===== PRIMARY CTA BUTTON STYLING ===== */
+        .primary-btn {
+            background: #001F54;
+            color: #ffffff;
+            border-radius: 12px;
+            border: none;
+            font-weight: 600;
+            padding: 12px 20px;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .primary-btn:hover {
+            background: #003B7A;
+        }
+
+        .primary-btn:focus {
+            outline: 3px solid rgba(0, 31, 84, 0.25);
+            outline-offset: 2px;
+        }
+
+        /* ===== PREMIUM BADGES ===== */
+        .badge {
+            background: #001F54;
+            color: #ffffff;
+            border-radius: 999px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .badge-orange {
+            background: #ff7a00;
+            color: #ffffff;
+        }
+
+        /* ===== RESPONSIVE GRID LAYOUT ===== */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 28px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-4,
+            .grid-3 {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .grid-4,
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ===== IMAGE HANDLING ===== */
+        .product-image img,
+        .category-image img,
+        .school-logo img,
+        .logo-box img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .product-image,
+        .category-image,
+        .school-logo,
+        .logo-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: transparent;
+        }
+
+        /* Legacy compatibility wrapper classes */
         .card-img-box {
             width: 100%;
             aspect-ratio: 1 / 0.8;
@@ -76,7 +179,6 @@
             transform: scale(1.05);
         }
 
-        /* logo / circular image box for school cards */
         .logo-box {
             width: 64px;
             height: 64px;
@@ -88,12 +190,6 @@
             overflow: hidden;
             flex-shrink: 0;
             border: 1px solid #e5e7eb;
-        }
-
-        .logo-box img {
-            max-width: 80%;
-            max-height: 80%;
-            object-fit: contain;
         }
     </style>
 
@@ -224,25 +320,31 @@
 
             {{-- Rest of the Nav Links --}}
             <a href="{{ route('schools.index', 'schools')}}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
                 <i class="fa-solid fa-school text-navy-600 mr-1"></i> Shop by School
             </a>
             <a href="{{ route('category.show', 'books') }}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
                 <i class="fa-solid fa-book text-navy-600 mr-1"></i> Books
             </a>
             <a href="{{ route('category.show', 'uniforms') }}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
                 <i class="fa-solid fa-shirt text-navy-600 mr-1"></i> Uniforms
             </a>
-            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+            <a href="{{ route('category.show', 'bags-bottles') }}"
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
                 <i class="fa-solid fa-bag-shopping text-navy-600 mr-1"></i> Bags & Bottles
             </a>
-            <a href="#" class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800">
+            <a href="{{ route('category.show', 'gifts') }}"
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
                 <i class="fa-solid fa-gift text-navy-600 mr-1"></i> Gifts
             </a>
+            <a href="{{ route('category.show', 'attar-fragrances') }}"
+                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
+                <i class="fa-solid fa-wind text-navy-600 mr-1"></i> Attar & Fragrances
+            </a>
             <a href="#"
-                class="ml-auto bg-amber-500 hover:bg-amber-600 text-white px-5 py-2.5 rounded-md text-sm font-semibold transition">
+                class="ml-auto bg-[#ff7a00] hover:bg-[#e06c00] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md">
                 <i class="fa-solid fa-tag mr-1"></i> Offers
             </a>
         </nav>
