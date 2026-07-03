@@ -18,6 +18,13 @@ class Order extends Model
         'paid_at',
         'payment_method',
         'stock_adjusted',
+        'email',
+        'shipping_zone_id',
+        'shipping_rate_id',
+        'shipping_method',
+        'shipping_cost',
+        'subtotal',
+
     ];
 
     protected $casts = [
@@ -44,5 +51,10 @@ class Order extends Model
     public function latestProof()
     {
         return $this->hasOne(PaymentProof::class)->latestOfMany();
+    }
+
+    public function shippingArea()
+    {
+        return $this->belongsTo(ShippingZone::class, 'shipping_zone_id');
     }
 }
