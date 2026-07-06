@@ -136,7 +136,44 @@
             }
         }
 
-        /* ===== IMAGE HANDLING ===== */
+        /* ===== IMAGE HANDLING DESIGN SYSTEM ===== */
+        .card-img-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f8fafc; /* Slate 50 background */
+            margin: 0;
+            padding: 0;
+            border-bottom: 1px solid rgba(0, 31, 84, 0.06);
+        }
+
+        .card-img-contain {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* padding: 16px; */
+            transition: transform 0.35s ease;
+        }
+
+        .card-img-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            padding: 0;
+            transition: transform 0.35s ease;
+        }
+
+        .card:hover .card-img-contain,
+        .card:hover .card-img-cover,
+        .group:hover .card-img-contain,
+        .group:hover .card-img-cover {
+            transform: scale(1.05);
+        }
+
+        /* Default fallback styling */
         .product-image img,
         .category-image img,
         .school-logo img,
@@ -155,28 +192,6 @@
             justify-content: center;
             overflow: hidden;
             background: transparent;
-        }
-
-        /* Legacy compatibility wrapper classes */
-        .card-img-box {
-            width: 100%;
-            aspect-ratio: 1 / 0.8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: #fff;
-        }
-
-        .card-img-box .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform .35s ease;
-        }
-
-        .card-img-box:hover .card-img {
-            transform: scale(1.05);
         }
 
         .logo-box {

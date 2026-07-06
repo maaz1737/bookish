@@ -62,16 +62,14 @@
 
                     <!-- Product Image -->
                     <a href="{{ route('product.show', $product) }}" class="block">
-                        <div class="card-img-box bg-slate-50">
+                        <div class="card-img-box">
                             @if (isset($product->images) && count($product->images) > 0)
-                                <img src="{{ app()->environment('production')
-                                    ? asset('storage/' . $product->images[0])
-                                    : asset('storage/' . $product->images[0]) }}"
+                                <img src="{{ url('storage/' . $product->images[0]) }}"
                                     alt="{{ $product->name }}"
-                                    class="card-img">
+                                    class="card-img-contain">
                             @else
-                                <div class="w-full h-full flex items-center justify-center bg-gray-100 text-gray-500 text-sm border rounded">
-                                    No Image
+                                <div class="w-full h-full flex items-center justify-center text-gray-300 text-sm">
+                                    <i class="fa-solid fa-image text-4xl"></i>
                                 </div>
                             @endif
                         </div>

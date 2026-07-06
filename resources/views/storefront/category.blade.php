@@ -66,21 +66,16 @@
                     class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition duration-300">
 
                     <!-- Product Image -->
-
-                    <div class="h-60 bg-gray-100 flex items-center justify-center">
-
+                    <div class="card-img-box">
                         @if (count($product->images))
-                            <img src="{{ app()->environment('local')
-                                ? asset('storage/' . $product->images[0])
-                                : asset('storage/' . $product->images[0]) }}"
+                            <img src="{{ url('storage/' . $product->images[0]) }}"
                                 alt="{{ $product->name }}"
-                                class="h-full w-full object-cover group-hover:scale-105 transition duration-300">
+                                class="card-img-contain">
                         @else
-                            <div class="text-7xl">
-                                🎒
+                            <div class="w-full h-full flex items-center justify-center text-gray-300 text-sm">
+                                <i class="fa-solid fa-image text-4xl"></i>
                             </div>
                         @endif
-
                     </div>
 
                     <!-- Product Content -->

@@ -160,10 +160,10 @@
 
                         <!-- Product Image -->
                         <a href="{{ route('product.show', $product) }}" class="block">
-                            <div class="w-full aspect-square bg-slate-50 overflow-hidden flex items-center justify-center p-4 border-b border-slate-100">
+                            <div class="card-img-box">
                                 @if (!empty($product->images) && count($product->images) > 0)
-                                    <img class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
-                                        src="{{ asset('storage/' . $product->images[0]) }}"
+                                    <img class="card-img-contain"
+                                        src="{{ url('storage/' . $product->images[0]) }}"
                                         alt="{{ $product->name }}"
                                         loading="lazy" />
                                 @else
@@ -224,11 +224,11 @@
             @foreach ($categories as $category)
                 <div class="category-card card flex flex-col justify-between h-full group filter-con">
                     <div>
-                        <div class="w-full aspect-square bg-slate-50 overflow-hidden flex items-center justify-center p-4 border-b border-slate-100">
+                        <div class="card-img-box">
                             @if ($category->image ?? false)
-                                <img src="{{ asset('storage/' . $category->image) }}"
+                                <img src="{{ url('storage/' . $category->image) }}"
                                     alt="{{ $category->name }} category"
-                                    class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
+                                    class="card-img-cover"
                                     loading="lazy" />
                             @else
                                 <i class="fa-solid fa-book text-4xl text-[#001F54] opacity-30"></i>
