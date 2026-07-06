@@ -384,7 +384,7 @@
             <div class="category-dropdown relative">
                 <button type="button"
                     class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
-                    <i class="fa-solid fa-school mr-1"></i>
+                    <i class="fa-solid fa-backpack mr-1"></i>
                     <span>School Essentials</span>
                     <i
                         class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
@@ -427,7 +427,7 @@
             <div class="category-dropdown relative">
                 <button type="button"
                     class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
-                    <i class="fa-solid fa-school mr-1"></i>
+                    <i class="fa-solid fa-gift mr-1"></i>
                     <span>Gifts & Decor</span>
                     <i
                         class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
@@ -443,7 +443,7 @@
                     class="categoryDropdownMenu absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
 
                     @forelse ($fragranceProducts as $product)
-                        <a href="{{ route('category.show', $product->slug) }}"
+                        <a href="{{ route('product.show', $product->slug) }}"
                             class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-blue-900 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
 
                             <span
@@ -482,7 +482,7 @@
             <div class="category-dropdown relative">
                 <button type="button"
                     class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
-                    <i class="fa-solid fa-school mr-1"></i>
+                    <i class="fa-solid fa-spray-can-sparkles mr-1"></i>
                     <span>fragrances</span>
                     <i
                         class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
@@ -497,7 +497,7 @@
                     class="categoryDropdownMenu absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
 
                     @forelse ($fragranceProducts as $product)
-                        <a href="{{ route('category.show', $product->slug) }}"
+                        <a href="{{ route('product.show', $product->slug) }}"
                             class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-blue-900 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
 
                             <span
