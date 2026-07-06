@@ -286,8 +286,8 @@
                                         <i class="fa-solid fa-credit-card text-[#0a1f44] text-lg"></i>
                                     </div>
                                     <div class="min-w-0">
-                                        <p class="text-xs text-gray-400">Account Number / IBAN</p>
-                                        <p class="font-bold text-[#0a1f44] font-mono text-sm break-all">{{ $bank['iban'] ?: $bank['account_no'] }}</p>
+                                        <p class="text-xs text-gray-400">Account Number</p>
+                                        <p class="font-bold text-[#0a1f44] font-mono text-sm break-all">{{  $bank['account_no'] }}</p>
                                     </div>
                                 </div>
                                 <button id="copy-iban" onclick="copyToClipboard('{{ $bank['iban'] ?: $bank['account_no'] }}','copy-iban')" class="bg-white border border-gray-200 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition shrink-0 hover:border-gray-300">
