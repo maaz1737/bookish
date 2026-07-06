@@ -53,6 +53,24 @@ class OtpAuthController extends Controller
         }
 
         Auth::login($user, remember: true);
+
+        // Sync session-based wishlist to user
+        $sessionId = $request->session()->getId();
+        $sessionWishlists = \App\Models\Wishlist::where('session_id', $sessionId)->get();
+        foreach ($sessionWishlists as $item) {
+            $userExists = \App\Models\Wishlist::where('user_id', $user->id)
+                ->where('product_id', $item->product_id)
+                ->exists();
+            if (!$userExists) {
+                $item->update([
+                    'user_id' => $user->id,
+                    'session_id' => null
+                ]);
+            } else {
+                $item->delete();
+            }
+        }
+
         $request->session()->regenerate();
 
         return redirect()->intended(route('home'));

@@ -11,6 +11,7 @@ use App\Http\Controllers\Storefront\ProductController as StoreProductController;
 use App\Http\Controllers\Storefront\CartController;
 use App\Http\Controllers\Storefront\CheckoutController;
 use App\Http\Controllers\Storefront\OrderTrackController;
+use App\Http\Controllers\Storefront\WishlistController;
 use App\Http\Controllers\ContactController;
 // Auth
 use App\Http\Controllers\Auth\OtpAuthController;
@@ -78,6 +79,13 @@ Route::post('/cart/product/{product}', [CartController::class, 'addProduct'])->n
 Route::post('/cart/bundle/{bundle}', [CartController::class, 'addBundle'])->name('cart.addBundle');
 Route::delete('/cart/{key}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
+
+// Wishlist
+Route::get('/wishlist', [WishlistController::class, 'index'])->name('wishlist.index');
+Route::post('/wishlist/add/{product}', [WishlistController::class, 'add'])->name('wishlist.add');
+Route::post('/wishlist/remove/{product}', [WishlistController::class, 'remove'])->name('wishlist.remove');
+Route::post('/wishlist/toggle/{product}', [WishlistController::class, 'toggle'])->name('wishlist.toggle');
+Route::get('/wishlist/count', [WishlistController::class, 'count'])->name('wishlist.count');
 
 // Checkout (guest checkout always available)
 Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
