@@ -58,7 +58,14 @@
                 Show on Dashboard
             </label>
         </div>
+        <div class="flex items-center gap-3">
+            <input type="checkbox" name="show_on_menu" value="0"
+                class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
 
+            <label class="text-sm font-medium text-gray-700">
+                Show on Main Menu
+            </label>
+        </div>
         <div class="flex justify-end">
             <button type="submit"
                 class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium px-6 py-2 rounded-lg transition">
