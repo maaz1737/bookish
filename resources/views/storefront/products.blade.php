@@ -43,10 +43,21 @@
     @if ($products->count())
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             @foreach ($products as $product)
+                @php
+                    $inWishlist = false;
+                    if (auth()->check()) {
+                        $inWishlist = \App\Models\Wishlist::where('user_id', auth()->id())->where('product_id', $product->id)->exists();
+                    } else {
+                        $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())->where('product_id', $product->id)->exists();
+                    }
+                @endphp
                 <div class="group bg-white rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl transition duration-300 border border-slate-200 flex flex-col h-full relative">
                     <!-- Wishlist Button -->
-                    <button class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white shadow flex items-center justify-center text-slate-400 hover:text-rose-500 z-10 transition">
-                        <i class="fa-regular fa-heart"></i>
+                    <button class="wishlist-toggle-btn absolute top-4 right-4 w-9 h-9 rounded-full bg-white shadow flex items-center justify-center z-10 transition {{ $inWishlist ? 'text-rose-500' : 'text-slate-400' }} hover:text-rose-500"
+                        data-product-id="{{ $product->id }}"
+                        data-url="{{ route('wishlist.toggle', $product) }}"
+                        aria-label="Toggle {{ $product->name }} wishlist">
+                        <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
                     </button>
 
                     <!-- Product Image -->

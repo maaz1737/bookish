@@ -255,12 +255,21 @@
                 <button class="bg-navy-800 text-white px-5"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
 
+            @php
+                $wishlistCount = 0;
+                if (auth()->check()) {
+                    $wishlistCount = \App\Models\Wishlist::where('user_id', auth()->id())->count();
+                } else {
+                    $wishlistCount = \App\Models\Wishlist::where('session_id', session()->getId())->count();
+                }
+            @endphp
             <div class="flex items-center gap-6 text-slate-700">
                 <a href="#" class="flex flex-col items-center text-xs"><i class="fa-regular fa-user text-lg"></i>Login /
                     Register</a>
-                <a href="#" class="relative flex flex-col items-center text-xs"><i
+                <a href="{{ route('wishlist.index') }}" class="relative flex flex-col items-center text-xs"><i
                         class="fa-regular fa-heart text-lg"></i>Wishlist<span
-                        class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center">0</span></a>
+                        class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center wishlist-badge"
+                        style="{{ $wishlistCount == 0 ? 'display: none;' : '' }}">{{ $wishlistCount }}</span></a>
 
                 {{-- {{ route('cart.index') }} --}}
                 <a href="#" class="cart relative flex flex-col items-center text-xs"><i
@@ -580,6 +589,49 @@
     </script>
     <script src="/js/cart.js"></script>
 
+    <!-- Wishlist Universal Handler -->
+    <script>
+        $(document).ready(function () {
+            $(document).on('click', '.wishlist-toggle-btn', function (e) {
+                e.preventDefault();
+                var btn = $(this);
+                var url = btn.data('url');
+                var icon = btn.find('i');
+                
+                $.ajax({
+                    url: url,
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}'
+                    },
+                    success: function (response) {
+                        if (response.success) {
+                            if (response.inWishlist) {
+                                btn.removeClass('text-slate-400').addClass('text-rose-500');
+                                icon.removeClass('fa-regular').addClass('fa-solid');
+                            } else {
+                                btn.removeClass('text-rose-500').addClass('text-slate-400');
+                                icon.removeClass('fa-solid').addClass('fa-regular');
+                            }
+                            
+                            if (response.count !== undefined) {
+                                var badge = $('.wishlist-badge');
+                                badge.text(response.count);
+                                if (response.count === 0) {
+                                    badge.hide();
+                                } else {
+                                    badge.show();
+                                }
+                            }
+                        }
+                    },
+                    error: function () {
+                        alert('Something went wrong. Please try again.');
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

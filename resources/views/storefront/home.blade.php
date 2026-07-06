@@ -136,6 +136,13 @@
                         } else {
                             $badgeText = $index % 2 === 0 ? 'New Arrival' : 'Top Trend';
                         }
+
+                        $inWishlist = false;
+                        if (auth()->check()) {
+                            $inWishlist = \App\Models\Wishlist::where('user_id', auth()->id())->where('product_id', $product->id)->exists();
+                        } else {
+                            $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())->where('product_id', $product->id)->exists();
+                        }
                     @endphp
 
                     <div class="product-card card flex flex-col relative group h-full filter-con">
@@ -144,9 +151,11 @@
                         <span class="{{ $badgeClass }} absolute top-4 left-4 z-10 shadow-sm">{{ $badgeText }}</span>
 
                         <!-- Wishlist -->
-                        <button class="wishlist-btn absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center text-slate-400 hover:text-rose-500 z-10 transition-colors"
-                            aria-label="Add {{ $product->name }} to wishlist">
-                            <i class="fa-regular fa-heart"></i>
+                        <button class="wishlist-toggle-btn absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center z-10 transition-colors {{ $inWishlist ? 'text-rose-500' : 'text-slate-400' }} hover:text-rose-500"
+                            data-product-id="{{ $product->id }}"
+                            data-url="{{ route('wishlist.toggle', $product) }}"
+                            aria-label="Toggle {{ $product->name }} wishlist">
+                            <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
                         </button>
 
                         <!-- Product Image -->
