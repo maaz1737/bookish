@@ -38,8 +38,11 @@ class CategoryController extends Controller
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
+
         $data['slug'] = Str::slug($data['name']);
         $data['show_on_dashboard'] = $request->has('show_on_dashboard');
+        $data['show_on_menu'] = $request->has('show_on_menu');
+
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('categories', 'public');
         }
@@ -59,6 +62,7 @@ class CategoryController extends Controller
         $data['slug'] = Str::slug($data['name']);
 
         $data['show_on_dashboard'] = $request->has('show_on_dashboard');
+        $data['show_on_menu'] = $request->has('show_on_menu');
 
         if ($request->hasFile('image')) {
 

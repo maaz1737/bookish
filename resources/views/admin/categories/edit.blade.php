@@ -31,8 +31,7 @@
                 <option value="">-- Root Category --</option>
 
                 @foreach ($categories as $cat)
-                    <option value="{{ $cat->id }}"
-                        {{ old('parent_id', $category->parent_id) == $cat->id ? 'selected' : '' }}>
+                    <option value="{{ $cat->id }}" {{ old('parent_id', $category->parent_id) == $cat->id ? 'selected' : '' }}>
                         {{ $cat->name }}
                     </option>
                 @endforeach
@@ -55,26 +54,28 @@
             @if ($category->image)
                 <div class="mb-2">
                     <img src="{{ app()->environment('production')
-                        ? url('storage/' . $category->image)
-                        : asset('storage/' . $category->image) }}"
-                        class="w-20 h-20 object-cover rounded-lg border">
+                ? url('storage/' . $category->image)
+                : asset('storage/' . $category->image) }}" class="w-20 h-20 object-cover rounded-lg border">
                 </div>
             @endif
 
-            <input type="file" name="image" accept="image/*"
-                class="w-full border border-gray-300 rounded-lg px-3 py-2">
+            <input type="file" name="image" accept="image/*" class="w-full border border-gray-300 rounded-lg px-3 py-2">
         </div>
 
         <div class="flex items-center gap-3">
-            <input type="checkbox" name="show_on_dashboard" value="1"
-                {{ old('show_on_dashboard', $category->show_on_dashboard) ? 'checked' : '' }}
-                class="w-4 h-4 text-indigo-600 border-gray-300 rounded">
+            <input type="checkbox" name="show_on_dashboard" value="1" {{ old('show_on_dashboard', $category->show_on_dashboard) ? 'checked' : '' }} class="w-4 h-4 text-indigo-600 border-gray-300 rounded">
 
             <label class="text-sm font-medium text-gray-700">
                 Show on Dashboard
             </label>
         </div>
+        <div class="flex items-center gap-3">
+            <input type="checkbox" name="show_on_menu" value="0" {{ old('show_on_menu', $category->show_on_menu) ? 'checked' : '' }} class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
 
+            <label class="text-sm font-medium text-gray-700">
+                Show on Main Menu
+            </label>
+        </div>
         <!-- Submit -->
         <div class="flex justify-end">
             <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg transition">

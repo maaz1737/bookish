@@ -13,7 +13,8 @@ class Category extends Model
         'description',
         'image',
         'is_active',
-        'show_on_dashboard'
+        'show_on_dashboard',
+        'show_on_menu',
     ];
     protected $casts = [
         'is_active' => 'boolean',

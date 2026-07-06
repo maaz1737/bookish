@@ -61,7 +61,7 @@
             overflow: hidden;
             transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .card:hover {
             transform: translateY(-4px);
             box-shadow: 0 12px 32px rgba(0, 31, 84, 0.12);
@@ -123,6 +123,7 @@
         }
 
         @media (max-width: 1024px) {
+
             .grid-4,
             .grid-3 {
                 grid-template-columns: repeat(2, 1fr);
@@ -130,6 +131,7 @@
         }
 
         @media (max-width: 640px) {
+
             .grid-4,
             .grid-3 {
                 grid-template-columns: 1fr;
@@ -280,78 +282,254 @@
         </div>
 
         {{-- nav --}}
-        <nav class="max-w-7xl mx-auto px-4 pb-4 flex items-center gap-2 flex-wrap relative">
-
-            {{-- Shop All Categories Dropdown Wrapper --}}
-            <div class="relative z-50">
-                {{-- Trigger Button --}}
-                <button id="categoryDropdownBtn" type="button"
-                    class="text-white bg-navy-800 px-5 py-2.5 rounded-md text-sm font-semibold flex items-center gap-2 transition duration-200 cursor-pointer select-none">
-                    <i id="categoryBtnIcon" class="fa-solid fa-bars transition-transform duration-200"></i>
-                    <span>Shop All Categories</span>
-                    <i id="categoryChevronIcon"
-                        class="fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+        <nav class="max-w-7xl mx-auto px-4 flex items-center gap-2 relative pb-2">
+            {{-- Rest of the Nav Links --}}
+            <div class="category-dropdown relative">
+                <button type="button"
+                    class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
+                    <i class="fa-solid fa-school mr-1"></i>
+                    <span>Shop by School</span>
+                    <i
+                        class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
                 </button>
 
-                {{-- Dropdown Menu Panel --}}
-                <div id="categoryDropdownMenu"
-                    class="absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 hidden opacity-0 transition-all duration-200 -translate-y-2">
+                <div
+                    class="categoryDropdownMenu absolute left-0 mt-2 w-[490px] bg-white rounded-xl shadow-2xl border border-slate-200 hidden z-50">
 
-                    <div class="px-4 py-2 text-[11px] font-bold uppercase tracking-wider text-slate-400 block">
-                        Available Categories
+                    <div class="grid grid-cols-[180px_1fr]">
+
+                        {{-- Left Side --}}
+                        <div class="p-5 border-r border-slate-200">
+
+                            <div class="">
+                                <div
+                                    class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-[#001F54]">
+                                    <i class="fa-solid fa-school text-lg"></i>
+                                </div>
+
+                                <div>
+                                    <h3 class="font-semibold text-[15px] text-[#1D3557]">
+                                        Shop By School
+                                    </h3>
+
+                                    <p class="text-xs text-gray-500 leading-5 mt-2">
+                                        Choose your school to find class-wise books,
+                                        uniforms & school-specific items.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {{-- Right Side --}}
+                        <div class="py-3">
+
+                            <div class="max-h-[260px] overflow-y-auto">
+
+                                @forelse($mainSchools as $school)
+
+                                    <a href="{{ route('schools.show', $school->slug) }}"
+                                        class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition">
+
+                                        <div
+                                            class="w-11 h-11 rounded-full border border-gray-200 overflow-hidden bg-white flex items-center justify-center shrink-0">
+
+                                            @if($school->logo)
+                                                <img src="{{ asset('storage/' . $school->logo) }}"
+                                                    class="w-full h-full object-cover" alt="{{ $school->name }}">
+                                            @else
+                                                <i class="fa-solid fa-school text-[#001F54]"></i>
+                                            @endif
+
+                                        </div>
+
+                                        <span class="text-[14px] font-medium text-[#22324C] leading-5">
+                                            {{ $school->name }}
+                                        </span>
+
+                                    </a>
+
+                                @empty
+
+                                    <div class="px-5 py-4 text-sm text-gray-400">
+                                        No schools found.
+                                    </div>
+
+                                @endforelse
+
+                            </div>
+
+                            @if($mainSchools->count())
+
+                                <div class="border-t mt-2">
+
+                                    <a href="{{ route('schools.index') }}"
+                                        class="flex items-center justify-center py-4 text-sm font-semibold text-[#3559C7] hover:bg-gray-50">
+
+                                        View All Schools
+                                        <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+
+                                    </a>
+
+                                </div>
+
+                            @endif
+
+                        </div>
+
                     </div>
 
+                </div>
+            </div>
+            <div class="category-dropdown relative">
+                <button type="button"
+                    class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
+                    <i class="fa-solid fa-school mr-1"></i>
+                    <span>School Essentials</span>
+                    <i
+                        class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+                </button>
+
+                <div
+                    class="categoryDropdownMenu absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
+
                     <div class="max-h-80 overflow-y-auto">
-                        @if (isset($categories) && $categories->count() > 0)
-                            @foreach ($categories as $category)
-                                <a href="{{ route('category.show', $category->slug) }}"
+                        @if (isset($schoolEssentials) && $schoolEssentials->count() > 0)
+                            @foreach ($schoolEssentials as $schoolEssential)
+                                <a href="{{ route('category.show', $schoolEssential->slug) }}"
                                     class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-blue-900 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
                                     <span
-                                        class="w-7 h-7 shrink-0 rounded-full bg-slate-50 flex items-center justify-center text-slate-500 border border-slate-100">
-                                        <i class="fa-solid fa-book text-xs"></i>
+                                        class="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
+                                        @if ($schoolEssential->image)
+                                            <img src="{{ asset('storage/' . $schoolEssential->image) }}"
+                                                alt="{{ $schoolEssential->name }}" class="w-full h-full object-cover ">
+                                        @else
+                                            <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
+                                        @endif
                                     </span>
-                                    <span class="font-semibold leading-tight text-slate-800">{{ $category->name }}</span>
+                                    <span class="font-semibold leading-tight text-slate-800">{{ $schoolEssential->name }}</span>
                                 </a>
                             @endforeach
                         @else
-                            <div class="px-4 py-3 text-xs text-slate-400 italic">No categories found</div>
+                            <div class="px-4 py-3 text-xs text-slate-400 italic">No Product found</div>
                         @endif
                     </div>
-
-                    <div class="border-t border-slate-100 mt-1 pt-1">
-                        <a href="#categories-section"
-                            class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-950 hover:bg-slate-50 transition w-full">
-                            View All Categories &nbsp;→
-                        </a>
-                    </div>
+                    @if (isset($schoolEssentials) && $schoolEssentials->count() > 0)
+                        <div class="border-t border-slate-100 mt-1 pt-1">
+                            <a href="{{ route('schools.index') }}"
+                                class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-700 hover:bg-slate-50 transition w-full">
+                                View All School Essentials &nbsp;→
+                            </a>
+                        </div>
+                    @endif
                 </div>
             </div>
+            <div class="category-dropdown relative">
+                <button type="button"
+                    class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
+                    <i class="fa-solid fa-school mr-1"></i>
+                    <span>Gifts & Decor</span>
+                    <i
+                        class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+                </button>
 
-            {{-- Rest of the Nav Links --}}
-            <a href="{{ route('schools.index', 'schools')}}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
-                <i class="fa-solid fa-school text-navy-600 mr-1"></i> Shop by School
-            </a>
-            <a href="{{ route('category.show', 'books') }}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
-                <i class="fa-solid fa-book text-navy-600 mr-1"></i> Books
-            </a>
-            <a href="{{ route('category.show', 'uniforms') }}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
-                <i class="fa-solid fa-shirt text-navy-600 mr-1"></i> Uniforms
-            </a>
-            <a href="{{ route('category.show', 'bags-bottles') }}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
-                <i class="fa-solid fa-bag-shopping text-navy-600 mr-1"></i> Bags & Bottles
-            </a>
-            <a href="{{ route('category.show', 'gifts') }}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
-                <i class="fa-solid fa-gift text-navy-600 mr-1"></i> Gifts
-            </a>
-            <a href="{{ route('category.show', 'attar-fragrances') }}"
-                class="px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-navy-800 transition-colors">
-                <i class="fa-solid fa-wind text-navy-600 mr-1"></i> Attar & Fragrances
-            </a>
+                @php
+                    $fragranceProducts = $mainProducts->filter(function ($product) {
+                        return str_contains(strtolower($product->category->name), 'gift');
+                    });
+                @endphp
+
+                <div
+                    class="categoryDropdownMenu absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
+
+                    @forelse ($fragranceProducts as $product)
+                        <a href="{{ route('category.show', $product->slug) }}"
+                            class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-blue-900 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
+
+                            <span
+                                class="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
+                                @if (count($product->images) > 0)
+                                    <img src="{{ asset('storage/' . $product->images[0]) }}" alt="{{ $product->name }}"
+                                        class="w-full h-full object-cover" loading="lazy">
+                                @else
+                                    <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
+                                @endif
+                            </span>
+
+                            <span class="font-semibold leading-tight text-slate-800">
+                                {{ $product->name }}
+                            </span>
+                        </a>
+                    @empty
+                        <div class="px-4 py-3 text-xs text-slate-400 italic">
+                            No Gift Product Found
+                        </div>
+                    @endforelse
+
+                    @if ($fragranceProducts->isNotEmpty())
+                        <div class="border-t border-slate-100 mt-1 pt-1">
+                            <a href="{{ route('schools.index') }}"
+                                class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-700 hover:bg-slate-50 transition w-full">
+                                View All Gifts &nbsp;→
+                            </a>
+                        </div>
+                    @endif
+                </div>
+            </div>
+            </div>
+
+
+            <div class="category-dropdown relative">
+                <button type="button"
+                    class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
+                    <i class="fa-solid fa-school mr-1"></i>
+                    <span>fragrances</span>
+                    <i
+                        class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+                </button>
+                @php
+                    $fragranceProducts = $mainProducts->filter(function ($product) {
+                        return str_contains(strtolower($product->category->name), 'fragrance');
+                    });
+                @endphp
+
+                <div
+                    class="categoryDropdownMenu absolute left-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-slate-200/80 py-2 hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
+
+                    @forelse ($fragranceProducts as $product)
+                        <a href="{{ route('category.show', $product->slug) }}"
+                            class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-blue-900 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
+
+                            <span
+                                class="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
+                                @if (count($product->images) > 0)
+                                    <img src="{{ asset('storage/' . $product->images[0]) }}" alt="{{ $product->name }}"
+                                        class="w-full h-full object-cover" loading="lazy">
+                                @else
+                                    <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
+                                @endif
+                            </span>
+
+                            <span class="font-semibold leading-tight text-slate-800">
+                                {{ $product->name }}
+                            </span>
+                        </a>
+                    @empty
+                        <div class="px-4 py-3 text-xs text-slate-400 italic">
+                            No Fragrances Found
+                        </div>
+                    @endforelse
+
+                    @if ($fragranceProducts->isNotEmpty())
+                        <div class="border-t border-slate-100 mt-1 pt-1">
+                            <a href="{{ route('schools.index') }}"
+                                class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-700 hover:bg-slate-50 transition w-full">
+                                View All Fragrances &nbsp;→
+                            </a>
+                        </div>
+                    @endif
+                </div>
+            </div>
             <a href="#"
                 class="ml-auto bg-[#ff7a00] hover:bg-[#e06c00] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md">
                 <i class="fa-solid fa-tag mr-1"></i> Offers
@@ -521,65 +699,104 @@
         </div>
     </footer>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const btn = document.getElementById('categoryDropdownBtn');
-            const menu = document.getElementById('categoryDropdownMenu');
-            const icon = document.getElementById('categoryBtnIcon');
-            const chevron = document.getElementById('categoryChevronIcon');
+        $(function () {
 
-            if (btn && menu) {
-                // Toggle dropdown open/close
-                btn.addEventListener('click', function (e) {
-                    e.stopPropagation();
-                    const isHidden = menu.classList.contains('hidden');
+            // Toggle dropdown
+            // Click: Toggle pinned state
+            $(document).on('click', '.category-dropdown > button', function (e) {
+                e.stopPropagation();
 
-                    if (isHidden) {
-                        openMenu();
-                    } else {
-                        closeMenu();
-                    }
+                const $dropdown = $(this).closest('.category-dropdown');
+
+                if ($dropdown.hasClass('clicked-open')) {
+                    $dropdown.removeClass('clicked-open');
+                    closeMenu($dropdown);
+                } else {
+                    // Close all other dropdowns
+                    $('.category-dropdown.clicked-open').each(function () {
+                        $(this).removeClass('clicked-open');
+                        closeMenu($(this));
+                    });
+
+                    $dropdown.addClass('clicked-open');
+                    openMenu($dropdown);
+                }
+            });
+
+            // Hover
+            $(document).on('mouseenter', '.category-dropdown', function () {
+                openMenu($(this));
+            });
+
+            // Leave
+            $(document).on('mouseleave', '.category-dropdown', function () {
+                // Don't close if it was opened by click
+                if (!$(this).hasClass('clicked-open')) {
+                    closeMenu($(this));
+                }
+            });
+
+            // Outside click
+            $(document).on('click', function () {
+                $('.category-dropdown.clicked-open').each(function () {
+                    $(this).removeClass('clicked-open');
+                    closeMenu($(this));
                 });
+            });
 
-                // Close when clicking anywhere outside the dropdown
-                document.addEventListener('click', function (e) {
-                    if (!menu.contains(e.target) && !btn.contains(e.target)) {
-                        closeMenu();
-                    }
+            // Close when clicking outside
+            $(document).on('click', function () {
+                $('.category-dropdown').each(function () {
+                    closeMenu($(this));
                 });
+            });
 
-                // Close on ESC keypress
-                document.addEventListener('keydown', function (e) {
-                    if (e.key === 'Escape') {
-                        closeMenu();
-                    }
-                });
-            }
+            // Prevent closing when clicking inside menu
+            $(document).on('click', '.categoryDropdownMenu', function (e) {
+                e.stopPropagation();
+            });
 
-            function openMenu() {
-                menu.classList.remove('hidden');
-                btn.classList.add('bg-navy-900', 'shadow-md');
-                icon.classList.add('rotate-90');
-                chevron.classList.add('rotate-180');
+            // Close on ESC
+            $(document).on('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    $('.category-dropdown').each(function () {
+                        closeMenu($(this));
+                    });
+                }
+            });
 
-                // Fast timeout to let browser register the layout change for transition
-                setTimeout(() => {
-                    menu.classList.remove('opacity-0', '-translate-y-2');
-                    menu.classList.add('opacity-100', 'translate-y-0');
+            function openMenu($dropdown) {
+                const $menu = $dropdown.find('.categoryDropdownMenu');
+                const $button = $dropdown.children('button');
+                const $chevron = $dropdown.find('.categoryChevronIcon');
+
+                $menu.removeClass('hidden');
+
+                setTimeout(function () {
+                    $menu.removeClass('opacity-0 -translate-y-2')
+                        .addClass('opacity-100 translate-y-0');
                 }, 10);
+
+                $button.addClass('bg-navy-800 text-white shadow-md');
+                $chevron.addClass('rotate-180');
             }
 
-            function closeMenu() {
-                menu.classList.remove('opacity-100', 'translate-y-0');
-                menu.classList.add('opacity-0', '-translate-y-2');
-                btn.classList.remove('bg-navy-900', 'shadow-md');
-                icon.classList.remove('rotate-90');
-                chevron.classList.remove('rotate-180');
+            function closeMenu($dropdown) {
+                const $menu = $dropdown.find('.categoryDropdownMenu');
+                const $button = $dropdown.children('button');
+                const $chevron = $dropdown.find('.categoryChevronIcon');
 
-                // Wait for tailwind transition animation before hiding complete display
-                setTimeout(() => {
-                    menu.classList.add('hidden');
+                $menu.removeClass('opacity-100 translate-y-0')
+                    .addClass('opacity-0 -translate-y-2');
+
+                $button.removeClass('bg-navy-800 text-white shadow-md');
+                $chevron.removeClass('rotate-180');
+
+                setTimeout(function () {
+                    $menu.addClass('hidden');
                 }, 200);
             }
+
         });
     </script>
 
