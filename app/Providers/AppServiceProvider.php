@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 use App\Http\Controllers\Storefront\CartController;
+use App\Services\HeaderService;
 use Illuminate\Support\Facades\View;
 use App\Models\Category;
 use Illuminate\Support\Facades\Schema;
@@ -32,7 +33,11 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
 
             $cart = app(CartController::class)->cart(request());
+
+            $view->with(app(HeaderService::class)->data());
             $view->with('carts', $cart);
         });
+
+
     }
 }

@@ -22,6 +22,7 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
+/public/vendor
 
 # Keep user-uploaded payment proofs / product images out of git
 # /storage/app/public/proofs
