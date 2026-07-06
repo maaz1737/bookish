@@ -1,0 +1,38 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+
+class StoreBundleRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return $this->user() && $this->user()->isAdmin();
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name'               => ['required', 'string', 'max:255'],
+            'school_id'          => ['nullable', 'exists:schools,id'],
+            'class_id'           => ['nullable', 'exists:school_classes,id'],
+            'discount'           => ['required', 'numeric', 'min:0', 'max:100'],
+            'is_active'          => ['boolean'],
+            'items'              => ['required', 'array', 'min:2'],
+            'items.*.product_id' => ['required', 'exists:products,id'],
+            'items.*.quantity'   => ['required', 'integer', 'min:1'],
+        ];
+    }
+
+    protected function prepareForValidation()
+    {
+        if ($this->has('items')) {
+            $this->merge([
+                'items' => array_values(array_filter($this->items, function ($item) {
+                    return isset($item['product_id']) && !is_null($item['product_id']);
+                }))
+            ]);
+        }
+    }
+}
