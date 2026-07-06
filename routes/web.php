@@ -70,6 +70,7 @@ Route::get('/testing2', function () {
 Route::get('/school/{school}/{classSlug}/bundle', [StoreBundleController::class, 'show'])->name('bundle.show');
 
 Route::get('/products', [StoreProductController::class, 'index'])->name('products.index');
+Route::get('/categories', [StoreProductController::class, 'categoriesIndex'])->name('categories.index');
 Route::get('/category/{slug}', [StoreProductController::class, 'category'])->name('category.show');
 Route::get('/product/{product}', [StoreProductController::class, 'show'])->name('product.show');
 Route::get('/get-classes/{school}', [StoreProductController::class, 'getClasses'])->name('get.Classes');
