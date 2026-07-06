@@ -416,7 +416,7 @@
                     </div>
                     @if (isset($schoolEssentials) && $schoolEssentials->count() > 0)
                         <div class="border-t border-slate-100 mt-1 pt-1">
-                            <a href="{{ route('schools.index') }}"
+                            <a href=""
                                 class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-700 hover:bg-slate-50 transition w-full">
                                 View All School Essentials &nbsp;→
                             </a>
@@ -468,7 +468,7 @@
 
                     @if ($fragranceProducts->isNotEmpty())
                         <div class="border-t border-slate-100 mt-1 pt-1">
-                            <a href="{{ route('schools.index') }}"
+                            <a href="#"
                                 class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-700 hover:bg-slate-50 transition w-full">
                                 View All Gifts &nbsp;→
                             </a>
@@ -522,7 +522,7 @@
 
                     @if ($fragranceProducts->isNotEmpty())
                         <div class="border-t border-slate-100 mt-1 pt-1">
-                            <a href="{{ route('schools.index') }}"
+                            <a href="#"
                                 class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-700 hover:bg-slate-50 transition w-full">
                                 View All Fragrances &nbsp;→
                             </a>
