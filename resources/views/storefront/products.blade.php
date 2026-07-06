@@ -55,7 +55,7 @@
                     <!-- Wishlist Button -->
                     <button class="wishlist-toggle-btn absolute top-4 right-4 w-9 h-9 rounded-full bg-white shadow flex items-center justify-center z-10 transition {{ $inWishlist ? 'text-rose-500' : 'text-slate-400' }} hover:text-rose-500"
                         data-product-id="{{ $product->id }}"
-                        data-url="{{ route('wishlist.toggle', $product) }}"
+                        data-url="{{ url('/wishlist/toggle/' . $product->id) }}"
                         aria-label="Toggle {{ $product->name }} wishlist">
                         <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
                     </button>
