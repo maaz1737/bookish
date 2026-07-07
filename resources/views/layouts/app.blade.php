@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+<!-- Include Alpine.js Core Script (Must be inside <head>) -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+<!-- Include Alpine.js Collapse Plugin (Accordions ki smooth opening ke liye) -->
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -138,7 +142,44 @@
             }
         }
 
-        /* ===== IMAGE HANDLING ===== */
+        /* ===== IMAGE HANDLING DESIGN SYSTEM ===== */
+        .card-img-box {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #f8fafc; /* Slate 50 background */
+            margin: 0;
+            padding: 0;
+            border-bottom: 1px solid rgba(0, 31, 84, 0.06);
+        }
+
+        .card-img-contain {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            /* padding: 16px; */
+            transition: transform 0.35s ease;
+        }
+
+        .card-img-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            padding: 0;
+            transition: transform 0.35s ease;
+        }
+
+        .card:hover .card-img-contain,
+        .card:hover .card-img-cover,
+        .group:hover .card-img-contain,
+        .group:hover .card-img-cover {
+            transform: scale(1.05);
+        }
+
+        /* Default fallback styling */
         .product-image img,
         .category-image img,
         .school-logo img,
@@ -157,28 +198,6 @@
             justify-content: center;
             overflow: hidden;
             background: transparent;
-        }
-
-        /* Legacy compatibility wrapper classes */
-        .card-img-box {
-            width: 100%;
-            aspect-ratio: 1 / 0.8;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            background: #fff;
-        }
-
-        .card-img-box .card-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform .35s ease;
-        }
-
-        .card-img-box:hover .card-img {
-            transform: scale(1.05);
         }
 
         .logo-box {
@@ -570,11 +589,26 @@
             <div>
                 <h4 class="text-white font-semibold mb-3">Quick Links</h4>
                 <ul class="space-y-2">
-                    <li>About Us</li>
-                    <li>Shop by Category</li>
-                    <li>Track Order</li>
-                    <li>Returns & Refunds</li>
-                    <li>FAQs</li>
+                    <a href="{{ route('about') }}">
+                        <li>About Us</li>
+                    </a>
+                    <a href="{{ route('shop-by-school') }}">
+                        <li>Shop by School</li>
+                    </a>
+                    <a href="{{route('shop-by-category')}}">
+                        <li>Shop by Category</li>
+                    </a>
+                    <a href="{{ route('returns-refunds') }}">
+                        <li>Returns & Refunds</li>
+                    </a>
+                    <a href="{{ route('faqs')}}">
+                        <li>FAQs</li>
+                    </a>
+                    {{-- <li>About Us</li> --}}
+                    {{-- <li>Shop by Category</li> --}}
+                    {{-- <li>Track Order</li> --}}
+                    {{-- <li>Returns & Refunds</li> --}}
+                    {{-- <li>FAQs</li> --}}
                     <li>Contact Us</li>
                 </ul>
             </div>

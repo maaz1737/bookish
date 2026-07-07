@@ -18,11 +18,57 @@ class ProductController extends Controller
     // SEO route: /category/{type}
     public function category(string $slug)
     {
-        $category = Category::with('allChildren')->where('slug', $slug)->where('is_active', true)->firstOrFail();
+        $category = Category::whereNull('parent_id')
+            ->where('slug', $slug)
+            ->where('is_active', true)
+            ->with(['children' => function ($q) {
+                $q->where('is_active', true)
+                  ->with(['products' => function ($pq) {
+                      $pq->where('is_active', true)
+                         ->with('variants')
+                         ->latest()
+                         ->limit(4);
+                  }]);
+            }])
+            ->first();
 
-        $products = Product::where('category_id', $category->id)->paginate(24);
-        return view('user.categories.categories', compact('category', 'products'));
+        // If not found as parent, try as subcategory
+        if (! $category) {
+            $subcategory = Category::where('slug', $slug)
+                ->where('is_active', true)
+                ->whereNotNull('parent_id')
+                ->with('parent')
+                ->first();
+
+            if ($subcategory) {
+                $products = Product::where('category_id', $subcategory->id)
+                    ->where('is_active', true)
+                    ->with('variants')
+                    ->latest()
+                    ->paginate(24);
+
+                return view('storefront.category', [
+                    'category'    => null,
+                    'subcategory' => $subcategory,
+                    'products'    => $products,
+                ]);
+            }
+
+            abort(404);
+        }
+
+
+        // Collect direct products under the parent category
+        $directProducts = Product::where('category_id', $category->id)
+            ->where('is_active', true)
+            ->with('variants')
+            ->latest()
+            ->limit(4)
+            ->get();
+
+        return view('storefront.category', compact('category', 'directProducts'));
     }
+
 
     // SEO route: /product/{product}
     public function show(Product $product)
@@ -52,5 +98,17 @@ class ProductController extends Controller
     public function getClasses($schoolId)
     {
         return SchoolClass::where('school_id', $schoolId)->get();
+    }
+
+    public function categoriesIndex()
+    {
+        $parentCategories = Category::whereNull('parent_id')
+            ->where('is_active', true)
+            ->with(['children' => function($q) {
+                $q->where('is_active', true);
+            }])
+            ->get();
+
+        return view('storefront.categories', compact('parentCategories'));
     }
 }
