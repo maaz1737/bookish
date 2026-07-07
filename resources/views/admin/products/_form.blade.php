@@ -4,16 +4,26 @@
         <input name="name" value="{{ old('name', $product->name ?? '') }}" required
             class="w-full border rounded px-3 py-2 mt-1"></label>
     <label class="block"><span class="text-sm font-medium">Category</span>
-        <select name="category_id" required class="w-full border rounded px-3 py-2 mt-1">
+        <select id="categoryId" name="category_id" required class="w-full border rounded px-3 py-2 mt-1">
             @foreach ($categories as $c)
-                <option value="{{ $c->id }}" @selected(old('category_id', $product->category_id ?? null) == $c->id)>{{ $c->name }} </option>
+                <option value="{{ $c->id }}" @selected(old('category_id', $product->category_id ?? null) == $c->id)>
+                    {{ $c->name }}
+                </option>
             @endforeach
         </select></label>
+    <label class="block">
+        <span class="text-sm font-medium">Sub Category</span>
+
+        <select id="subcategory_id" name="sub_category_id" class="w-full border rounded px-3 py-2 mt-1">
+            <option value="">Select Sub Category</option>
+        </select>
+    </label>
     <label class="block"><span class="text-sm font-medium">School (optional)</span>
         <select name="school_id" id="school_id" class="w-full border rounded px-3 py-2 mt-1">
             <option value="">—</option>
             @foreach ($schools as $s)
-                <option value="{{ $s->id }}" @selected(old('school_id', $product->school_id ?? null) == $s->id)>{{ $s->name }}</option>
+                <option value="{{ $s->id }}" @selected(old('school_id', $product->school_id ?? null) == $s->id)>{{ $s->name }}
+                </option>
             @endforeach
         </select></label>
     <label class="block"><span class="text-sm font-medium">Class (optional)</span>
@@ -49,7 +59,8 @@
             @endforeach
         </select></label>
     <label class="block sm:col-span-2"><span class="text-sm font-medium">Description</span>
-        <textarea name="description" class="w-full border rounded px-3 py-2 mt-1">{{ old('description', $product->description ?? '') }}</textarea>
+        <textarea name="description"
+            class="w-full border rounded px-3 py-2 mt-1">{{ old('description', $product->description ?? '') }}</textarea>
     </label>
     <label class="block sm:col-span-2"><span class="text-sm font-medium">Images</span>
         <input name="images[]" type="file" multiple accept="image/*" class="w-full mt-1"></label>
@@ -71,10 +82,24 @@
 
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+
+
+        const categoryId = "{{ old('category_id', optional($product ?? null)->category_id) }}";
+        const subCategoryId = "{{ old('subcategory_id', optional($product ?? null)->sub_category_id) }}";
+        let schoolId = $('#school_id').val();
+        let categoryIdInput = $('#categoryId');
+
+
+        if (categoryId) {
+            subCategory(categoryId, subCategoryId);
+        }
+        else {
+            subCategory(categoryIdInput.val());
+        }
 
         // When school changes
-        $('#school_id').on('change', function() {
+        $('#school_id').on('change', function () {
 
             let schoolId = $(this).val();
             let classSelect = $('#class_id');
@@ -86,11 +111,11 @@
                 return;
             }
 
-            $.get(`/get-classes/${schoolId}`, function(data) {
+            $.get(`/get-classes/${schoolId}`, function (data) {
 
                 classSelect.html('<option value="">—</option>');
 
-                $.each(data, function(index, cls) {
+                $.each(data, function (index, cls) {
                     classSelect.append(
                         `<option value="${cls.id}">${cls.name}</option>`
                     );
@@ -101,11 +126,11 @@
 
 
         // On page load (edit mode)
-        let schoolId = $('#school_id').val();
+
 
         if (schoolId) {
 
-            $.get(`/get-classes/${schoolId}`, function(data) {
+            $.get(`/get-classes/${schoolId}`, function (data) {
 
                 let selectedClass = "{{ $product->class_id ?? '' }}";
 
@@ -113,7 +138,7 @@
 
                 classSelect.html('<option value="">—</option>');
 
-                $.each(data, function(index, cls) {
+                $.each(data, function (index, cls) {
 
                     let selected = (cls.id == selectedClass) ? 'selected' : '';
 
@@ -123,6 +148,40 @@
                 });
             });
         }
+
+
+        categoryIdInput.on('change', function () {
+            let id = $(this).val();
+            subCategory(id)
+
+        });
+
+        function subCategory(id, selectedSubCategory = null) {
+
+            $('#subcategory_id').append('<option value="">...Loading</option>');
+
+            $.get(`/get-categories/${id}`, function (data) {
+                let subCategory = $('#subcategory_id');
+                console.log(data)
+                // Remove existing options
+                subCategory.empty();
+                // Default option
+                subCategory.append('<option value="">Select Sub Category</option>');
+
+                $.each(data.category.children, function (index, item) {
+
+                    let selected = item.id == selectedSubCategory ? 'selected' : '';
+
+                    subCategory.append(
+                        `<option value="${item.id}" ${selected}>${item.name}</option>`
+                    );
+                });
+
+            });
+        }
+
+
+
 
     });
 </script>

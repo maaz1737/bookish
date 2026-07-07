@@ -47,6 +47,8 @@ class ProductController extends Controller
 
     public function store(StoreProductRequest $request)
     {
+
+
         try {
 
             $attribute = Attribute::all();
@@ -174,8 +176,9 @@ class ProductController extends Controller
     private function formData(): array
     {
         return [
-            'categories' => Category::where('is_active', true)->get(),
+            'categories' => Category::where('is_active', true)->whereNull('parent_id')->get(),
             'schools' => School::where('is_active', true)->get(),
+            'sub_category' => collect(),
             'classes' => collect(),
         ];
     }

@@ -19,25 +19,36 @@ class CategoryController extends Controller
     }
     public function create()
     {
-        $categories = Category::select('id', 'name')->get();
+        $categories = Category::select('id', 'name')->whereNull("parent_id")->get();
         return view("admin.categories.create", compact('categories'));
     }
     public function edit(Category $category)
     {
-        $categories = Category::select('id', 'name')->get();
+        $categories = Category::select('id', 'name')->whereNull("parent_id")->get();
 
         return view('admin.categories.edit', compact('category', 'categories'));
     }
     public function store(Request $request)
     {
-
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'parent_id' => ['nullable', 'integer', 'exists:categories,id', 'different:id'],
+            'parent_id' => ['nullable', 'integer', 'exists:categories,id'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
 
+        if (!empty($data['parent_id'])) {
+            $parentCategory = Category::find($data['parent_id']);
+
+            // Parent is already a child of another category
+            if ($parentCategory->parent_id != null) {
+                return back()
+                    ->withInput()
+                    ->withErrors([
+                        'parent_id' => 'This category is already a child category.'
+                    ]);
+            }
+        }
 
         $data['slug'] = Str::slug($data['name']);
         $data['show_on_dashboard'] = $request->has('show_on_dashboard');
@@ -46,7 +57,9 @@ class CategoryController extends Controller
         if ($request->hasFile('image')) {
             $data['image'] = $request->file('image')->store('categories', 'public');
         }
+
         Category::create($data);
+
         return back()->with('success', 'Category created successfully.');
     }
 
@@ -58,9 +71,19 @@ class CategoryController extends Controller
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
+        if (!empty($data['parent_id'])) {
+            $parentCategory = Category::find($data['parent_id']);
 
+            // Parent is already a child of another category
+            if ($parentCategory->parent_id != null) {
+                return back()
+                    ->withInput()
+                    ->withErrors([
+                        'parent_id' => 'This category is already a child category.'
+                    ]);
+            }
+        }
         $data['slug'] = Str::slug($data['name']);
-
         $data['show_on_dashboard'] = $request->has('show_on_dashboard');
         $data['show_on_menu'] = $request->has('show_on_menu');
 
@@ -89,7 +112,7 @@ class CategoryController extends Controller
     public function getCategories($id)
     {
 
-        $category = Category::with('allChildren')->find($id);
+        $category = Category::with('children')->find($id);
 
         return response()->json([
             'category' => $category,

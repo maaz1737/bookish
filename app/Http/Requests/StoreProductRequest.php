@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -19,8 +18,14 @@ class StoreProductRequest extends FormRequest
         )->type;
 
         return [
-            'name'                => ['required', 'string', 'max:255'],
-            'category_id'         => ['required', 'exists:categories,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'category_id' => ['required', 'exists:categories,id'],
+            'sub_category_id' => [
+                'nullable',
+                Rule::exists('categories', 'id')->where(function ($query) {
+                    $query->where('parent_id', request('category_id'));
+                }),
+            ],
             'school_id' => [
                 'nullable',
                 'exists:schools,id',
@@ -31,19 +36,19 @@ class StoreProductRequest extends FormRequest
                 'nullable',
                 'exists:school_classes,id',
             ],
-            'price'               => ['required', 'numeric', 'min:0'],
-            'discount_price'      => ['nullable', 'numeric', 'min:0', 'lt:price'],
-            'stock'               => ['required', 'integer', 'min:0'],
+            'price' => ['required', 'numeric', 'min:0'],
+            'discount_price' => ['nullable', 'numeric', 'min:0', 'lt:price'],
+            'stock' => ['required', 'integer', 'min:0'],
             'low_stock_threshold' => ['nullable', 'integer', 'min:0'],
-            'publisher'           => ['nullable', 'string', 'max:255'], // books only; hidden publicly
+            'publisher' => ['nullable', 'string', 'max:255'], // books only; hidden publicly
             // Uniform variants are strictly required for uniform category (Section 6.2)
-            'size'                => [Rule::requiredIf($categoryType === 'uniform'), 'nullable', 'string', 'max:50'],
-            'gender'              => [Rule::requiredIf($categoryType === 'uniform'), 'nullable', Rule::in(['boys', 'girls', 'unisex'])],
-            'description'         => ['nullable', 'string'],
-            'images'              => ['nullable', 'array'],
-            'images.*'            => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
-            'is_active'           => ['boolean'],
-            'is_best_seller'      => ['boolean'],
+            'size' => [Rule::requiredIf($categoryType === 'uniform'), 'nullable', 'string', 'max:50'],
+            'gender' => [Rule::requiredIf($categoryType === 'uniform'), 'nullable', Rule::in(['boys', 'girls', 'unisex'])],
+            'description' => ['nullable', 'string'],
+            'images' => ['nullable', 'array'],
+            'images.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
+            'is_active' => ['boolean'],
+            'is_best_seller' => ['boolean'],
         ];
     }
 
