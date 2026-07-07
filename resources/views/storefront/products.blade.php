@@ -78,7 +78,7 @@
                     <!-- Product Content -->
                     <div class="p-5 flex flex-col flex-grow">
                         <a href="{{ route('product.show', $product) }}" class="hover:text-gold-500 transition">
-                            <h3 class="font-bold text-lg text-gray-800 group-hover:text-indigo-600 transition line-clamp-2" style="min-height: 56px;">
+                            <h3 class="font-bold text-lg text-gray-800 group-hover:text-indigo-600 transition line-clamp-2">
                                 {{ $product->name }}
                             </h3>
                         </a>

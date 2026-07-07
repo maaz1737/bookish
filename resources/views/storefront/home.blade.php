@@ -295,7 +295,7 @@
                                 </div>
 
                             @elseif ($imgCount === 1)
-                                <div class="w-full h-full flex items-center justify-center p-6">
+                                <div class="w-full h-full flex items-center justify-center">
                                     <img src="{{ $imgSrc($prodImages[0]->images[0]) }}"
                                         class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                         alt="{{ $prodImages[0]->name }}" loading="lazy" />
