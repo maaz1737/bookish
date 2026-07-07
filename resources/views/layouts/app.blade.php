@@ -304,13 +304,13 @@
         <nav class="max-w-7xl mx-auto px-4 flex items-center gap-2 relative pb-2">
             {{-- Rest of the Nav Links --}}
             <div class="category-dropdown relative">
-                <button type="button"
+                <a href="{{ route('schools.index') }}"
                     class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
                     <i class="fa-solid fa-school mr-1"></i>
                     <span>Shop by School</span>
                     <i
                         class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
-                </button>
+                </a>
 
                 <div class="categoryDropdownMenu absolute left-0 w-[490px]  hidden z-50">
 
@@ -404,55 +404,57 @@
 
             @foreach ($mainCategories as $mainCategory)
                 <div class="category-dropdown relative">
-                    <button type="button"
-                        class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
-                        <span>{{ $mainCategory->name }}</span>
+                    <a href="{{ route('category.show', $mainCategory->slug) }}"
+                        class="px-4 py-2.5 inline-block text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
+                        <span>{{ ucfirst($mainCategory->name) }}</span>
                         <i
                             class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
-                    </button>
+                    </a>
 
-                    <div
-                        class="categoryDropdownMenu absolute left-0 w-64 hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
+                    @if(count($mainCategory->children) > 0)
+                        <div
+                            class="categoryDropdownMenu absolute left-0 w-64 hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
 
-                        <div class="bg-white rounded-xl shadow-xl border border-slate-200/80 mt-2">
-                            @forelse ($mainCategory->children as $category)
-                                <a href="{{ route('category.show', $category->slug) }}"
-                                    class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-blue-900 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
+                            <div class="bg-white rounded-xl shadow-xl border border-slate-200/80 mt-2">
+                                @forelse ($mainCategory->children as $category)
+                                    <a href="{{ route('category.show', $category->slug) }}"
+                                        class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-blue-900 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
 
-                                    <span
-                                        class="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
-                                        @if ($category->image)
-                                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
-                                                class="w-full h-full object-cover" loading="lazy">
-                                        @else
-                                            <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
-                                        @endif
-                                    </span>
+                                        <span
+                                            class="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
+                                            @if ($category->image)
+                                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                                                    class="w-full h-full object-cover" loading="lazy">
+                                            @else
+                                                <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
+                                            @endif
+                                        </span>
 
-                                    <span class="font-semibold leading-tight text-slate-800">
-                                        {{ ucfirst($category->name) }}
-                                    </span>
-                                </a>
-                                @if ($category->allChildren->count())
-                                    @foreach ($category->allChildren as $child)
-                                        @include('admin.categories.link_category', ['cat' => $child])
-                                    @endforeach
-                                @endif
-                            @empty
-                                <div class="px-4 py-3 text-xs text-slate-400 italic">
-                                    No Sub-Category Found
+                                        <span class="font-semibold leading-tight text-slate-800">
+                                            {{ ucfirst($category->name) }}
+                                        </span>
+                                    </a>
+                                    @if ($category->allChildren->count())
+                                        @foreach ($category->allChildren as $child)
+                                            @include('admin.categories.link_category', ['cat' => $child])
+                                        @endforeach
+                                    @endif
+                                @empty
+                                    <div class="px-4 py-3 text-xs text-slate-400 italic">
+                                        No Sub-Category Found
+                                    </div>
+                                @endforelse
+
+                                <div class="border-t border-slate-100 mt-1 pt-1">
+                                    <a href="{{ route('category.show', $mainCategory->slug) }}"
+                                        class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-700 hover:bg-slate-50 transition w-full">
+                                        View All {{ ucfirst($mainCategory->name) }} &nbsp;→
+                                    </a>
                                 </div>
-                            @endforelse
-
-                            <div class="border-t border-slate-100 mt-1 pt-1">
-                                <a href="{{ route('category.show', $mainCategory->slug) }}"
-                                    class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-700 hover:bg-slate-50 transition w-full">
-                                    View All {{ ucfirst($mainCategory->name) }} &nbsp;→
-                                </a>
                             </div>
-                        </div>
 
-                    </div>
+                        </div>
+                    @endif
                 </div>
 
             @endforeach
@@ -644,7 +646,7 @@
 
             // Toggle dropdown
             // Click: Toggle pinned state
-            $(document).on('click', '.category-dropdown > button', function (e) {
+            $(document).on('click', '.category-dropdown > a', function (e) {
                 e.stopPropagation();
 
                 const $dropdown = $(this).closest('.category-dropdown');
@@ -708,7 +710,7 @@
 
             function openMenu($dropdown) {
                 const $menu = $dropdown.find('.categoryDropdownMenu');
-                const $button = $dropdown.children('button');
+                const $button = $dropdown.children('a');
                 const $chevron = $dropdown.find('.categoryChevronIcon');
 
                 $menu.removeClass('hidden');
@@ -724,7 +726,7 @@
 
             function closeMenu($dropdown) {
                 const $menu = $dropdown.find('.categoryDropdownMenu');
-                const $button = $dropdown.children('button');
+                const $button = $dropdown.children('a');
                 const $chevron = $dropdown.find('.categoryChevronIcon');
 
                 $menu.removeClass('opacity-100 translate-y-0')
