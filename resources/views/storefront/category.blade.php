@@ -4,11 +4,11 @@
 
     @php
         $isSubcategoryPage = isset($subcategory) && $subcategory;
-        $isParentPage      = !$isSubcategoryPage && isset($category) && $category;
+        $isParentPage = !$isSubcategoryPage && isset($category) && $category;
     @endphp
 
     {{-- ===== BREADCRUMB ===== --}}
-    <nav class="text-xs text-slate-500 mb-6 flex items-center gap-2 flex-wrap">
+    {{-- <nav class="text-xs text-slate-500 mb-6 flex items-center gap-2 flex-wrap">
         <a href="{{ route('home') }}" class="hover:text-[#001F54] transition-colors">Home</a>
         <i class="fa-solid fa-chevron-right text-[8px] text-slate-400"></i>
         <a href="{{ route('categories.index') }}" class="hover:text-[#001F54] transition-colors">Categories</a>
@@ -24,18 +24,37 @@
             <i class="fa-solid fa-chevron-right text-[8px] text-slate-400"></i>
             <span class="text-[#001F54] font-semibold">{{ $category->name }}</span>
         @endif
-    </nav>
+    </nav> --}}
 
     {{-- ===== HERO HEADER ===== --}}
-    <section class="relative overflow-hidden bg-gradient-to-r from-slate-50 via-slate-100 to-indigo-50/50 border border-slate-200/60 rounded-[24px] shadow-sm mb-10 p-8 md:p-12">
-        <div class="grid md:grid-cols-12 items-center gap-8 relative z-10">
+    <section
+        class=" overflow-hidden mb-4">
+        <div class="grid md:grid-cols-12 items-start gap-8 relative z-10">
             @php
-                $heroImage = $isSubcategoryPage ? ($subcategory->image ?? null) : ($category->image ?? null);
-                $heroName  = $isSubcategoryPage ? $subcategory->name : ($category->name ?? 'Category');
-                $heroDesc  = $isSubcategoryPage ? ($subcategory->description ?? '') : ($category->description ?? '');
+                $heroImage = $isSubcategoryPage ? $subcategory->image ?? null : $category->image ?? null;
+                $heroName = $isSubcategoryPage ? $subcategory->name : $category->name ?? 'Category';
+                $heroDesc = $isSubcategoryPage ? $subcategory->description ?? '' : $category->description ?? '';
             @endphp
 
             <div class="md:col-span-7 flex flex-col justify-center">
+                <nav class="text-xs text-slate-500 mb-6 flex items-center gap-2 flex-wrap">
+                    <a href="{{ route('home') }}" class="hover:text-[#001F54] transition-colors">Home</a>
+                    <i class="fa-solid fa-chevron-right text-[8px] text-slate-400"></i>
+                    <a href="{{ route('categories.index') }}" class="hover:text-[#001F54] transition-colors">Categories</a>
+                    @if ($isSubcategoryPage)
+                        @php $crumbParent = $subcategory->parent ?? null; @endphp
+                        @if ($crumbParent)
+                            <i class="fa-solid fa-chevron-right text-[8px] text-slate-400"></i>
+                            <a href="{{ route('category.show', $crumbParent->slug) }}"
+                                class="hover:text-[#001F54] transition-colors">{{ $crumbParent->name }}</a>
+                        @endif
+                        <i class="fa-solid fa-chevron-right text-[8px] text-slate-400"></i>
+                        <span class="text-[#001F54] font-semibold">{{ $subcategory->name }}</span>
+                    @elseif ($isParentPage)
+                        <i class="fa-solid fa-chevron-right text-[8px] text-slate-400"></i>
+                        <span class="text-[#001F54] font-semibold">{{ $category->name }}</span>
+                    @endif
+                </nav>
                 <h1 class="text-4xl md:text-5xl font-extrabold text-[#001F54] leading-tight tracking-tight">
                     {{ $heroName }}
                 </h1>
@@ -46,7 +65,7 @@
                 @endif
 
                 {{-- Subcategory chips (parent page only) --}}
-                @if ($isParentPage && $category->children->count())
+                {{-- @if ($isParentPage && $category->children->count())
                     <div class="flex flex-wrap gap-2 mt-6">
                         @foreach ($category->children as $child)
                             <a href="{{ route('category.show', $child->slug) }}"
@@ -55,16 +74,19 @@
                             </a>
                         @endforeach
                     </div>
-                @endif
+                @endif --}}
             </div>
 
             @if ($heroImage)
-                <div class="md:col-span-5 flex justify-center md:justify-end">
-                    <img src="{{ url('storage/' . $heroImage) }}" alt="{{ $heroName }}" class="max-h-56 md:max-h-64 object-contain drop-shadow-md hover:scale-105 transition-transform duration-500">
+                <div class="md:col-span-5 flex justify-center">
+                    <img src="{{ url('storage/' . $heroImage) }}" alt="{{ $heroName }}"
+                        class="max-h-56 md:max-h-64">
                 </div>
             @endif
         </div>
-        <div class="absolute -top-12 -right-12 w-64 h-64 bg-gradient-to-br from-[#001F54]/5 to-transparent rounded-full pointer-events-none"></div>
+        {{-- <div
+            class="absolute -top-12 -right-12 w-64 h-64 bg-gradient-to-br from-[#001F54]/5 to-transparent rounded-full pointer-events-none">
+        </div> --}}
     </section>
 
     {{-- =====================================================
@@ -80,13 +102,14 @@
                         @php $hasAnyProduct = true; @endphp
                         <section>
                             {{-- Section Heading --}}
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-3 border-b-2 border-slate-100">
+                            <div
+                                class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
                                 <h2 class="text-xl sm:text-2xl font-extrabold text-[#001F54] flex items-center gap-3">
                                     <span class="w-1 h-7 bg-[#ff7a00] rounded-full inline-block shrink-0"></span>
                                     {{ $sub->name }}
                                 </h2>
                                 <a href="{{ route('category.show', $sub->slug) }}"
-                                   class="text-[#001F54] hover:text-[#ff7a00] font-bold text-sm flex items-center gap-1 transition-colors shrink-0">
+                                    class="text-[#001F54] hover:text-[#ff7a00] font-bold text-sm flex items-center gap-1 transition-colors shrink-0">
                                     View All <i class="fa-solid fa-arrow-right text-xs"></i>
                                 </a>
                             </div>
@@ -107,7 +130,8 @@
         @if (isset($directProducts) && $directProducts->count())
             @php $hasAnyProduct = true; @endphp
             <section class="mt-14">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-3 border-b-2 border-slate-100">
+                <div
+                    class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-3 border-b-2 border-slate-100">
                     <h2 class="text-xl sm:text-2xl font-extrabold text-[#001F54] flex items-center gap-3">
                         <span class="w-1 h-7 bg-[#ff7a00] rounded-full inline-block shrink-0"></span>
                         All Products
@@ -126,7 +150,8 @@
             <div class="bg-white rounded-[24px] shadow-sm border border-slate-100 p-16 text-center">
                 <div class="text-7xl mb-4 opacity-60">📦</div>
                 <h2 class="text-2xl font-bold text-[#001F54] mb-2">No Products Yet</h2>
-                <p class="text-slate-500 max-w-md mx-auto">Products for this category haven't been added yet. Please check back soon.</p>
+                <p class="text-slate-500 max-w-md mx-auto">Products for this category haven't been added yet. Please check
+                    back soon.</p>
                 <a href="{{ route('products.index') }}" class="primary-btn mt-6 inline-flex">Browse All Products</a>
             </div>
         @endif
@@ -149,14 +174,16 @@
             <div class="bg-white rounded-[24px] shadow-sm border border-slate-100 p-16 text-center">
                 <div class="text-7xl mb-4 opacity-60">📦</div>
                 <h2 class="text-2xl font-bold text-[#001F54] mb-2">No Products Found</h2>
-                <p class="text-slate-500 max-w-md mx-auto">No products have been added to this category yet. Please check back later.</p>
+                <p class="text-slate-500 max-w-md mx-auto">No products have been added to this category yet. Please check
+                    back later.</p>
                 <a href="{{ route('products.index') }}" class="primary-btn mt-6 inline-flex">Browse All Products</a>
             </div>
         @endif
     @endif
 
     {{-- ===== TRUST STRIP ===== --}}
-    <section class="bg-white rounded-[20px] shadow-[0_8px_24px_rgba(0,31,84,0.04)] border border-slate-100 p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 text-sm mt-14">
+    <section
+        class="bg-white rounded-[20px] shadow-[0_8px_24px_rgba(0,31,84,0.04)] border border-slate-100 p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 text-sm mt-14">
         <div class="flex gap-4 items-start p-2">
             <div class="w-12 h-12 shrink-0 bg-[#001F54]/5 rounded-xl flex items-center justify-center text-[#001F54]">
                 <i class="fa-solid fa-shield-halved text-xl"></i>

@@ -145,29 +145,30 @@
         /* ===== IMAGE HANDLING DESIGN SYSTEM ===== */
         .card-img-box {
             width: 100%;
-            aspect-ratio: 1 / 1;
+            /* aspect-ratio: 1 / 1;
             display: flex;
-            align-items: center;
-            justify-content: center;
+            align-items: center; */
+            /* justify-content: center; */
             overflow: hidden;
             background: #f8fafc; /* Slate 50 background */
             margin: 0;
             padding: 0;
-            border-bottom: 1px solid rgba(0, 31, 84, 0.06);
+            /* border-bottom: 1px solid rgba(0, 31, 84, 0.06); */
         }
 
         .card-img-contain {
             width: 100%;
-            height: 100%;
-            object-fit: contain;
+            max-height: 200px;
+            /* object-fit: contain; */
             /* padding: 16px; */
             transition: transform 0.35s ease;
+            aspect-ratio: 16/12;
         }
 
         .card-img-cover {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-height: 200px;
+            aspect-rartio:16/12;
             padding: 0;
             transition: transform 0.35s ease;
         }
@@ -594,24 +595,25 @@
                     <a href="{{ route('about') }}">
                         <li>About Us</li>
                     </a>
-                    <a href="{{ route('shop-by-school') }}">
+                    {{-- <a href="{{ route('shop-by-school') }}">
                         <li>Shop by School</li>
-                    </a>
-                    <a href="{{route('shop-by-category')}}">
+                    </a> --}}
+                    {{-- <a href="{{route('shop-by-category')}}">
                         <li>Shop by Category</li>
-                    </a>
+                    </a> --}}
                     <a href="{{ route('returns-refunds') }}">
                         <li>Returns & Refunds</li>
                     </a>
-                    <a href="{{ route('faqs')}}">
+                    {{-- <a href="{{ route('faqs')}}">
                         <li>FAQs</li>
-                    </a>
+                    </a> --}}
                     {{-- <li>About Us</li> --}}
                     {{-- <li>Shop by Category</li> --}}
                     {{-- <li>Track Order</li> --}}
                     {{-- <li>Returns & Refunds</li> --}}
-                    {{-- <li>FAQs</li> --}}
-                    <li>Contact Us</li>
+                    <a href="{{ route('contact') }}">
+                        <li>Contact Us</li>
+                    </a>
                 </ul>
             </div>
             <div>
