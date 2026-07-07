@@ -85,4 +85,16 @@ class CategoryController extends Controller
         $category->delete();
         return back()->with('success', 'Category deleted.');
     }
+
+    public function getCategories($id)
+    {
+
+        $category = Category::with('allChildren')->find($id);
+
+        return response()->json([
+            'category' => $category,
+        ], 200);
+
+    }
+
 }

@@ -13,7 +13,10 @@ class HeaderService
     {
         return [
             'mainSchools' => School::all(),
-            'schoolEssentials' => Category::where('show_on_menu', true)->get(),
+            'mainCategories' => Category::whereNull('parent_id')
+                ->where('show_on_menu', true)
+                ->with('childrenShowOnDas')
+                ->get(),
             'mainProducts' => Product::whereHas('category', function ($q) {
                 $q->where('name', 'like', '%gift%')
                     ->orWhere('name', 'like', '%fragrance%');
