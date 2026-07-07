@@ -63,16 +63,18 @@
         </div>
 
         <div class="flex items-center gap-3">
-            <input type="checkbox" name="show_on_dashboard" value="1" {{ old('show_on_dashboard', $category->show_on_dashboard) ? 'checked' : '' }} class="w-4 h-4 text-indigo-600 border-gray-300 rounded">
+            <input id="showOnDashboard" type="checkbox" name="show_on_dashboard" value="1" {{ old('show_on_dashboard', $category->show_on_dashboard) ? 'checked' : '' }}
+                class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
 
-            <label class="text-sm font-medium text-gray-700">
+            <label for="showOnDashboard" class="text-sm font-medium text-gray-700">
                 Show on Dashboard
             </label>
         </div>
         <div class="flex items-center gap-3">
-            <input type="checkbox" name="show_on_menu" value="0" {{ old('show_on_menu', $category->show_on_menu) ? 'checked' : '' }} class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+            <input id="showOnMenu" type="checkbox" name="show_on_menu" value="0" {{ old('show_on_menu', $category->show_on_menu) ? 'checked' : '' }}
+                class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
 
-            <label class="text-sm font-medium text-gray-700">
+            <label for="showOnMenu" class="text-sm font-medium text-gray-700">
                 Show on Main Menu
             </label>
         </div>

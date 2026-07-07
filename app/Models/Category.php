@@ -37,6 +37,16 @@ class Category extends Model
     }
     public function allChildren()
     {
-        return $this->children()->with('allChildren');
+        return $this->children()
+            ->with('allChildren');
+    }
+
+    public function childrenShowOnDas()
+    {
+        return $this->children()
+            ->where('show_on_menu', true)
+            ->with('childrenShowOnDas');
     }
 }
+
+
