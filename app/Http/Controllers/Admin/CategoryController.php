@@ -54,8 +54,8 @@ class CategoryController extends Controller
         $data['slug'] = Str::slug($data['name']);
 
         $data['slug'] = Str::slug($data['name']);
-
-        if (Category::where('slug', $data['slug'])->exists()) {
+        Category::where('slug', $data['slug'])->exists();
+        if (true) {
             return back()
                 ->withInput()
                 ->withErrors([
@@ -102,16 +102,17 @@ class CategoryController extends Controller
         }
         $data['slug'] = Str::slug($data['name']);
 
-        $data['slug'] = Str::slug($data['name']);
-
-        if (Category::where('slug', $data['slug'])->exists()) {
+        if (
+            Category::where('slug', $data['slug'])
+                ->where('id', '!=', $category->id)
+                ->exists()
+        ) {
             return back()
                 ->withInput()
                 ->withErrors([
                     'name' => 'A category with this name already exists.'
                 ]);
         }
-
         $data['show_on_dashboard'] = $request->has('show_on_dashboard');
         $data['show_on_menu'] = $request->has('show_on_menu');
 
