@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
             SchoolSeeder::class,
             SettingSeeder::class,
             AdminSeeder::class,
+            GiftsAndDecorSeeder::class,
+            ProductsSeeder::class,
         ]);
     }
 }
