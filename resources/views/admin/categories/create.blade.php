@@ -51,18 +51,18 @@
                 class="w-full border border-gray-300 rounded-lg px-3 py-2 file:bg-indigo-600 file:text-white file:border-0 file:px-4 file:py-2 file:rounded-md file:cursor-pointer">
         </div>
         <div class="flex items-center gap-3">
-            <input type="checkbox" name="show_on_dashboard" value="1" checked
+            <input id="showOnDashboard" type="checkbox" name="show_on_dashboard" value="1" checked
                 class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
 
-            <label class="text-sm font-medium text-gray-700">
+            <label for="showOnDashboard" class="text-sm font-medium text-gray-700">
                 Show on Dashboard
             </label>
         </div>
         <div class="flex items-center gap-3">
-            <input type="checkbox" name="show_on_menu" value="0"
+            <input id="showOnMenu" type="checkbox" name="show_on_menu" value="0"
                 class="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
 
-            <label class="text-sm font-medium text-gray-700">
+            <label for="showOnMenu" class="text-sm font-medium text-gray-700">
                 Show on Main Menu
             </label>
         </div>

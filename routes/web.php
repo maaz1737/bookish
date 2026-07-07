@@ -73,6 +73,8 @@ Route::get('/products', [StoreProductController::class, 'index'])->name('product
 Route::get('/category/{slug}', [StoreProductController::class, 'category'])->name('category.show');
 Route::get('/product/{product}', [StoreProductController::class, 'show'])->name('product.show');
 Route::get('/get-classes/{school}', [StoreProductController::class, 'getClasses'])->name('get.Classes');
+Route::get('/get-categories/{id}', [CategoryController::class, 'getCategories'])->name('get.categories');
+
 // Cart
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/product/{product}', [CartController::class, 'addProduct'])->name('cart.addProduct');
