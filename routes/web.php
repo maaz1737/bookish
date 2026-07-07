@@ -13,6 +13,12 @@ use App\Http\Controllers\Storefront\CheckoutController;
 use App\Http\Controllers\Storefront\OrderTrackController;
 use App\Http\Controllers\Storefront\WishlistController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Storefront\AboutController;
+use App\Http\Controllers\Storefront\SchoolCatalogController;
+use App\Http\Controllers\Storefront\CategoryCatalogController;
+use App\Http\Controllers\Storefront\PolicyController;
+use App\Http\Controllers\Storefront\FaqController;
+
 // Auth
 use App\Http\Controllers\Auth\OtpAuthController;
 
@@ -95,6 +101,21 @@ Route::post('/checkout/{order}', [CheckoutController::class, 'statusUpdate'])->n
 Route::get('/checkout/{orderNumber}/bank', [CheckoutController::class, 'bank'])->name('checkout.bank');
 Route::post('/checkout/{orderNumber}/proof', [CheckoutController::class, 'uploadProof'])->name('checkout.proof');
 Route::get('/checkout/{order}/confirmation', [CheckoutController::class, 'confirmation'])->name('checkout.confirmation');
+
+
+
+
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/shop-by-school', [SchoolCatalogController::class, 'index'])->name('shop-by-school');
+Route::get('/shop-by-category', [CategoryCatalogController::class, 'index'])->name('shop-by-category');
+Route::get('/returns-refunds', [PolicyController::class, 'index'])->name('returns-refunds');
+Route::get('/faqs', [FaqController::class, 'index'])->name('faqs'); 
+
+
+
+
+
+
 
 // Order tracking
 Route::get('/track/{orderNumber}', [OrderTrackController::class, 'show'])->name('order.track');

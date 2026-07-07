@@ -49,6 +49,13 @@ class CategoryController extends Controller
         Category::create($data);
         return back()->with('success', 'Category created successfully.');
     }
+    // public function showCategory($slug,  $category)
+    // {
+    //     $ategory = Category::where('slug', $slug)->firstOrFail();
+    //     $sections = Category::where('parent_id', $category->id)->with('products')->get();
+        
+    //     return view('category', compact('category', 'sections'));
+    // }
 
     public function update(Request $request, Category $category)
     {

@@ -215,7 +215,7 @@
             <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
                 <i class="fa-solid fa-layer-group text-[#001F54]"></i> Shop by Category
             </h2>
-            <a href="#categories-section" class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
+            <a href="{{ route('categories.index') }}" class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
                 View All Categories <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>

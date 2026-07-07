@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+<!-- Include Alpine.js Core Script (Must be inside <head>) -->
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
+<!-- Include Alpine.js Collapse Plugin (Accordions ki smooth opening ke liye) -->
+<script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -678,11 +682,26 @@
             <div>
                 <h4 class="text-white font-semibold mb-3">Quick Links</h4>
                 <ul class="space-y-2">
-                    <li>About Us</li>
-                    <li>Shop by Category</li>
-                    <li>Track Order</li>
-                    <li>Returns & Refunds</li>
-                    <li>FAQs</li>
+                    <a href="{{ route('about') }}">
+                        <li>About Us</li>
+                    </a>
+                    <a href="{{ route('shop-by-school') }}">
+                        <li>Shop by School</li>
+                    </a>
+                    <a href="{{route('shop-by-category')}}">
+                        <li>Shop by Category</li>
+                    </a>
+                    <a href="{{ route('returns-refunds') }}">
+                        <li>Returns & Refunds</li>
+                    </a>
+                    <a href="{{ route('faqs')}}">
+                        <li>FAQs</li>
+                    </a>
+                    {{-- <li>About Us</li> --}}
+                    {{-- <li>Shop by Category</li> --}}
+                    {{-- <li>Track Order</li> --}}
+                    {{-- <li>Returns & Refunds</li> --}}
+                    {{-- <li>FAQs</li> --}}
                     <li>Contact Us</li>
                 </ul>
             </div>

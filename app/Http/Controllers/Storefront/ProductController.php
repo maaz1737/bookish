@@ -53,4 +53,16 @@ class ProductController extends Controller
     {
         return SchoolClass::where('school_id', $schoolId)->get();
     }
+
+    public function categoriesIndex()
+    {
+        $parentCategories = Category::whereNull('parent_id')
+            ->where('is_active', true)
+            ->with(['children' => function($q) {
+                $q->where('is_active', true);
+            }])
+            ->get();
+
+        return view('storefront.categories', compact('parentCategories'));
+    }
 }
