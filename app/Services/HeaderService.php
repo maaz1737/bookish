@@ -15,7 +15,11 @@ class HeaderService
             'mainSchools' => School::all(),
             'mainCategories' => Category::whereNull('parent_id')
                 ->where('show_on_menu', true)
-                ->with('childrenShowOnDas')
+                ->with([
+                    'children' => function ($query) {
+                        $query->where('show_on_menu', true);
+                    }
+                ])
                 ->get(),
             'mainProducts' => Product::whereHas('category', function ($q) {
                 $q->where('name', 'like', '%gift%')

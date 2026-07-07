@@ -29,7 +29,7 @@
                 <option value="">-- Root Category --</option>
 
                 @foreach ($categories as $category)
-                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    <option value="{{ $category->id }}" class="px-2">{{ $category->name }}</option>
                 @endforeach
 
             </select>
