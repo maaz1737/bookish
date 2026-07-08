@@ -24,7 +24,6 @@
             justify-content: center;
             align-items: center;
             background: #fff;
-            padding: 20px;
         }
 
         .image-container img {
