@@ -105,13 +105,13 @@
                     </div>
 
                     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                        <div class="p-5 border-b border-gray-100 flex items-center justify-between">
+                        {{-- <div class="p-5 border-b border-gray-100 flex items-center justify-between">
                             <h2 class="font-bold text-gray-800 text-lg">
                                 Books Included in this Set <span
                                     class="text-indigo-600 font-medium text-sm ml-1">({{ $bundle->items->count() }}
                                     Items)</span>
                             </h2>
-                        </div>
+                        </div> --}}
 
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">

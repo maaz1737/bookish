@@ -173,6 +173,30 @@ class ProductController extends Controller
         return back()->with('success', 'Product deleted.');
     }
 
+    public function bulkDestroy(Request $request)
+    {
+        $ids = collect($request->input('selected', []))
+            ->filter(fn($id) => is_numeric($id))
+            ->map(fn($id) => (int) $id)
+            ->unique()
+            ->values()
+            ->all();
+
+        if (empty($ids)) {
+            return back()->with('error', 'Please select at least one product to delete.');
+        }
+
+        $products = Product::whereIn('id', $ids)->get();
+
+        if ($products->isEmpty()) {
+            return back()->with('error', 'No products were found for deletion.');
+        }
+
+        $products->each->delete();
+
+        return back()->with('success', count($products) . ' product(s) deleted.');
+    }
+
     private function formData(): array
     {
         return [

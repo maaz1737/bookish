@@ -9,6 +9,7 @@ use App\Models\BundleItem;
 use App\Models\Product;
 use App\Models\School;
 use App\Services\BundlePricingService;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class BundleController extends Controller
@@ -103,5 +104,30 @@ class BundleController extends Controller
     {
         $bundle->delete();
         return back()->with('success', 'Bundle deleted.');
+    }
+
+    public function bulkDestroy(Request $request)
+    {
+        dd($request);
+        $ids = collect($request->input('selected', []))
+            ->filter(fn($id) => is_numeric($id))
+            ->map(fn($id) => (int) $id)
+            ->unique()
+            ->values()
+            ->all();
+
+        if (empty($ids)) {
+            return back()->with('error', 'Please select at least one bundle to delete.');
+        }
+
+        $bundles = Bundle::whereIn('id', $ids)->get();
+
+        if ($bundles->isEmpty()) {
+            return back()->with('error', 'No bundles were found for deletion.');
+        }
+
+        $bundles->each->delete();
+
+        return back()->with('success', count($bundles) . ' bundle(s) deleted.');
     }
 }

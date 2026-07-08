@@ -56,7 +56,7 @@
             </div>
 
             <div class="md:col-span-5 flex justify-center md:justify-end">
-                <img src="{{ url('storage/about_hero_collage.png') }}"
+                <img src="{{ url('images/about_hero_collage.png') }}"
                      alt="Bookish & Beyond Products"
                      class="max-h-64 md:max-h-72 object-contain drop-shadow-lg hover:scale-[1.03] transition-transform duration-500">
             </div>

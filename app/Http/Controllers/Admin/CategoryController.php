@@ -145,6 +145,30 @@ class CategoryController extends Controller
         return back()->with('success', 'Category deleted.');
     }
 
+    public function bulkDestroy(Request $request)
+    {
+        $ids = collect($request->input('selected', []))
+            ->filter(fn($id) => is_numeric($id))
+            ->map(fn($id) => (int) $id)
+            ->unique()
+            ->values()
+            ->all();
+
+        if (empty($ids)) {
+            return back()->with('error', 'Please select at least one category to delete.');
+        }
+
+        $categories = Category::whereIn('id', $ids)->get();
+
+        if ($categories->isEmpty()) {
+            return back()->with('error', 'No categories were found for deletion.');
+        }
+
+        $categories->each->delete();
+
+        return back()->with('success', count($categories) . ' category/ies deleted.');
+    }
+
     public function getCategories($id)
     {
 
