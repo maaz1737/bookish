@@ -76,7 +76,8 @@
         .primary-btn {
             background: #001F54;
             color: #ffffff;
-            border-radius: 12px;
+            border-radius: 8px;
+            font-size: 16px;
             border: none;
             font-weight: 500;
             padding: 8px 0px;
