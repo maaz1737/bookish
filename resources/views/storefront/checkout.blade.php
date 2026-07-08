@@ -18,7 +18,6 @@
                 @endforeach
             </div>
         </div>
-
         <div class="max-w-7xl mx-auto px-4 py-8">
             <h2 class="text-3xl font-extrabold text-[#0a1f44] mb-6">Checkout</h2>
 
@@ -137,7 +136,6 @@
                         <p class="text-center text-xs text-gray-500 mt-3">No account needed — guest checkout.</p>
                     </form>
                 </div>
-
                 {{-- Order Summary (static placeholder — wire to your cart data) --}}
                 <aside class="bg-white border rounded-lg p-6 h-fit">
                     <div class="flex items-center justify-between mb-4">
@@ -154,19 +152,17 @@
                         {{-- Replace with your @foreach ($cartItems as $item) loop --}}
                         @php $sample = [['School Backpack (Navy Blue)', 'Premium Quality · 18 inch', 2250], ['School Uniform Set', 'Boys · Grade 6 · White', 1500], ['Class 5 Complete Book Bundle', 'Includes All Subjects', 2450]]; @endphp
                         @foreach ($cart['items'] as $p)
-                                        <div class="flex gap-3">
-                                            <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
-                                                <img src="{{ app()->environment('local')
-                            ? asset('storage/' . $p['image'][0])
-                            : asset('storage/' . $p['image'][0]) }}" alt="" class="w-full h-full object-cover">
-                                            </div>
-                                            <div class="flex-1">
-                                                <p class="font-semibold text-sm text-[#0a1f44]">{{ $p['name'] }}</p>
-                                                <p class="text-xs text-gray-500">Premium Quality · 18 inch</p>
-                                                <p class="text-xs text-gray-500">Qty: {{ $p['quantity'] }}</p>
-                                            </div>
-                                            <p class="text-sm font-semibold text-[#0a1f44]">PKR {{ $p['price'] }}</p>
-                                        </div>
+                            <div class="flex gap-3">
+                                <div class="w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
+                                    <img src="{{ $p['image'] }}" alt="" class="w-full h-full block object-fill">
+                                </div>
+                                <div class="flex-1">
+                                    <p class="font-semibold text-sm text-[#0a1f44]">{{ $p['name'] }}</p>
+                                    <p class="text-xs text-gray-500">Premium Quality · 18 inch</p>
+                                    <p class="text-xs text-gray-500">Qty: {{ $p['quantity'] }}</p>
+                                </div>
+                                <p class="text-sm font-semibold text-[#0a1f44]">PKR {{ $p['price'] }}</p>
+                            </div>
                         @endforeach
                     </div>
 

@@ -191,9 +191,10 @@ class CheckoutController extends Controller
         $items = $request->session()->get('cart', []);
         $productIds = collect($items)->pluck('id');
         $products = Product::whereIn('id', $productIds)
-            ->pluck('images', 'id');
+            ->get()
+            ->keyBy('id');
         foreach ($items as &$item) {
-            $item['image'] = $products[$item['id']] ?? null;
+            $item['image'] = $products[$item['id']]->imageUrl();
         }
 
         $total = collect($items)->sum(fn($i) => $i['price'] * $i['quantity']);
