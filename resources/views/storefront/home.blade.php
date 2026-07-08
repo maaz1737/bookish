@@ -2,6 +2,68 @@
 
 @section('content')
 
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .product-card {
+            width: 350px;
+            /* Set your desired card width */
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 20px;
+        }
+
+        .image-container {
+            height: 260px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #fff;
+            padding: 20px;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
+
+        .product-info {
+            color: navy;
+            padding: 11px 10px;
+            font-weight: 700;
+        }
+
+        .product-info button {
+            padding: 10px 20px;
+            background-color: navy;
+            color: white;
+            border: none;
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .amount {
+            display: flex;
+            gap: 8px;
+            padding: 10px 0px;
+            font-size: 20px;
+            align-items: end;
+        }
+
+        .prev-amount {
+            font-size: 12px;
+            text-decoration: line-through;
+            color: gray;
+        }
+    </style>
+
     {{-- ===== HERO BANNER ===== --}}
     @if ($heroBanners->count() > 0)
         <section class="rounded-[24px] overflow-hidden bg-gradient-to-br from-navy-50 to-slate-100 mb-10 relative">
@@ -152,56 +214,56 @@
                         }
                     @endphp
 
-                    <div class="product-card card flex flex-col relative group h-full filter-con">
+                    <div class="product-card relative group">
 
-                        <!-- Badge -->
-                        <span class="{{ $badgeClass }} absolute top-4 left-4 z-10 shadow-sm">{{ $badgeText }}</span>
+                        <!-- Discount / Badge -->
+                        <span class="{{ $badgeClass }} absolute top-4 left-4 z-10 shadow-sm">
+                            {{ $badgeText }}
+                        </span>
 
                         <!-- Wishlist -->
                         <button
-                            class="wishlist-toggle-btn absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center z-10 transition-colors {{ $inWishlist ? 'text-rose-500' : 'text-slate-400' }} hover:text-rose-500"
+                            class="wishlist-toggle-btn absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center transition-colors {{ $inWishlist ? 'text-rose-500' : 'text-slate-400' }} hover:text-rose-500"
                             data-product-id="{{ $product->id }}" data-url="{{ route('wishlist.toggle', $product) }}"
                             aria-label="Toggle {{ $product->name }} wishlist">
+
                             <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
                         </button>
 
-                        <!-- Product Image -->
-                        <a href="{{ route('product.show', $product) }}" class="block">
-                            <div class="card-img-box">
-                                <img class="card-img-contain" src="{{  $product->imageUrl() }}" alt="{{ $product->name }}"
-                                    loading="lazy" />
+                        <!-- Image -->
+                        <a href="{{ route('product.show', $product) }}">
+                            <div class="image-container">
+                                <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" loading="lazy">
                             </div>
                         </a>
 
-                        <!-- Name & Price -->
-                        <div class="p-5 flex flex-col flex-grow justify-between">
-                            <div>
-                                <a href="{{ route('product.show', $product) }}">
-                                    <h3
-                                        class="text-sm font-bold text-[#001F54] hover:text-[#003B7A] transition-colors leading-tight line-clamp-2 mb-3 filter-name">
-                                        {{ $product->name }}
-                                    </h3>
-                                </a>
-                                <div class="price-row mb-4">
-                                    <span class="text-lg font-bold text-[#001F54]">
-                                        PKR {{ number_format($product->discount_price ?? $product->price) }}
-                                    </span>
-                                    @if ($product->discount_price && $product->price)
-                                        <span class="text-xs text-slate-400 line-through ml-2">
-                                            PKR {{ number_format($product->price) }}
-                                        </span>
-                                    @endif
-                                </div>
+                        <!-- Product Info -->
+                        <div class="product-info">
+
+                            <a href="{{ route('product.show', $product) }}">
+                                <h3>{{ ucfirst($product->name) }}</h3>
+                            </a>
+
+                            <div class="amount">
+                                <p>PKR {{ number_format($product->discount_price ?? $product->price) }}</p>
+
+                                @if ($product->discount_price)
+                                    <p class="prev-amount">
+                                        PKR {{ number_format($product->price) }}
+                                    </p>
+                                @endif
                             </div>
 
-                            <!-- Add to Cart -->
-                            <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form w-full">
+                            <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form">
                                 @csrf
-                                <button type="submit" class="primary-btn w-full justify-center">
-                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
+                                <button type="submit">
+                                    <i class="fa-solid fa-cart-shopping mr-2"></i>
+                                    Add To Cart
                                 </button>
                             </form>
+
                         </div>
+
                     </div>
                 @endforeach
             </div>
@@ -332,9 +394,9 @@
                                     @foreach ($prodImages as $prod)
                                         <div
                                             class="flex items-center justify-center p-3 border-white/60
-                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 0 ? 'border-r border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 1 ? 'border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 2 ? 'border-r' : '' }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 0 ? 'border-r border-b' : '' }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 1 ? 'border-b' : '' }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 2 ? 'border-r' : '' }}">
                                             <img src="{{ $imgSrc($prod->images[0]) }}"
                                                 class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 alt="{{ $prod->name }}" loading="lazy" />

@@ -50,7 +50,7 @@
             <div class="mt-6 grid grid-cols-1 items-center gap-8 md:grid-cols-2">
                 <!-- Illustration -->
                 <div class="flex justify-center">
-                    <img src="{{ asset('storage/order-success.png') }}" alt="Order placed successfully"
+                    <img src="{{ asset('images/order-success.png') }}" alt="Order placed successfully"
                         class="h-48 w-auto object-contain sm:h-56" />
                 </div>
 
