@@ -78,11 +78,12 @@
             color: #ffffff;
             border-radius: 12px;
             border: none;
-            font-weight: 600;
-            padding: 12px 20px;
+            font-weight: 500;
+            padding: 8px 0px;
             transition: all 0.2s ease;
             cursor: pointer;
             text-align: center;
+            width: 100%;
         }
 
         .primary-btn:hover {
