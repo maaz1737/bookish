@@ -27,10 +27,8 @@
         }
 
         .image-container img {
-            max-width: 100%;
-            max-height: 100%;
-            width: auto;
-            height: auto;
+            width: 100%;
+            height: 100%;
         }
 
         .product-info {
@@ -41,7 +39,6 @@
 
         .product-info button {
             padding: 10px 20px;
-            background-color: navy;
             color: white;
             border: none;
             width: 100%;
@@ -255,7 +252,7 @@
 
                             <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form">
                                 @csrf
-                                <button type="submit">
+                                <button type="submit" class="primary-btn">
                                     <i class="fa-solid fa-cart-shopping mr-2"></i>
                                     Add To Cart
                                 </button>
@@ -393,9 +390,9 @@
                                     @foreach ($prodImages as $prod)
                                         <div
                                             class="flex items-center justify-center p-3 border-white/60
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 0 ? 'border-r border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 1 ? 'border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 2 ? 'border-r' : '' }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 0 ? 'border-r border-b' : '' }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 1 ? 'border-b' : '' }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 2 ? 'border-r' : '' }}">
                                             <img src="{{ $imgSrc($prod->images[0]) }}"
                                                 class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 alt="{{ $prod->name }}" loading="lazy" />

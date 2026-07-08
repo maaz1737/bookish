@@ -81,15 +81,12 @@
             font-weight: 600;
             padding: 12px 20px;
             transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             cursor: pointer;
+            text-align: center;
         }
 
         .primary-btn:hover {
-            background: #003B7A;
+            background: #000654;
         }
 
         .primary-btn:focus {
