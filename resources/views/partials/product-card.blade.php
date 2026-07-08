@@ -35,14 +35,15 @@
         padding: 3px 0px 10px 0px;
         align-items: end;
         font-weight: 600;
+        font-size: 18px
     }
 
     .prev-amount {
         font-size: 14px;
-        font-weight: 400;
+        font-weight: 500;
         text-decoration: line-through;
         color: gray;
-        padding-bottom: 1px;
+        padding-bottom: 2px;
     }
 </style>
 
