@@ -22,7 +22,7 @@
             </div>
 
             <div class="md:col-span-5 flex justify-center md:justify-end">
-                <img src="{{ url('storage/contact_hero_collage.png') }}" 
+                <img src="{{ url('images/contact_hero_collage.png') }}" 
                      alt="Contact Us Essentials" 
                      class="max-h-60 md:max-h-68 object-contain drop-shadow-lg hover:scale-[1.02] transition-transform duration-500 rounded-2xl">
             </div>

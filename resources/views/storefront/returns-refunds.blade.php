@@ -25,7 +25,7 @@
                 </p>
             </div>
             <div class="md:col-span-5 flex justify-center md:justify-end">
-                <img src="{{ url('storage/contact_hero_collage.png') }}"
+                <img src="{{ url('images/contact_hero_collage.png') }}"
                      alt="Returns & Refunds"
                      class="max-h-56 md:max-h-64 object-contain drop-shadow-md hover:scale-105 transition-transform duration-500">
             </div>

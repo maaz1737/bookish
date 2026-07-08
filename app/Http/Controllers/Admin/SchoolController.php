@@ -63,4 +63,28 @@ class SchoolController extends Controller
         $school->delete();
         return back()->with('success', 'School deleted.');
     }
+
+    public function bulkDestroy(Request $request)
+    {
+        $ids = collect($request->input('selected', []))
+            ->filter(fn($id) => is_numeric($id))
+            ->map(fn($id) => (int) $id)
+            ->unique()
+            ->values()
+            ->all();
+
+        if (empty($ids)) {
+            return back()->with('error', 'Please select at least one school to delete.');
+        }
+
+        $schools = School::whereIn('id', $ids)->get();
+
+        if ($schools->isEmpty()) {
+            return back()->with('error', 'No schools were found for deletion.');
+        }
+
+        $schools->each->delete();
+
+        return back()->with('success', count($schools) . ' school(s) deleted.');
+    }
 }

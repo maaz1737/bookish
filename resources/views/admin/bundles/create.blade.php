@@ -70,7 +70,7 @@
                                 <input type="checkbox" name="items[{{ $i }}][product_id]" value="{{ $p->id }}" 
                                     class="product-checkbox w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
                                     data-price="{{ $p->effectivePrice() }}"
-                                    {{ is_array(old('items')) && collect(old('items'))->contains('product_id', $p->id) ? 'checked' : '' }}>
+                                    {{ is_array(old('items'))->contains('product_id', $p->id) ? 'checked' : '' }}>
                                 <span class="text-sm font-medium text-gray-800">{{ $p->name }}</span>
                             </span>
                             <span class="flex items-center gap-6">
