@@ -171,7 +171,7 @@ async function loadCart() {
                     ×
                 </button>
 
-                <img src="${storageUrl}/${item.image}"
+                <img src="${item.image}"
                     class="w-[50px] h-[50px] border rounded object-cover">
             </div>
 

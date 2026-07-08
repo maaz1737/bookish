@@ -430,18 +430,9 @@
                     @foreach ($order->items as $item)
                         <div class="flex gap-3">
                             <div class="w-16 h-16 bg-gray-100 rounded-md flex items-center justify-center flex-shrink-0">
-                                @php
-                                    $image = $item->product?->images[0] ?? null;
-                                @endphp
-                                @if ($image)
-                                    <img src="{{ app()->environment('production') ? asset('storage/' . $image) : asset('storage/' . $image) }}"
+                                    <img src="{{ $item->product->imageUrl() }}"
                                         alt="{{ $item->product?->name ?? 'Product' }}"
-                                        class="w-full h-full object-contain rounded-md"
-                                        onerror="this.onerror=null;this.src='{{ asset('images/no-image.png') }}';">
-                                @else
-                                    <img src="{{ asset('images/no-image.png') }}" alt="Image not found"
-                                        class="w-full h-full object-contain rounded-md">
-                                @endif
+                                        class="w-full h-full object-fill rounded-md">
                             </div>
                             <div class="min-w-0 flex-1">
                                 <div class="flex justify-between gap-2">

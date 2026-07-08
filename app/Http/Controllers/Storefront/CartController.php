@@ -185,7 +185,7 @@ class CartController extends Controller
                 'price' => $product->price,
                 'discount_price' => $product->discount_price,
                 'quantity' => $qty,
-                'image' => $product->images[0] ?? null,
+                'image' => $product->imageUrl(),
                 'subtotal' => $price * $qty,
             ];
 

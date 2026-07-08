@@ -21,19 +21,23 @@ class ProductController extends Controller
         $category = Category::whereNull('parent_id')
             ->where('slug', $slug)
             ->where('is_active', true)
-            ->with(['children' => function ($q) {
-                $q->where('is_active', true)
-                  ->with(['products' => function ($pq) {
-                      $pq->where('is_active', true)
-                         ->with('variants')
-                         ->latest()
-                         ->limit(4);
-                  }]);
-            }])
+            ->with([
+                'children' => function ($q) {
+                    $q->where('is_active', true)
+                        ->with([
+                            'products' => function ($pq) {
+                                $pq->where('is_active', true)
+                                    ->with('variants')
+                                    ->latest()
+                                    ->limit(4);
+                            }
+                        ]);
+                }
+            ])
             ->first();
 
         // If not found as parent, try as subcategory
-        if (! $category) {
+        if (!$category) {
             $subcategory = Category::where('slug', $slug)
                 ->where('is_active', true)
                 ->whereNotNull('parent_id')
@@ -48,9 +52,9 @@ class ProductController extends Controller
                     ->paginate(24);
 
                 return view('storefront.category', [
-                    'category'    => null,
+                    'category' => null,
                     'subcategory' => $subcategory,
-                    'products'    => $products,
+                    'products' => $products,
                 ]);
             }
 
@@ -79,16 +83,16 @@ class ProductController extends Controller
         return view('storefront.product', [
             'product' => $product,
             // JSON-LD product schema (Section 14) — note: no publisher exposed.
-            'jsonLd'  => [
-                '@context'   => 'https://schema.org',
-                '@type'      => 'Product',
-                'name'       => $product->name,
+            'jsonLd' => [
+                '@context' => 'https://schema.org',
+                '@type' => 'Product',
+                'name' => $product->name,
                 'description' => $product->description,
-                'offers'     => [
-                    '@type'         => 'Offer',
+                'offers' => [
+                    '@type' => 'Offer',
                     'priceCurrency' => 'PKR',
-                    'price'         => $product->effectivePrice(),
-                    'availability'  => $product->stock > 0
+                    'price' => $product->effectivePrice(),
+                    'availability' => $product->stock > 0
                         ? 'https://schema.org/InStock'
                         : 'https://schema.org/OutOfStock',
                 ],
@@ -104,9 +108,11 @@ class ProductController extends Controller
     {
         $parentCategories = Category::whereNull('parent_id')
             ->where('is_active', true)
-            ->with(['children' => function($q) {
-                $q->where('is_active', true);
-            }])
+            ->with([
+                'children' => function ($q) {
+                    $q->where('is_active', true);
+                }
+            ])
             ->get();
 
         return view('storefront.categories', compact('parentCategories'));
