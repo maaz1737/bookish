@@ -43,7 +43,10 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
-
+    public function subCategory()
+    {
+        return $this->belongsTo(Category::class, 'sub_category_id');
+    }
     public function school()
     {
         return $this->belongsTo(School::class);
@@ -93,6 +96,23 @@ class Product extends Model
     public function hasVariants(): bool
     {
         return $this->variants()->exists();
+    }
+
+
+    public function imageUrl()
+    {
+        if (!empty($this->images[0])) {
+            return asset('storage/' . $this->images[0]);
+        }
+        if ($this->subCategory?->image) {
+            return asset('storage/' . $this->subCategory->image);
+        }
+
+        if ($this->category?->image) {
+            return asset('storage/' . $this->category->image);
+        }
+
+        return asset('images/no-image.png');
     }
 
 }

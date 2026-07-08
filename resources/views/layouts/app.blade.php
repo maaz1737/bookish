@@ -5,6 +5,7 @@
 
 <!-- Include Alpine.js Collapse Plugin (Accordions ki smooth opening ke liye) -->
 <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -150,7 +151,8 @@
             align-items: center; */
             /* justify-content: center; */
             overflow: hidden;
-            background: #f8fafc; /* Slate 50 background */
+            background: #f8fafc;
+            /* Slate 50 background */
             margin: 0;
             padding: 0;
             /* border-bottom: 1px solid rgba(0, 31, 84, 0.06); */
@@ -168,7 +170,7 @@
         .card-img-cover {
             width: 100%;
             max-height: 200px;
-            aspect-rartio:16/12;
+            aspect-rartio: 16/12;
             padding: 0;
             transition: transform 0.35s ease;
         }
@@ -743,11 +745,6 @@
             }
 
         });
-    </script>
-
-    <script>
-        const storageUrl =
-            "{{ app()->environment('production') ? asset('storage/') : asset('storage/') }}";
     </script>
     <script src="/js/cart.js"></script>
 

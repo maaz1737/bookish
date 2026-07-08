@@ -14,7 +14,8 @@
                             @endif
                                 <div class="grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
                                     <div class="z-10">
-                                        <span class="text-[#ff7a00] text-sm font-bold tracking-wider uppercase flex items-center gap-1.5">
+                                        <span
+                                            class="text-[#ff7a00] text-sm font-bold tracking-wider uppercase flex items-center gap-1.5">
                                             <i class="fa-solid fa-star"></i> Welcome to Bookish & Beyond
                                         </span>
                                         <h2 class="text-3xl md:text-5xl font-extrabold text-[#001F54] mt-3 leading-tight font-sans">
@@ -22,13 +23,15 @@
                                             <span class="text-[#ff7a00]">In One Place.</span>
                                         </h2>
                                         <p class="mt-4 text-slate-600 max-w-md text-sm md:text-base leading-relaxed">
-                                            Books, Uniforms, Bags, Attar & Thoughtful Gifts – All Handpicked for Quality You Can Trust.
+                                            Books, Uniforms, Bags, Attar & Thoughtful Gifts – All Handpicked for Quality You Can
+                                            Trust.
                                         </p>
                                         <div class="flex gap-4 mt-6">
                                             <a href="#school-section" class="primary-btn px-6 py-3 shadow-md hover:shadow-lg">
                                                 Shop by School <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
                                             </a>
-                                            <a href="#category-section" class="inline-flex items-center justify-center border-2 border-[#001F54] text-[#001F54] hover:bg-[#001F54] hover:text-white px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200">
+                                            <a href="#category-section"
+                                                class="inline-flex items-center justify-center border-2 border-[#001F54] text-[#001F54] hover:bg-[#001F54] hover:text-white px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200">
                                                 Shop All Categories
                                             </a>
                                         </div>
@@ -61,9 +64,9 @@
                                         </div>
                                     </div>
                                 </div>
-                            @if ($banner->link)
-                                </a>
-                            @endif
+                                @if ($banner->link)
+                                    </a>
+                                @endif
                         </div>
                     @endforeach
                 </div>
@@ -79,7 +82,8 @@
             <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
                 <i class="fa-solid fa-school text-[#001F54]"></i> Popular Schools
             </h2>
-            <a href="{{ route('schools.index') }}" class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
+            <a href="{{ route('schools.index') }}"
+                class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
                 View All Schools <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
@@ -88,9 +92,11 @@
             @foreach ($schools as $school)
                 <div class="school-card card p-6 flex flex-col justify-between h-full group filter-con">
                     <div>
-                        <div class="w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
+                        <div
+                            class="w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
                             @if ($school->logo ?? false)
-                                <img src="{{ asset('storage/' . $school->logo) }}" alt="{{ $school->name }} emblem" class="max-w-full max-h-full object-contain" loading="lazy" />
+                                <img src="{{ asset('storage/' . $school->logo) }}" alt="{{ $school->name }} emblem"
+                                    class="max-w-full max-h-full object-contain" loading="lazy" />
                             @else
                                 <i class="fa-solid fa-school text-3xl text-[#001F54]"></i>
                             @endif
@@ -118,7 +124,8 @@
                 <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
                     <i class="fa-solid fa-fire text-[#ff7a00]"></i> Trending Now
                 </h2>
-                <a href="{{ route('products.index') }}" class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
+                <a href="{{ route('products.index') }}"
+                    class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
                     View All Products <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </div>
@@ -151,9 +158,9 @@
                         <span class="{{ $badgeClass }} absolute top-4 left-4 z-10 shadow-sm">{{ $badgeText }}</span>
 
                         <!-- Wishlist -->
-                        <button class="wishlist-toggle-btn absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center z-10 transition-colors {{ $inWishlist ? 'text-rose-500' : 'text-slate-400' }} hover:text-rose-500"
-                            data-product-id="{{ $product->id }}"
-                            data-url="{{ route('wishlist.toggle', $product) }}"
+                        <button
+                            class="wishlist-toggle-btn absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center z-10 transition-colors {{ $inWishlist ? 'text-rose-500' : 'text-slate-400' }} hover:text-rose-500"
+                            data-product-id="{{ $product->id }}" data-url="{{ route('wishlist.toggle', $product) }}"
                             aria-label="Toggle {{ $product->name }} wishlist">
                             <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
                         </button>
@@ -161,16 +168,8 @@
                         <!-- Product Image -->
                         <a href="{{ route('product.show', $product) }}" class="block">
                             <div class="card-img-box">
-                                @if (!empty($product->images) && count($product->images) > 0)
-                                    <img class="card-img-contain"
-                                        src="{{ url('storage/' . $product->images[0]) }}"
-                                        alt="{{ $product->name }}"
-                                        loading="lazy" />
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center text-gray-300 text-sm">
-                                        <i class="fa-solid fa-image text-4xl"></i>
-                                    </div>
-                                @endif
+                                <img class="card-img-contain" src="{{  $product->imageUrl() }}" alt="{{ $product->name }}"
+                                    loading="lazy" />
                             </div>
                         </a>
 
@@ -178,7 +177,8 @@
                         <div class="p-5 flex flex-col flex-grow justify-between">
                             <div>
                                 <a href="{{ route('product.show', $product) }}">
-                                    <h3 class="text-sm font-bold text-[#001F54] hover:text-[#003B7A] transition-colors leading-tight line-clamp-2 mb-3 filter-name">
+                                    <h3
+                                        class="text-sm font-bold text-[#001F54] hover:text-[#003B7A] transition-colors leading-tight line-clamp-2 mb-3 filter-name">
                                         {{ $product->name }}
                                     </h3>
                                 </a>
@@ -215,7 +215,8 @@
             <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
                 <i class="fa-solid fa-layer-group text-[#001F54]"></i> Shop by Category
             </h2>
-            <a href="{{ route('categories.index') }}" class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
+            <a href="{{ route('categories.index') }}"
+                class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
                 View All Categories <i class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
@@ -226,10 +227,8 @@
                     <div>
                         <div class="card-img-box">
                             @if ($category->image ?? false)
-                                <img src="{{ url('storage/' . $category->image) }}"
-                                    alt="{{ $category->name }} category"
-                                    class="card-img-cover"
-                                    loading="lazy" />
+                                <img src="{{ url('storage/' . $category->image) }}" alt="{{ $category->name }} category"
+                                    class="card-img-cover" loading="lazy" />
                             @else
                                 <i class="fa-solid fa-book text-4xl text-[#001F54] opacity-30"></i>
                             @endif
@@ -258,7 +257,8 @@
                 <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
                     <i class="fa-solid fa-boxes-stacked text-[#001F54]"></i> Smart Saver Bundles
                 </h2>
-                <a href="{{ route('bundles.index') }}" class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
+                <a href="{{ route('bundles.index') }}"
+                    class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
                     View All Bundles <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </div>
@@ -266,11 +266,11 @@
             <div class="grid-4">
                 @foreach ($bundles as $bundle)
                     @php
-                        $discount   = (float) ($bundle->discount ?? 0);
-                        $products   = $bundle->products;
+                        $discount = (float) ($bundle->discount ?? 0);
+                        $products = $bundle->products;
                         $prodImages = $products->filter(fn($p) => !empty($p->images))->take(4)->values();
-                        $imgCount   = $prodImages->count();
-                        $imgSrc     = fn($path) => url('storage/' . $path);
+                        $imgCount = $prodImages->count();
+                        $imgSrc = fn($path) => url('storage/' . $path);
                     @endphp
 
                     <div class="bundle-card card flex flex-col relative group h-full filter-con">
@@ -282,13 +282,15 @@
                             </span>
                         @endif
                         @if ($products->count() > 0)
-                            <span class="absolute top-4 right-4 z-20 bg-white/90 text-[#001F54] text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-slate-200">
+                            <span
+                                class="absolute top-4 right-4 z-20 bg-white/90 text-[#001F54] text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-slate-200">
                                 {{ $products->count() }} Items
                             </span>
                         @endif
 
                         <!-- Bundle Collage Image Area -->
-                        <div class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50 h-[200px] w-full">
+                        <div
+                            class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50 h-[200px] w-full">
                             @if ($imgCount === 0)
                                 <div class="w-full h-full flex items-center justify-center opacity-30">
                                     <i class="fa-solid fa-boxes-stacked text-5xl text-[#001F54]"></i>
@@ -304,7 +306,8 @@
                             @elseif ($imgCount === 2)
                                 <div class="flex h-full">
                                     @foreach ($prodImages as $prod)
-                                        <div class="flex-1 flex items-center justify-center p-4 {{ !$loop->last ? 'border-r border-white/60' : '' }}">
+                                        <div
+                                            class="flex-1 flex items-center justify-center p-4 {{ !$loop->last ? 'border-r border-white/60' : '' }}">
                                             <img src="{{ $imgSrc($prod->images[0]) }}"
                                                 class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 alt="{{ $prod->name }}" loading="lazy" />
@@ -315,7 +318,8 @@
                             @elseif ($imgCount === 3)
                                 <div class="flex h-full">
                                     @foreach ($prodImages as $prod)
-                                        <div class="flex-1 flex items-center justify-center p-3 {{ !$loop->last ? 'border-r border-white/60' : '' }}">
+                                        <div
+                                            class="flex-1 flex items-center justify-center p-3 {{ !$loop->last ? 'border-r border-white/60' : '' }}">
                                             <img src="{{ $imgSrc($prod->images[0]) }}"
                                                 class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 alt="{{ $prod->name }}" loading="lazy" />
@@ -326,10 +330,11 @@
                             @else
                                 <div class="grid grid-cols-2 grid-rows-2 h-full">
                                     @foreach ($prodImages as $prod)
-                                        <div class="flex items-center justify-center p-3 border-white/60
-                                            {{ $loop->index === 0 ? 'border-r border-b' : '' }}
-                                            {{ $loop->index === 1 ? 'border-b' : '' }}
-                                            {{ $loop->index === 2 ? 'border-r' : '' }}">
+                                        <div
+                                            class="flex items-center justify-center p-3 border-white/60
+                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 0 ? 'border-r border-b' : '' }}
+                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 1 ? 'border-b' : '' }}
+                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 2 ? 'border-r' : '' }}">
                                             <img src="{{ $imgSrc($prod->images[0]) }}"
                                                 class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 alt="{{ $prod->name }}" loading="lazy" />
@@ -375,7 +380,8 @@
 
 
     {{-- ===== TRUST / BENEFITS STRIP ===== --}}
-    <section class="bg-white rounded-[20px] shadow-[0_8px_24px_rgba(0,31,84,0.04)] border border-slate-100 p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 text-sm mb-12">
+    <section
+        class="bg-white rounded-[20px] shadow-[0_8px_24px_rgba(0,31,84,0.04)] border border-slate-100 p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 text-sm mb-12">
         <div class="flex gap-4 items-start p-2">
             <div class="w-12 h-12 shrink-0 bg-[#001F54]/5 rounded-xl flex items-center justify-center text-[#001F54]">
                 <i class="fa-solid fa-shield-halved text-xl"></i>
