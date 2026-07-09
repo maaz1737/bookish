@@ -8,17 +8,23 @@
     }
 
     .image-container {
-        height: 260px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: #fff;
-        border-bottom: 1px solid #f7f7f7;
+        aspect-ratio: 4/ 3;
+        /* one shape for every card */
+        width: 100%;
+        overflow: hidden;
+        background: #f4f4f5;
+
     }
 
     .image-container img {
         width: 100%;
         height: 100%;
+        object-fit: cover;
+        /* fills box, crops overflow, never distorts */
+        object-position: center;
+        /* override per-image via admin focal point */
+        display: block;
+
     }
 
     .product-info {
