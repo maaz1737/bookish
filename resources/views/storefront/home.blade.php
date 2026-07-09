@@ -203,7 +203,7 @@
                         $imgSrc = fn($path) => url('storage/' . $path);
                     @endphp
 
-                    <div class="bundle-card card product-card filter-con">
+                    <div class="relative bundle-card card product-card filter-con">
 
                         <!-- Badges -->
                         @if ($discount > 0)
