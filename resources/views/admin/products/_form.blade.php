@@ -3,21 +3,34 @@
     <label class="block sm:col-span-2"><span class="text-sm font-medium">Name</span>
         <input name="name" value="{{ old('name', $product->name ?? '') }}" required
             class="w-full border rounded px-3 py-2 mt-1"></label>
-    <label class="block"><span class="text-sm font-medium">Category</span>
-        <select id="categoryId" name="category_id" required class="w-full border rounded px-3 py-2 mt-1">
+            
+    <label class="block"><span class="text-sm font-medium">Main Category</span>
+        <select id="categoryId" name="main_category_id" required class="w-full border rounded px-3 py-2 mt-1">
+            <option value="">Select Category</option>
             @foreach ($categories as $c)
-                <option value="{{ $c->id }}" @selected(old('category_id', $product->category_id ?? null) == $c->id)>
+                {{-- Edit mode check --}}
+                @php
+                    $isMainSelected = false;
+                    if(old('main_category_id')) {
+                        $isMainSelected = old('main_category_id') == $c->id;
+                    } elseif(isset($product)) {
+                        // Agar product ki apni category ka parent_id hai, to iska matlab product subcategory mein hai, aur main category uska parent_id hogi.
+                        $isMainSelected = ($product->category_id == $c->id || (optional($product->category)->parent_id == $c->id));
+                    }
+                @endphp
+                <option value="{{ $c->id }}" @selected($isMainSelected)>
                     {{ $c->name }}
                 </option>
             @endforeach
         </select></label>
+        
     <label class="block">
         <span class="text-sm font-medium">Sub Category</span>
-
-        <select id="subcategory_id" name="sub_category_id" class="w-full border rounded px-3 py-2 mt-1">
+        <select id="subcategory_id" name="category_id" class="w-full border rounded px-3 py-2 mt-1">
             <option value="">Select Sub Category</option>
         </select>
     </label>
+
     <label class="block"><span class="text-sm font-medium">School (optional)</span>
         <select name="school_id" id="school_id" class="w-full border rounded px-3 py-2 mt-1">
             <option value="">—</option>
@@ -79,31 +92,53 @@
 </div>
 <button class="mt-6 bg-indigo-600 text-white px-6 py-2 rounded">Save</button>
 
-
-
 <script>
     $(document).ready(function () {
-
-
-        const categoryId = "{{ old('category_id', optional($product ?? null)->category_id) }}";
-        const subCategoryId = "{{ old('subcategory_id', optional($product ?? null)->sub_category_id) }}";
+        // 🔥 Fix: Get the correct main and sub category logic on load
+        let initialMainCat = $('#categoryId').val();
+        let selectedSubCategory = "{{ old('category_id', $product->category_id ?? '') }}";
+        
         let schoolId = $('#school_id').val();
-        let categoryIdInput = $('#categoryId');
 
-
-        if (categoryId) {
-            subCategory(categoryId, subCategoryId);
+        // If main category is available, load subcategories immediately
+        if (initialMainCat) {
+            subCategory(initialMainCat, selectedSubCategory);
         }
-        else {
-            subCategory(categoryIdInput.val());
+
+        // When Main Category changes
+        $('#categoryId').on('change', function () {
+            let id = $(this).val();
+            subCategory(id);
+        });
+
+        function subCategory(id, selectedSub = null) {
+            let subCategorySelect = $('#subcategory_id');
+            subCategorySelect.html('<option value="">Loading...</option>');
+
+            if (!id) {
+                subCategorySelect.html('<option value="">Select Sub Category</option>');
+                return;
+            }
+
+            $.get(`/get-categories/${id}`, function (data) {
+                subCategorySelect.empty();
+                subCategorySelect.append('<option value="">Select Sub Category</option>');
+
+                if(data.category && data.category.children) {
+                    $.each(data.category.children, function (index, item) {
+                        let selected = (item.id == selectedSub) ? 'selected' : '';
+                        subCategorySelect.append(
+                            `<option value="${item.id}" ${selected}>${item.name}</option>`
+                        );
+                    });
+                }
+            });
         }
 
         // When school changes
         $('#school_id').on('change', function () {
-
             let schoolId = $(this).val();
             let classSelect = $('#class_id');
-
             classSelect.html('<option value="">Loading...</option>');
 
             if (!schoolId) {
@@ -112,76 +147,25 @@
             }
 
             $.get(`/get-classes/${schoolId}`, function (data) {
-
                 classSelect.html('<option value="">—</option>');
-
                 $.each(data, function (index, cls) {
-                    classSelect.append(
-                        `<option value="${cls.id}">${cls.name}</option>`
-                    );
+                    classSelect.append(`<option value="${cls.id}">${cls.name}</option>`);
                 });
-
             });
         });
 
-
-        // On page load (edit mode)
-
-
+        // Load classes on page load (edit mode)
         if (schoolId) {
-
             $.get(`/get-classes/${schoolId}`, function (data) {
-
                 let selectedClass = "{{ $product->class_id ?? '' }}";
-
                 let classSelect = $('#class_id');
-
                 classSelect.html('<option value="">—</option>');
 
                 $.each(data, function (index, cls) {
-
                     let selected = (cls.id == selectedClass) ? 'selected' : '';
-
-                    classSelect.append(
-                        `<option value="${cls.id}" ${selected}>${cls.name}</option>`
-                    );
+                    classSelect.append(`<option value="${cls.id}" ${selected}>${cls.name}</option>`);
                 });
             });
         }
-
-
-        categoryIdInput.on('change', function () {
-            let id = $(this).val();
-            subCategory(id)
-
-        });
-
-        function subCategory(id, selectedSubCategory = null) {
-
-            $('#subcategory_id').append('<option value="">...Loading</option>');
-
-            $.get(`/get-categories/${id}`, function (data) {
-                let subCategory = $('#subcategory_id');
-                console.log(data)
-                // Remove existing options
-                subCategory.empty();
-                // Default option
-                subCategory.append('<option value="">Select Sub Category</option>');
-
-                $.each(data.category.children, function (index, item) {
-
-                    let selected = item.id == selectedSubCategory ? 'selected' : '';
-
-                    subCategory.append(
-                        `<option value="${item.id}" ${selected}>${item.name}</option>`
-                    );
-                });
-
-            });
-        }
-
-
-
-
     });
 </script>
