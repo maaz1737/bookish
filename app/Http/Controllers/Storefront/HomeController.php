@@ -39,8 +39,9 @@ class HomeController extends Controller
         $bundles = Bundle::where('is_active', true)
             ->with(['products', 'schoolClass'])
             ->latest()
-            ->take(4)
+            ->take(3)
             ->get();
+
 
         return view('storefront.home', compact(
             'heroBanners',
