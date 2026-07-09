@@ -13,22 +13,26 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::withCount('products')
-            ->paginate(10);
-
+        $categories = Category::withCount('products')->paginate(10);
         return view('admin.categories', compact('categories'));
     }
+
     public function create()
     {
         $categories = Category::select('id', 'name')->whereNull("parent_id")->get();
         return view("admin.categories.create", compact('categories'));
     }
+
     public function edit(Category $category)
     {
-        $categories = Category::select('id', 'name')->whereNull("parent_id")->get();
+        $categories = Category::select('id', 'name')
+            ->whereNull("parent_id")
+            ->where('id', '!=', $category->id)
+            ->get();
 
         return view('admin.categories.edit', compact('category', 'categories'));
     }
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -40,27 +44,18 @@ class CategoryController extends Controller
 
         if (!empty($data['parent_id'])) {
             $parentCategory = Category::find($data['parent_id']);
-
-            // Parent is already a child of another category
-            if ($parentCategory->parent_id != null) {
+            if ($parentCategory && $parentCategory->parent_id != null) {
                 return back()
                     ->withInput()
-                    ->withErrors([
-                        'parent_id' => 'This category is already a child category.'
-                    ]);
+                    ->withErrors(['parent_id' => 'This category is already a child category. You cannot nest it further.']);
             }
         }
 
         $data['slug'] = Str::slug($data['name']);
-
-        $data['slug'] = Str::slug($data['name']);
-        Category::where('slug', $data['slug'])->exists();
-        if (true) {
+        if (Category::where('slug', $data['slug'])->exists()) {
             return back()
                 ->withInput()
-                ->withErrors([
-                    'name' => 'A category with this name already exists.'
-                ]);
+                ->withErrors(['name' => 'A category with this name or slug already exists.']);
         }
 
         $data['show_on_dashboard'] = $request->has('show_on_dashboard');
@@ -72,15 +67,8 @@ class CategoryController extends Controller
 
         Category::create($data);
 
-        return back()->with('success', 'Category created successfully.');
+        return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
     }
-    // public function showCategory($slug,  $category)
-    // {
-    //     $ategory = Category::where('slug', $slug)->firstOrFail();
-    //     $sections = Category::where('parent_id', $category->id)->with('products')->get();
-        
-    //     return view('category', compact('category', 'sections'));
-    // }
 
     public function update(Request $request, Category $category)
     {
@@ -91,44 +79,40 @@ class CategoryController extends Controller
                 'max:255',
                 Rule::unique('categories', 'name')->ignore($category->id),
             ],
-            'parent_id' => ['nullable', 'integer', 'exists:categories,id', 'different:id'],
+            'parent_id' => ['nullable', 'integer', 'exists:categories,id'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
         ]);
-        if (!empty($data['parent_id'])) {
-            $parentCategory = Category::find($data['parent_id']);
 
-            // Parent is already a child of another category
-            if ($parentCategory->parent_id != null) {
-                return back()
-                    ->withInput()
-                    ->withErrors([
-                        'parent_id' => 'This category is already a child category.'
-                    ]);
-            }
-        }
-        $data['slug'] = Str::slug($data['name']);
-
-        if (
-            Category::where('slug', $data['slug'])
-                ->where('id', '!=', $category->id)
-                ->exists()
-        ) {
+        if (!empty($data['parent_id']) && $data['parent_id'] == $category->id) {
             return back()
                 ->withInput()
-                ->withErrors([
-                    'name' => 'A category with this name already exists.'
-                ]);
+                ->withErrors(['parent_id' => 'A category cannot be its own parent.']);
         }
+
+        if (!empty($data['parent_id'])) {
+            $parentCategory = Category::find($data['parent_id']);
+            if ($parentCategory && $parentCategory->parent_id != null) {
+                return back()
+                    ->withInput()
+                    ->withErrors(['parent_id' => 'This category is already a child category.']);
+            }
+        }
+
+        $data['slug'] = Str::slug($data['name']);
+        if (Category::where('slug', $data['slug'])->where('id', '!=', $category->id)->exists()) {
+            return back()
+                ->withInput()
+                ->withErrors(['name' => 'A category with this name or slug already exists.']);
+        }
+
         $data['show_on_dashboard'] = $request->has('show_on_dashboard');
         $data['show_on_menu'] = $request->has('show_on_menu');
 
         if ($request->hasFile('image')) {
-
             if ($category->image && Storage::disk('public')->exists($category->image)) {
                 Storage::disk('public')->delete($category->image);
             }
-
             $data['image'] = $request->file('image')->store('categories', 'public');
         }
 
@@ -141,6 +125,10 @@ class CategoryController extends Controller
 
     public function destroy(Category $category)
     {
+        if ($category->image && Storage::disk('public')->exists($category->image)) {
+            Storage::disk('public')->delete($category->image);
+        }
+
         $category->delete();
         return back()->with('success', 'Category deleted.');
     }
@@ -164,20 +152,26 @@ class CategoryController extends Controller
             return back()->with('error', 'No categories were found for deletion.');
         }
 
-        $categories->each->delete();
+        foreach ($categories as $cat) {
+            if ($cat->image && Storage::disk('public')->exists($cat->image)) {
+                Storage::disk('public')->delete($cat->image);
+            }
+            $cat->delete();
+        }
 
         return back()->with('success', count($categories) . ' category/ies deleted.');
     }
 
     public function getCategories($id)
     {
-
         $category = Category::with('children')->find($id);
+
+        if (!$category) {
+            return response()->json(['message' => 'Category not found'], 404);
+        }
 
         return response()->json([
             'category' => $category,
         ], 200);
-
     }
-
 }
