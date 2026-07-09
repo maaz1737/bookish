@@ -15,7 +15,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Encoders\WebpEncoder;
 class ProductController extends Controller
 {
     public function index()
@@ -220,6 +221,46 @@ class ProductController extends Controller
         }
         return $paths;
     }
+
+
+    // private function storeImages(Request $request): array
+    // {
+    //     if (!Storage::disk('public')->exists('products')) {
+    //         Storage::disk('public')->makeDirectory('products');
+    //     }
+
+    //     $paths = [];
+
+    //     foreach ($request->file('images', []) as $file) {
+
+    //         // Read uploaded image
+    //         $image = Image::read($file);
+
+    //         if ($image->width() < 380 || $image->height() < 260) {
+    //             $image->scale(width: 380, height: 260);
+    //         } else {
+    //             $image->scaleDown(width: 380, height: 380);
+    //         }
+
+    //         $canvas = Image::create(380, 260)->fill('#ffffff');
+    //         $canvas->place($image, 'center');
+
+    //         $filename = Str::uuid() . '.webp';
+
+    //         // Encode image
+    //         $encoded = $canvas->encode(new WebpEncoder(quality: 90));
+
+    //         // Save to storage/app/public/products
+    //         Storage::disk('public')->put(
+    //             "products/{$filename}",
+    //             (string) $encoded
+    //         );
+
+    //         $paths[] = "products/{$filename}";
+    //     }
+
+    //     return $paths;
+    // }
 
     public function bulkUploadShow()
     {
