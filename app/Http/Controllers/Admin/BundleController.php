@@ -108,7 +108,6 @@ class BundleController extends Controller
 
     public function bulkDestroy(Request $request)
     {
-        dd($request);
         $ids = collect($request->input('selected', []))
             ->filter(fn($id) => is_numeric($id))
             ->map(fn($id) => (int) $id)
