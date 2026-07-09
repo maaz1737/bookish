@@ -26,13 +26,10 @@ class CartController extends Controller
         $action = $request->input('action', 'add');
 
         if ($action === 'increase') {
-
             if (isset($cart[$key])) {
                 $cart[$key]['quantity']++;
             }
-
         } elseif ($action === 'decrease') {
-
             if (isset($cart[$key])) {
                 $cart[$key]['quantity']--;
 
@@ -40,18 +37,15 @@ class CartController extends Controller
                     unset($cart[$key]);
                 }
             }
-
         } else {
-
             $cart[$key] = [
                 'type' => 'product',
                 'id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->effectivePrice(),
-                'quantity' => ($cart[$key]['quantity'] ?? 0) + $qty,
+                'quantity' => $qty, 
                 'slug' => $product->slug,
             ];
-
         }
 
         $request->session()->put('cart', $cart);
@@ -66,10 +60,7 @@ class CartController extends Controller
     public function addBundle(Request $request, Bundle $bundle)
     {
         $bundle->loadMissing('items.product');
-
-        // Optional: which book ids to exclude (toggle individual books off)
         $excluded = (array) $request->input('exclude', []);
-
         $cart = $request->session()->get('cart', []);
 
         foreach ($bundle->items as $item) {
@@ -91,7 +82,8 @@ class CartController extends Controller
                 'id' => $item->product_id,
                 'name' => $item->product->name,
                 'price' => round($discountedPrice, 2),
-                'quantity' => ($cart[$key]['quantity'] ?? 0) + $item->quantity,
+                'quantity' => $item->quantity,
+                'is_bundle_item' => true
             ];
         }
 
@@ -116,7 +108,6 @@ class CartController extends Controller
     public function cart(Request $request): array
     {
         $items = $request->session()->get('cart', []);
-
         $productIds = collect($items)->pluck('id');
 
         $products = Product::whereIn('id', $productIds)
@@ -128,8 +119,12 @@ class CartController extends Controller
 
             if ($product) {
                 $item['image'] = $product->images;
-                $item['price'] = $product->price;
-                $item['discount_price'] = $product->discount_price;
+                if (!isset($item['is_bundle_item'])) {
+                    $item['price'] = $product->price;
+                    $item['discount_price'] = $product->discount_price;
+                } else {
+                    $item['discount_price'] = $item['price'];
+                }
             }
         }
 
@@ -144,8 +139,6 @@ class CartController extends Controller
         ];
     }
 
-
-
     public function json(Request $request)
     {
         $cart = $request->session()->get('cart', []);
@@ -159,31 +152,25 @@ class CartController extends Controller
         }
 
         $productIds = collect($cart)->pluck('id');
-
-        $products = Product::whereIn('id', $productIds)
-            ->get()
-            ->keyBy('id');
-
-
+        $products = Product::whereIn('id', $productIds)->get()->keyBy('id');
 
         $items = [];
         $total = 0;
 
         foreach ($cart as $key => $item) {
-
             $product = $products[$item['id']] ?? null;
-            if (!$product)
-                continue;
+            if (!$product) continue;
 
             $qty = $item['quantity'];
-            $price = $product->discount_price ?? $product->price;
+            
+            $price = isset($item['is_bundle_item']) ? $item['price'] : ($product->discount_price ?? $product->price);
 
             $items[] = [
                 'key' => $key,
                 'id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->price,
-                'discount_price' => $product->discount_price,
+                'discount_price' => isset($item['is_bundle_item']) ? $item['price'] : $product->discount_price,
                 'quantity' => $qty,
                 'image' => $product->imageUrl(),
                 'subtotal' => $price * $qty,
@@ -192,21 +179,18 @@ class CartController extends Controller
             $total += $price * $qty;
         }
 
-        $cart = session('cart', []);
-
-        $totalQty = array_sum(array_column($cart, 'quantity')) ?? null;
+        $totalQty = array_sum(array_column($cart, 'quantity'));
 
         return response()->json([
             'items' => $items,
             'total' => $total,
-            'total_count' => $totalQty ?? null,
+            'total_count' => $totalQty,
         ]);
     }
+
     public function update(Request $request)
     {
         $cart = session()->get('cart', []);
-
-
         $key = $request->key;
         $action = $request->action;
 
@@ -227,10 +211,8 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-
         return response()->json(['success' => true]);
     }
-
 
     public function removeCartItem(Request $request)
     {

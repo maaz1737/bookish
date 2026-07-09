@@ -42,7 +42,7 @@
             
             <label class="block">
                 <span class="text-sm font-bold text-gray-700">Discount % <span class="text-red-500">*</span></span>
-                <input name="discount" id="discount-input" type="number" step="0.01" min="0" max="100" value="10" required
+                <input name="discount" id="discount-input" type="number" step="0.01" min="0" max="100" value="{{ old('discount', 10) }}" required
                     class="w-full border rounded-lg px-3 py-2 mt-1 focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
                 @error('discount')
                     <p class="text-red-500 text-xs mt-1 font-semibold">{{ $message }}</p>
@@ -65,19 +65,25 @@
             <div class="border rounded-lg overflow-hidden shadow-sm bg-gray-50">
                 <div class="max-h-80 overflow-y-auto divide-y divide-gray-200">
                     @foreach ($products as $i => $p)
+                        @php
+                            // Validation fail hone ke baad purane selected data ko track karne ka tarika
+                            $oldItem = collect(old('items', []))->firstWhere('product_id', $p->id);
+                            $isChecked = !empty($oldItem);
+                            $oldQty = $isChecked ? ($oldItem['quantity'] ?? 1) : 1;
+                        @endphp
                         <label class="flex items-center justify-between p-3.5 hover:bg-indigo-50/30 cursor-pointer bg-white transition select-none">
                             <span class="flex items-center gap-3">
                                 <input type="checkbox" name="items[{{ $i }}][product_id]" value="{{ $p->id }}" 
                                     class="product-checkbox w-4 h-4 text-indigo-600 rounded border-gray-300 focus:ring-indigo-500"
                                     data-price="{{ $p->effectivePrice() }}"
-                                    {{ is_array(old('items'))->contains('product_id', $p->id) ? 'checked' : '' }}>
+                                    {{ $isChecked ? 'checked' : '' }}>
                                 <span class="text-sm font-medium text-gray-800">{{ $p->name }}</span>
                             </span>
                             <span class="flex items-center gap-6">
                                 <span class="text-xs text-gray-500 font-semibold bg-gray-100 px-2 py-1 rounded">Stock: {{ $p->stock }}</span>
                                 <span class="text-sm font-bold text-gray-700 w-24 text-right" data-raw-price="{{ $p->effectivePrice() }}">{{ number_format($p->effectivePrice()) }} PKR</span>
                                 <span class="text-xs text-gray-400">Qty:</span>
-                                <input type="number" name="items[{{ $i }}][quantity]" value="{{ old('items.'.$i.'.quantity', 1) }}" min="1"
+                                <input type="number" name="items[{{ $i }}][quantity]" value="{{ $oldQty }}" min="1"
                                     class="product-qty w-16 border rounded-lg px-2 py-1 text-center focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
                             </span>
                         </label>
@@ -100,7 +106,7 @@
 
         <div class="flex items-center justify-between pt-4 border-t">
             <label class="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" name="is_active" value="1" checked class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                <input type="checkbox" name="is_active" value="1" {{ old('is_active', '1') == '1' ? 'checked' : '' }} class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
                 <span class="text-sm font-medium text-gray-700">Active (Visible on storefront)</span>
             </label>
             <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2.5 rounded-lg shadow-sm transition">
@@ -175,7 +181,9 @@
             calculatePrices();
         });
 
-        // Initialize calculation
-        calculatePrices();
+        // Initialize calculation properly when DOM is fully loaded (Fixes old value issue)
+        document.addEventListener('DOMContentLoaded', () => {
+            calculatePrices();
+        });
     </script>
 @endsection
