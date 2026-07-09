@@ -126,7 +126,7 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-[repeat(3,auto)] justify-between">
+            <div class="grid-3">
                 @foreach ($bestSellers as $index => $product)
                     @php
                         $badgeClass = 'badge';
@@ -169,7 +169,7 @@
                 </a>
             </div>
 
-            <div class="grid grid-cols-[repeat(3,auto)] justify-between">
+            <div class="grid-3">
                 @foreach ($categories as $category)
                     @include('partials.category-card', ['category' => $category])
                 @endforeach
