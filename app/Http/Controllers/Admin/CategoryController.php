@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\Cache;
 class CategoryController extends Controller
 {
     public function index()
@@ -66,7 +66,7 @@ class CategoryController extends Controller
         }
 
         Category::create($data);
-
+        Cache::forget('menu.main_categories');
         return redirect()->route('admin.categories.index')->with('success', 'Category created successfully.');
     }
 
@@ -118,6 +118,7 @@ class CategoryController extends Controller
 
         $category->update($data);
 
+        Cache::forget('menu.main_categories');
         return redirect()
             ->route('admin.categories.index')
             ->with('success', 'Category updated successfully.');
@@ -130,6 +131,7 @@ class CategoryController extends Controller
         }
 
         $category->delete();
+        Cache::forget('menu.main_categories');
         return back()->with('success', 'Category deleted.');
     }
 
@@ -158,7 +160,7 @@ class CategoryController extends Controller
             }
             $cat->delete();
         }
-
+        Cache::forget('menu.main_categories');
         return back()->with('success', count($categories) . ' category/ies deleted.');
     }
 

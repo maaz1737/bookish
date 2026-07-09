@@ -111,7 +111,7 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/shop-by-school', [SchoolCatalogController::class, 'index'])->name('shop-by-school');
 Route::get('/shop-by-category', [CategoryCatalogController::class, 'index'])->name('shop-by-category');
 Route::get('/returns-refunds', [PolicyController::class, 'index'])->name('returns-refunds');
-Route::get('/faqs', [FaqController::class, 'index'])->name('faqs'); 
+Route::get('/faqs', [FaqController::class, 'index'])->name('faqs');
 
 
 

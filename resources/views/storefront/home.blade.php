@@ -10,59 +10,59 @@
                 <div class="swiper-wrapper">
                     @foreach ($heroBanners as $banner)
                         <div class="swiper-slide">
-                                <div class="grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
-                                    <div class="z-10">
-                                        <span
-                                            class="text-[#ff7a00] text-sm font-bold tracking-wider uppercase flex items-center gap-1.5">
-                                            <i class="fa-solid fa-star"></i> Welcome to Bookish & Beyond
-                                        </span>
-                                        <h2 class="text-3xl md:text-5xl font-extrabold text-[#001F54] mt-3 leading-tight font-sans">
-                                            Everything Your Family Needs, <br>
-                                            <span class="text-[#ff7a00]">In One Place.</span>
-                                        </h2>
-                                        <p class="mt-4 text-slate-600 max-w-md text-sm md:text-base leading-relaxed">
-                                            Books, Uniforms, Bags, Attar & Thoughtful Gifts – All Handpicked for Quality You Can
-                                            Trust.
-                                        </p>
-                                        <div class="flex gap-4 mt-6">
-                                            <a href="#school-section"
-                                                class="px-6 py-3 bg-navy-800 text-white rounded-xl shadow-md hover:shadow-lg">
-                                                Shop by School <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
-                                            </a>
-                                            <a href="#category-section"
-                                                class="inline-flex items-center justify-center border-2 border-[#001F54] text-[#001F54] hover:bg-[#001F54] hover:text-white px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200">
-                                                Shop All Categories
-                                            </a>
-                                        </div>
-
-                                        {{-- Hero Bottom Trust Strip --}}
-                                        <div class="flex flex-wrap gap-x-6 gap-y-2 mt-10 text-xs md:text-sm text-slate-700">
-                                            <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-shield-halved text-[#001F54]"></i>
-                                                <span><b>100% Original</b></span>
-                                            </div>
-                                            <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-truck text-[#001F54]"></i>
-                                                <span><b>Fast Delivery</b></span>
-                                            </div>
-                                            <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-rotate-left text-[#001F54]"></i>
-                                                <span><b>Easy Returns</b></span>
-                                            </div>
-                                            <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-lock text-[#001F54]"></i>
-                                                <span><b>Secure Payments</b></span>
-                                            </div>
-                                        </div>
+                            <div class="grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
+                                <div class="z-10">
+                                    <span
+                                        class="text-[#ff7a00] text-sm font-bold tracking-wider uppercase flex items-center gap-1.5">
+                                        <i class="fa-solid fa-star"></i> Welcome to Bookish & Beyond
+                                    </span>
+                                    <h2 class="text-3xl md:text-5xl font-extrabold text-[#001F54] mt-3 leading-tight font-sans">
+                                        Everything Your Family Needs, <br>
+                                        <span class="text-[#ff7a00]">In One Place.</span>
+                                    </h2>
+                                    <p class="mt-4 text-slate-600 max-w-md text-sm md:text-base leading-relaxed">
+                                        Books, Uniforms, Bags, Attar & Thoughtful Gifts – All Handpicked for Quality You Can
+                                        Trust.
+                                    </p>
+                                    <div class="flex gap-4 mt-6">
+                                        <a href="#school-section"
+                                            class="px-6 py-3 bg-navy-800 text-white rounded-xl shadow-md hover:shadow-lg">
+                                            Shop by School <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                                        </a>
+                                        <a href="#category-section"
+                                            class="inline-flex items-center justify-center border-2 border-[#001F54] text-[#001F54] hover:bg-[#001F54] hover:text-white px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200">
+                                            Shop All Categories
+                                        </a>
                                     </div>
-                                    <div class="flex justify-center md:justify-end">
-                                        <div class="w-full max-w-[480px] aspect-[5/4] flex items-center justify-center p-4">
-                                            <img class="max-h-full max-w-full object-contain"
-                                                src="{{ asset('storage/' . $banner->image_path) }}"
-                                                alt="Everything Your Family Needs, In One Place" loading="eager">
+
+                                    {{-- Hero Bottom Trust Strip --}}
+                                    <div class="flex flex-wrap gap-x-6 gap-y-2 mt-10 text-xs md:text-sm text-slate-700">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-shield-halved text-[#001F54]"></i>
+                                            <span><b>100% Original</b></span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-truck text-[#001F54]"></i>
+                                            <span><b>Fast Delivery</b></span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-rotate-left text-[#001F54]"></i>
+                                            <span><b>Easy Returns</b></span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-lock text-[#001F54]"></i>
+                                            <span><b>Secure Payments</b></span>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="flex justify-center md:justify-end">
+                                    <div class="w-full max-w-[480px] aspect-[5/4] flex items-center justify-center p-4">
+                                        <img class="max-h-full max-w-full object-contain"
+                                            src="{{ asset('storage/' . $banner->image_path) }}"
+                                            alt="Everything Your Family Needs, In One Place" loading="eager">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -126,7 +126,7 @@
                 </a>
             </div>
 
-            <div class="grid-3">
+            <div class="grid grid-cols-[repeat(3,auto)] justify-between">
                 @foreach ($bestSellers as $index => $product)
                     @php
                         $badgeClass = 'badge';
@@ -134,10 +134,8 @@
                             $pct = round((($product->price - $product->discount_price) / $product->price) * 100);
                             $badgeText = "Save {$pct}%";
                             $badgeClass = 'badge badge-orange';
-                        } elseif ($product->is_best_seller) {
-                            $badgeText = 'Best Seller';
                         } else {
-                            $badgeText = $index % 2 === 0 ? 'New Arrival' : 'Top Trend';
+                            $badgeText = 'Best Seller';
                         }
 
                         $inWishlist = false;
@@ -158,48 +156,32 @@
 
 
     {{-- ===== SHOP BY CATEGORY ===== --}}
-    <section class="mb-12" id="category-section">
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
-                <i class="fa-solid fa-layer-group text-[#001F54]"></i> Shop by Category
-            </h2>
-            <a href="{{ route('categories.index') }}"
-                class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
-                View All Categories <i class="fa-solid fa-arrow-right text-xs"></i>
-            </a>
-        </div>
 
-        <div class="grid-4">
-            @foreach ($categories as $category)
-                <div class="category-card card flex flex-col justify-between h-full group filter-con">
-                    <div>
-                        <div class="card-img-box">
-                            @if ($category->image ?? false)
-                                <img src="{{ url('storage/' . $category->image) }}" alt="{{ $category->name }} category"
-                                    class="card-img-cover" loading="lazy" />
-                            @else
-                                <i class="fa-solid fa-book text-4xl text-[#001F54] opacity-30"></i>
-                            @endif
-                        </div>
-                        <div class="p-5 pb-2">
-                            <h3 class="text-base font-bold text-[#001F54] text-center filter-name">
-                                {{ $category->name }}
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="px-5 pb-5">
-                        <a href="{{ route('category.show', $category->slug) }}" class="primary-btn block">
-                            Explore Now →
-                        </a>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </section>
+    @if($categories->count())
+        <section class="mb-12" id="category-section">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-[#001F54]"></i> Shop by Category
+                </h2>
+                <a href="{{ route('categories.index') }}"
+                    class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
+                    View All Categories <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-[repeat(3,auto)] justify-between">
+                @foreach ($categories as $category)
+                    @include('partials.category-card', ['category' => $category])
+                @endforeach
+            </div>
+        </section>
+
+
+    @endif
 
 
     {{-- ===== SMART SAVER BUNDLES ===== --}}
-    @if (isset($bundles) && $bundles->count())
+    @if ($bundles->count())
         <section class="mb-12">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
@@ -280,9 +262,9 @@
                                     @foreach ($prodImages as $prod)
                                         <div
                                             class="flex items-center justify-center p-3 border-white/60
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $loop->index === 0 ? 'border-r border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $loop->index === 1 ? 'border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $loop->index === 2 ? 'border-r' : '' }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $loop->index === 0 ? 'border-r border-b' : '' }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $loop->index === 1 ? 'border-b' : '' }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $loop->index === 2 ? 'border-r' : '' }}">
                                             <img src="{{ $imgSrc($prod->images[0]) }}"
                                                 class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 alt="{{ $prod->name }}" loading="lazy" />
