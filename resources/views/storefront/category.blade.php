@@ -152,7 +152,7 @@
                 <h2 class="text-2xl font-bold text-[#001F54] mb-2">No Products Yet</h2>
                 <p class="text-slate-500 max-w-md mx-auto">Products for this category haven't been added yet. Please check
                     back soon.</p>
-                <a href="{{ route('products.index') }}" class="primary-btn mt-6 inline-flex">Browse All Products</a>
+                <a href="{{ route('products.index') }}" class="bg-navy-800 mt-6 text-white rounded-xl px-4 py-2 inline-flex">Browse All Products</a>
             </div>
         @endif
     @endif
