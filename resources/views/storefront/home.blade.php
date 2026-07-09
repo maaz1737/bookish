@@ -10,9 +10,6 @@
                 <div class="swiper-wrapper">
                     @foreach ($heroBanners as $banner)
                         <div class="swiper-slide">
-                            @if ($banner->link)
-                                <a href="{{ $banner->link }}" class="block">
-                            @endif
                                 <div class="grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
                                     <div class="z-10">
                                         <span
@@ -66,9 +63,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                @if ($banner->link)
-                                    </a>
-                                @endif
                         </div>
                     @endforeach
                 </div>
