@@ -208,21 +208,6 @@ class ProductController extends Controller
         ];
     }
 
-    // private function storeImages(Request $request): array
-    // {
-    //     if (!Storage::disk('public')->exists('products')) {
-    //         Storage::disk('public')->makeDirectory('products');
-    //     }
-
-    //     $paths = [];
-
-    //     foreach ((array) $request->file('images', []) as $file) {
-    //         $paths[] = $file->store('products', 'public');
-    //     }
-    //     return $paths;
-    // }
-
-
     private function storeImages(Request $request): array
     {
         if (!Storage::disk('public')->exists('products')) {
@@ -231,36 +216,51 @@ class ProductController extends Controller
 
         $paths = [];
 
-        foreach ($request->file('images', []) as $file) {
-
-            // Read uploaded image
-            $image = Image::read($file);
-
-            if ($image->width() < 380 || $image->height() < 260) {
-                $image->scale(width: 380, height: 260);
-            } else {
-                $image->scaleDown(width: 380, height: 380);
-            }
-
-            $canvas = Image::create(380, 260)->fill('#ffffff');
-            $canvas->place($image, 'center');
-
-            $filename = Str::uuid() . '.webp';
-
-            // Encode image
-            $encoded = $canvas->encode(new WebpEncoder(quality: 90));
-
-            // Save to storage/app/public/products
-            Storage::disk('public')->put(
-                "products/{$filename}",
-                (string) $encoded
-            );
-
-            $paths[] = "products/{$filename}";
+        foreach ((array) $request->file('images', []) as $file) {
+            $paths[] = $file->store('products', 'public');
         }
-
         return $paths;
     }
+
+
+    // private function storeImages(Request $request): array
+    // {
+    //     if (!Storage::disk('public')->exists('products')) {
+    //         Storage::disk('public')->makeDirectory('products');
+    //     }
+
+    //     $paths = [];
+
+    //     foreach ($request->file('images', []) as $file) {
+
+    //         // Read uploaded image
+    //         $image = Image::read($file);
+
+    //         if ($image->width() < 380 || $image->height() < 260) {
+    //             $image->scale(width: 380, height: 260);
+    //         } else {
+    //             $image->scaleDown(width: 380, height: 380);
+    //         }
+
+    //         $canvas = Image::create(380, 260)->fill('#ffffff');
+    //         $canvas->place($image, 'center');
+
+    //         $filename = Str::uuid() . '.webp';
+
+    //         // Encode image
+    //         $encoded = $canvas->encode(new WebpEncoder(quality: 90));
+
+    //         // Save to storage/app/public/products
+    //         Storage::disk('public')->put(
+    //             "products/{$filename}",
+    //             (string) $encoded
+    //         );
+
+    //         $paths[] = "products/{$filename}";
+    //     }
+
+    //     return $paths;
+    // }
 
     public function bulkUploadShow()
     {
