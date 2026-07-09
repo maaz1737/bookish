@@ -5,10 +5,7 @@
 
     <div class="bg-white rounded-lg shadow p-8 grid sm:grid-cols-2 gap-8">
         <div class="rounded h-72 flex items-center justify-center text-gray-400">
-            <img src="{{ app()->environment('local')
-                ? asset('storage/' . $product->images[0])
-                : asset('storage/' . $product->images[0]) }}"
-                alt="Image Not found" class="w-full h-full object-cover block">
+            <img src="{{ $product->imageUrl() }}" alt="Image Not found" class="w-full h-full object-cover block">
         </div>
         <div>
             <span class="text-xs uppercase tracking-wide text-gray-400">{{ $product->category->name }}</span>
@@ -31,8 +28,7 @@
             <form method="POST" action="{{ route('cart.addProduct', $product) }}" class="mt-6 flex gap-3">
                 @csrf
                 <input type="number" name="quantity" value="1" min="1" class="w-20 border rounded px-3 py-2">
-                <button class="bg-indigo-600 text-white px-6 py-2 rounded font-medium"
-                    {{ $product->stock <= 0 ? 'disabled' : '' }}>
+                <button class="bg-indigo-600 text-white px-6 py-2 rounded font-medium" {{ $product->stock <= 0 ? 'disabled' : '' }}>
                     {{ $product->stock > 0 ? 'Add to cart' : 'Out of stock' }}
                 </button>
             </form>
