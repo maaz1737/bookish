@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Storefront;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\Bundle;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\School;
@@ -30,7 +31,7 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        $bundles = \App\Models\Bundle::where('is_active', true)
+        $bundles = Bundle::where('is_active', true)
             ->with(['products', 'schoolClass'])
             ->latest()
             ->take(4)
