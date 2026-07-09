@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     {{-- ===== HERO BANNER ===== --}}
     @if ($heroBanners->count() > 0)
         <section class="rounded-[24px] overflow-hidden bg-gradient-to-br from-navy-50 to-slate-100 mb-10 relative">
@@ -27,7 +28,8 @@
                                             Trust.
                                         </p>
                                         <div class="flex gap-4 mt-6">
-                                            <a href="#school-section" class="primary-btn px-6 py-3 shadow-md hover:shadow-lg">
+                                            <a href="#school-section"
+                                                class="px-6 py-3 bg-navy-800 text-white rounded-xl shadow-md hover:shadow-lg">
                                                 Shop by School <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
                                             </a>
                                             <a href="#category-section"
@@ -130,7 +132,7 @@
                 </a>
             </div>
 
-            <div class="grid-4">
+            <div class="grid-3">
                 @foreach ($bestSellers as $index => $product)
                     @php
                         $badgeClass = 'badge';
@@ -152,57 +154,9 @@
                         }
                     @endphp
 
-                    <div class="product-card card flex flex-col relative group h-full filter-con">
 
-                        <!-- Badge -->
-                        <span class="{{ $badgeClass }} absolute top-4 left-4 z-10 shadow-sm">{{ $badgeText }}</span>
+                    @include('partials.product-card', ['product' => $product])
 
-                        <!-- Wishlist -->
-                        <button
-                            class="wishlist-toggle-btn absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center z-10 transition-colors {{ $inWishlist ? 'text-rose-500' : 'text-slate-400' }} hover:text-rose-500"
-                            data-product-id="{{ $product->id }}" data-url="{{ route('wishlist.toggle', $product) }}"
-                            aria-label="Toggle {{ $product->name }} wishlist">
-                            <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
-                        </button>
-
-                        <!-- Product Image -->
-                        <a href="{{ route('product.show', $product) }}" class="block">
-                            <div class="card-img-box">
-                                <img class="card-img-contain" src="{{  $product->imageUrl() }}" alt="{{ $product->name }}"
-                                    loading="lazy" />
-                            </div>
-                        </a>
-
-                        <!-- Name & Price -->
-                        <div class="p-5 flex flex-col flex-grow justify-between">
-                            <div>
-                                <a href="{{ route('product.show', $product) }}">
-                                    <h3
-                                        class="text-sm font-bold text-[#001F54] hover:text-[#003B7A] transition-colors leading-tight line-clamp-2 mb-3 filter-name">
-                                        {{ $product->name }}
-                                    </h3>
-                                </a>
-                                <div class="price-row mb-4">
-                                    <span class="text-lg font-bold text-[#001F54]">
-                                        PKR {{ number_format($product->discount_price ?? $product->price) }}
-                                    </span>
-                                    @if ($product->discount_price && $product->price)
-                                        <span class="text-xs text-slate-400 line-through ml-2">
-                                            PKR {{ number_format($product->price) }}
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <!-- Add to Cart -->
-                            <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form w-full">
-                                @csrf
-                                <button type="submit" class="primary-btn w-full justify-center">
-                                    <i class="fa-solid fa-cart-shopping"></i> Add to Cart
-                                </button>
-                            </form>
-                        </div>
-                    </div>
                 @endforeach
             </div>
         </section>
@@ -240,7 +194,7 @@
                         </div>
                     </div>
                     <div class="px-5 pb-5">
-                        <a href="{{ route('category.show', $category->slug) }}" class="primary-btn w-full justify-center">
+                        <a href="{{ route('category.show', $category->slug) }}" class="primary-btn block">
                             Explore Now →
                         </a>
                     </div>
@@ -332,9 +286,9 @@
                                     @foreach ($prodImages as $prod)
                                         <div
                                             class="flex items-center justify-center p-3 border-white/60
-                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 0 ? 'border-r border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 1 ? 'border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                        {{ $loop->index === 2 ? 'border-r' : '' }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $loop->index === 0 ? 'border-r border-b' : '' }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $loop->index === 1 ? 'border-b' : '' }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $loop->index === 2 ? 'border-r' : '' }}">
                                             <img src="{{ $imgSrc($prod->images[0]) }}"
                                                 class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 alt="{{ $prod->name }}" loading="lazy" />

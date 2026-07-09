@@ -76,20 +76,19 @@
         .primary-btn {
             background: #001F54;
             color: #ffffff;
-            border-radius: 12px;
+            border-radius: 8px;
+            font-size: 16px;
             border: none;
-            font-weight: 600;
-            padding: 12px 20px;
+            font-weight: 500;
+            padding: 8px 0px;
             transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
             cursor: pointer;
+            text-align: center;
+            width: 100%;
         }
 
         .primary-btn:hover {
-            background: #003B7A;
+            background: #000654;
         }
 
         .primary-btn:focus {

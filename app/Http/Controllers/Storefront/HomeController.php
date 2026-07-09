@@ -27,7 +27,7 @@ class HomeController extends Controller
         $bestSellers = Product::active()
             ->where('is_best_seller', true)
             ->latest()
-            ->take(4)
+            ->take(3)
             ->get();
 
         $bundles = \App\Models\Bundle::where('is_active', true)
