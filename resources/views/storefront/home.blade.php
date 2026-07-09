@@ -193,7 +193,7 @@
                 </a>
             </div>
 
-            <div class="grid-4">
+            <div class="grid-3">
                 @foreach ($bundles as $bundle)
                     @php
                         $discount = (float) ($bundle->discount ?? 0);
@@ -203,7 +203,7 @@
                         $imgSrc = fn($path) => url('storage/' . $path);
                     @endphp
 
-                    <div class="bundle-card card flex flex-col relative group h-full filter-con">
+                    <div class="bundle-card card product-card filter-con">
 
                         <!-- Badges -->
                         @if ($discount > 0)
@@ -219,8 +219,7 @@
                         @endif
 
                         <!-- Bundle Collage Image Area -->
-                        <div
-                            class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50 h-[200px] w-full">
+                        <div class="relative image-container">
                             @if ($imgCount === 0)
                                 <div class="w-full h-full flex items-center justify-center opacity-30">
                                     <i class="fa-solid fa-boxes-stacked text-5xl text-[#001F54]"></i>
@@ -261,10 +260,7 @@
                                 <div class="grid grid-cols-2 grid-rows-2 h-full">
                                     @foreach ($prodImages as $prod)
                                         <div
-                                            class="flex items-center justify-center p-3 border-white/60
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $loop->index === 0 ? 'border-r border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $loop->index === 1 ? 'border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $loop->index === 2 ? 'border-r' : '' }}">
+                                            class="flex items-center justify-center p-3 border-white/60 {{ $loop->index === 0 ? 'border-r border-b' : '' }} {{ $loop->index === 1 ? 'border-b' : '' }} {{ $loop->index === 2 ? 'border-r' : '' }}">
                                             <img src="{{ $imgSrc($prod->images[0]) }}"
                                                 class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 alt="{{ $prod->name }}" loading="lazy" />
@@ -275,30 +271,30 @@
                         </div>
 
                         <!-- Bundle Card Content -->
-                        <div class="p-5 flex flex-col flex-grow justify-between">
+                        <div class="product-info">
                             <div>
-                                <h3 class="text-[#001F54] font-bold text-base leading-tight mb-1 filter-name">
-                                    {{ $bundle->name }}
+                                <h3 class="filter-name">
+                                    {{ ucfirst($bundle->name) }}
                                 </h3>
-                                <p class="text-xs text-slate-400 mb-3 line-clamp-1">
+                                <p class="text-xs text-slate-400 pb-1 line-clamp-1">
                                     {{ $products->pluck('name')->join(' + ') }}
                                 </p>
                             </div>
-                            <div class="mb-4">
-                                <span class="text-lg font-bold text-[#001F54]">
+                            <div class="mb-2 amount">
+                                <span class="">
                                     PKR {{ number_format($bundle->final_price) }}
                                 </span>
                                 @if ($bundle->total_price > 0 && $bundle->total_price != $bundle->final_price)
-                                    <span class="text-xs text-slate-400 line-through ml-2">
+                                    <span class="prev-amount">
                                         PKR {{ number_format($bundle->total_price) }}
                                     </span>
                                 @endif
                             </div>
 
-                            <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class="w-full mt-auto">
+                            <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class="cart-form w-full mt-auto">
                                 @csrf
-                                <button type="submit" class="primary-btn w-full justify-center">
-                                    <i class="fa-solid fa-cart-shopping text-sm"></i> Add Bundle to Cart
+                                <button type="submit" class="primary-btn">
+                                    <i class="fa-solid fa-cart-shopping text-sm"></i> Add to Cart
                                 </button>
                             </form>
                         </div>
