@@ -83,13 +83,12 @@
             </div>
 
             @if ($heroImage)
-                <div class="md:col-span-5 flex justify-center"
-                    style="
-                    background: url({{ url('storage/' . $heroImage) }});
-                    background-repeat: no-repeat;
-                    background-size: contain;
-                    height: 100%;
-                    background-position: center;">
+                <div class="md:col-span-5 flex justify-center" style="
+                                                            background: url({{ url('storage/' . $heroImage) }});
+                                                            background-repeat: no-repeat;
+                                                            background-size: contain;
+                                                            height: 100%;
+                                                            background-position: center;">
                     {{-- <img src="{{ url('storage/' . $heroImage) }}" alt="{{ $heroName }}"
                         class="max-h-64 md:max-h-80 object-contain drop-shadow-xl"> --}}
                 </div>
@@ -124,7 +123,24 @@
                             {{-- Product Grid --}}
                             <div class="grid-4">
                                 @foreach ($sub->products as $product)
-                                    @include('storefront.partials.product-card', ['product' => $product])
+                                    @php
+                                        $badgeClass = 'badge';
+                                        if ($product->discount_price && $product->price > 0) {
+                                            $pct = round((($product->price - $product->discount_price) / $product->price) * 100);
+                                            $badgeText = "Save {$pct}%";
+                                            $badgeClass = 'badge badge-orange';
+                                        } else {
+                                            $badgeText = 'Best Seller';
+                                        }
+
+                                        $inWishlist = false;
+                                        if (auth()->check()) {
+                                            $inWishlist = \App\Models\Wishlist::where('user_id', auth()->id())->where('product_id', $product->id)->exists();
+                                        } else {
+                                            $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())->where('product_id', $product->id)->exists();
+                                        }
+                                    @endphp
+                                    @include('partials.product-card', ['product' => $product])
                                 @endforeach
                             </div>
                         </section>
