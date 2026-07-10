@@ -57,8 +57,6 @@
             @endphp
 
             <div class="md:col-span-7 flex flex-col justify-center py-12">
-
-
                 {{-- Heading --}}
                 <h1 class="text-4xl md:text-5xl font-extrabold text-[#001F54] leading-tight tracking-tight">
                     {{ $heroName }}
@@ -83,12 +81,13 @@
             </div>
 
             @if ($heroImage)
-                <div class="md:col-span-5 flex justify-center" style="
-                                                            background: url({{ url('storage/' . $heroImage) }});
-                                                            background-repeat: no-repeat;
-                                                            background-size: contain;
-                                                            height: 100%;
-                                                            background-position: center;">
+                <div class="md:col-span-5 flex justify-center"
+                    style="
+                                                                                                                                                                                                                                                        background: url({{ url('storage/' . $heroImage) }});
+                                                                                                                                                                                                                                                        background-repeat: no-repeat;
+                                                                                                                                                                                                                                                        background-size: contain;
+                                                                                                                                                                                                                                                        height: 100%;
+                                                                                                                                                                                                                                                        background-position: center;">
                     {{-- <img src="{{ url('storage/' . $heroImage) }}" alt="{{ $heroName }}"
                         class="max-h-64 md:max-h-80 object-contain drop-shadow-xl"> --}}
                 </div>
@@ -99,13 +98,15 @@
     {{-- =====================================================
     PARENT CATEGORY PAGE — subcategory sections with products
     ====================================================== --}}
+
+
+
     @if ($isParentPage)
         @php $hasAnyProduct = false; @endphp
-
         @if ($category->children->count())
             <div class="space-y-14" id="products">
                 @foreach ($category->children as $sub)
-                    @if ($sub->products->count())
+                    @if ($sub->childProducts->count())
                         @php $hasAnyProduct = true; @endphp
                         <section>
                             {{-- Section Heading --}}
@@ -122,7 +123,7 @@
 
                             {{-- Product Grid --}}
                             <div class="grid-4">
-                                @foreach ($sub->products as $product)
+                                @foreach ($sub->childProducts as $product)
                                     @php
                                         $badgeClass = 'badge';
                                         if ($product->discount_price && $product->price > 0) {
@@ -233,7 +234,7 @@
                 <h2 class="text-2xl font-bold text-[#001F54] mb-2">No Products Found</h2>
                 <p class="text-slate-500 max-w-md mx-auto">No products have been added to this category yet. Please check
                     back later.</p>
-                <a href="{{ route('products.index') }}" class="primary-btn mt-6 inline-flex">Browse All Products</a>
+                <a href="{{ route('products.index') }}" class="primary-btn px-3 inline-block mt-3">Browse All Products</a>
             </div>
         @endif
     @endif

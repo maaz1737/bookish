@@ -20,22 +20,19 @@ class ProductController extends Controller
     {
         $category = Category::whereNull('parent_id')
             ->where('slug', $slug)
-            ->with('products')
             ->where('is_active', true)
             ->with([
                 'products' => function ($q) {
-                    $q->where('is_active', true)
-                        ->with('variants')
-                        ->latest();
+                    $q->where('is_active', true)->latest();
                 },
                 'children' => function ($q) {
                     $q->where('is_active', true)
                         ->with([
-                            'products' => function ($pq) {
+                            'childProducts' => function ($pq) {
                                 $pq->where('is_active', true)
                                     ->with('variants')
                                     ->latest()
-                                    ->limit(4);
+                                    ->take(4);
                             }
                         ]);
                 }
@@ -51,7 +48,7 @@ class ProductController extends Controller
                 ->first();
 
             if ($subcategory) {
-                $products = Product::where('category_id', $subcategory->id)
+                $products = Product::where('sub_category_id', $subcategory->id)
                     ->where('is_active', true)
                     ->with('variants')
                     ->latest()
@@ -67,14 +64,12 @@ class ProductController extends Controller
             abort(404);
         }
 
-
         // Collect direct products under the parent category
         $directProducts = Product::where('category_id', $category->id)
             ->where('is_active', true)
+            ->whereNull('sub_category_id')
             ->with('variants')
             ->with('category')
-            ->latest()
-            ->limit(4)
             ->get();
 
         return view('storefront.category', compact('category', 'directProducts'));
