@@ -21,51 +21,43 @@
 
     <!-- Wishlist Grid -->
     @if ($wishlistItems->count() > 0)
-        <div class="grid-4" id="wishlist-grid">
+        <div class="grid-3" id="wishlist-grid">
             @foreach ($wishlistItems as $item)
                 @php
                     $product = $item->product;
                 @endphp
                 @if ($product)
-                    <div class="product-card card flex flex-col justify-between relative group h-full" id="wishlist-item-{{ $product->id }}">
-                        
+                    <div class="product-card card relative group" id="wishlist-item-{{ $product->id }}">
                         <!-- Remove button -->
-                        <button class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center text-rose-500 hover:bg-rose-50 z-10 transition-colors remove-wishlist-btn" 
-                            data-product-id="{{ $product->id }}" 
-                            data-url="{{ route('wishlist.remove', $product) }}"
+                        <button
+                            class="absolute top-4 right-4 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center text-rose-500 hover:bg-rose-50 z-10 transition-colors remove-wishlist-btn"
+                            data-product-id="{{ $product->id }}" data-url="{{ route('wishlist.remove', $product) }}"
                             aria-label="Remove {{ $product->name }} from wishlist">
                             <i class="fa-solid fa-trash-can"></i>
                         </button>
 
                         <!-- Product Image -->
                         <a href="{{ route('product.show', $product) }}" class="block">
-                            <div class="card-img-box">
-                                @if (isset($product->images) && count($product->images) > 0)
-                                    <img class="card-img-contain"
-                                        src="{{ url('storage/' . $product->images[0]) }}"
-                                        alt="{{ $product->name }}" loading="lazy" />
-                                @else
-                                    <div class="w-full h-full flex items-center justify-center text-gray-300 text-sm">
-                                        <i class="fa-solid fa-image text-4xl"></i>
-                                    </div>
-                                @endif
+                            <div class="image-container" style="background:url({{ $product->imageUrl() }})">
                             </div>
                         </a>
 
                         <!-- Name & Price & Form inside a padded area -->
-                        <div class="p-5 flex-grow flex flex-col justify-between">
+                        <div class="product-info">
                             <div>
                                 <a href="{{ route('product.show', $product) }}" class="hover:no-underline">
-                                    <h3 class="text-sm font-bold text-[#001F54] hover:text-[#003B7A] transition-colors leading-tight line-clamp-2 mb-2">
+                                    <h3 class="">
                                         {{ $product->name }}
                                     </h3>
                                 </a>
                             </div>
 
-                            <div class="price-row mb-4">
-                                <span class="price text-lg font-bold text-[#001F54]">PKR {{ number_format($product->discount_price ?? $product->price) }}</span>
+                            <div class="price-row amount">
+                                <span class="price">PKR
+                                    {{ number_format($product->discount_price ?? $product->price) }}</span>
                                 @if ($product->discount_price && $product->price)
-                                    <span class="old-price text-xs text-slate-400 line-through ml-2">PKR {{ number_format($product->price) }}</span>
+                                    <span class="old-price prev-amount">PKR
+                                        {{ number_format($product->price) }}</span>
                                 @endif
                             </div>
 
@@ -86,7 +78,7 @@
             <div class="text-6xl mb-4">❤️</div>
             <h2 class="text-2xl font-bold text-[#001F54] mb-2">Your wishlist is empty</h2>
             <p class="text-slate-500 mb-6">Explore our collections and add products you love to your wishlist.</p>
-            <a href="{{ route('products.index') }}" class="primary-btn px-6 py-3 inline-flex">
+            <a href="{{ route('products.index') }}" class="primary-btn py-2 px-4">
                 Start Shopping
             </a>
         </div>
@@ -94,8 +86,8 @@
 
     <!-- Ajax Removal Handling -->
     <script>
-        $(document).ready(function() {
-            $('.remove-wishlist-btn').on('click', function(e) {
+        $(document).ready(function () {
+            $('.remove-wishlist-btn').on('click', function (e) {
                 e.preventDefault();
                 var btn = $(this);
                 var productId = btn.data('product-id');
@@ -108,24 +100,24 @@
                         data: {
                             _token: '{{ csrf_token() }}'
                         },
-                        success: function(response) {
+                        success: function (response) {
                             if (response.success) {
                                 // Remove item from grid
-                                $('#wishlist-item-' + productId).fadeOut(300, function() {
+                                $('#wishlist-item-' + productId).fadeOut(300, function () {
                                     $(this).remove();
-                                    
+
                                     // If no items left, show empty state message
                                     if ($('#wishlist-grid').children().length === 0) {
                                         $('#wishlist-grid').replaceWith(`
-                                            <div class="bg-white rounded-[24px] shadow-sm p-12 text-center border border-slate-200">
-                                                <div class="text-6xl mb-4">❤️</div>
-                                                <h2 class="text-2xl font-bold text-[#001F54] mb-2">Your wishlist is empty</h2>
-                                                <p class="text-slate-500 mb-6">Explore our collections and add products you love to your wishlist.</p>
-                                                <a href="{{ route('products.index') }}" class="primary-btn px-6 py-3 inline-flex">
-                                                    Start Shopping
-                                                </a>
-                                            </div>
-                                        `);
+                                                                                                                                <div class="bg-white rounded-[24px] shadow-sm p-12 text-center border border-slate-200">
+                                                                                                                                    <div class="text-6xl mb-4">❤️</div>
+                                                                                                                                    <h2 class="text-2xl font-bold text-[#001F54] mb-2">Your wishlist is empty</h2>
+                                                                                                                                    <p class="text-slate-500 mb-6">Explore our collections and add products you love to your wishlist.</p>
+                                                                                                                                    <a href="{{ route('products.index') }}" class="primary-btn px-6 py-3 inline-flex">
+                                                                                                                                        Start Shopping
+                                                                                                                                    </a>
+                                                                                                                                </div>
+                                                                                                                            `);
                                     }
                                 });
 
@@ -140,7 +132,7 @@
                                 }
                             }
                         },
-                        error: function() {
+                        error: function () {
                             alert('Something went wrong. Please try again.');
                         }
                     });
