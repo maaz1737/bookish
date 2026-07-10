@@ -47,6 +47,16 @@ class Category extends Model
             ->where('show_on_menu', true)
             ->with('childrenShowOnDas');
     }
+
+    public function imageUrl()
+    {
+
+        if ($this->image) {
+            return asset('storage/' . $this->image);
+        }
+        return asset('images/category.png');
+
+    }
 }
 
 

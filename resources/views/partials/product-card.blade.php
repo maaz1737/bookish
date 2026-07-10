@@ -8,24 +8,26 @@
     }
 
     .image-container {
-        aspect-ratio: 4/ 3;
-        /* one shape for every card */
+        /* aspect-ratio: 4/ 3;
         width: 100%;
         overflow: hidden;
-        background: #f4f4f5;
+        background: #f4f4f5; */
+        width: 100%;
+        background-position: center !important;
+        background-repeat: no-repeat !important;
+        background-size: cover !important;
+        height: 260px !important;
 
     }
 
-    .image-container img {
+    /* .image-container img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        /* fills box, crops overflow, never distorts */
         object-position: center;
-        /* override per-image via admin focal point */
         display: block;
 
-    }
+    } */
 
     .product-info {
         color: navy;
@@ -72,8 +74,8 @@
 
     <!-- Image -->
     <a href="{{ route('product.show', $product) }}">
-        <div class="image-container">
-            <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" loading="lazy">
+        <div class="image-container" style="background: url({{ $product->imageUrl()  }});">
+            {{-- <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" loading="lazy"> --}}
         </div>
     </a>
 

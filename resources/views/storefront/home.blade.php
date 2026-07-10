@@ -10,59 +10,59 @@
                 <div class="swiper-wrapper">
                     @foreach ($heroBanners as $banner)
                         <div class="swiper-slide">
-                                <div class="grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
-                                    <div class="z-10">
-                                        <span
-                                            class="text-[#ff7a00] text-sm font-bold tracking-wider uppercase flex items-center gap-1.5">
-                                            <i class="fa-solid fa-star"></i> Welcome to Bookish & Beyond
-                                        </span>
-                                        <h2 class="text-3xl md:text-5xl font-extrabold text-[#001F54] mt-3 leading-tight font-sans">
-                                            Everything Your Family Needs, <br>
-                                            <span class="text-[#ff7a00]">In One Place.</span>
-                                        </h2>
-                                        <p class="mt-4 text-slate-600 max-w-md text-sm md:text-base leading-relaxed">
-                                            Books, Uniforms, Bags, Attar & Thoughtful Gifts – All Handpicked for Quality You Can
-                                            Trust.
-                                        </p>
-                                        <div class="flex gap-4 mt-6">
-                                            <a href="#school-section"
-                                                class="px-6 py-3 bg-navy-800 text-white rounded-xl shadow-md hover:shadow-lg">
-                                                Shop by School <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
-                                            </a>
-                                            <a href="#category-section"
-                                                class="inline-flex items-center justify-center border-2 border-[#001F54] text-[#001F54] hover:bg-[#001F54] hover:text-white px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200">
-                                                Shop All Categories
-                                            </a>
-                                        </div>
-
-                                        {{-- Hero Bottom Trust Strip --}}
-                                        <div class="flex flex-wrap gap-x-6 gap-y-2 mt-10 text-xs md:text-sm text-slate-700">
-                                            <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-shield-halved text-[#001F54]"></i>
-                                                <span><b>100% Original</b></span>
-                                            </div>
-                                            <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-truck text-[#001F54]"></i>
-                                                <span><b>Fast Delivery</b></span>
-                                            </div>
-                                            <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-rotate-left text-[#001F54]"></i>
-                                                <span><b>Easy Returns</b></span>
-                                            </div>
-                                            <div class="flex items-center gap-2">
-                                                <i class="fa-solid fa-lock text-[#001F54]"></i>
-                                                <span><b>Secure Payments</b></span>
-                                            </div>
-                                        </div>
+                            <div class="grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
+                                <div class="z-10">
+                                    <span
+                                        class="text-[#ff7a00] text-sm font-bold tracking-wider uppercase flex items-center gap-1.5">
+                                        <i class="fa-solid fa-star"></i> Welcome to Bookish & Beyond
+                                    </span>
+                                    <h2 class="text-3xl md:text-5xl font-extrabold text-[#001F54] mt-3 leading-tight font-sans">
+                                        Everything Your Family Needs, <br>
+                                        <span class="text-[#ff7a00]">In One Place.</span>
+                                    </h2>
+                                    <p class="mt-4 text-slate-600 max-w-md text-sm md:text-base leading-relaxed">
+                                        Books, Uniforms, Bags, Attar & Thoughtful Gifts – All Handpicked for Quality You Can
+                                        Trust.
+                                    </p>
+                                    <div class="flex gap-4 mt-6">
+                                        <a href="#school-section"
+                                            class="px-6 py-3 bg-navy-800 text-white rounded-xl shadow-md hover:shadow-lg">
+                                            Shop by School <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                                        </a>
+                                        <a href="#category-section"
+                                            class="inline-flex items-center justify-center border-2 border-[#001F54] text-[#001F54] hover:bg-[#001F54] hover:text-white px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200">
+                                            Shop All Categories
+                                        </a>
                                     </div>
-                                    <div class="flex justify-center md:justify-end">
-                                        <div class="w-full max-w-[480px] aspect-[5/4] flex items-center justify-center p-4">
-                                            <img class="max-h-full max-w-full object-contain"
-                                                src="{{ asset('storage/' . $banner->image_path) }}"
-                                                alt="Everything Your Family Needs, In One Place" loading="eager">
+
+                                    {{-- Hero Bottom Trust Strip --}}
+                                    <div class="flex flex-wrap gap-x-6 gap-y-2 mt-10 text-xs md:text-sm text-slate-700">
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-shield-halved text-[#001F54]"></i>
+                                            <span><b>100% Original</b></span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-truck text-[#001F54]"></i>
+                                            <span><b>Fast Delivery</b></span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-rotate-left text-[#001F54]"></i>
+                                            <span><b>Easy Returns</b></span>
+                                        </div>
+                                        <div class="flex items-center gap-2">
+                                            <i class="fa-solid fa-lock text-[#001F54]"></i>
+                                            <span><b>Secure Payments</b></span>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="flex justify-center md:justify-end">
+                                    <div class="w-full max-w-[480px] aspect-[5/4] flex items-center justify-center p-4">
+                                        <img class="max-h-full max-w-full object-contain"
+                                            src="{{ asset('storage/' . $banner->image_path) }}"
+                                            alt="Everything Your Family Needs, In One Place" loading="eager">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -134,10 +134,8 @@
                             $pct = round((($product->price - $product->discount_price) / $product->price) * 100);
                             $badgeText = "Save {$pct}%";
                             $badgeClass = 'badge badge-orange';
-                        } elseif ($product->is_best_seller) {
-                            $badgeText = 'Best Seller';
                         } else {
-                            $badgeText = $index % 2 === 0 ? 'New Arrival' : 'Top Trend';
+                            $badgeText = 'Best Seller';
                         }
 
                         $inWishlist = false;
@@ -158,48 +156,32 @@
 
 
     {{-- ===== SHOP BY CATEGORY ===== --}}
-    <section class="mb-12" id="category-section">
-        <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
-                <i class="fa-solid fa-layer-group text-[#001F54]"></i> Shop by Category
-            </h2>
-            <a href="{{ route('categories.index') }}"
-                class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
-                View All Categories <i class="fa-solid fa-arrow-right text-xs"></i>
-            </a>
-        </div>
 
-        <div class="grid-4">
-            @foreach ($categories as $category)
-                <div class="category-card card flex flex-col justify-between h-full group filter-con">
-                    <div>
-                        <div class="card-img-box">
-                            @if ($category->image ?? false)
-                                <img src="{{ url('storage/' . $category->image) }}" alt="{{ $category->name }} category"
-                                    class="card-img-cover" loading="lazy" />
-                            @else
-                                <i class="fa-solid fa-book text-4xl text-[#001F54] opacity-30"></i>
-                            @endif
-                        </div>
-                        <div class="p-5 pb-2">
-                            <h3 class="text-base font-bold text-[#001F54] text-center filter-name">
-                                {{ $category->name }}
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="px-5 pb-5">
-                        <a href="{{ route('category.show', $category->slug) }}" class="primary-btn block">
-                            Explore Now →
-                        </a>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    </section>
+    @if($categories->count())
+        <section class="mb-12" id="category-section">
+            <div class="flex items-center justify-between mb-6">
+                <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
+                    <i class="fa-solid fa-layer-group text-[#001F54]"></i> Shop by Category
+                </h2>
+                <a href="{{ route('categories.index') }}"
+                    class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
+                    View All Categories <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
+            </div>
+
+            <div class="grid-3">
+                @foreach ($categories as $category)
+                    @include('partials.category-card', ['category' => $category])
+                @endforeach
+            </div>
+        </section>
+
+
+    @endif
 
 
     {{-- ===== SMART SAVER BUNDLES ===== --}}
-    @if (isset($bundles) && $bundles->count())
+    @if ($bundles->count())
         <section class="mb-12">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
@@ -211,7 +193,7 @@
                 </a>
             </div>
 
-            <div class="grid-4">
+            <div class="grid-3">
                 @foreach ($bundles as $bundle)
                     @php
                         $discount = (float) ($bundle->discount ?? 0);
@@ -221,7 +203,7 @@
                         $imgSrc = fn($path) => url('storage/' . $path);
                     @endphp
 
-                    <div class="bundle-card card flex flex-col relative group h-full filter-con">
+                    <div class="relative bundle-card card product-card filter-con">
 
                         <!-- Badges -->
                         @if ($discount > 0)
@@ -237,8 +219,7 @@
                         @endif
 
                         <!-- Bundle Collage Image Area -->
-                        <div
-                            class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50 h-[200px] w-full">
+                        <div class="relative image-container">
                             @if ($imgCount === 0)
                                 <div class="w-full h-full flex items-center justify-center opacity-30">
                                     <i class="fa-solid fa-boxes-stacked text-5xl text-[#001F54]"></i>
@@ -279,10 +260,7 @@
                                 <div class="grid grid-cols-2 grid-rows-2 h-full">
                                     @foreach ($prodImages as $prod)
                                         <div
-                                            class="flex items-center justify-center p-3 border-white/60
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $loop->index === 0 ? 'border-r border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $loop->index === 1 ? 'border-b' : '' }}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                {{ $loop->index === 2 ? 'border-r' : '' }}">
+                                            class="flex items-center justify-center p-3 border-white/60 {{ $loop->index === 0 ? 'border-r border-b' : '' }} {{ $loop->index === 1 ? 'border-b' : '' }} {{ $loop->index === 2 ? 'border-r' : '' }}">
                                             <img src="{{ $imgSrc($prod->images[0]) }}"
                                                 class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                                 alt="{{ $prod->name }}" loading="lazy" />
@@ -293,30 +271,30 @@
                         </div>
 
                         <!-- Bundle Card Content -->
-                        <div class="p-5 flex flex-col flex-grow justify-between">
+                        <div class="product-info">
                             <div>
-                                <h3 class="text-[#001F54] font-bold text-base leading-tight mb-1 filter-name">
-                                    {{ $bundle->name }}
+                                <h3 class="filter-name">
+                                    {{ ucfirst($bundle->name) }}
                                 </h3>
-                                <p class="text-xs text-slate-400 mb-3 line-clamp-1">
+                                <p class="text-xs text-slate-400 pb-1 line-clamp-1">
                                     {{ $products->pluck('name')->join(' + ') }}
                                 </p>
                             </div>
-                            <div class="mb-4">
-                                <span class="text-lg font-bold text-[#001F54]">
+                            <div class="mb-2 amount">
+                                <span class="">
                                     PKR {{ number_format($bundle->final_price) }}
                                 </span>
                                 @if ($bundle->total_price > 0 && $bundle->total_price != $bundle->final_price)
-                                    <span class="text-xs text-slate-400 line-through ml-2">
+                                    <span class="prev-amount">
                                         PKR {{ number_format($bundle->total_price) }}
                                     </span>
                                 @endif
                             </div>
 
-                            <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class="w-full mt-auto">
+                            <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class="cart-form w-full mt-auto">
                                 @csrf
-                                <button type="submit" class="primary-btn w-full justify-center">
-                                    <i class="fa-solid fa-cart-shopping text-sm"></i> Add Bundle to Cart
+                                <button type="submit" class="primary-btn">
+                                    <i class="fa-solid fa-cart-shopping text-sm"></i> Add to Cart
                                 </button>
                             </form>
                         </div>
