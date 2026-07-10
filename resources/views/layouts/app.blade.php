@@ -557,9 +557,8 @@
             <!-- Header -->
             <div class="flex items-center justify-between px-4 py-3 border-b">
                 <h2 class="text-[15px] font-semibold text-gray-800">
-                    Review Your Cart ({{ count($carts['items']) }})
+                    Review Your Cart (<span id="review_cart">{{ count($carts['items']) }}</span>)
                 </h2>
-
                 <button id="closeCart" class="text-gray-500 text-xl leading-none">
                     ×
                 </button>

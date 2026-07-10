@@ -51,7 +51,6 @@ class ProductController extends Controller
             // dd($subcategory->childProducts);
         }
 
-
         return view('storefront.category', compact('category'));
     }
 
