@@ -32,9 +32,8 @@
 
         {{-- Decorative dots (bottom-left) --}}
         {{-- <div class="absolute left-2 bottom-4 grid grid-cols-4 gap-2 opacity-70 pointer-events-none">
-            @for ($i = 0; $i < 12; $i++)
-                <span class="w-1.5 h-1.5 rounded-full bg-[#ff7a00]/40"></span>
-            @endfor
+            @for ($i = 0; $i < 12; $i++) <span class="w-1.5 h-1.5 rounded-full bg-[#ff7a00]/40"></span>
+                @endfor
         </div> --}}
         {{-- Decorative dots (bottom-left) - Triangle Shape --}}
         <div class="absolute left-2 bottom-4 flex flex-col gap-2 opacity-70 pointer-events-none">
@@ -99,7 +98,7 @@
     </section>
 
     {{-- =====================================================
-         PARENT CATEGORY PAGE — subcategory sections with products
+    PARENT CATEGORY PAGE — subcategory sections with products
     ====================================================== --}}
     @if ($isParentPage)
         @php $hasAnyProduct = false; @endphp
@@ -138,16 +137,32 @@
         @if (isset($directProducts) && $directProducts->count())
             @php $hasAnyProduct = true; @endphp
             <section class="mt-14" id="products">
-                <div
-                    class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-3 border-b-2 border-slate-100">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-3 border-b-2 border-slate-100">
                     <h2 class="text-xl sm:text-2xl font-extrabold text-[#001F54] flex items-center gap-3">
                         <span class="w-1 h-7 bg-[#ff7a00] rounded-full inline-block shrink-0"></span>
                         All Products
                     </h2>
                 </div>
-                <div class="grid-4">
+                <div class="grid-3">
                     @foreach ($directProducts as $product)
-                        @include('storefront.partials.product-card', ['product' => $product])
+                        @php
+                            $badgeClass = 'badge';
+                            if ($product->discount_price && $product->price > 0) {
+                                $pct = round((($product->price - $product->discount_price) / $product->price) * 100);
+                                $badgeText = "Save {$pct}%";
+                                $badgeClass = 'badge badge-orange';
+                            } else {
+                                $badgeText = 'Best Seller';
+                            }
+
+                            $inWishlist = false;
+                            if (auth()->check()) {
+                                $inWishlist = \App\Models\Wishlist::where('user_id', auth()->id())->where('product_id', $product->id)->exists();
+                            } else {
+                                $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())->where('product_id', $product->id)->exists();
+                            }
+                        @endphp
+                        @include('partials.product-card', ['product' => $product])
                     @endforeach
                 </div>
             </section>
@@ -160,20 +175,37 @@
                 <h2 class="text-2xl font-bold text-[#001F54] mb-2">No Products Yet</h2>
                 <p class="text-slate-500 max-w-md mx-auto">Products for this category haven't been added yet. Please check
                     back soon.</p>
-                <a href="{{ route('products.index') }}"
-                    class="bg-navy-800 mt-6 text-white rounded-xl px-4 py-2 inline-flex">Browse All Products</a>
+                <a href="{{ route('products.index') }}" class="bg-navy-800 mt-6 text-white rounded-xl px-4 py-2 inline-flex">Browse
+                    All Products</a>
             </div>
         @endif
     @endif
 
     {{-- =====================================================
-         SUBCATEGORY PAGE — paginated product list
+    SUBCATEGORY PAGE — paginated product list
     ====================================================== --}}
     @if ($isSubcategoryPage)
         @if (isset($products) && $products->count())
-            <div class="grid-4" id="products">
+            <div class="grid-3" id="products">
                 @foreach ($products as $product)
-                    @include('storefront.partials.product-card', ['product' => $product])
+                    @php
+                        $badgeClass = 'badge';
+                        if ($product->discount_price && $product->price > 0) {
+                            $pct = round((($product->price - $product->discount_price) / $product->price) * 100);
+                            $badgeText = "Save {$pct}%";
+                            $badgeClass = 'badge badge-orange';
+                        } else {
+                            $badgeText = 'Best Seller';
+                        }
+
+                        $inWishlist = false;
+                        if (auth()->check()) {
+                            $inWishlist = \App\Models\Wishlist::where('user_id', auth()->id())->where('product_id', $product->id)->exists();
+                        } else {
+                            $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())->where('product_id', $product->id)->exists();
+                        }
+                    @endphp
+                    @include('partials.product-card', ['product' => $product])
                 @endforeach
             </div>
             @if ($products->hasPages())

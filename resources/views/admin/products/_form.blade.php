@@ -20,13 +20,13 @@
 
                 <label class="block">
                     <span class="text-sm font-medium">Main Category</span>
-                    <select id="categoryId" name="main_category_id" required class="w-full border rounded px-3 py-2 mt-1">
+                    <select id="categoryId" name="category_id" required class="w-full border rounded px-3 py-2 mt-1">
                         <option value="">Select Category</option>
                         @foreach ($categories as $c)
                             @php
                                 $isMainSelected = false;
-                                if (old('main_category_id')) {
-                                    $isMainSelected = old('main_category_id') == $c->id;
+                                if (old('category_id')) {
+                                    $isMainSelected = old('category_id') == $c->id;
                                 } elseif (isset($product)) {
                                     // Agar product ki apni category ka parent_id hai, to main category uska parent_id hogi.
                                     $isMainSelected =
@@ -43,7 +43,7 @@
 
                 <label class="block">
                     <span class="text-sm font-medium">Sub Category</span>
-                    <select id="subcategory_id" name="category_id" class="w-full border rounded px-3 py-2 mt-1">
+                    <select id="subcategory_id" name="sub_category_id" class="w-full border rounded px-3 py-2 mt-1">
                         <option value="">Select Sub Category</option>
                     </select>
                 </label>
@@ -75,8 +75,8 @@
 
                 <label class="block">
                     <span class="text-sm font-medium">Base Price</span>
-                    <input name="price" type="number" step="0.01" value="{{ old('price', $product->price ?? '') }}"
-                        required class="w-full border rounded px-3 py-2 mt-1">
+                    <input name="price" type="number" step="0.01" value="{{ old('price', $product->price ?? '') }}" required
+                        class="w-full border rounded px-3 py-2 mt-1">
                 </label>
 
                 <label class="block">
@@ -119,7 +119,8 @@
 
                 <label class="block sm:col-span-2">
                     <span class="text-sm font-medium">Description</span>
-                    <textarea name="description" rows="4" class="w-full border rounded px-3 py-2 mt-1">{{ old('description', $product->description ?? '') }}</textarea>
+                    <textarea name="description" rows="4"
+                        class="w-full border rounded px-3 py-2 mt-1">{{ old('description', $product->description ?? '') }}</textarea>
                 </label>
 
                 <div class="block sm:col-span-2">
@@ -140,7 +141,8 @@
 
                                 @foreach ($productImages ?? [] as $img)
                                     <div class="relative border rounded p-1 bg-white shadow-sm">
-                                        {{-- Apne storage folder path ke mutabiq url change kar saktay hain agar storage/use nahi ho raha --}}
+                                        {{-- Apne storage folder path ke mutabiq url change kar saktay hain agar storage/use nahi ho
+                                        raha --}}
                                         <img src="{{ asset('storage/' . $img) }}" class="h-20 w-20 object-cover rounded">
                                     </div>
                                 @endforeach
@@ -176,7 +178,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             let initialMainCat = $('#categoryId').val();
             let selectedSubCategory = "{{ old('category_id', $product->category_id ?? '') }}";
             let schoolId = $('#school_id').val();
@@ -187,7 +189,7 @@
             }
 
             // When Main Category changes
-            $('#categoryId').on('change', function() {
+            $('#categoryId').on('change', function () {
                 let id = $(this).val();
                 subCategory(id);
             });
@@ -201,12 +203,12 @@
                     return;
                 }
 
-                $.get(`/get-categories/${id}`, function(data) {
+                $.get(`/get-categories/${id}`, function (data) {
                     subCategorySelect.empty();
                     subCategorySelect.append('<option value="">Select Sub Category</option>');
 
                     if (data.category && data.category.children) {
-                        $.each(data.category.children, function(index, item) {
+                        $.each(data.category.children, function (index, item) {
                             let selected = (item.id == selectedSub) ? 'selected' : '';
                             subCategorySelect.append(
                                 `<option value="${item.id}" ${selected}>${item.name}</option>`
@@ -217,7 +219,7 @@
             }
 
             // When school changes
-            $('#school_id').on('change', function() {
+            $('#school_id').on('change', function () {
                 let schoolId = $(this).val();
                 let classSelect = $('#class_id');
                 classSelect.html('<option value="">Loading...</option>');
@@ -227,23 +229,23 @@
                     return;
                 }
 
-                $.get(`/get-classes/${schoolId}`, function(data) {
+                $.get(`/get-classes/${schoolId}`, function (data) {
                     classSelect.html('<option value="">—</option>');
-                    $.each(data, function(index, cls) {
+                    $.each(data, function (index, cls) {
                         classSelect.append(
-                        `<option value="${cls.id}">${cls.name}</option>`);
+                            `<option value="${cls.id}">${cls.name}</option>`);
                     });
                 });
             });
 
             // Load classes on page load (edit mode)
             if (schoolId) {
-                $.get(`/get-classes/${schoolId}`, function(data) {
+                $.get(`/get-classes/${schoolId}`, function (data) {
                     let selectedClass = "{{ $product->class_id ?? '' }}";
                     let classSelect = $('#class_id');
                     classSelect.html('<option value="">—</option>');
 
-                    $.each(data, function(index, cls) {
+                    $.each(data, function (index, cls) {
                         let selected = (cls.id == selectedClass) ? 'selected' : '';
                         classSelect.append(
                             `<option value="${cls.id}" ${selected}>${cls.name}</option>`);
