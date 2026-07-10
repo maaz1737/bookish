@@ -56,13 +56,12 @@
             </div>
 
             @if ($category->image)
-                <div class="md:col-span-5 flex justify-center"
-                    style="
-                                                                                                                                                 background: url({{ url('storage/' . $category->image) }});
-                                                                                                                                                 background-repeat: no-repeat;
-                                                                                                                                                background-size: contain;
-                                                                                                                                                 height: 100%;
-                                                                                                                                                 background-position: center;">
+                <div class="md:col-span-5 flex justify-center" style="
+                        background: url({{ $category->imageUrl() }});
+                        background-repeat: no-repeat;
+                        background-size: contain;
+                        height: 100%;
+                        background-position: center;">
                 </div>
             @endif
         </div>
@@ -151,8 +150,7 @@
 
 
 
-    {{-- ===== TRUST STRIP ===== --}}
-    {{-- <section
+    <section
         class="bg-white rounded-[20px] shadow-[0_8px_24px_rgba(0,31,84,0.04)] border border-slate-100 p-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-6 text-sm mt-14">
         <div class="flex gap-4 items-start p-2">
             <div class="w-12 h-12 shrink-0 bg-[#001F54]/5 rounded-xl flex items-center justify-center text-[#001F54]">
@@ -199,6 +197,6 @@
                 <p class="text-xs text-slate-500 mt-1 leading-normal">We're here to help you anytime</p>
             </div>
         </div>
-    </section> --}}
+    </section>
 
 @endsection
