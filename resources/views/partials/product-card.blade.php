@@ -1,6 +1,7 @@
 <style>
     .product-card {
-        width: 380px;
+        /* min-width: 380px; */
+        width: 100%;
         border: 1px solid #f0f0f0;
         border-radius: 8px;
         overflow: hidden;
