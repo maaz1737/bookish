@@ -141,8 +141,10 @@
                     <div class="flex items-center justify-between mb-4">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center relative">
-                                🛍️<span
-                                    class="absolute -top-1 -right-1 bg-amber-400 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center">2</span>
+                                🛍️ <span
+                                        class="absolute -top-1 -right-1 w-5 h-5 bg-amber-400 text-[#0a1f44] text-xs font-bold rounded-full flex items-center justify-center">
+                                        {{ count($cart['items']) }}
+                                    </span>
                             </div>
                             <h3 class="text-lg font-bold text-[#0a1f44]">Order Summary</h3>
                         </div>

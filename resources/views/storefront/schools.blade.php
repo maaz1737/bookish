@@ -2,7 +2,7 @@
 
 @section('content')
     <!-- Header Section -->
-    <section class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white rounded-3xl p-10 mb-12">
+    <section class="bg-gradient-to-r from-slate-900 to-blue-950 text-white rounded-3xl p-10 mb-12">
 
         <div class="max-w-3xl">
 
@@ -26,7 +26,7 @@
         <div class="relative">
 
             <input id="search" type="text" placeholder="Search School..."
-                class="w-full border border-gray-200 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                class="w-full border border-gray-200 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-blue-900">
 
         </div>
 
@@ -34,15 +34,14 @@
 
 
     <!-- Schools Grid -->
-
-    <div id="con" class=" grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div id="con" class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
         @foreach ($schools as $school)
             <a href="{{ route('schools.show', $school) }}"
                 class="group bg-white rounded-3xl shadow-sm hover:shadow-2xl transition duration-300 overflow-hidden">
 
                 <!-- Top Banner -->
-                <div class="h-28 bg-gradient-to-r from-indigo-500 to-purple-500 relative">
+                <div class="h-28 bg-gradient-to-r from-blue-900 to-slate-800 relative">
 
                     <div class="absolute left-6 bottom-[-30px]">
 
@@ -57,7 +56,7 @@
                 <!-- Content -->
                 <div class="p-6 pt-10">
 
-                    <h2 class="school-name text-xl font-bold text-gray-800 group-hover:text-indigo-600 transition">
+                    <h2 class="school-name text-xl font-bold text-gray-800 group-hover:text-blue-900 transition">
                         {{ $school->name }}
                     </h2>
 
@@ -67,7 +66,7 @@
                             {{ $school->classes_count }} Classes
                         </span>
 
-                        <span class="text-indigo-600 font-semibold">
+                        <span class="text-blue-900 font-semibold group-hover:translate-x-1 transition-transform inline-block">
                             View →
                         </span>
 
@@ -82,7 +81,6 @@
 
 
     <!-- Empty State -->
-
     @if ($schools->count() == 0)
         <div class="bg-white rounded-2xl shadow p-12 text-center">
 
@@ -103,10 +101,9 @@
 
 
     <!-- Bottom CTA -->
-
     <section class="mt-16">
 
-        <div class="bg-indigo-600 text-white rounded-3xl p-10 text-center">
+        <div class="bg-gradient-to-r from-slate-900 to-blue-950 text-white rounded-3xl p-10 text-center">
 
             <h2 class="text-3xl font-bold mb-3">
                 Can't Find Your School?
@@ -116,7 +113,7 @@
                 Contact us and we'll add your school's books and bundles.
             </p>
 
-            <a href="#" class="inline-block bg-white text-indigo-600 px-6 py-3 rounded-xl font-semibold">
+            <a href="#" class="inline-block bg-white text-blue-900 px-6 py-3 rounded-xl font-semibold hover:bg-gray-100 transition">
                 Contact Us
             </a>
 
