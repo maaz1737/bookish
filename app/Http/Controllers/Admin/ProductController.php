@@ -153,6 +153,7 @@ class ProductController extends Controller
     {
         $data = $request->validated();
 
+
         if ($request->hasFile('images')) {
             $data['images'] = $this->storeImages($request);
         } else {
