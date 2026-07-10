@@ -20,8 +20,14 @@ class ProductController extends Controller
     {
         $category = Category::whereNull('parent_id')
             ->where('slug', $slug)
+            ->with('products')
             ->where('is_active', true)
             ->with([
+                'products' => function ($q) {
+                    $q->where('is_active', true)
+                        ->with('variants')
+                        ->latest();
+                },
                 'children' => function ($q) {
                     $q->where('is_active', true)
                         ->with([
@@ -66,6 +72,7 @@ class ProductController extends Controller
         $directProducts = Product::where('category_id', $category->id)
             ->where('is_active', true)
             ->with('variants')
+            ->with('category')
             ->latest()
             ->limit(4)
             ->get();

@@ -1,7 +1,7 @@
 @extends('layouts.app') {{-- Agar aap koi layout use kar rahe hain to isko apne mutabiq set kar lein --}}
 
 @section('content')
-    <div class="max-w-4xl mx-auto p-6 bg-white rounded shadow">
+    <div class="max-w-7xl mx-auto p-6 bg-white rounded shadow">
         <h2 class="text-xl font-bold mb-6">{{ isset($product) ? 'Edit Product' : 'Create Product' }}</h2>
         <form action="{{ isset($product) ? route('admin.products.update', $product) : route('admin.products.store') }}"
             method="POST" enctype="multipart/form-data">
