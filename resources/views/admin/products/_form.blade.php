@@ -3,17 +3,17 @@
     <label class="block sm:col-span-2"><span class="text-sm font-medium">Name</span>
         <input name="name" value="{{ old('name', $product->name ?? '') }}" required
             class="w-full border rounded px-3 py-2 mt-1"></label>
-            
+
     <label class="block"><span class="text-sm font-medium">Main Category</span>
-        <select id="categoryId" name="main_category_id" required class="w-full border rounded px-3 py-2 mt-1">
+        <select id="categoryId" name="category_id" required class="w-full border rounded px-3 py-2 mt-1">
             <option value="">Select Category</option>
             @foreach ($categories as $c)
                 {{-- Edit mode check --}}
                 @php
                     $isMainSelected = false;
-                    if(old('main_category_id')) {
-                        $isMainSelected = old('main_category_id') == $c->id;
-                    } elseif(isset($product)) {
+                    if (old('category_id')) {
+                        $isMainSelected = old('category_id') == $c->id;
+                    } elseif (isset($product)) {
                         // Agar product ki apni category ka parent_id hai, to iska matlab product subcategory mein hai, aur main category uska parent_id hogi.
                         $isMainSelected = ($product->category_id == $c->id || (optional($product->category)->parent_id == $c->id));
                     }
@@ -23,10 +23,10 @@
                 </option>
             @endforeach
         </select></label>
-        
+
     <label class="block">
         <span class="text-sm font-medium">Sub Category</span>
-        <select id="subcategory_id" name="category_id" class="w-full border rounded px-3 py-2 mt-1">
+        <select id="subcategory_id" name="sub_category_id" class="w-full border rounded px-3 py-2 mt-1">
             <option value="">Select Sub Category</option>
         </select>
     </label>
@@ -97,7 +97,7 @@
         // 🔥 Fix: Get the correct main and sub category logic on load
         let initialMainCat = $('#categoryId').val();
         let selectedSubCategory = "{{ old('category_id', $product->category_id ?? '') }}";
-        
+
         let schoolId = $('#school_id').val();
 
         // If main category is available, load subcategories immediately
@@ -124,7 +124,7 @@
                 subCategorySelect.empty();
                 subCategorySelect.append('<option value="">Select Sub Category</option>');
 
-                if(data.category && data.category.children) {
+                if (data.category && data.category.children) {
                     $.each(data.category.children, function (index, item) {
                         let selected = (item.id == selectedSub) ? 'selected' : '';
                         subCategorySelect.append(
