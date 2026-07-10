@@ -530,6 +530,7 @@
                     </svg>
 
                 </button>
+                
 
                 <div class="border-t"></div>
 
@@ -557,8 +558,14 @@
                 <!-- Checkout -->
                 <div class="px-3 pb-3">
                     <a href="{{ url('/checkout') }}"
-                        class="w-full block h-10 rounded bg-[#6C63FF] hover:bg-[#5e54f6] text-white text-sm font-medium flex items-center justify-center">
+                        class="w-full h-11 rounded-xl bg-[#163A6B] hover:bg-[#102F59] text-white text-sm font-semibold flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30">
                         🛒 Checkout
+                    </a>
+                </div>
+                <div class="px-3 pb-3">
+                    <a href="{{ route('cart.index') }}"
+                        class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30">
+                        🛒 View Cart
                     </a>
                 </div>
 
