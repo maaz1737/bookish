@@ -7,6 +7,7 @@ use App\Models\School;
 use App\Models\SchoolClass;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class ClassController extends Controller
 {
@@ -22,11 +23,19 @@ class ClassController extends Controller
     {
         $data = $request->validate([
             'school_id' => ['required', 'exists:schools,id'],
-            'name' => ['required', 'string', 'max:255'],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('school_classes', 'name'),
+            ],
             'sort_order' => ['required', 'integer'],
         ]);
+
         $data['slug'] = Str::slug($data['name']);
+
         SchoolClass::create($data);
+
         return back()->with('success', 'Class created.');
     }
 
@@ -41,7 +50,12 @@ class ClassController extends Controller
     {
         $data = $request->validate([
             'school_id' => ['required', 'exists:schools,id'],
-            'name' => ['required', 'string', 'max:255'],
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('school_classes', 'name')->ignore($class->id),
+            ],
             'sort_order' => ['required', 'integer'],
         ]);
 
