@@ -43,7 +43,7 @@ class CartController extends Controller
                 'id' => $product->id,
                 'name' => $product->name,
                 'price' => $product->effectivePrice(),
-                'quantity' => $qty, 
+                'quantity' => $qty,
                 'slug' => $product->slug,
             ];
         }
@@ -159,10 +159,11 @@ class CartController extends Controller
 
         foreach ($cart as $key => $item) {
             $product = $products[$item['id']] ?? null;
-            if (!$product) continue;
+            if (!$product)
+                continue;
 
             $qty = $item['quantity'];
-            
+
             $price = isset($item['is_bundle_item']) ? $item['price'] : ($product->discount_price ?? $product->price);
 
             $items[] = [
