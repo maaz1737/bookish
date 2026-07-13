@@ -5,12 +5,13 @@
 
     {{-- ===== HERO BANNER ===== --}}
     @if ($heroBanners->count() > 0)
-        <section class="rounded-[24px] overflow-hidden bg-gradient-to-br from-navy-50 to-slate-100 mb-10 relative">
+        <section
+            class="rounded-[24px] overflow-hidden bg-transparent sm:bg-gradient-to-br sm:from-navy-50 sm:to-slate-100 mb-10 relative">
             <div class="swiper heroSwiper">
                 <div class="swiper-wrapper">
                     @foreach ($heroBanners as $banner)
                         <div class="swiper-slide">
-                            <div class="grid md:grid-cols-2 gap-8 items-center p-8 md:p-12">
+                            <div class="grid md:grid-cols-2 gap-8 items-center xs:p-4 sm:p-8 md:p-12">
                                 <div class="z-10">
                                     <span
                                         class="text-[#ff7a00] text-sm font-bold tracking-wider uppercase flex items-center gap-1.5">
@@ -26,11 +27,11 @@
                                     </p>
                                     <div class="flex gap-4 mt-6">
                                         <a href="#school-section"
-                                            class="px-6 py-3 bg-navy-800 text-white rounded-xl shadow-md hover:shadow-lg">
+                                            class="px-4 py-2.5 text-sm rounded-lg bg-navy-800 text-white shadow-md hover:bg-navy-900 hover:shadow-lg transition-all duration-200 lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
                                             Shop by School <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
                                         </a>
                                         <a href="#category-section"
-                                            class="inline-flex items-center justify-center border-2 border-[#001F54] text-[#001F54] hover:bg-[#001F54] hover:text-white px-6 py-3 rounded-xl font-semibold text-sm transition-all duration-200">
+                                            class="inline-flex items-center justify-center border-2 border-[#001F54] text-[#001F54] hover:bg-[#001F54] hover:text-white px-4 py-2.5 text-sm rounded-lg font-semibold transition-all duration-200 lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
                                             Shop All Categories
                                         </a>
                                     </div>
@@ -75,12 +76,13 @@
     {{-- ===== POPULAR SCHOOLS ===== --}}
     <section class="mb-12" id="school-section">
         <div class="flex items-center justify-between mb-6">
-            <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
+            <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
                 <i class="fa-solid fa-school text-[#001F54]"></i> Popular Schools
             </h2>
             <a href="{{ route('schools.index') }}"
-                class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
-                View All Schools <i class="fa-solid fa-arrow-right text-xs"></i>
+                class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">
+                <span>View All <span class="hidden md:inline">Schools</span></span> <i
+                    class="fa-solid fa-arrow-right text-xs"></i>
             </a>
         </div>
 
@@ -148,12 +150,13 @@
     @if($categories->count())
         <section class="mb-12" id="category-section">
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
+                <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
                     <i class="fa-solid fa-layer-group text-[#001F54]"></i> Shop by Category
                 </h2>
                 <a href="{{ route('categories.index') }}"
-                    class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
-                    View All Categories <i class="fa-solid fa-arrow-right text-xs"></i>
+                    class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">
+                    <span>View All <span class="hidden md:inline">Categories</span></span> <i
+                        class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </div>
 
@@ -172,12 +175,13 @@
     @if ($bundles->count())
         <section class="mb-12">
             <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
+                <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
                     <i class="fa-solid fa-boxes-stacked text-[#001F54]"></i> Smart Saver Bundles
                 </h2>
                 <a href="{{ route('bundles.index') }}"
-                    class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
-                    View All Bundles <i class="fa-solid fa-arrow-right text-xs"></i>
+                    class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">
+                    <span>View All <span class="hidden md:inline">Bundles</span></span> <i
+                        class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </div>
 
