@@ -2,14 +2,12 @@
 
 @section('content')
 
-    <!-- Breadcrumb -->
     <nav class="text-xs text-slate-500 mb-6 flex items-center gap-2">
         <a href="{{ route('home') }}" class="hover:text-[#001F54] transition-colors">Home</a>
         <i class="fa-solid fa-chevron-right text-[8px] text-slate-400"></i>
         <span class="text-[#001F54] font-semibold">All Categories</span>
     </nav>
 
-    <!-- Page Header -->
     <div class="mb-8">
         <h1 class="text-4xl sm:text-5xl font-extrabold text-[#001F54] mb-3">
             View All Categories
@@ -19,7 +17,6 @@
         </p>
     </div>
 
-    <!-- Search categories... -->
     <div class="mb-10 max-w-xl relative">
         <div class="flex border border-slate-300 rounded-xl overflow-hidden shadow-sm bg-white focus-within:border-[#001F54] focus-within:ring-2 focus-within:ring-[#001F54]/10 transition-all duration-200">
             <span class="pl-4 flex items-center text-slate-400">
@@ -27,19 +24,12 @@
             </span>
             <input type="text" id="categorySearchInput" placeholder="Search categories..."
                 class="w-full pl-3 pr-4 py-3.5 text-sm outline-none text-slate-800 bg-white placeholder-slate-400">
-                {{-- <select class="border-l border-slate-300 px-3 text-sm bg-white " id="categoryFilter">
-                    <option value="">All Categories</option>
-                    @foreach ($parentCategories as $parent)
-                        <option value="{{ $parent->slug }}">{{ $parent->name }}</option>
-                    @endforeach
-                </select> --}}
             <button type="button" id="categorySearchClear" class="pr-4 text-slate-400 hover:text-slate-600 text-sm hidden">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
     </div>
 
-    <!-- Explore products by category alert box -->
     <div class="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 border border-slate-200/80 rounded-[24px] p-6 sm:p-8 mb-12 shadow-sm">
         <h2 class="text-xl font-bold text-[#001F54] mb-2">
             Explore products by category
@@ -48,7 +38,6 @@
             This page focuses on product categories only. School-specific books and uniforms should remain under the separate Shop By School journey.
         </p>
 
-        <!-- Nested card: Looking for school books? -->
         <div class="bg-white border border-slate-100 rounded-2xl p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4 hover:shadow-md transition-shadow duration-300 max-w-3xl">
             <div class="w-14 h-14 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center text-3xl shadow-sm shrink-0">
                 🏫
@@ -64,7 +53,6 @@
         </div>
     </div>
 
-    <!-- Categories List Sections -->
     <div class="space-y-16" id="categories-container">
         @foreach ($parentCategories as $parent)
             @php
@@ -78,7 +66,6 @@
             @endphp
             <div class="parent-category-section" data-parent-name="{{ strtolower($parent->name) }}">
                 
-                <!-- Main Heading Section -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-4 mb-6">
                     <div>
                         <h2 class="text-2xl sm:text-3xl font-extrabold text-[#001F54] flex items-center gap-3">
@@ -94,40 +81,22 @@
                     </a>
                 </div>
 
-                <!-- Subcategories Grid -->
                 <div class="grid-4 subcategories-grid">
                     @foreach ($parent->children as $sub)
-                        @php
-                            // Subcategory icons mapping based on layout screenshots
-                            $emojiMap = [
-                                'school-bags' => '🎒',
-                                'water-bottles' => '🥤',
-                                'lunch-boxes' => '🍱',
-                                'geometry-boxes' => '📐',
-                                'pencil-boxes' => '✏️',
-                                'stationery' => '🖍️',
-                                'art-supplies' => '🎨',
-                                'study-accessories' => '📚',
-                                'paf-decoration-models' => '✈️',
-                                'jet-plane-models' => '🛩️',
-                                'gift-items' => '🎁',
-                                'decoration-pieces' => '🏆',
-                                'attar' => '🧴',
-                                'perfumes' => '🌸',
-                                'fragrance-gift-sets' => '🎀'
-                            ];
-                            $emoji = $emojiMap[$sub->slug] ?? '📦';
-                        @endphp
                         <div class="subcategory-card card flex flex-col justify-between h-full group filter-con" data-sub-name="{{ strtolower($sub->name) }}">
                             
-                            <!-- Card image/emoji container -->
-                            <div class="card-img-box bg-slate-50 flex items-center justify-center relative overflow-hidden">
-                                <div class="text-6xl transition-transform duration-300 group-hover:scale-110">
-                                    {{ $emoji }}
-                                </div>
+                            <div class="card-img-box bg-slate-50 flex items-center justify-center relative overflow-hidden h-48 w-full rounded-t-2xl">
+                                @if($sub->image)
+                                    <img src="{{ asset('storage/' . $sub->image) }}" 
+                                         alt="{{ $sub->name }}" 
+                                         class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                                @else
+                                    <img src="{{ asset('images/placeholder-category.png') }}" 
+                                         alt="{{ $sub->name }}" 
+                                         class="w-full h-full object-cover">
+                                @endif
                             </div>
 
-                            <!-- Content details -->
                             <div class="p-5 flex flex-col flex-grow justify-between">
                                 <div class="mb-4">
                                     <h3 class="font-bold text-[#001F54] text-base mb-1 filter-name">
@@ -148,7 +117,6 @@
         @endforeach
     </div>
 
-    <!-- Live Search Script -->
     <script>
         $(document).ready(function () {
             var $searchInput = $('#categorySearchInput');
