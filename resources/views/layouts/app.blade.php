@@ -785,79 +785,159 @@
 
 
     {{-- ===== FOOTER ===== --}}
-   <footer class="bg-navy-900 text-slate-300 mt-12">
-    <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
-        
-        <!-- Brand Info -->
-        <div class="col-span-2">
-            <h3 class="text-white text-lg font-bold">Bookish <span class="text-gold-500">& Beyond</span></h3>
-            <p class="mt-3 text-slate-400 leading-relaxed">
-                School essentials, baby wear & gifts. We offer quality items for school, studies, uniforms, books, baby wear, gifts and more.
-            </p>
-            <div class="flex gap-3 mt-4">
-                <a href="#" class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500 transition-colors">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </a>
-                <a href="#" class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500 transition-colors">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-                <a href="#" class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500 transition-colors">
-                    <i class="fa-brands fa-whatsapp"></i>
-                </a>
-                <a href="#" class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500 transition-colors">
-                    <i class="fa-brands fa-youtube"></i>
-                </a>
+    <footer class="bg-navy-900 text-slate-300 mt-12">
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+
+                <!-- Company -->
+                <div class="sm:col-span-2">
+
+                    <h3 class="text-white text-2xl font-bold">
+                        Bookish <span class="text-gold-500">& Beyond</span>
+                    </h3>
+
+                    <p class="mt-4 text-slate-400 leading-7 max-w-md">
+                        School essentials, baby wear & gifts. We provide quality books,
+                        uniforms, school accessories, baby wear, gifts and much more.
+                    </p>
+
+                    <div class="flex flex-wrap gap-3 mt-6">
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+
+                            <i class="fa-brands fa-facebook-f"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+
+                            <i class="fa-brands fa-instagram"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+
+                            <i class="fa-brands fa-whatsapp"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+
+                            <i class="fa-brands fa-youtube"></i>
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+
+                    <h4 class="text-white font-semibold text-lg mb-4">
+                        Quick Links
+                    </h4>
+
+                    <ul class="space-y-3">
+
+                        <li>
+                            <a href="{{ route('about') }}" class="hover:text-gold-500 transition">
+                                About Us
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('returns-refunds') }}" class="hover:text-gold-500 transition">
+                                Returns & Refunds
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('contact') }}" class="hover:text-gold-500 transition">
+                                Contact Us
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+
+                <!-- Shop -->
+                <div>
+
+                    <h4 class="text-white font-semibold text-lg mb-4">
+                        Shop
+                    </h4>
+
+                    <ul class="space-y-3">
+
+                        <li><a href="#" class="hover:text-gold-500">Books</a></li>
+                        <li><a href="#" class="hover:text-gold-500">Uniforms</a></li>
+                        <li><a href="#" class="hover:text-gold-500">Bags & Bottles</a></li>
+                        <li><a href="#" class="hover:text-gold-500">Baby Wear</a></li>
+                        <li><a href="#" class="hover:text-gold-500">Accessories</a></li>
+                        <li><a href="#" class="hover:text-gold-500">Gifts</a></li>
+
+                    </ul>
+
+                </div>
+
+                <!-- Contact -->
+                <div>
+
+                    <h4 class="text-white font-semibold text-lg mb-4">
+                        Customer Service
+                    </h4>
+
+                    <ul class="space-y-4 text-sm">
+
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-phone text-gold-400 mt-1"></i>
+                            <span>+92 300 1234567</span>
+                        </li>
+
+                        <li class="flex items-start gap-3 break-all">
+                            <i class="fa-solid fa-envelope text-gold-400 mt-1"></i>
+                            <span>support@bookish.pk</span>
+                        </li>
+
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-gold-400 mt-1"></i>
+                            <span>Lahore, Pakistan</span>
+                        </li>
+
+                        <li class="flex items-start gap-3">
+                            <i class="fa-regular fa-clock text-gold-400 mt-1"></i>
+                            <span>Mon – Sat (10:00 AM – 8:00 PM)</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
             </div>
+
         </div>
 
-        <!-- Quick Links (Fixed HTML Nesting) -->
-        <div>
-            <h4 class="text-white font-semibold mb-3">Quick Links</h4>
-            <ul class="space-y-2">
-                <li>
-                    <a href="{{ route('about') }}" class="hover:text-gold-500 transition-colors">About Us</a>
-                </li>
-                <li>
-                    <a href="{{ route('returns-refunds') }}" class="hover:text-gold-500 transition-colors">Returns & Refunds</a>
-                </li>
-                <li>
-                    <a href="{{ route('contact') }}" class="hover:text-gold-500 transition-colors">Contact Us</a>
-                </li>
-            </ul>
+        <div class="border-t border-navy-800">
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+
+                <p class="text-center text-xs sm:text-sm text-slate-400">
+                    © {{ date('Y') }} Bookish & Beyond. All Rights Reserved.
+                </p>
+
+            </div>
+
         </div>
 
-        <!-- Shop Links (Added placeholders for proper alignment/interaction) -->
-        <div>
-            <h4 class="text-white font-semibold mb-3">Shop</h4>
-            <ul class="space-y-2">
-                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Books</a></li>
-                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Uniforms</a></li>
-                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Bags & Bottles</a></li>
-                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Baby Wear</a></li>
-                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Accessories</a></li>
-                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Gifts</a></li>
-            </ul>
-        </div>
-
-        <!-- Customer Service -->
-        <div>
-            <h4 class="text-white font-semibold mb-3">Customer Service</h4>
-            <ul class="space-y-2">
-                <li class="flex items-center"><i class="fa-solid fa-phone text-gold-400 mr-2 w-4"></i>+92 320 4735908</li>
-                <li class="flex items-center"><i class="fa-solid fa-envelope text-gold-400 mr-2 w-4"></i>support@bookish.pk</li>
-                <li class="flex items-center"><i class="fa-solid fa-location-dot text-gold-400 mr-2 w-4"></i>Lahore, Pakistan</li>
-                <li class="flex items-start"><i class="fa-regular fa-clock text-gold-400 mr-2 mt-1 w-4"></i><span>Mon - Sat<br>(10AM - 8PM)</span></li>
-            </ul>
-        </div>
-    </div>
-
-    <!-- Copyright Bar -->
-    <div class="border-t border-navy-800">
-        <div class="max-w-7xl mx-auto px-4 py-4 text-center text-xs text-slate-400">
-            © {{ date('Y') }} Bookish & Beyond. All Rights Reserved.
-        </div>
-    </div>
-</footer>
+    </footer>
 
 
     <script src="/js/category-dropdown.js" defer></script>
