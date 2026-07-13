@@ -167,22 +167,25 @@
                 {{-- Stock Status --}}
                 {{-- <div class="mb-5">
                     @if ($inStock)
-                        @if ($isLow)
-                            <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block"></span>
-                                Low Stock — only {{ $product->stock }} left
-                            </span>
-                        @else
-                            <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
-                                In Stock
-                            </span>
-                        @endif
+                    @if ($isLow)
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block"></span>
+                        Low Stock — only {{ $product->stock }} left
+                    </span>
                     @else
-                        <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full">
-                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block"></span>
-                            Out of Stock
-                        </span>
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
+                        In Stock
+                    </span>
+                    @endif
+                    @else
+                    <span
+                        class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full">
+                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block"></span>
+                        Out of Stock
+                    </span>
                     @endif
                 </div> --}}
 
@@ -211,44 +214,44 @@
 
                 {{-- Add to Cart Form --}}
 
-                 <div class="flex gap-8">
-       {{-- Quantity --}}
-                <div class="flex items-center gap-4 mb-5">
-                    <span class="text-sm font-semibold text-[#001F54]">Quantity:</span>
-                    <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden">
-                        <button type="button" id="qty-minus"
-                            class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
-                            −
-                        </button>
-                        <input type="number" name="quantity" id="qty-input" value="1" min="1"
-                            max="{{ $product->stock }}"
-                            class="w-14 h-10 text-center text-sm font-bold text-[#001F54] border-0 border-x border-slate-200 focus:outline-none focus:ring-0 bg-white">
-                        <button type="button" id="qty-plus"
-                            class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
-                            +
-                        </button>
+                <div class="flex gap-8">
+                    {{-- Quantity --}}
+                    <div class="flex items-center gap-4 mb-5">
+                        <span class="text-sm font-semibold text-[#001F54]">Quantity:</span>
+                        <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden">
+                            <button type="button" id="qty-minus"
+                                class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
+                                −
+                            </button>
+                            <input type="number" name="quantity" id="qty-input" value="1" min="1"
+                                max="{{ $product->stock }}"
+                                class="w-14 h-10 text-center text-sm font-bold text-[#001F54] border-0 border-x border-slate-200 focus:outline-none focus:ring-0 bg-white">
+                            <button type="button" id="qty-plus"
+                                class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
+                                +
+                            </button>
+                        </div>
                     </div>
-                </div>
-                @if ($inStock)
-                    <form method="POST" action="{{ route('cart.addProduct', $product) }}" id="add-to-cart-form"
-                        class=" cart-form">
-                        @csrf
-                        {{-- Add to Cart Button --}}
-                        <button type="submit"
-                            class="w-full flex items-center justify-center gap-2 bg-[#001F54] py-3 hover:bg-[#000c3a] px-16 text-white font-bold  rounded-[14px] transition-all duration-200 shadow-sm hover:shadow-md text-sm mb-3 h-10">
-                            <i class="fa-solid fa-cart-shopping"></i>
-                            Add to Cart
+                    @if ($inStock)
+                        <form method="POST" action="{{ route('cart.addProduct', $product) }}" id="add-to-cart-form"
+                            class=" cart-form">
+                            @csrf
+                            {{-- Add to Cart Button --}}
+                            <button type="submit"
+                                class="w-full flex items-center justify-center gap-2 bg-[#001F54] py-3 hover:bg-[#000c3a] px-16 text-white font-bold  rounded-[14px] transition-all duration-200 shadow-sm hover:shadow-md text-sm mb-3 h-10">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                Add to Cart
+                            </button>
+                        </form>
+                    @else
+                        <button disabled
+                            class="w-full flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-bold px-8 py-4 rounded-[14px] cursor-not-allowed text-sm mb-3">
+                            <i class="fa-solid fa-ban"></i>
+                            Out of Stock
                         </button>
-                    </form>
-                @else
-                    <button disabled
-                        class="w-full flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-bold px-8 py-4 rounded-[14px] cursor-not-allowed text-sm mb-3">
-                        <i class="fa-solid fa-ban"></i>
-                        Out of Stock
-                    </button>
-                @endif
-                 </div>
-         
+                    @endif
+                </div>
+
 
                 {{-- Secondary Actions: Wishlist + Share --}}
                 <div class="grid grid-cols-2 gap-3 mt-1">
@@ -284,46 +287,8 @@
     @endif
 
     {{-- ===== TRUST BADGES ===== --}}
-    <div class="bg-white border border-slate-100 rounded-[24px] shadow-sm p-6 md:p-8 mb-8">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div class="flex items-start gap-3">
-                <div class="w-10 h-10 shrink-0 flex items-center justify-center rounded-xl bg-[#001F54]/5 text-[#001F54]">
-                    <i class="fa-solid fa-truck-fast text-base"></i>
-                </div>
-                <div>
-                    <div class="text-sm font-bold text-[#001F54]">Fast Delivery</div>
-                    <div class="text-xs text-slate-500 mt-0.5">Quick delivery across Pakistan.</div>
-                </div>
-            </div>
-            <div class="flex items-start gap-3">
-                <div class="w-10 h-10 shrink-0 flex items-center justify-center rounded-xl bg-[#001F54]/5 text-[#001F54]">
-                    <i class="fa-solid fa-shield-halved text-base"></i>
-                </div>
-                <div>
-                    <div class="text-sm font-bold text-[#001F54]">100% Original Products</div>
-                    <div class="text-xs text-slate-500 mt-0.5">We only sell original and high quality products.</div>
-                </div>
-            </div>
-            <div class="flex items-start gap-3">
-                <div class="w-10 h-10 shrink-0 flex items-center justify-center rounded-xl bg-[#001F54]/5 text-[#001F54]">
-                    <i class="fa-solid fa-rotate-left text-base"></i>
-                </div>
-                <div>
-                    <div class="text-sm font-bold text-[#001F54]">Easy Returns</div>
-                    <div class="text-xs text-slate-500 mt-0.5">7 days return policy for unused items.</div>
-                </div>
-            </div>
-            <div class="flex items-start gap-3">
-                <div class="w-10 h-10 shrink-0 flex items-center justify-center rounded-xl bg-[#001F54]/5 text-[#001F54]">
-                    <i class="fa-solid fa-lock text-base"></i>
-                </div>
-                <div>
-                    <div class="text-sm font-bold text-[#001F54]">Secure Payments</div>
-                    <div class="text-xs text-slate-500 mt-0.5">Safe and secure payment options.</div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('partials.trust-section')
+
 
     {{-- ===== JAVASCRIPT ===== --}}
     <script>
@@ -375,7 +340,7 @@
         /* ----- Wishlist label sync (piggybacks on global .wishlist-toggle-btn handler) ----- */
         /* The global jQuery handler in app.blade.php handles the AJAX call.
            We just need to also update the label text & border classes on the detail button. */
-        $(document).on('click', '#wishlist-btn', function() {
+        $(document).on('click', '#wishlist-btn', function () {
             /* After a short delay the global handler will have updated the icon.
                We update the label & border classes here. */
             setTimeout(() => {

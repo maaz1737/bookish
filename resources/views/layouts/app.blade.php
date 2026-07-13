@@ -696,7 +696,7 @@
     @endif
 
     {{-- ===== MAIN ===== --}}
-    <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-8">
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-3  md:py-8">
         @yield('content')
     </main>
 
@@ -786,9 +786,9 @@
         </div>
     </div>
 
-
+   
     {{-- ===== FOOTER ===== --}}
-    <footer class="bg-navy-900 text-slate-300 mt-12">
+    <footer class="bg-navy-900 text-slate-300 mt-2 md:mt-12">
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 

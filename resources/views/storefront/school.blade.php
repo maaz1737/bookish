@@ -277,28 +277,7 @@
     @endif
 
     {{-- ======================== TRUST STRIP ======================== --}}
-    <section class="mt-4 mb-6">
-        <div class="bg-white border border-gray-100 rounded-2xl shadow-sm px-6 py-6">
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-                @foreach ([
-                    ['icon' => 'fa-shield-halved',      'title' => '100% Original Products',  'sub' => 'Sourced from authorized publishers & brands'],
-                    ['icon' => 'fa-truck',               'title' => 'Fast & Reliable Delivery', 'sub' => 'Across Pakistan'],
-                    ['icon' => 'fa-credit-card',         'title' => 'Secure Payments',          'sub' => 'Multiple payment options'],
-                    ['icon' => 'fa-rotate-left',         'title' => 'Easy Returns',             'sub' => 'Hassle-free returns within 7 days'],
-                    ['icon' => 'fa-headset',             'title' => 'Dedicated Support',        'sub' => "We're here to help you anytime"],
-                ] as $t)
-                    <div class="flex items-center gap-3">
-                        <i class="fa-solid {{ $t['icon'] }} text-2xl text-[#0a1f44] flex-shrink-0"></i>
-                        <div>
-                            <p class="text-sm font-bold text-[#0a1f44] leading-tight">{{ $t['title'] }}</p>
-                            <p class="text-xs text-gray-400 mt-0.5">{{ $t['sub'] }}</p>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
 </div>
+    @include('partials.trust-section')
 
 @endsection
