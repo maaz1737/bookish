@@ -2,7 +2,6 @@
 @section('content')
     <div class="bg-gray-50 py-8">
         <div class="max-w-7xl mx-auto px-4">
-
             {{-- Progress Steps --}}
             <div class="max-w-4xl mx-auto px-4 pt-2">
                 <div class="flex items-center justify-between text-xs text-gray-500">
@@ -71,14 +70,14 @@
                                 <div class="flex-1 min-w-0">
                                     <h3 class="font-semibold text-[#0a1f44] truncate">{{ $item['name'] }}</h3>
                                     <p class="text-sm text-gray-500 mt-1">Qty: {{ $item['quantity'] }}</p>
-                                    <p class="text-sm text-gray-400">Unit price: PKR {{ number_format($item['price']) }}
+                                    <p class="text-sm text-gray-400">Unit price: PKR {{ number_format($item['discount_price']) }}
                                     </p>
                                 </div>
 
                                 {{-- Price + Remove --}}
                                 <div class="text-right">
                                     <p class="font-bold text-[#0a1f44]">
-                                        PKR {{ number_format($item['price'] * $item['quantity']) }}
+                                        PKR {{ number_format($item['discount_price'] * $item['quantity']) }}
                                     </p>
                                     <form action="{{ url('/cart/' . $key) }}" method="POST" class="mt-2">
                                         @csrf
@@ -114,17 +113,17 @@
                                 <span>Subtotal ({{ count($cart['items']) }} items)</span>
                                 <span class="font-medium">PKR {{ number_format($cart['total']) }}</span>
                             </div>
-                            <div class="flex justify-between text-gray-600">
+                            {{-- <div class="flex justify-between text-gray-600">
                                 <span class="flex items-center gap-1">Delivery Charges <span
                                         class="text-gray-400">ⓘ</span></span>
                                 <span class="font-medium">PKR 150</span>
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="bg-amber-50 rounded-lg p-4 mb-6 flex justify-between items-center">
                             <span class="font-bold text-[#0a1f44]">Total Amount</span>
                             <span class="text-xl font-bold text-[#0a1f44]">
-                                PKR {{ number_format($cart['total'] + 150) }}
+                                PKR {{ number_format($cart['total']) }}
                             </span>
                         </div>
 
