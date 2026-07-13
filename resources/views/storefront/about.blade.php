@@ -101,7 +101,7 @@
                             @endif
 
                             {{-- Icon --}}
-                            <div class="shrink-0 w-10 h-10 rounded-full bg-[#F97316] text-white flex items-center justify-center z-10 shadow-md">
+                            <div class="shrink-0 w-10 h-10 rounded-full bg-[#001F54] text-white flex items-center justify-center z-10 shadow-md">
                                 <i class="fa-solid {{ $step['icon'] }} text-sm"></i>
                             </div>
 
@@ -139,7 +139,7 @@
 
             @foreach ($values as $value)
                 <div class="bg-white rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgba(0,31,84,0.03)] p-6 flex flex-col items-center text-center gap-3 group hover:shadow-[0_8px_30px_rgba(0,31,84,0.07)] hover:-translate-y-1 transition-all duration-300">
-                    <div class="w-14 h-14 rounded-2xl bg-[#001F54]/5 text-[#001F54] flex items-center justify-center group-hover:bg-[#F97316] group-hover:text-white transition-all duration-300">
+                    <div class="w-14 h-14 rounded-2xl bg-[#001F54]/5 text-[#001F54] flex items-center justify-center group-hover:bg-[#001F54] group-hover:text-white transition-all duration-300">
                         <i class="fa-solid {{ $value['icon'] }} text-xl"></i>
                     </div>
                     <h3 class="font-extrabold text-[#001F54] text-sm leading-snug">{{ $value['title'] }}</h3>
@@ -169,7 +169,7 @@
             @foreach ($offers as $offer)
                 <div class="bg-white rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgba(0,31,84,0.03)] overflow-hidden group hover:shadow-[0_8px_30px_rgba(0,31,84,0.08)] hover:-translate-y-1 transition-all duration-300">
                     <div class="h-44 bg-slate-50 overflow-hidden">
-                        <img src="{{ url('images/' . $offer['img']) }}"
+                        <img src="{{ url('storage/' . $offer['img']) }}"
                              alt="{{ $offer['title'] }}"
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
@@ -230,7 +230,7 @@
     </section>
 
     {{-- ===== CLOSING MESSAGE ===== --}}
-    {{-- <section class="mb-6">
+    <section class="mb-6">
         <div class="bg-gradient-to-r from-slate-50 to-indigo-50/50 border border-slate-200/60 rounded-2xl p-8 text-center shadow-sm">
             <div class="w-14 h-14 bg-[#ff7a00]/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <i class="fa-solid fa-heart text-[#ff7a00] text-2xl"></i>
@@ -243,6 +243,6 @@
                 Shop Now <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
             </a>
         </div>
-    </section> --}}
+    </section>
 
 @endsection
