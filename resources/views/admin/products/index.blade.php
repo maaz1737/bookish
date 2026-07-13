@@ -26,7 +26,10 @@
             <table class="w-full text-sm">
                 <thead class="bg-gray-50 text-left">
                     <tr>
-                        <th class="w-20 px-1">Select</th>
+                        <th class="w-20 px-1">
+                            <input type="checkbox" data-bulk-select-all class="rounded border-gray-300">
+                            Select
+                        </th>
                         <th class="w-20 p-3">Image</th>
                         <th class="w-64 p-3">Name</th>
                         <th class="w-40 p-3">Category</th>
