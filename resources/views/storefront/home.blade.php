@@ -173,7 +173,7 @@
 
     {{-- ===== SMART SAVER BUNDLES ===== --}}
     @if ($bundles->count())
-        <section class="mb-12">
+        <section class="">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
                     <i class="fa-solid fa-boxes-stacked text-[#001F54]"></i> Smart Saver Bundles

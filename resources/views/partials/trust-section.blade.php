@@ -1,4 +1,4 @@
-<section class=" bg-transparent md:bg-white rounded-[20px] shadow-[0_8px_24px_rgba(0,31,84,0.04)] border border-slate-100
+<section class="mt-12 bg-transparent md:bg-white rounded-[20px] shadow-[0_8px_24px_rgba(0,31,84,0.04)] border border-slate-100
                    p-2 sm:p-4 md:p-8
                    grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4 md:gap-6
                    text-sm mb-8 md:mb-12">
