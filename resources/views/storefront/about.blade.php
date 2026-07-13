@@ -169,7 +169,7 @@
             @foreach ($offers as $offer)
                 <div class="bg-white rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgba(0,31,84,0.03)] overflow-hidden group hover:shadow-[0_8px_30px_rgba(0,31,84,0.08)] hover:-translate-y-1 transition-all duration-300">
                     <div class="h-44 bg-slate-50 overflow-hidden">
-                        <img src="{{ url('storage/' . $offer['img']) }}"
+                        <img src="{{ url('images/' . $offer['img']) }}"
                              alt="{{ $offer['title'] }}"
                              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                     </div>
