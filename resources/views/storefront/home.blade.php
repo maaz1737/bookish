@@ -115,21 +115,28 @@
 
     {{-- ===== TRENDING NOW ===== --}}
     @if (isset($bestSellers) && $bestSellers->count())
-        <section class="mb-12">
-            <div class="flex items-center justify-between mb-6">
-                <h2 class="text-2xl font-bold text-[#001F54] flex items-center gap-2">
-                    <i class="fa-solid fa-fire text-[#ff7a00]"></i> Trending Now
+        <section class="mb-8 md:mb-12">
+            <div class="flex items-center justify-between gap-3 mb-4 md:mb-6">
+
+                <!-- Section Title -->
+                <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
+                    <i class="fa-solid fa-fire text-[#ff7a00] text-lg md:text-xl"></i>
+                    Trending Now
                 </h2>
+
+                <!-- View All -->
                 <a href="{{ route('products.index') }}"
-                    class="text-[#001F54] hover:text-[#ff7a00] font-semibold text-sm flex items-center gap-1 transition-colors">
-                    View All Products <i class="fa-solid fa-arrow-right text-xs"></i>
+                    class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">
+                    View All
+                    <i class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
+
             </div>
 
-            <div class="grid-3">
-                @foreach ($bestSellers as $index => $product)
+            <!-- Products -->
+            <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-6">
+                @foreach ($bestSellers as $product)
                     @include('partials.product-card', ['product' => $product])
-
                 @endforeach
             </div>
         </section>

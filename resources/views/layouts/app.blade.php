@@ -263,7 +263,7 @@
             background-position: center !important;
             background-repeat: no-repeat !important;
             background-size: cover !important;
-            height: 260px !important;
+            aspect-ratio: 19 / 13 !important;
 
         }
 
