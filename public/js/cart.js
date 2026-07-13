@@ -143,7 +143,7 @@ async function loadCart() {
             </p>
 
             <a href="/"
-                class="mt-6 inline-flex items-center rounded-lg bg-blue-800 px-4 py-2 text-white font-medium hover:bg-blue-700 transition">
+                class="mt-6 inline-flex items-center rounded-lg bg-[#163A6B] hover:bg-[#102F59] px-4 py-2 text-white font-medium  transition">
                 Shop Now
             </a>
         </div>
