@@ -164,6 +164,45 @@ async function loadCart() {
             html += `
         <div class="flex gap-2 mb-4 cart-item-container">
 
+                <div class="relative shrink-0 cart-loader">
+                    <img src="${item.image}"
+                        class="w-16 h-16 rounded-xl border border-[#E6ECF5] bg-white p-1 shadow-sm object-cover transition-all duration-300 hover:shadow-md">
+                </div>
+                <div class="flex-1">
+                    <div class="flex justify-between items-start">
+
+                        <div class="flex-1 pr-4">
+                            <h3 class="text-[15px] font-semibold text-gray-800 leading-5">
+                                ${item.name}
+                            </h3>
+                        </div>
+                        <div class="flex flex-col items-end">
+                            <div class="text-right">
+                                <span class="text-[13px] font-semibold text-[#163A6B] block">
+                                    Rs ${item.discount_price ?? item.price}
+                                </span>
+                                <span class="text-[10px] text-red-400 line-through">
+                                    Rs ${item.price}
+                                </span>
+                            </div>
+                            ${savePercent}
+                            <button
+                                onclick="removeItem('${item.key}', this)"
+                                class="mt-2 inline-flex items-center gap-1 text-xs font-medium text-red-600 hover:text-red-700 transition-colors -mr-2">
+
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="w-4 h-4"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    stroke-width="2">
+                                    <path stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d="M19 7H5M10 11V17M14 11V17M6 7L7 19C7.1 20.1 7.9 21 9 21H15C16.1 21 16.9 20.1 17 19L18 7M9 7V5C9 4.4 9.4 4 10 4H14C14.6 4 15 4.4 15 5V7"/>
+                                </svg>
+                                Remove
+                            </button>
+                        </div>
             <div class="relative shrink-0 cart-loader">
                 <button onclick="removeItem('${item.key}',this)"
                     class="absolute -left-1 -top-1 w-3.5 h-3.5 rounded-full border bg-white text-[10px] text-gray-500 flex items-center justify-center">
@@ -257,9 +296,8 @@ async function updateQty(key, action, ele) {
 
 
 async function removeItem(key, ele) {
-
-    // before send message
-    let image = $(ele).closest(".cart-loader");
+    // FIX: `.cart-loader` selector fixed using `.closest().find()` to show the loader properly
+    let image = $(ele).closest(".cart-item-container").find(".cart-loader");
     let originalHtml = image.html();
     image.html(`<span class="relative">
         ${originalHtml}
@@ -290,7 +328,11 @@ async function removeItem(key, ele) {
         // Success message
 
     } catch (error) {
-        showToast('Something went wrong.', 'error');
+        if (typeof showToast === "function") {
+            showToast("Something went wrong.", "error");
+        } else {
+            console.error("showToast function is not defined");
+        }
         console.error(error);
     }
 }
