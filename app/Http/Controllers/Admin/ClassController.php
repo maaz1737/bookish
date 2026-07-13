@@ -54,7 +54,9 @@ class ClassController extends Controller
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('school_classes', 'name')->ignore($class->id),
+                Rule::unique('school_classes')
+                    ->where(fn($query) => $query->where('school_id', $request->school_id))
+                    ->ignore($class->id),
             ],
             'sort_order' => ['required', 'integer'],
         ]);
