@@ -272,7 +272,7 @@
                                 @endif
                             </div>
 
-                            <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class="cart-form w-full mt-auto">
+                            <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class=" w-full mt-auto">
                                 @csrf
                                 <button type="submit" class="primary-btn">
                                     <i class="fa-solid fa-cart-shopping text-sm"></i> Add to Cart
