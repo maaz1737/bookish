@@ -374,7 +374,7 @@
         <nav class="max-w-7xl hidden  mx-auto px-4 lg:flex items-center gap-2 relative pb-2">
             {{-- Rest of the Nav Links --}}
             <div class="category-dropdown relative">
-                <a href="{{ route('schools.index') }}"
+                <a href="#"
                     class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
                     <i class="fa-solid fa-school mr-1"></i>
                     <span>Shop by School</span>
