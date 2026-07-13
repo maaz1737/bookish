@@ -318,14 +318,14 @@
 
     {{-- ===== HEADER ===== --}}
     <header class="bg-white border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-6">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-6  justify-between">
             <a href="{{ url('/') }}" class="shrink-0">
                 <h1 class="text-2xl font-extrabold text-navy-800">Bookish <span class="text-gold-500">& Beyond</span>
                 </h1>
                 <p class="text-xs text-slate-500">School Essentials, Baby Wear & Gifts</p>
             </a>
 
-            <form action="#" class="flex-1 hidden md:flex border border-slate-300 rounded-lg overflow-hidden">
+            <form action="#" class="flex-1 hidden lg:flex border border-slate-300 rounded-lg overflow-hidden">
                 <input type="text" placeholder="Search books, uniforms, bags, accessories..."
                     class="filter-search flex-1 px-4 py-2 text-sm outline-none">
                 <select class="border-l border-slate-300 px-3 text-sm bg-white">
@@ -343,23 +343,35 @@
                 }
             @endphp
             <div class="flex items-center gap-6 text-slate-700">
-                <a href="#" class="flex flex-col items-center text-xs"><i class="fa-regular fa-user text-lg"></i>Login /
-                    Register</a>
+                <a href="#" class="flex flex-col items-center text-xs"><i class="fa-regular fa-user text-lg"></i>
+                    <span class="hidden lg:inline">Login / Register</span>
+                </a>
                 <a href="{{ route('wishlist.index') }}" class="relative flex flex-col items-center text-xs"><i
-                        class="fa-regular fa-heart text-lg"></i>Wishlist<span
+                        class="fa-regular fa-heart text-lg"></i>
+                    <span class="hidden lg:inline">Wishlist</span>
+                    <span
                         class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center wishlist-badge"
                         style="{{ $wishlistCount == 0 ? 'display: none;' : '' }}">{{ $wishlistCount }}</span></a>
 
                 {{-- {{ route('cart.index') }} --}}
                 <a href="#" class="cart relative flex flex-col items-center text-xs"><i
-                        class="fa-solid fa-cart-shopping text-lg"></i>Cart<span
+                        class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span class="hidden lg:inline">Cart</span>
+                    <span
                         class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center"
                         id="cart_count">0</span></a>
+                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-md text-slate-700 hover:bg-slate-100"
+                    aria-label="Open menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
             </div>
         </div>
 
         {{-- nav --}}
-        <nav class="max-w-7xl mx-auto px-4 flex items-center gap-2 relative pb-2">
+        <nav class="max-w-7xl hidden  mx-auto px-4 lg:flex items-center gap-2 relative pb-2">
             {{-- Rest of the Nav Links --}}
             <div class="category-dropdown relative">
                 <a href="{{ route('schools.index') }}"
@@ -523,7 +535,150 @@
         </nav>
 
     </header>
+    <!-- Overlay -->
+    <div id="mobileOverlay" class="fixed inset-0 bg-black/50 hidden z-[998] lg:hidden">
+    </div>
 
+    <!-- Sidebar -->
+    <div id="mobileSidebar" class="fixed top-0 right-0 h-screen w-[320px] max-w-[90vw] bg-white shadow-2xl z-[999]
+    translate-x-full transition-transform duration-300 lg:hidden flex flex-col">
+
+        <!-- Header -->
+        <div class="flex items-center justify-between p-5 border-b">
+
+            <h2 class="font-bold text-xl text-[#001F54]">
+                Bookish
+            </h2>
+
+            <button id="closeMobileMenu">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+
+        </div>
+
+        <!-- Menu -->
+        <div class="overflow-y-auto flex-1">
+
+            <!-- Schools -->
+
+            <div class="border-b">
+
+                <button class="mobileDropdownBtn w-full flex justify-between items-center px-5 py-4 font-semibold">
+
+                    <span>
+                        <i class="fa-solid fa-school mr-2"></i>
+                        Shop by School
+                    </span>
+
+                    <i class="fa-solid fa-chevron-down duration-300"></i>
+
+                </button>
+
+                <div class="mobileDropdown hidden">
+
+                    @foreach($mainSchools as $school)
+
+                        <a href="{{ route('schools.show', $school->slug) }}"
+                            class="flex items-center gap-3 px-8 py-3 hover:bg-slate-50">
+
+                            @if($school->logo)
+
+                                <img src="{{ asset('storage/' . $school->logo) }}" class="w-9 h-9 rounded-full object-cover">
+
+                            @else
+
+                                <div class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
+
+                                    <i class="fa-solid fa-school"></i>
+
+                                </div>
+
+                            @endif
+
+                            {{ $school->name }}
+
+                        </a>
+
+                    @endforeach
+
+                    <a href="{{ route('schools.index') }}" class="block px-8 py-3 font-semibold text-blue-700">
+
+                        View All Schools →
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Categories -->
+
+            @foreach($mainCategories as $mainCategory)
+
+                <div class="border-b">
+
+                    <button class="mobileDropdownBtn w-full flex justify-between items-center px-5 py-4">
+
+                        <span>
+
+                            {{ ucfirst($mainCategory->name) }}
+
+                        </span>
+
+                        @if($mainCategory->children->count())
+
+                            <i class="fa-solid fa-chevron-down duration-300"></i>
+
+                        @endif
+
+                    </button>
+
+                    @if($mainCategory->children->count())
+
+                        <div class="mobileDropdown hidden">
+
+                            @foreach($mainCategory->children as $category)
+
+                                <a href="{{ route('category.show', $category->slug) }}" class="block px-8 py-3 hover:bg-slate-50">
+
+                                    {{ ucfirst($category->name) }}
+
+                                </a>
+
+                                @foreach($category->allChildren as $child)
+
+                                    @include('admin.categories.link_category', ['cat' => $child])
+
+                                @endforeach
+
+                            @endforeach
+
+                            <a href="{{ route('category.show', $mainCategory->slug) }}"
+                                class="block px-8 py-3 font-semibold text-blue-700">
+
+                                View All
+
+                            </a>
+
+                        </div>
+
+                    @endif
+
+                </div>
+
+            @endforeach
+
+            <!-- Offers -->
+
+            <a href="#" class="block m-5 rounded-lg bg-orange-500 text-white text-center py-3 font-semibold">
+
+                Offers
+
+            </a>
+
+        </div>
+
+    </div>
     {{-- ===== FLASH MESSAGES ===== --}}
     @if (session('success'))
         <div
@@ -748,7 +903,52 @@
             });
         });
     </script>
+    <script>
+        $(function () {
 
+            // Open Sidebar
+
+            $("#mobile-menu-btn").click(function () {
+
+                $("#mobileOverlay").fadeIn(200);
+
+                $("#mobileSidebar").removeClass("translate-x-full");
+
+                $("body").css("overflow", "hidden");
+
+            });
+
+            // Close Sidebar
+
+            $("#closeMobileMenu,#mobileOverlay").click(function () {
+
+                $("#mobileOverlay").fadeOut(200);
+
+                $("#mobileSidebar").addClass("translate-x-full");
+
+                $("body").css("overflow", "");
+
+            });
+
+            // Accordion
+
+            $(".mobileDropdownBtn").click(function () {
+
+                let dropdown = $(this).next(".mobileDropdown");
+
+                if (!dropdown.length)
+                    return;
+
+                dropdown.stop(true, true).slideToggle(250);
+
+                $(this)
+                    .find(".fa-chevron-down")
+                    .toggleClass("rotate-180");
+
+            });
+
+        });
+    </script>
 </body>
 
 </html>
