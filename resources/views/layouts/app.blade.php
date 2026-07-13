@@ -785,81 +785,79 @@
 
 
     {{-- ===== FOOTER ===== --}}
-    <footer class="bg-navy-900 text-slate-300 mt-12">
-        <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
-            <div class="col-span-2">
-                <h3 class="text-white text-lg font-bold">Bookish <span class="text-gold-500">& Beyond</span></h3>
-                <p class="mt-3 text-slate-400 leading-relaxed">School essentials, baby wear & gifts. We offer quality
-                    items for school, studies, uniforms, books, baby wear, gifts and more.</p>
-                <div class="flex gap-3 mt-4">
-                    <a href="#"
-                        class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500"><i
-                            class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"
-                        class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500"><i
-                            class="fa-brands fa-instagram"></i></a>
-                    <a href="#"
-                        class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500"><i
-                            class="fa-brands fa-whatsapp"></i></a>
-                    <a href="#"
-                        class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500"><i
-                            class="fa-brands fa-youtube"></i></a>
-                </div>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-3">Quick Links</h4>
-                <ul class="space-y-2">
-                    <a href="{{ route('about') }}">
-                        <li>About Us</li>
-                    </a>
-                    {{-- <a href="{{ route('shop-by-school') }}">
-                        <li>Shop by School</li>
-                    </a> --}}
-                    {{-- <a href="{{route('shop-by-category')}}">
-                        <li>Shop by Category</li>
-                    </a> --}}
-                    <a href="{{ route('returns-refunds') }}">
-                        <li>Returns & Refunds</li>
-                    </a>
-                    {{-- <a href="{{ route('faqs')}}">
-                        <li>FAQs</li>
-                    </a> --}}
-                    {{-- <li>About Us</li> --}}
-                    {{-- <li>Shop by Category</li> --}}
-                    {{-- <li>Track Order</li> --}}
-                    {{-- <li>Returns & Refunds</li> --}}
-                    <a href="{{ route('contact') }}">
-                        <li>Contact Us</li>
-                    </a>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-3">Shop</h4>
-                <ul class="space-y-2">
-                    <li>Books</li>
-                    <li>Uniforms</li>
-                    <li>Bags & Bottles</li>
-                    <li>Baby Wear</li>
-                    <li>Accessories</li>
-                    <li>Gifts</li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-3">Customer Service</h4>
-                <ul class="space-y-2">
-                    <li><i class="fa-solid fa-phone text-gold-400 mr-2"></i>+92 300 1234567</li>
-                    <li><i class="fa-solid fa-envelope text-gold-400 mr-2"></i>support@bookish.pk</li>
-                    <li><i class="fa-solid fa-location-dot text-gold-400 mr-2"></i>Lahore, Pakistan</li>
-                    <li><i class="fa-regular fa-clock text-gold-400 mr-2"></i>Mon - Sat (10AM - 8PM)</li>
-                </ul>
+   <footer class="bg-navy-900 text-slate-300 mt-12">
+    <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-2 md:grid-cols-5 gap-8 text-sm">
+        
+        <!-- Brand Info -->
+        <div class="col-span-2">
+            <h3 class="text-white text-lg font-bold">Bookish <span class="text-gold-500">& Beyond</span></h3>
+            <p class="mt-3 text-slate-400 leading-relaxed">
+                School essentials, baby wear & gifts. We offer quality items for school, studies, uniforms, books, baby wear, gifts and more.
+            </p>
+            <div class="flex gap-3 mt-4">
+                <a href="#" class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500 transition-colors">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+                <a href="#" class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500 transition-colors">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="#" class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500 transition-colors">
+                    <i class="fa-brands fa-whatsapp"></i>
+                </a>
+                <a href="#" class="w-8 h-8 rounded-full bg-navy-800 flex items-center justify-center hover:bg-gold-500 transition-colors">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
             </div>
         </div>
-        <div class="border-t border-navy-800">
-            <div class="max-w-7xl mx-auto px-4 py-4 text-center text-xs text-slate-400">
-                © {{ date('Y') }} Bookish & Beyond. All Rights Reserved.
-            </div>
+
+        <!-- Quick Links (Fixed HTML Nesting) -->
+        <div>
+            <h4 class="text-white font-semibold mb-3">Quick Links</h4>
+            <ul class="space-y-2">
+                <li>
+                    <a href="{{ route('about') }}" class="hover:text-gold-500 transition-colors">About Us</a>
+                </li>
+                <li>
+                    <a href="{{ route('returns-refunds') }}" class="hover:text-gold-500 transition-colors">Returns & Refunds</a>
+                </li>
+                <li>
+                    <a href="{{ route('contact') }}" class="hover:text-gold-500 transition-colors">Contact Us</a>
+                </li>
+            </ul>
         </div>
-    </footer>
+
+        <!-- Shop Links (Added placeholders for proper alignment/interaction) -->
+        <div>
+            <h4 class="text-white font-semibold mb-3">Shop</h4>
+            <ul class="space-y-2">
+                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Books</a></li>
+                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Uniforms</a></li>
+                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Bags & Bottles</a></li>
+                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Baby Wear</a></li>
+                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Accessories</a></li>
+                <li><a href="{{ route('categories.index')}}" class="hover:text-gold-500 transition-colors">Gifts</a></li>
+            </ul>
+        </div>
+
+        <!-- Customer Service -->
+        <div>
+            <h4 class="text-white font-semibold mb-3">Customer Service</h4>
+            <ul class="space-y-2">
+                <li class="flex items-center"><i class="fa-solid fa-phone text-gold-400 mr-2 w-4"></i>+92 320 4735908</li>
+                <li class="flex items-center"><i class="fa-solid fa-envelope text-gold-400 mr-2 w-4"></i>support@bookish.pk</li>
+                <li class="flex items-center"><i class="fa-solid fa-location-dot text-gold-400 mr-2 w-4"></i>Lahore, Pakistan</li>
+                <li class="flex items-start"><i class="fa-regular fa-clock text-gold-400 mr-2 mt-1 w-4"></i><span>Mon - Sat<br>(10AM - 8PM)</span></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Copyright Bar -->
+    <div class="border-t border-navy-800">
+        <div class="max-w-7xl mx-auto px-4 py-4 text-center text-xs text-slate-400">
+            © {{ date('Y') }} Bookish & Beyond. All Rights Reserved.
+        </div>
+    </div>
+</footer>
 
 
     <script src="/js/category-dropdown.js" defer></script>
