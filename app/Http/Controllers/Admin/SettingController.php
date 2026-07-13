@@ -20,6 +20,7 @@ class SettingController extends Controller
                 'bank_iban' => Setting::get('bank_iban'),
                 'bank_account_no' => Setting::get('bank_account_no'),
                 'raast_id' => Setting::get('raast_id'),
+                'qr_image' => Setting::get('qr_image'),
             ],
         ]);
     }
