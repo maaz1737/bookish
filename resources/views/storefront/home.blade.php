@@ -128,25 +128,6 @@
 
             <div class="grid-3">
                 @foreach ($bestSellers as $index => $product)
-                    @php
-                        $badgeClass = 'badge';
-                        if ($product->discount_price && $product->price > 0) {
-                            $pct = round((($product->price - $product->discount_price) / $product->price) * 100);
-                            $badgeText = "Save {$pct}%";
-                            $badgeClass = 'badge badge-orange';
-                        } else {
-                            $badgeText = 'Best Seller';
-                        }
-
-                        $inWishlist = false;
-                        if (auth()->check()) {
-                            $inWishlist = \App\Models\Wishlist::where('user_id', auth()->id())->where('product_id', $product->id)->exists();
-                        } else {
-                            $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())->where('product_id', $product->id)->exists();
-                        }
-                    @endphp
-
-
                     @include('partials.product-card', ['product' => $product])
 
                 @endforeach

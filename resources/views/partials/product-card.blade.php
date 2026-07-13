@@ -1,66 +1,24 @@
-<style>
-    .product-card {
-        width: 380px;
-        border: 1px solid #f0f0f0;
-        border-radius: 8px;
-        overflow: hidden;
-        box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+@php
+    $badgeClass = 'badge';
+    if ($product->discount_price && $product->price > 0) {
+        $pct = round((($product->price - $product->discount_price) / $product->price) * 100);
+        $badgeText = "Save {$pct}%";
+        $badgeClass = 'badge badge-orange';
+    } else {
+        $badgeText = 'Best Seller';
     }
-
-    .image-container {
-        /* aspect-ratio: 4/ 3;
-        width: 100%;
-        overflow: hidden;
-        background: #f4f4f5; */
-        width: 100%;
-        background-position: center !important;
-        background-repeat: no-repeat !important;
-        background-size: cover !important;
-        height: 260px !important;
-
+    $inWishlist = false;
+    if (auth()->check()) {
+        $inWishlist = \App\Models\Wishlist::where('user_id', auth()->id())->where('product_id', $product->id)->exists();
+    } else {
+        $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())->where('product_id', $product->id)->exists();
     }
-
-    /* .image-container img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-        display: block;
-
-    } */
-
-    .product-info {
-        color: navy;
-        padding: 11px 10px;
-        font-weight: 600;
-        font-size: 20px;
-
-    }
-
-    .amount {
-        display: flex;
-        gap: 12px;
-        padding: 3px 0px 10px 0px;
-        align-items: end;
-        font-weight: 600;
-        font-size: 18px
-    }
-
-    .prev-amount {
-        font-size: 14px;
-        font-weight: 500;
-        text-decoration: line-through;
-        color: gray;
-        padding-bottom: 2px;
-    }
-</style>
-
-
+@endphp
 <div class="product-card relative group bg-white">
 
     <!-- Discount / Badge -->
-    <span class="{{ $badgeClass }} absolute top-4 left-4 z-10 shadow-sm">
-        {{ $badgeText }}
+    <span class="{{ $badgeClass ?? "" }} absolute top-4 left-4 z-10 shadow-sm">
+        {{ $badgeText ?? "" }}
     </span>
 
     <!-- Wishlist -->
