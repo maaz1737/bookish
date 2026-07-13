@@ -70,14 +70,14 @@
                                 <div class="flex-1 min-w-0">
                                     <h3 class="font-semibold text-[#0a1f44] truncate">{{ $item['name'] }}</h3>
                                     <p class="text-sm text-gray-500 mt-1">Qty: {{ $item['quantity'] }}</p>
-                                    <p class="text-sm text-gray-400">Unit price: PKR {{ number_format($item['discount_price']) }}
+                                    <p class="text-sm text-gray-400">Unit price: PKR {{ number_format($item['discount_price'] ?? $item['price'] ) }}
                                     </p>
                                 </div>
 
                                 {{-- Price + Remove --}}
                                 <div class="text-right">
                                     <p class="font-bold text-[#0a1f44]">
-                                        PKR {{ number_format($item['discount_price'] * $item['quantity']) }}
+                                        PKR {{ number_format(($item['discount_price'] ?? $item['price'] ) * $item['quantity']) }}
                                     </p>
                                     <form action="{{ url('/cart/' . $key) }}" method="POST" class="mt-2">
                                         @csrf
