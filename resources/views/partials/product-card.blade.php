@@ -17,17 +17,21 @@
 <div class="product-card relative group bg-white">
 
     <!-- Discount / Badge -->
-    <span class="{{ $badgeClass ?? "" }} absolute top-4 left-4 z-10 shadow-sm">
+    <span
+        class="{{ $badgeClass ?? '' }} absolute top-2 left-2 md:top-4 md:left-4 z-10 shadow-sm text-[10px] md:text-xs px-2 py-1 md:px-2.5 md:py-1.5">
         {{ $badgeText ?? "" }}
     </span>
 
     <!-- Wishlist -->
-    <button
-        class="wishlist-toggle-btn absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white shadow flex items-center justify-center transition-colors {{ $inWishlist ? 'text-rose-500' : 'text-slate-400' }} hover:text-rose-500"
-        data-product-id="{{ $product->id }}" data-url="{{ route('wishlist.toggle', $product) }}"
-        aria-label="Toggle {{ $product->name }} wishlist">
+    <button class="wishlist-toggle-btn absolute top-2 right-2 md:top-4 md:right-4 z-10 flex items-center justify-center
+           w-7 h-7 md:w-8 md:h-8
+           rounded-full bg-white shadow transition-all duration-200
+           {{ $inWishlist ? 'text-rose-500' : 'text-slate-400' }}
+           hover:text-rose-500 hover:shadow-md hover:scale-105" data-product-id="{{ $product->id }}"
+        data-url="{{ route('wishlist.toggle', $product) }}" aria-label="Toggle {{ $product->name }} wishlist">
 
-        <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart"></i>
+        <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart text-xs md:text-sm"></i>
+
     </button>
 
     <!-- Image -->
