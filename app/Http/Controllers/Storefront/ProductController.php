@@ -22,14 +22,19 @@ class ProductController extends Controller
             ->where('slug', $slug)
             ->where('is_active', true)
             ->with([
+                'products' => function ($q) {
+                    $q->where('is_active', true)
+                        ->whereNull('sub_category_id')
+                        ->latest();
+                },
                 'children' => function ($q) {
                     $q->where('is_active', true)
                         ->with([
-                            'products' => function ($pq) {
+                            'childProducts' => function ($pq) {
                                 $pq->where('is_active', true)
                                     ->with('variants')
                                     ->latest()
-                                    ->limit(4);
+                                    ->take(4);
                             }
                         ]);
                 }
@@ -38,39 +43,15 @@ class ProductController extends Controller
 
         // If not found as parent, try as subcategory
         if (!$category) {
-            $subcategory = Category::where('slug', $slug)
+            $category = Category::where('slug', $slug)
                 ->where('is_active', true)
                 ->whereNotNull('parent_id')
-                ->with('parent')
+                ->with('childProducts')
                 ->first();
-
-            if ($subcategory) {
-                $products = Product::where('category_id', $subcategory->id)
-                    ->where('is_active', true)
-                    ->with('variants')
-                    ->latest()
-                    ->paginate(24);
-
-                return view('storefront.category', [
-                    'category' => null,
-                    'subcategory' => $subcategory,
-                    'products' => $products,
-                ]);
-            }
-
-            abort(404);
+            // dd($subcategory->childProducts);
         }
 
-
-        // Collect direct products under the parent category
-        $directProducts = Product::where('category_id', $category->id)
-            ->where('is_active', true)
-            ->with('variants')
-            ->latest()
-            ->limit(4)
-            ->get();
-
-        return view('storefront.category', compact('category', 'directProducts'));
+        return view('storefront.category', compact('category'));
     }
 
 

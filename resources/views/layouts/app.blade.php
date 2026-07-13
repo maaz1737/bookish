@@ -244,7 +244,63 @@
             }
         }
     </style>
+    <style>
+        .product-card {
+            /* min-width: 380px; */
+            width: 100%;
+            border: 1px solid #f0f0f0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+        }
 
+        .image-container {
+            /* aspect-ratio: 4/ 3;
+        width: 100%;
+        overflow: hidden;
+        background: #f4f4f5; */
+            width: 100%;
+            background-position: center !important;
+            background-repeat: no-repeat !important;
+            background-size: cover !important;
+            height: 260px !important;
+
+        }
+
+        /* .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+
+    } */
+
+        .product-info {
+            color: navy;
+            padding: 11px 10px;
+            font-weight: 600;
+            font-size: 20px;
+
+        }
+
+        .amount {
+            display: flex;
+            gap: 12px;
+            padding: 3px 0px 10px 0px;
+            align-items: end;
+            font-weight: 600;
+            font-size: 18px
+        }
+
+        .prev-amount {
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: line-through;
+            color: gray;
+            padding-bottom: 2px;
+        }
+    </style>
 </head>
 
 <body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
@@ -501,9 +557,8 @@
             <!-- Header -->
             <div class="flex items-center justify-between px-4 py-3 border-b">
                 <h2 class="text-[15px] font-semibold text-gray-800">
-                    Review Your Cart ({{ count($carts['items']) }})
+                    Review Your Cart (<span id="review_cart">{{ count($carts['items']) }}</span>)
                 </h2>
-
                 <button id="closeCart" class="text-gray-500 text-xl leading-none">
                     ×
                 </button>

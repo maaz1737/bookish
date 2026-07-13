@@ -66,7 +66,6 @@ $(document).on("submit", ".cart-form", function (e) {
         url: form.attr("action"),
         type: "POST",
         data: form.serialize(),
-
         beforeSend: function () {
             button.prop("disabled", true);
 
@@ -223,10 +222,10 @@ async function loadCart() {
             `;
          });
     }
-    document.getElementById("cart_total").innerHTML = data.total;
-    document.getElementById("cart_count").innerHTML = data.total_count ?? 0;
-
-    document.getElementById("cart-container").innerHTML = html;
+    document.getElementById('cart_total').innerHTML = data.total
+    document.getElementById('cart_count').innerHTML = data.total_count ?? 0;
+    document.getElementById('review_cart').innerHTML = data.total_count ?? 0;
+    document.getElementById('cart-container').innerHTML = html;
 }
 
 async function updateQty(key, action, ele) {
