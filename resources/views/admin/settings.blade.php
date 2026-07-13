@@ -9,6 +9,11 @@
             <label class="block"><span class="text-sm font-medium">{{ $label }}</span>
                 <input name="{{ $key }}" value="{{ $settings[$key] }}" class="w-full border rounded px-3 py-2 mt-1"></label>
         @endforeach
+        <div>
+            <div class="h-20 w-20 bg-center bg-cover bg-no-repeat"
+                style="background-image: url('{{ asset('storage/' . $settings['qr_image']) }}');">
+            </div>
+        </div>
         <label class="block">
             <span class="text-sm font-medium">QR Image</span>
             <input type="file" name="qr_image" class="w-full border rounded px-3 py-2 mt-1">

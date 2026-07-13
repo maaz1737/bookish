@@ -263,7 +263,7 @@
             background-position: center !important;
             background-repeat: no-repeat !important;
             background-size: cover !important;
-            height: 260px !important;
+            aspect-ratio: 19 / 13 !important;
 
         }
 
@@ -318,11 +318,13 @@
 
     {{-- ===== HEADER ===== --}}
     <header class="bg-white border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-6  justify-between">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-2 xs:gap-6  justify-between">
             <a href="{{ url('/') }}" class="shrink-0">
-                <h1 class="text-2xl font-extrabold text-navy-800">Bookish <span class="text-gold-500">& Beyond</span>
+                <h1 class="text-xl sm:text-2xl font-extrabold text-navy-800">Bookish <span class="text-gold-500">&
+                        Beyond</span>
                 </h1>
-                <p class="text-xs text-slate-500">School Essentials, Baby Wear & Gifts</p>
+                <p class="text-[12px] sm:text-xs text-slate-500">School Essentials<span class="hidden sm:inline">, Baby
+                        Wear & Gifts</span> </p>
             </a>
 
             <form action="#" class="flex-1 hidden lg:flex border border-slate-300 rounded-lg overflow-hidden">
@@ -343,7 +345,8 @@
                 }
             @endphp
             <div class="flex items-center gap-6 text-slate-700">
-                <a href="#" class="flex flex-col items-center text-xs"><i class="fa-regular fa-user text-lg"></i>
+                <a href="#" class="flex flex-col items-center text-xs hidden sm:inline"><i
+                        class="fa-regular fa-user text-lg"></i>
                     <span class="hidden lg:inline">Login / Register</span>
                 </a>
                 <a href="{{ route('wishlist.index') }}" class="relative flex flex-col items-center text-xs"><i
@@ -693,7 +696,7 @@
     @endif
 
     {{-- ===== MAIN ===== --}}
-    <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-8">
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-3  md:py-8">
         @yield('content')
     </main>
 
@@ -783,9 +786,9 @@
         </div>
     </div>
 
-
+   
     {{-- ===== FOOTER ===== --}}
-    <footer class="bg-navy-900 text-slate-300 mt-12">
+    <footer class="bg-navy-900 text-slate-300 mt-2 md:mt-12">
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 

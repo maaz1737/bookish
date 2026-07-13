@@ -473,40 +473,9 @@
         </div>
 
         <!-- Trust badges -->
-        <div class="mt-8 border border-gray-200 rounded-xl p-6 bg-white max-w-5xl mx-auto">
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-                <div class="flex items-center gap-3"><i class="fa-solid fa-shield-halved text-2xl text-[#0a1f44]"></i>
-                    <div>
-                        <p class="text-sm font-bold text-[#0a1f44]">100% Original Products</p>
-                        <p class="text-xs text-gray-500">Sourced from authorized suppliers</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3"><i class="fa-solid fa-truck text-2xl text-[#0a1f44]"></i>
-                    <div>
-                        <p class="text-sm font-bold text-[#0a1f44]">Fast & Reliable Delivery</p>
-                        <p class="text-xs text-gray-500">Across Pakistan</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3"><i class="fa-solid fa-credit-card text-2xl text-[#0a1f44]"></i>
-                    <div>
-                        <p class="text-sm font-bold text-[#0a1f44]">Secure Payments</p>
-                        <p class="text-xs text-gray-500">Multiple payment options</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3"><i class="fa-solid fa-rotate-left text-2xl text-[#0a1f44]"></i>
-                    <div>
-                        <p class="text-sm font-bold text-[#0a1f44]">Easy Returns</p>
-                        <p class="text-xs text-gray-500">Hassle-free returns within 7 days</p>
-                    </div>
-                </div>
-                <div class="flex items-center gap-3"><i class="fa-solid fa-headset text-2xl text-[#0a1f44]"></i>
-                    <div>
-                        <p class="text-sm font-bold text-[#0a1f44]">Dedicated Support</p>
-                        <p class="text-xs text-gray-500">We're here to help you anytime</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    
+            @include('partials.trust-section')
+
 
     </main>
 

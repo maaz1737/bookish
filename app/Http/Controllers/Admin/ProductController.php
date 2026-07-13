@@ -214,7 +214,6 @@ class ProductController extends Controller
         if (!Storage::disk('public')->exists('products')) {
             Storage::disk('public')->makeDirectory('products');
         }
-
         $paths = [];
 
         foreach ((array) $request->file('images', []) as $file) {
