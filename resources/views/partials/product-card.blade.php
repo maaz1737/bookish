@@ -38,17 +38,18 @@
     </a>
 
     <!-- Product Info -->
-    <div class="product-info">
-
+    <div class="text-[#001F54] px-2.5 py-2 font-semibold text-sm md:text-base lg:text-lg">
         <a href="{{ route('product.show', $product) }}">
             <h3>{{ ucfirst($product->name) }}</h3>
         </a>
 
-        <div class="amount">
-            <p>PKR {{ number_format($product->discount_price ?? $product->price) }}</p>
+        <div class="flex items-end gap-2 pb-3">
+            <p class="text-[#001F54] font-bold text-sm md:text-base lg:text-lg">
+                PKR {{ number_format($product->discount_price ?? $product->price) }}
+            </p>
 
             @if ($product->discount_price)
-                <p class="prev-amount">
+                <p class="text-gray-500 line-through text-xs md:text-sm pb-[2px]">
                     PKR {{ number_format($product->price) }}
                 </p>
             @endif
@@ -56,9 +57,14 @@
 
         <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form">
             @csrf
-            <button type="submit" class="primary-btn">
-                <i class="fa-solid fa-cart-shopping mr-2"></i>
-                Add To Cart
+            <button type="submit"
+                class="w-full rounded-lg bg-[#001F54] py-2 md:py-2.5 text-sm md:text-base font-medium text-white transition-all duration-200 hover:bg-[#003080] hover:shadow-md active:scale-[0.98]">
+
+                <i class="fa-solid fa-cart-shopping mr-1 md:mr-2"></i>
+
+                <span class="lg:hidden">Add</span>
+                <span class="hidden lg:inline">Add To Cart</span>
+
             </button>
         </form>
 
