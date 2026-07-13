@@ -27,9 +27,12 @@ class ClassController extends Controller
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('school_classes', 'name'),
+                Rule::unique('school_classes')
+                    ->where(fn($query) => $query->where('school_id', $request->school_id)),
             ],
             'sort_order' => ['required', 'integer'],
+        ], [
+            'name.unique' => 'A class with this name already exists for the selected school.',
         ]);
 
         $data['slug'] = Str::slug($data['name']);
