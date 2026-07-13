@@ -161,7 +161,6 @@ async function loadCart() {
             html += `
             <div class="cart-item-container flex gap-4 mb-5 p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
 
-                <!-- Product Image -->
                 <div class="relative shrink-0 cart-loader">
                     <img src="${item.image}"
                         class="w-16 h-16 rounded-xl border border-[#E6ECF5] bg-white p-1 shadow-sm object-cover transition-all duration-300 hover:shadow-md">
@@ -258,8 +257,8 @@ async function updateQty(key, action, ele) {
 }
 
 async function removeItem(key, ele) {
-    // before send message
-    let image = $(ele).closest(".cart-loader");
+    // FIX: `.cart-loader` selector fixed using `.closest().find()` to show the loader properly
+    let image = $(ele).closest(".cart-item-container").find(".cart-loader");
     let originalHtml = image.html();
     image.html(`<span class="relative">
         ${originalHtml}
@@ -289,7 +288,11 @@ async function removeItem(key, ele) {
 
         // Success message
     } catch (error) {
-        showToast("Something went wrong.", "error");
+        if (typeof showToast === "function") {
+            showToast("Something went wrong.", "error");
+        } else {
+            console.error("showToast function is not defined");
+        }
         console.error(error);
     }
 }
