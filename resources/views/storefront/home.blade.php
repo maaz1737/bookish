@@ -25,16 +25,28 @@
                                         Books, Uniforms, Bags, Attar & Thoughtful Gifts – All Handpicked for Quality You Can
                                         Trust.
                                     </p>
-                                    <div class="flex gap-4 mt-6">
-                                        <a href="#school-section"
-                                            class="px-4 py-2.5 text-sm rounded-lg bg-navy-800 text-white shadow-md hover:bg-navy-900 hover:shadow-lg transition-all duration-200 lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
-                                            Shop by School <i class="fa-solid fa-arrow-right ml-1 text-xs"></i>
+                                    <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mt-6 w-full">
+                                        <a href="#school-section" class="inline-flex items-center justify-center whitespace-nowrap
+                                                            w-full sm:w-auto
+                                                            px-4 py-2.5 text-sm rounded-lg
+                                                            bg-navy-800 text-white shadow-md
+                                                            hover:bg-navy-900 hover:shadow-lg
+                                                            transition-all duration-200
+                                                            lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
+                                            Shop by School <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
                                         </a>
-                                        <a href="#category-section"
-                                            class="inline-flex items-center justify-center border-2 border-[#001F54] text-[#001F54] hover:bg-[#001F54] hover:text-white px-4 py-2.5 text-sm rounded-lg font-semibold transition-all duration-200 lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
+
+                                        <a href="#category-section" class="inline-flex items-center justify-center whitespace-nowrap
+                                                            w-full sm:w-auto
+                                                            border-2 border-[#001F54] text-[#001F54]
+                                                            hover:bg-[#001F54] hover:text-white
+                                                            px-4 py-2.5 text-sm rounded-lg font-semibold
+                                                            transition-all duration-200
+                                                            lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
                                             Shop All Categories
                                         </a>
                                     </div>
+
 
                                     {{-- Hero Bottom Trust Strip --}}
                                     <div class="flex flex-wrap gap-x-6 gap-y-2 mt-10 text-xs md:text-sm text-slate-700">
@@ -136,7 +148,7 @@
             </div>
 
             <!-- Products -->
-            <div class="grid xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-6">
+            <div class="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-6">
                 @foreach ($bestSellers as $product)
                     @include('partials.product-card', ['product' => $product])
                 @endforeach
