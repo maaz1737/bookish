@@ -305,7 +305,7 @@ async function loadCart() {
 
                     <button
                         onclick="removeItem('${item.key}', this)"
-                        class="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-red-500 hover:text-red-700 transition-colors">
+                        class="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-red-500 hover:text-red-700 transition-colors ">
                         <svg xmlns="http://www.w3.org/2000/svg"
                             class="w-3.5 h-3.5"
                             fill="none"
@@ -335,7 +335,7 @@ async function updateQty(key, action, ele) {
     let originalHtml = image.html();
     image.html(`<span class="relative">
         ${originalHtml}
-    <div class="">
+    <div>
         ${loader}
     </div>
 </span>
@@ -363,7 +363,7 @@ async function removeItem(key, ele) {
     let originalHtml = image.html();
     image.html(`<span class="relative">
         ${originalHtml}
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div>
         ${loader}
     </div>
 </span>
