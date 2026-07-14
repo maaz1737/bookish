@@ -223,18 +223,22 @@
             height: 18px;
             background-image: linear-gradient(rgb(186, 66, 255) 35%, rgb(0, 225, 255));
             border-radius: 50%;
-            animation: spinning82341 1.2s linear infinite;
             box-shadow:
                 0 -1px 4px rgb(186, 66, 255),
                 0 1px 4px rgb(0, 225, 255);
+            display: grid;
+            place-items: center;
+            animation: spinning82341 1.2s linear infinite;
+            transform-origin: 50% 50%;
+            /* spin around its own center */
+            will-change: transform;
         }
 
         .spinner1 {
             width: 14px;
             height: 14px;
-            margin: 2px;
             background: white;
-            /* or your button background */
+            /* match parent bg for the "ring" illusion */
             border-radius: 50%;
         }
 
@@ -242,6 +246,8 @@
             to {
                 transform: rotate(360deg);
             }
+        }
+
         }
     </style>
     <style>
