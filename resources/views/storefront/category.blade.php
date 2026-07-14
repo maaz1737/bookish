@@ -18,7 +18,9 @@
         @endif
     </nav>
     <section
-        class="relative overflow-hidden mb-10 rounded-[28px] bg-gradient-to-br from-navy-50 to-slate-100 px-8 px-8 md:px-4py-2 md:py-4">
+        class="relative overflow-hidden mb-10 rounded-[28px] bg-gradient-to-br from-navy-50 to-slate-100 p-2 md:px-8 md:py-4">
+
+        <!-- Decorative dots -->
         <div class="absolute left-2 bottom-4 flex flex-col gap-2 opacity-70 pointer-events-none">
             @for ($row = 2; $row <= 4; $row++)
                 <div class="flex gap-2">
@@ -28,42 +30,43 @@
                 </div>
             @endfor
         </div>
-        <div class="absolute right-[38%] top-10 text-[#ff7a00] text-2xl pointer-events-none hidden md:block">✦</div>
 
-        <div class="grid md:grid-cols-12 items-center gap-8 relative z-10">
-            <div class="md:col-span-7 flex flex-col justify-center py-12">
-                {{-- Heading --}}
-                <h1 class="text-4xl md:text-5xl font-extrabold text-[#001F54] leading-tight tracking-tight">
+        <div class="absolute right-[38%] top-10 text-[#ff7a00] text-2xl pointer-events-none hidden md:block">
+            ✦
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 items-center gap-6 md:gap-8 relative z-10">
+
+            <!-- Content -->
+            <div class="md:col-span-7 flex flex-col justify-center py-4 md:py-12 text-center md:text-left">
+
+                <h1
+                    class="text-2xl sm:text-3xl md:text-5xl font-bold md:font-extrabold text-[#001F54] leading-tight tracking-tight">
                     {{ $category->name }}
                 </h1>
 
-                {{-- Description --}}
                 @if ($category->description)
-                    <p class="text-slate-600 text-sm md:text-base mt-4 max-w-md leading-relaxed">
+                    <p class="text-slate-600 text-sm sm:text-base mt-4 max-w-full md:max-w-md leading-relaxed mx-auto md:mx-0">
                         {{ $category->description }}
                     </p>
                 @endif
 
-                {{-- CTA Button --}}
-                <div class="mt-4">
+                <div class="mt-5">
                     <a href="#products"
                         class="inline-flex items-center gap-2 bg-[#001F54] hover:bg-[#001440] text-white font-semibold text-sm px-4 py-2 rounded-xl transition-colors">
-                        Explore
-                        {{ $category->name }}
-                        <i class="fa-solid fa-arrow-right text-xs mb-[-3px]"></i>
+                        Explore {{ $category->name }}
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
                     </a>
                 </div>
             </div>
 
+            <!-- Image -->
             @if ($category->image)
-                <div class="md:col-span-5 flex justify-center" style="
-                                        background: url({{ $category->imageUrl() }});
-                                        background-repeat: no-repeat;
-                                        background-size: contain;
-                                        height: 100%;
-                                        background-position: center;">
+                <div class="md:col-span-5 h-52 sm:h-64 md:h-[380px] bg-center bg-contain bg-no-repeat"
+                    style="background-image: url('{{ $category->imageUrl() }}');">
                 </div>
             @endif
+
         </div>
     </section>
 
@@ -73,19 +76,19 @@
                 @if ($sub->childProducts->count())
                     <section>
                         {{-- Section Heading --}}
-                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                            <h2 class="text-xl sm:text-2xl font-extrabold text-[#001F54] flex items-center gap-3">
+                        <div class="flex flex-row sm:items-center justify-between gap-2 mb-4">
+                            <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
                                 <span class="w-1 h-7 bg-[#ff7a00] rounded-full inline-block shrink-0"></span>
                                 {{ $sub->name }}
                             </h2>
                             <a href="{{ route('category.show', $sub->slug) }}"
-                                class="text-[#001F54] hover:text-[#ff7a00] font-bold text-sm flex items-center gap-1 transition-colors shrink-0">
+                                class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">
                                 View All <i class="fa-solid fa-arrow-right text-xs"></i>
                             </a>
                         </div>
 
                         {{-- Product Grid --}}
-                        <div class="grid-4">
+                        <div class="grid-4 mt-3 md:mt-0">
                             @foreach ($sub->childProducts as $product)
                                 @include('partials.product-card', ['product' => $product])
                             @endforeach
@@ -97,8 +100,8 @@
     @endif
     @if ($category->products->count())
         <section class="mt-14" id="products">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-3 border-b-2 border-slate-100">
-                <h2 class="text-xl sm:text-2xl font-extrabold text-[#001F54] flex items-center gap-3">
+            <div class="mb-3 pb-1 md:mb-6 md:pb-3 border-b-2 border-slate-100">
+                <h2 class="flex items-center gap-1 text-xl md:text-2xl font-bold text-[#001F54]">
                     <span class="w-1 h-7 bg-[#ff7a00] rounded-full inline-block shrink-0"></span>
                     All Products
                 </h2>
