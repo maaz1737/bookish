@@ -111,101 +111,90 @@
             </div>
 
             {{-- ===== RIGHT: Product Info ===== --}}
-            <div class="flex flex-col justify-center p-6 md:p-10">
+
+            {{-- ===== RIGHT: Product Info ===== --}}
+            <div class="flex flex-col justify-center p-4 sm:p-6 md:p-10">
 
                 {{-- Category label --}}
-                <span class="text-xs font-bold tracking-widest text-[#ff7a00] uppercase mb-3">
+                <span class="text-xs font-bold tracking-widest text-[#ff7a00] uppercase mb-2 sm:mb-3">
                     {{ $product->category?->name ?? '' }}
                 </span>
 
                 {{-- Product Name --}}
-                <h1 class="text-3xl md:text-3xl font-extrabold text-[#001F54] leading-tight mb-3">
+                <h1 class="text-2xl sm:text-3xl font-extrabold text-[#001F54] leading-tight mb-3 break-words">
                     {{ $product->name }}
                 </h1>
 
                 {{-- Star Rating (static 5-star display) --}}
-                <div class="flex items-center gap-2 mb-5">
+                <div class="flex items-center gap-2 mb-4 sm:mb-5 flex-wrap">
                     <div class="flex text-[#ff7a00]">
                         @for ($s = 0; $s < 5; $s++)
-                            <i class="fa-solid fa-star text-sm"></i>
+                            <i class="fa-solid fa-star text-xs sm:text-sm"></i>
                         @endfor
                     </div>
                     <span class="text-xs text-slate-400 font-medium">(12 Reviews)</span>
                 </div>
 
-                {{-- Pricing --}}
-                <div class="flex items-center gap-3 mb-2">
-                    <span class="text-3xl font-black text-[#001F54]">PKR {{ number_format($effectivePrice) }}</span>
-                    @if ($hasDiscount)
-                        <span class="text-base text-slate-400 line-through">PKR {{ number_format($product->price) }}</span>
-                        <span class="bg-[#ff7a00] text-white text-xs font-bold px-2.5 py-1 rounded-full">Save
-                            {{ $discountPct }}%</span>
-                    @endif
-                    @if ($inStock)
-                        @if ($isLow)
+                {{-- Pricing & Stock status (Wrapped for small screens) --}}
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3 mb-4 sm:mb-5">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="text-2xl sm:text-3xl font-black text-[#001F54]">PKR
+                            {{ number_format($effectivePrice) }}</span>
+                        @if ($hasDiscount)
+                            <span class="text-sm sm:text-base text-slate-400 line-through">PKR
+                                {{ number_format($product->price) }}</span>
                             <span
-                                class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">
-                                <span class="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block"></span>
-                                Low Stock — only {{ $product->stock }} left
-                            </span>
-                        @else
-                            <span
-                                class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
-                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
-                                In Stock
+                                class="bg-[#ff7a00] text-white text-[10px] sm:text-xs font-bold px-2.5 py-1 rounded-full whitespace-nowrap">
+                                Save {{ $discountPct }}%
                             </span>
                         @endif
-                    @else
-                        <span
-                            class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full">
-                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block"></span>
-                            Out of Stock
-                        </span>
-                    @endif
-                </div>
+                    </div>
 
-                {{-- Stock Status --}}
-                {{-- <div class="mb-5">
-                    @if ($inStock)
-                    @if ($isLow)
-                    <span
-                        class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full">
-                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block"></span>
-                        Low Stock — only {{ $product->stock }} left
-                    </span>
-                    @else
-                    <span
-                        class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
-                        In Stock
-                    </span>
-                    @endif
-                    @else
-                    <span
-                        class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full">
-                        <span class="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block"></span>
-                        Out of Stock
-                    </span>
-                    @endif
-                </div> --}}
+                    {{-- Stock Badge --}}
+                    <div class="w-full sm:w-auto mt-1 sm:mt-0">
+                        @if ($inStock)
+                            @if ($isLow)
+                                <span
+                                    class="inline-flex items-center gap-1.5 text-xs font-semibold text-amber-600 bg-amber-50 border border-amber-200 px-3 py-1 rounded-full whitespace-nowrap">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500 inline-block"></span>
+                                    Low Stock — only {{ $product->stock }} left
+                                </span>
+                            @else
+                                <span
+                                    class="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full whitespace-nowrap">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block"></span>
+                                    In Stock
+                                </span>
+                            @endif
+                        @else
+                            <span
+                                class="inline-flex items-center gap-1.5 text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-200 px-3 py-1 rounded-full whitespace-nowrap">
+                                <span class="w-1.5 h-1.5 rounded-full bg-rose-500 inline-block"></span>
+                                Out of Stock
+                            </span>
+                        @endif
+                    </div>
+                </div>
 
                 {{-- Description --}}
                 @if ($product->description)
-                    <p class="text-slate-600 text-sm leading-relaxed mb-6">
+                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed mb-5 sm:mb-6 break-words">
                         {{ $product->description }}
                     </p>
                 @endif
 
                 {{-- Size / Gender meta --}}
                 @if ($product->size || $product->gender)
-                    <div class="flex flex-wrap gap-3 mb-6">
+                    <div class="flex flex-wrap gap-2 mb-5 sm:mb-6">
                         @if ($product->size)
-                            <span class="text-xs bg-slate-100 text-slate-600 font-medium px-3 py-1.5 rounded-full">
+                            <span
+                                class="text-xs bg-slate-100 text-slate-600 font-medium px-3 py-1.5 rounded-full whitespace-nowrap">
                                 Size: {{ $product->size }}
                             </span>
                         @endif
                         @if ($product->gender)
-                            <span class="text-xs bg-slate-100 text-slate-600 font-medium px-3 py-1.5 rounded-full">
+                            <span
+                                class="text-xs bg-slate-100 text-slate-600 font-medium px-3 py-1.5 rounded-full whitespace-nowrap">
                                 {{ ucfirst($product->gender) }}
                             </span>
                         @endif
@@ -213,68 +202,71 @@
                 @endif
 
                 {{-- Add to Cart Form --}}
-
                 @if ($inStock)
                     <form method="POST" action="{{ route('cart.addProduct', $product) }}" id="add-to-cart-form"
-                        class=" cart-form">
+                        class="cart-form mb-4 sm:mb-6">
                         @csrf
 
-                        <div class="flex gap-8">
-                            {{-- Quantity --}}
-                            <div class="flex items-center gap-4 mb-5">
-                                <span class="text-sm font-semibold text-[#001F54]">Quantity:</span>
-                                <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden">
+                        {{-- Quantity + Button Wrapper (Vertical on mobile, Horizontal on SM screens and above) --}}
+                        <div class="flex flex-col sm:flex-row sm:items-center gap-4 md:gap-6">
+
+                            {{-- Quantity Selector --}}
+                            <div class="flex items-center gap-3 sm:gap-4">
+                                <span class="text-sm font-semibold text-[#001F54] whitespace-nowrap">Quantity:</span>
+                                <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden bg-white">
                                     <button type="button" id="qty-minus"
                                         class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
                                         −
                                     </button>
                                     <input type="number" name="quantity" id="qty-input" value="1" min="1"
                                         max="{{ $product->stock }}"
-                                        class="w-14 h-10 text-center text-sm font-bold text-[#001F54] border-0 border-x border-slate-200 focus:outline-none focus:ring-0 bg-white">
+                                        class="w-12 sm:w-14 h-10 text-center text-sm font-bold text-[#001F54] border-0 border-x border-slate-200 focus:outline-none focus:ring-0 bg-white p-0">
                                     <button type="button" id="qty-plus"
                                         class="add-to-cart-btn w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
                                         +
                                     </button>
                                 </div>
                             </div>
-                            
+
                             {{-- Add to Cart Button --}}
                             <button type="submit"
-                                class="w-full flex items-center justify-center gap-2 bg-[#001F54] py-3 hover:bg-[#000c3a] px-16 text-white font-bold  rounded-[14px] transition-all duration-200 shadow-sm hover:shadow-md text-sm mb-3 h-10">
+                                class="w-full flex items-center justify-center gap-2 bg-[#001F54] py-3 hover:bg-[#000c3a] px-6 sm:px-10 text-white font-bold rounded-[14px] transition-all duration-200 shadow-sm hover:shadow-md text-sm h-11">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                Add to Cart
+                                <span class="whitespace-nowrap">Add to Cart</span>
                             </button>
+
+                        </div>
                     </form>
                 @else
                     <button disabled
-                        class="w-full flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-bold px-8 py-4 rounded-[14px] cursor-not-allowed text-sm mb-3">
+                        class="w-full flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-bold px-8 py-3.5 rounded-[14px] cursor-not-allowed text-sm mb-4 sm:mb-6">
                         <i class="fa-solid fa-ban"></i>
                         Out of Stock
                     </button>
                 @endif
-            </div>
 
 
-            {{-- Secondary Actions: Wishlist + Share --}}
-            <div class="grid grid-cols-2 gap-3 mt-1">
-                {{-- Wishlist Toggle — uses global .wishlist-toggle-btn handler in app.blade.php --}}
-                <button id="wishlist-btn" data-product-id="{{ $product->id }}"
-                    data-url="{{ route('wishlist.toggle', $product) }}"
-                    class="wishlist-toggle-btn wishlist-detail-extra flex items-center justify-center gap-2 border-2 {{ $inWishlist ? 'border-rose-400 text-rose-500 bg-rose-50' : 'border-slate-200 text-slate-600' }} hover:border-rose-400 hover:text-rose-500 hover:bg-rose-50 font-semibold px-4 py-3 rounded-[14px] transition-all duration-200 text-sm">
-                    <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart text-sm"></i>
-                    <span class="wishlist-label">{{ $inWishlist ? 'Wishlisted' : 'Add to Wishlist' }}</span>
-                </button>
+                {{-- Secondary Actions: Wishlist + Share --}}
+                <div class="grid grid-cols-2 gap-2 sm:gap-3 mt-2">
+                    {{-- Wishlist Toggle --}}
+                    <button id="wishlist-btn" data-product-id="{{ $product->id }}"
+                        data-url="{{ route('wishlist.toggle', $product) }}"
+                        class="wishlist-toggle-btn wishlist-detail-extra flex items-center justify-center gap-1.5 sm:gap-2 border-2 {{ $inWishlist ? 'border-rose-400 text-rose-500 bg-rose-50' : 'border-slate-200 text-slate-600' }} hover:border-rose-400 hover:text-rose-500 hover:bg-rose-50 font-semibold px-2 sm:px-4 py-2.5 sm:py-3 rounded-[14px] transition-all duration-200 text-xs sm:text-sm">
+                        <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart text-xs sm:text-sm"></i>
+                        <span class="wishlist-label truncate">{{ $inWishlist ? 'Wishlisted' : 'Wishlist' }}</span>
+                    </button>
 
-                {{-- Share Button --}}
-                <button onclick="shareProduct()"
-                    class="flex items-center justify-center gap-2 border-2 border-slate-200 text-slate-600 hover:border-[#001F54]/40 hover:text-[#001F54] hover:bg-slate-50 font-semibold px-4 py-3 rounded-[14px] transition-all duration-200 text-sm">
-                    <i class="fa-solid fa-share-nodes text-sm"></i>
-                    <span>Share</span>
-                </button>
+                    {{-- Share Button --}}
+                    <button onclick="shareProduct()"
+                        class="flex items-center justify-center gap-1.5 sm:gap-2 border-2 border-slate-200 text-slate-600 hover:border-[#001F54]/40 hover:text-[#001F54] hover:bg-slate-50 font-semibold px-2 sm:px-4 py-2.5 sm:py-3 rounded-[14px] transition-all duration-200 text-xs sm:text-sm">
+                        <i class="fa-solid fa-share-nodes text-xs sm:text-sm"></i>
+                        <span class="truncate">Share</span>
+                    </button>
+                </div>
+
             </div>
 
         </div>
-    </div>
     </div>
 
     {{-- ===== DESCRIPTION SECTION ===== --}}
@@ -342,7 +334,7 @@
         /* ----- Wishlist label sync (piggybacks on global .wishlist-toggle-btn handler) ----- */
         /* The global jQuery handler in app.blade.php handles the AJAX call.
            We just need to also update the label text & border classes on the detail button. */
-        $(document).on('click', '#wishlist-btn', function () {
+        $(document).on('click', '#wishlist-btn', function() {
             /* After a short delay the global handler will have updated the icon.
                We update the label & border classes here. */
             setTimeout(() => {
