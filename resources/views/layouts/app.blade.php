@@ -313,7 +313,7 @@
 
 
     {{-- ===== TOP UTILITY BAR ===== --}}
-    <div class="bg-navy-800 text-white text-xs">
+    <div class="bg-navy-800 text-white text-xs hidden md:block">
         <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
             <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
             <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
@@ -321,6 +321,14 @@
             <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support 0321 1234567</span>
         </div>
     </div>
+    <marquee class="bg-navy-800 text-white text-xs block md:hidden"">
+        <div class=" max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-8">
+        <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
+        <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
+            Products</span>
+        <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support 0321 1234567</span>
+        </div>
+    </marquee>
 
     {{-- ===== HEADER ===== --}}
     <header class="bg-white border-b border-slate-200">
@@ -329,7 +337,8 @@
                 <h1 class="text-xl sm:text-2xl font-extrabold text-navy-800">Bookish <span class="text-gold-500">&
                         Beyond</span>
                 </h1>
-                <p class="text-[12px] sm:text-xs text-slate-500">School Essentials<span class="hidden sm:inline">, Baby
+                <p class="text-[12px] sm:text-xs text-slate-500">School Essentials<span class="hidden sm:inline">,
+                        Baby
                         Wear & Gifts</span> </p>
             </a>
 
