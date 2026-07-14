@@ -345,8 +345,8 @@
                 }
             @endphp
             <div class="flex items-center gap-6 text-slate-700">
-                <a href="#" class="flex flex-col items-center text-xs hidden sm:inline"><i
-                        class="fa-regular fa-user text-lg"></i>
+                <a href="#" class="hidden sm:flex flex-col items-center text-xs">
+                    <i class="fa-regular fa-user text-lg"></i>
                     <span class="hidden lg:inline">Login / Register</span>
                 </a>
                 <a href="{{ route('wishlist.index') }}" class="relative flex flex-col items-center text-xs"><i
