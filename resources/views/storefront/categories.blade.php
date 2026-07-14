@@ -15,12 +15,12 @@
             View All Categories
         </h1>
         <p class="text-slate-600 text-sm sm:text-base max-w-2xl leading-relaxed">
-            Browse product categories and quickly find school essentials, gifts, decor items, and fragrances.
+            Browse all product categories and subcategories.
         </p>
     </div>
 
     <!-- Search categories... -->
-    <div class="mb-10 max-w-xl relative">
+    {{-- <div class="mb-10 max-w-xl relative">
         <div
             class="flex border border-slate-300 rounded-xl overflow-hidden shadow-sm bg-white focus-within:border-[#001F54] focus-within:ring-2 focus-within:ring-[#001F54]/10 transition-all duration-200">
             <span class="pl-4 flex items-center text-slate-400">
@@ -28,20 +28,20 @@
             </span>
             <input type="text" id="categorySearchInput" placeholder="Search categories..."
                 class="w-full pl-3 pr-4 py-3.5 text-sm outline-none text-slate-800 bg-white placeholder-slate-400">
-            {{-- <select class="border-l border-slate-300 px-3 text-sm bg-white " id="categoryFilter">
+            <select class="border-l border-slate-300 px-3 text-sm bg-white " id="categoryFilter">
                 <option value="">All Categories</option>
                 @foreach ($parentCategories as $parent)
                 <option value="{{ $parent->slug }}">{{ $parent->name }}</option>
                 @endforeach
-            </select> --}}
+            </select>
             <button type="button" id="categorySearchClear" class="pr-4 text-slate-400 hover:text-slate-600 text-sm hidden">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Explore products by category alert box -->
-    <div
+    {{-- <div
         class="bg-gradient-to-r from-blue-50/50 to-indigo-50/50 border border-slate-200/80 rounded-[24px] p-6 sm:p-8 mb-12 shadow-sm">
         <h2 class="text-xl font-bold text-[#001F54] mb-2">
             Explore products by category
@@ -68,7 +68,7 @@
                 </p>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!-- Categories List Sections -->
     <div class="space-y-16" id="categories-container">
@@ -92,9 +92,9 @@
                             <span class="text-3xl">{{ $parentIcon }}</span>
                             {{ $parent->name }}
                         </h2>
-                        <p class="text-slate-500 text-xs sm:text-sm mt-1">
+                        {{-- <p class="text-slate-500 text-xs sm:text-sm mt-1">
                             {{ $parent->description }}
-                        </p>
+                        </p> --}}
                     </div>
                     <a href="{{ route('category.show', $parent->slug) }}"
                         class="text-[#001F54] hover:text-[#ff7a00] font-bold text-sm flex items-center gap-1 transition-colors mt-2 sm:mt-0">
