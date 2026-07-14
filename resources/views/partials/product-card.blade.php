@@ -63,13 +63,19 @@
                     class="cart-form inline md:hidden">
                     @csrf
                     <button type="submit"
-                        class="flex items-center gap-2 py-2 pl-2 pr-3 text-sm font-medium rounded-md hover:opacity-90 transition-opacity bg-[#001F54] text-white">
+                        class="flex items-center gap-2 py-2 pl-2 pr-3 text-sm font-medium rounded-md hover:opacity-90 transition-opacity bg-[#001F54] text-white relative">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                             class="lucide lucide-plus size-4" aria-hidden="true">
                             <path d="M5 12h14"></path>
                             <path d="M12 5v14"></path>
                         </svg>Add to cart</button>
+                    <div
+                        class="absolute inset-0 grid place-items-center bg-blue-500/20 backdrop-blur-sm z-10 rounded-lg cart-load hidden">
+                        <div class="spinner">
+                            <div class="spinner1"></div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
@@ -77,7 +83,7 @@
         <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form hidden md:inline">
             @csrf
             <button type="submit"
-                class="w-full rounded-lg bg-[#001F54] py-2 md:py-2.5 text-sm md:text-base font-medium text-white transition-all duration-200 hover:opacity-90 hover:shadow-md active:scale-[0.98]">
+                class="relative w-full rounded-lg bg-[#001F54] py-2 md:py-2.5 text-sm md:text-base font-medium text-white transition-all duration-200 hover:opacity-90 hover:shadow-md active:scale-[0.98]">
                 <i class="fa-solid fa-cart-shopping mr-1 md:mr-2"></i>
                 <span class="lg:hidden">Add</span>
                 <span class="hidden lg:inline">Add To Cart</span>

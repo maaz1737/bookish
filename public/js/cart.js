@@ -2,9 +2,11 @@ const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 
 document.addEventListener("DOMContentLoaded", loadCart);
 
-let loader = ` <div class="spinner">
-           <div class="spinner1"></div>
-            </div>`;
+let loader = `<div class="absolute inset-0 grid place-items-center bg-blue-500/20 backdrop-blur-sm z-10 rounded-lg">
+    <div class="spinner">
+      <div class="spinner1"></div>
+    </div>
+  </div>`;
 
 const $cartDrawer = $("#cartDrawer");
 const $overlay = $("#cartOverlay");
@@ -67,12 +69,9 @@ $(document).on("submit", ".cart-form", function (e) {
         data: form.serialize(),
         beforeSend: function () {
             button.prop("disabled", true);
-
             button.html(`
-                <span class="inline-flex items-center gap-2">
-                    <span>${originalHtml}</span>
+                    <span>...adding</span>
                     ${loader}
-                </span>
             `);
         },
 
