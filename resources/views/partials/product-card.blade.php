@@ -70,12 +70,6 @@
                             <path d="M5 12h14"></path>
                             <path d="M12 5v14"></path>
                         </svg>Add to cart</button>
-                    <div
-                        class="absolute inset-0 grid place-items-center bg-blue-500/20 backdrop-blur-sm z-10 rounded-lg cart-load hidden">
-                        <div class="spinner">
-                            <div class="spinner1"></div>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>
