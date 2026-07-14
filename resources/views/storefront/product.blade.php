@@ -232,7 +232,7 @@
                                         max="{{ $product->stock }}"
                                         class="w-14 h-10 text-center text-sm font-bold text-[#001F54] border-0 border-x border-slate-200 focus:outline-none focus:ring-0 bg-white">
                                     <button type="button" id="qty-plus"
-                                        class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
+                                        class="add-to-cart-btn w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
                                         +
                                     </button>
                                 </div>
