@@ -335,7 +335,7 @@ async function updateQty(key, action, ele) {
     let originalHtml = image.html();
     image.html(`<span class="relative">
         ${originalHtml}
-    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div class="">
         ${loader}
     </div>
 </span>
