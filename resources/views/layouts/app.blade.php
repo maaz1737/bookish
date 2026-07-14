@@ -419,14 +419,13 @@
                                 <div class="max-h-[260px] overflow-y-auto">
 
                                     @forelse($mainSchools as $school)
-
                                         <a href="{{ route('schools.show', $school->slug) }}"
                                             class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition">
 
                                             <div
                                                 class="w-11 h-11 rounded-full border border-gray-200 overflow-hidden bg-white flex items-center justify-center shrink-0">
 
-                                                @if($school->logo)
+                                                @if ($school->logo)
                                                     <img src="{{ asset('storage/' . $school->logo) }}"
                                                         class="w-full h-full object-cover" alt="{{ $school->name }}">
                                                 @else
@@ -446,13 +445,11 @@
                                         <div class="px-5 py-4 text-sm text-gray-400">
                                             No schools found.
                                         </div>
-
                                     @endforelse
 
                                 </div>
 
-                                @if($mainSchools->count())
-
+                                @if ($mainSchools->count())
                                     <div class="border-t mt-2">
 
                                         <a href="{{ route('schools.index') }}"
@@ -464,7 +461,6 @@
                                         </a>
 
                                     </div>
-
                                 @endif
 
                             </div>
@@ -484,7 +480,7 @@
                             class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
                     </a>
 
-                    @if(count($mainCategory->children) > 0)
+                    @if (count($mainCategory->children) > 0)
                         <div
                             class="categoryDropdownMenu absolute left-0 w-64 hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
 
@@ -496,8 +492,9 @@
                                         <span
                                             class="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
                                             @if ($category->image)
-                                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
-                                                    class="w-full h-full object-cover" loading="lazy">
+                                                <img src="{{ asset('storage/' . $category->image) }}"
+                                                    alt="{{ $category->name }}" class="w-full h-full object-cover"
+                                                    loading="lazy">
                                             @else
                                                 <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
                                             @endif
@@ -529,7 +526,6 @@
                         </div>
                     @endif
                 </div>
-
             @endforeach
             <a href="#"
                 class="ml-auto bg-[#ff7a00] hover:bg-[#e06c00] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md">
@@ -543,7 +539,8 @@
     </div>
 
     <!-- Sidebar -->
-    <div id="mobileSidebar" class="fixed top-0 right-0 h-screen w-[320px] max-w-[90vw] bg-white shadow-2xl z-[999]
+    <div id="mobileSidebar"
+        class="fixed top-0 right-0 h-screen w-[320px] max-w-[90vw] bg-white shadow-2xl z-[999]
     translate-x-full transition-transform duration-300 lg:hidden flex flex-col">
 
         <!-- Header -->
@@ -579,29 +576,24 @@
 
                 <div class="mobileDropdown hidden">
 
-                    @foreach($mainSchools as $school)
-
+                    @foreach ($mainSchools as $school)
                         <a href="{{ route('schools.show', $school->slug) }}"
                             class="flex items-center gap-3 px-8 py-3 hover:bg-slate-50">
 
-                            @if($school->logo)
-
-                                <img src="{{ asset('storage/' . $school->logo) }}" class="w-9 h-9 rounded-full object-cover">
-
+                            @if ($school->logo)
+                                <img src="{{ asset('storage/' . $school->logo) }}"
+                                    class="w-9 h-9 rounded-full object-cover">
                             @else
-
                                 <div class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
 
                                     <i class="fa-solid fa-school"></i>
 
                                 </div>
-
                             @endif
 
                             {{ $school->name }}
 
                         </a>
-
                     @endforeach
 
                     <a href="{{ route('schools.index') }}" class="block px-8 py-3 font-semibold text-blue-700">
@@ -616,8 +608,7 @@
 
             <!-- Categories -->
 
-            @foreach($mainCategories as $mainCategory)
-
+            @foreach ($mainCategories as $mainCategory)
                 <div class="border-b">
 
                     <button class="mobileDropdownBtn w-full flex justify-between items-center px-5 py-4">
@@ -628,32 +619,26 @@
 
                         </span>
 
-                        @if($mainCategory->children->count())
-
+                        @if ($mainCategory->children->count())
                             <i class="fa-solid fa-chevron-down duration-300"></i>
-
                         @endif
 
                     </button>
 
-                    @if($mainCategory->children->count())
-
+                    @if ($mainCategory->children->count())
                         <div class="mobileDropdown hidden">
 
-                            @foreach($mainCategory->children as $category)
-
-                                <a href="{{ route('category.show', $category->slug) }}" class="block px-8 py-3 hover:bg-slate-50">
+                            @foreach ($mainCategory->children as $category)
+                                <a href="{{ route('category.show', $category->slug) }}"
+                                    class="block px-8 py-3 hover:bg-slate-50">
 
                                     {{ ucfirst($category->name) }}
 
                                 </a>
 
-                                @foreach($category->allChildren as $child)
-
+                                @foreach ($category->allChildren as $child)
                                     @include('admin.categories.link_category', ['cat' => $child])
-
                                 @endforeach
-
                             @endforeach
 
                             <a href="{{ route('category.show', $mainCategory->slug) }}"
@@ -664,11 +649,9 @@
                             </a>
 
                         </div>
-
                     @endif
 
                 </div>
-
             @endforeach
 
             <!-- Offers -->
@@ -690,7 +673,8 @@
         </div>
     @endif
     @if (session('error'))
-        <div class="max-w-7xl mx-auto w-full px-4 mt-4 bg-red-50 border border-red-200 text-red-800 rounded-md p-3 text-sm">
+        <div
+            class="max-w-7xl mx-auto w-full px-4 mt-4 bg-red-50 border border-red-200 text-red-800 rounded-md p-3 text-sm">
             ⚠️ {{ session('error') }}
         </div>
     @endif
@@ -706,7 +690,8 @@
     </div>
 
     <!-- Cart Sidebar -->
-    <div id="cartDrawer" class="fixed top-0 right-0 h-screen w-full md:w-[380px] bg-white shadow-xl
+    <div id="cartDrawer"
+        class="fixed top-0 right-0 h-screen w-full md:w-[380px] bg-white shadow-xl
            translate-x-full transition-transform duration-300 ease-in-out
            z-[999999]">
 
@@ -768,7 +753,7 @@
                 </div>
 
                 <!-- Checkout -->
-                <div class="px-3 pb-3">
+                {{-- <div class="px-3 pb-3">
                     <a href="{{ url('/checkout') }}"
                         class="w-full h-11 rounded-xl bg-[#163A6B] hover:bg-[#102F59] text-white text-sm font-semibold flex items-center justify-center shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30">
                         🛒 Checkout
@@ -779,6 +764,21 @@
                         class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30">
                         🛒 Add to Cart
                     </a>
+                </div> --}}
+                <div class="grid grid-cols-2 gap-3 px-3 pb-3 md:flex md:flex-col md:gap-2">
+
+                    {{-- Add to Cart Button --}}
+                    <a href="{{ route('cart.index') }}"
+                        class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-1 md:order-2">
+                        🛒 Add to Cart
+                    </a>
+
+                    {{-- Checkout Button --}}
+                    <a href="{{ url('/checkout') }}"
+                        class="w-full h-11 rounded-xl bg-[#163A6B] hover:bg-[#102F59] text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-2 md:order-1">
+                        💳 Checkout
+                    </a>
+
                 </div>
 
             </div>
@@ -949,8 +949,8 @@
 
     <!-- Wishlist Universal Handler -->
     <script>
-        $(document).ready(function () {
-            $(document).on('click', '.wishlist-toggle-btn', function (e) {
+        $(document).ready(function() {
+            $(document).on('click', '.wishlist-toggle-btn', function(e) {
                 e.preventDefault();
                 var btn = $(this);
                 var url = btn.data('url');
@@ -962,7 +962,7 @@
                     data: {
                         _token: '{{ csrf_token() }}'
                     },
-                    success: function (response) {
+                    success: function(response) {
                         if (response.success) {
                             if (response.inWishlist) {
                                 btn.removeClass('text-slate-400').addClass('text-rose-500');
@@ -983,7 +983,7 @@
                             }
                         }
                     },
-                    error: function () {
+                    error: function() {
                         alert('Something went wrong. Please try again.');
                     }
                 });
@@ -991,11 +991,11 @@
         });
     </script>
     <script>
-        $(function () {
+        $(function() {
 
             // Open Sidebar
 
-            $("#mobile-menu-btn").click(function () {
+            $("#mobile-menu-btn").click(function() {
 
                 $("#mobileOverlay").fadeIn(200);
 
@@ -1007,7 +1007,7 @@
 
             // Close Sidebar
 
-            $("#closeMobileMenu,#mobileOverlay").click(function () {
+            $("#closeMobileMenu,#mobileOverlay").click(function() {
 
                 $("#mobileOverlay").fadeOut(200);
 
@@ -1019,7 +1019,7 @@
 
             // Accordion
 
-            $(".mobileDropdownBtn").click(function () {
+            $(".mobileDropdownBtn").click(function() {
 
                 let dropdown = $(this).next(".mobileDropdown");
 
