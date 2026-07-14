@@ -92,7 +92,8 @@ $(document).on("submit", ".cart-form", function (e) {
                           stroke-linejoin="round"
                           d="M5 13l4 4L19 7" />
                 </svg>
-                Added to Cart
+                <span>Added <span class='hidden md:inline'>to Cart </span></span>
+                
             `);
 
             // Restore the original button after 2 seconds
@@ -360,7 +361,7 @@ async function updateQty(key, action, ele) {
 
 async function removeItem(key, ele) {
     // before send message
-    let image = $(ele).closest(".cart-loader");
+    let image = $(ele).closest(".cart-item-container").find(".cart-loader");
     let originalHtml = image.html();
     image.html(`<span class="relative">
         ${originalHtml}
