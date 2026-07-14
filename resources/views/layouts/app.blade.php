@@ -706,7 +706,7 @@
     </div>
 
     <!-- Cart Sidebar -->
-    <div id="cartDrawer" class="fixed top-0 right-0 h-screen w-[380px] bg-white shadow-xl
+    <div id="cartDrawer" class="fixed top-0 right-0 h-screen w-full md:w-[380px] bg-white shadow-xl
            translate-x-full transition-transform duration-300 ease-in-out
            z-[999999]">
 
@@ -786,7 +786,7 @@
         </div>
     </div>
 
-   
+
     {{-- ===== FOOTER ===== --}}
     <footer class="bg-navy-900 text-slate-300 mt-2 md:mt-12">
 
