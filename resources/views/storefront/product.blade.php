@@ -203,7 +203,7 @@
 
                 {{-- Add to Cart Form --}}
                 @if ($inStock)
-                    <form method="POST" action="{{ route('cart.addProduct', $product) }}" id="add-to-cart-form"
+                    <form method="POST" action="{{ route('cart.addProduct', $product) }}" id="add-to-cart-form "
                         class="cart-form mb-4 sm:mb-6">
                         @csrf
 
@@ -222,7 +222,7 @@
                                         max="{{ $product->stock }}"
                                         class="w-12 sm:w-14 h-10 text-center text-sm font-bold text-[#001F54] border-0 border-x border-slate-200 focus:outline-none focus:ring-0 bg-white p-0">
                                     <button type="button" id="qty-plus"
-                                        class="add-to-cart-btn w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
+                                        class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
                                         +
                                     </button>
                                 </div>
@@ -230,7 +230,7 @@
 
                             {{-- Add to Cart Button --}}
                             <button type="submit"
-                                class="w-full flex items-center justify-center gap-2 bg-[#001F54] py-3 hover:bg-[#000c3a] px-6 sm:px-10 text-white font-bold rounded-[14px] transition-all duration-200 shadow-sm hover:shadow-md text-sm h-11">
+                                class="w-full flex items-center justify-center gap-2 bg-[#001F54] py-3 hover:bg-[#000c3a] px-6 sm:px-10 text-white font-bold rounded-[14px] transition-all duration-200 shadow-sm hover:shadow-md text-sm h-11 relative">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 <span class="whitespace-nowrap">Add to Cart</span>
                             </button>
@@ -334,7 +334,7 @@
         /* ----- Wishlist label sync (piggybacks on global .wishlist-toggle-btn handler) ----- */
         /* The global jQuery handler in app.blade.php handles the AJAX call.
            We just need to also update the label text & border classes on the detail button. */
-        $(document).on('click', '#wishlist-btn', function() {
+        $(document).on('click', '#wishlist-btn', function () {
             /* After a short delay the global handler will have updated the icon.
                We update the label & border classes here. */
             setTimeout(() => {
