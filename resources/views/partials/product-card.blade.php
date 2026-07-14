@@ -47,28 +47,40 @@
             <h3>{{ ucfirst($product->name) }}</h3>
         </a>
 
-        <div class="flex items-end gap-2 pb-3">
-            <p class="text-[#001F54] font-bold text-sm md:text-base lg:text-lg">
-                PKR {{ number_format($product->discount_price ?? $product->price) }}
-            </p>
-
-            @if ($product->discount_price)
-                <p class="text-gray-500 line-through text-xs md:text-sm pb-[2px]">
-                    PKR {{ number_format($product->price) }}
+        <div class="flex justify-between">
+            <div class="flex items-end gap-x-2 xs:items-center">
+                <p class="text-[#001F54] font-bold text-sm md:text-base lg:text-lg">
+                    PKR {{ number_format($product->discount_price ?? $product->price) }}
                 </p>
-            @endif
+                @if ($product->discount_price)
+                    <p class="text-gray-500 line-through text-xs md:text-sm pb-[2px]">
+                        PKR {{ number_format($product->price) }}
+                    </p>
+                @endif
+            </div>
+            <div>
+                <form action="{{ route('cart.addProduct', $product) }}" method="POST"
+                    class="cart-form inline md:hidden">
+                    @csrf
+                    <button type="submit"
+                        class="flex items-center gap-2 py-2 pl-2 pr-3 text-sm font-medium rounded-md hover:opacity-90 transition-opacity bg-[#001F54] text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="lucide lucide-plus size-4" aria-hidden="true">
+                            <path d="M5 12h14"></path>
+                            <path d="M12 5v14"></path>
+                        </svg>Add to cart</button>
+                </form>
+            </div>
         </div>
 
-        <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form">
+        <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form hidden md:inline">
             @csrf
             <button type="submit"
-                class="w-full rounded-lg bg-[#001F54] py-2 md:py-2.5 text-sm md:text-base font-medium text-white transition-all duration-200 hover:bg-[#003080] hover:shadow-md active:scale-[0.98]">
-
+                class="w-full rounded-lg bg-[#001F54] py-2 md:py-2.5 text-sm md:text-base font-medium text-white transition-all duration-200 hover:opacity-90 hover:shadow-md active:scale-[0.98]">
                 <i class="fa-solid fa-cart-shopping mr-1 md:mr-2"></i>
-
                 <span class="lg:hidden">Add</span>
                 <span class="hidden lg:inline">Add To Cart</span>
-
             </button>
         </form>
 
