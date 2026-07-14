@@ -47,8 +47,7 @@ $(document).on("submit", ".cart-form", function (e) {
     e.preventDefault();
 
     let form = $(this);
-    let button = form.find("button");
-
+    let button = form.find('button[type="submit"]');
     // Prevent duplicate requests
     if (button.prop("disabled")) {
         return;
