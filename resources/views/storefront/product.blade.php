@@ -214,65 +214,67 @@
 
                 {{-- Add to Cart Form --}}
 
-                <div class="flex gap-8">
-                    {{-- Quantity --}}
-                    <div class="flex items-center gap-4 mb-5">
-                        <span class="text-sm font-semibold text-[#001F54]">Quantity:</span>
-                        <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden">
-                            <button type="button" id="qty-minus"
-                                class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
-                                −
-                            </button>
-                            <input type="number" name="quantity" id="qty-input" value="1" min="1"
-                                max="{{ $product->stock }}"
-                                class="w-14 h-10 text-center text-sm font-bold text-[#001F54] border-0 border-x border-slate-200 focus:outline-none focus:ring-0 bg-white">
-                            <button type="button" id="qty-plus"
-                                class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
-                                +
-                            </button>
-                        </div>
-                    </div>
-                    @if ($inStock)
-                        <form method="POST" action="{{ route('cart.addProduct', $product) }}" id="add-to-cart-form"
-                            class=" cart-form">
-                            @csrf
+                @if ($inStock)
+                    <form method="POST" action="{{ route('cart.addProduct', $product) }}" id="add-to-cart-form"
+                        class=" cart-form">
+                        @csrf
+
+                        <div class="flex gap-8">
+                            {{-- Quantity --}}
+                            <div class="flex items-center gap-4 mb-5">
+                                <span class="text-sm font-semibold text-[#001F54]">Quantity:</span>
+                                <div class="flex items-center border border-slate-200 rounded-xl overflow-hidden">
+                                    <button type="button" id="qty-minus"
+                                        class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
+                                        −
+                                    </button>
+                                    <input type="number" name="quantity" id="qty-input" value="1" min="1"
+                                        max="{{ $product->stock }}"
+                                        class="w-14 h-10 text-center text-sm font-bold text-[#001F54] border-0 border-x border-slate-200 focus:outline-none focus:ring-0 bg-white">
+                                    <button type="button" id="qty-plus"
+                                        class="w-10 h-10 flex items-center justify-center text-slate-600 hover:bg-slate-100 transition-colors text-lg font-bold">
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                            
                             {{-- Add to Cart Button --}}
                             <button type="submit"
                                 class="w-full flex items-center justify-center gap-2 bg-[#001F54] py-3 hover:bg-[#000c3a] px-16 text-white font-bold  rounded-[14px] transition-all duration-200 shadow-sm hover:shadow-md text-sm mb-3 h-10">
                                 <i class="fa-solid fa-cart-shopping"></i>
                                 Add to Cart
                             </button>
-                        </form>
-                    @else
-                        <button disabled
-                            class="w-full flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-bold px-8 py-4 rounded-[14px] cursor-not-allowed text-sm mb-3">
-                            <i class="fa-solid fa-ban"></i>
-                            Out of Stock
-                        </button>
-                    @endif
-                </div>
-
-
-                {{-- Secondary Actions: Wishlist + Share --}}
-                <div class="grid grid-cols-2 gap-3 mt-1">
-                    {{-- Wishlist Toggle — uses global .wishlist-toggle-btn handler in app.blade.php --}}
-                    <button id="wishlist-btn" data-product-id="{{ $product->id }}"
-                        data-url="{{ route('wishlist.toggle', $product) }}"
-                        class="wishlist-toggle-btn wishlist-detail-extra flex items-center justify-center gap-2 border-2 {{ $inWishlist ? 'border-rose-400 text-rose-500 bg-rose-50' : 'border-slate-200 text-slate-600' }} hover:border-rose-400 hover:text-rose-500 hover:bg-rose-50 font-semibold px-4 py-3 rounded-[14px] transition-all duration-200 text-sm">
-                        <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart text-sm"></i>
-                        <span class="wishlist-label">{{ $inWishlist ? 'Wishlisted' : 'Add to Wishlist' }}</span>
+                    </form>
+                @else
+                    <button disabled
+                        class="w-full flex items-center justify-center gap-2 bg-slate-200 text-slate-400 font-bold px-8 py-4 rounded-[14px] cursor-not-allowed text-sm mb-3">
+                        <i class="fa-solid fa-ban"></i>
+                        Out of Stock
                     </button>
-
-                    {{-- Share Button --}}
-                    <button onclick="shareProduct()"
-                        class="flex items-center justify-center gap-2 border-2 border-slate-200 text-slate-600 hover:border-[#001F54]/40 hover:text-[#001F54] hover:bg-slate-50 font-semibold px-4 py-3 rounded-[14px] transition-all duration-200 text-sm">
-                        <i class="fa-solid fa-share-nodes text-sm"></i>
-                        <span>Share</span>
-                    </button>
-                </div>
-
+                @endif
             </div>
+
+
+            {{-- Secondary Actions: Wishlist + Share --}}
+            <div class="grid grid-cols-2 gap-3 mt-1">
+                {{-- Wishlist Toggle — uses global .wishlist-toggle-btn handler in app.blade.php --}}
+                <button id="wishlist-btn" data-product-id="{{ $product->id }}"
+                    data-url="{{ route('wishlist.toggle', $product) }}"
+                    class="wishlist-toggle-btn wishlist-detail-extra flex items-center justify-center gap-2 border-2 {{ $inWishlist ? 'border-rose-400 text-rose-500 bg-rose-50' : 'border-slate-200 text-slate-600' }} hover:border-rose-400 hover:text-rose-500 hover:bg-rose-50 font-semibold px-4 py-3 rounded-[14px] transition-all duration-200 text-sm">
+                    <i class="{{ $inWishlist ? 'fa-solid' : 'fa-regular' }} fa-heart text-sm"></i>
+                    <span class="wishlist-label">{{ $inWishlist ? 'Wishlisted' : 'Add to Wishlist' }}</span>
+                </button>
+
+                {{-- Share Button --}}
+                <button onclick="shareProduct()"
+                    class="flex items-center justify-center gap-2 border-2 border-slate-200 text-slate-600 hover:border-[#001F54]/40 hover:text-[#001F54] hover:bg-slate-50 font-semibold px-4 py-3 rounded-[14px] transition-all duration-200 text-sm">
+                    <i class="fa-solid fa-share-nodes text-sm"></i>
+                    <span>Share</span>
+                </button>
+            </div>
+
         </div>
+    </div>
     </div>
 
     {{-- ===== DESCRIPTION SECTION ===== --}}
