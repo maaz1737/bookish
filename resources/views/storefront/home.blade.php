@@ -296,7 +296,7 @@
 
                             <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class="cart-form w-full mt-auto">
                                 @csrf
-                                <button type="submit" class="primary-btn hover:bg-[#223a8f]">
+                                <button type="submit" class="primary-btn hover:bg-[#223a8f] relative">
                                     <i class="fa-solid fa-cart-shopping text-sm"></i> Add to Cart
                                 </button>
                             </form>
