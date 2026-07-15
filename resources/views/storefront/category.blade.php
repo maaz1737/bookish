@@ -71,7 +71,7 @@
     </section>
 
     @if ($category->children->count())
-        <div class="space-y-14" id="products">
+        <div class="space-y-14 filter-container">
             @foreach ($category->children as $sub)
                 @if ($sub->childProducts->count())
                     <section>
@@ -99,7 +99,7 @@
         </div>
     @endif
     @if ($category->products->count())
-        <section class="mt-14" id="products">
+        <section id="products" class="mt-14 filter-container">
             <div class="mb-3 pb-1 md:mb-6 md:pb-3 border-b-2 border-slate-100">
                 <h2 class="flex items-center gap-1 text-xl md:text-2xl font-bold text-[#001F54]">
                     <span class="w-1 h-7 bg-[#ff7a00] rounded-full inline-block shrink-0"></span>
@@ -132,7 +132,7 @@
     @endif
 
     @if ($category->childProducts->count())
-        <div class="grid-3" id="products">
+        <div class="grid-3 filter-container">
             @foreach ($category->childProducts as $product)
                 @include('partials.product-card', ['product' => $product])
             @endforeach
