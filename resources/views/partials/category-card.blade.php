@@ -1,4 +1,4 @@
-<div class="category-card card group filter-con product-card">
+<div class="category-card card group product-card filter-card">
     <div>
         <div class="image-container" style="background:url({{ $category->imageUrl()}})">
             {{-- @if ($category->image ?? false)
