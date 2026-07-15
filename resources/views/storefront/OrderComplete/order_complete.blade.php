@@ -18,7 +18,7 @@
         </div>
     </div>
     <div class="flex items-center justify-center mt-8">
-        <div class="w-full max-w-4xl rounded-2xl bg-white p-8 shadow-lg sm:p-12">
+        <div class="w-full max-w-4xl rounded-2xl bg-white p-2 shadow-lg sm:p-12">
             <!-- Success icon -->
             <div class="relative mx-auto mb-6 flex h-20 w-20 items-center justify-center">
                 <svg class="h-20 w-20 text-emerald-500" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -55,7 +55,7 @@
                 </div>
 
                 <!-- Order details -->
-                <div class="space-y-4 rounded-xl border border-gray-200 p-5">
+                <div class="space-y-4 rounded-xl border border-gray-200 p-2 md:p-5">
                     <div class="flex items-center justify-between gap-4">
                         <div class="flex items-center gap-3 text-gray-500">
                             <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
