@@ -14,7 +14,7 @@
         $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())->where('product_id', $product->id)->exists();
     }
 @endphp
-<div class="product-card relative group bg-white card">
+<div class="product-card relative group bg-white card filter-card">
 
     <!-- Discount / Badge -->
     <span class=" {{ $badgeClass ?? '' }} absolute top-2 left-2 md:top-4 md:left-4 z-10 shadow-sm text-[10px] md:text-xs

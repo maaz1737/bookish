@@ -1114,13 +1114,36 @@
         })
     </script>
     <script>
+        // $(".filter-search").on("input", function () {
+        //     let inputVal = $(this).val().toLowerCase();
+
+        //     $(".filter-card").each(function () {
+        //         let productName = $(this).find(".filter-name").text().toLowerCase();
+        //         $(this).toggle(productName.includes(inputVal));
+        //     });
+        // });
+    </script>
+
+
+    <script>
         $(".filter-search").on("input", function () {
-            let inputVal = $(this).val().toLowerCase();
+            let keyword = $(this).val().trim().toLowerCase();
 
-            $(".product-card").each(function () {
-                let productName = $(this).find(".filter-name").text().toLowerCase();
+            $(".filter-container").each(function () {
+                let visibleCards = 0;
 
-                $(this).toggle(productName.includes(inputVal));
+                $(this).find(".filter-card").each(function () {
+                    let name = $(this).find(".filter-name").text().trim().toLowerCase();
+                    let matched = name.includes(keyword);
+
+                    $(this).toggle(matched);
+
+                    if (matched) {
+                        visibleCards++;
+                    }
+                });
+
+                $(this).toggle(visibleCards > 0);
             });
         });
     </script>
