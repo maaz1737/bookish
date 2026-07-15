@@ -38,14 +38,18 @@ class CartController extends Controller
                 }
             }
         } else {
-            $cart[$key] = [
-                'type' => 'product',
-                'id' => $product->id,
-                'name' => $product->name,
-                'price' => $product->effectivePrice(),
-                'quantity' => $qty,
-                'slug' => $product->slug,
-            ];
+            if (isset($cart[$key])) {
+                $cart[$key]['quantity'] += $qty;
+            } else {
+                $cart[$key] = [
+                    'type' => 'product',
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'price' => $product->effectivePrice(),
+                    'quantity' => $qty,
+                    'slug' => $product->slug,
+                ];
+            }
         }
 
         $request->session()->put('cart', $cart);
