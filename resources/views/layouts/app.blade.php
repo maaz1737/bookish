@@ -230,6 +230,7 @@
             place-items: center;
             animation: spinning82341 1.2s linear infinite;
             transform-origin: 50% 50%;
+            /* vertical-align: middle; */
             /* spin around its own center */
             will-change: transform;
         }

@@ -11,9 +11,20 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::active()->latest()->paginate(24);
+        $sort  = request('sort', 'latest');
+        $query = Product::active()->with('variants');
+
+        match ($sort) {
+            'price_asc'  => $query->orderBy('price', 'asc'),
+            'price_desc' => $query->orderBy('price', 'desc'),
+            'name_asc'   => $query->orderBy('name', 'asc'),
+            default      => $query->latest(),
+        };
+
+        $products = $query->paginate(24);
         return view('storefront.products', compact('products'));
     }
+
 
     // SEO route: /category/{type}
     public function category(string $slug)

@@ -2,82 +2,68 @@
 
 @section('content')
 
-    <!-- Hero Section -->
-    <section
-        class="sm:bg-transparent bg-gradient-to-r from-navy-800 to-navy-900 text-white rounded-3xl p-2 sm:p-2 md:p-10 mb-10">
+    {{-- Breadcrumb --}}
+    <nav class="text-sm text-slate-500 mb-6 flex items-center gap-2">
+        <a href="{{ url('/') }}" class="hover:text-navy-600 transition-colors">Home</a>
+        <span class="text-navy-800">/</span>
+        <span class="text-navy-800 font-medium">Trending Now</span>
+    </nav>
 
-        <div class="flex flex-col items-center text-center gap-4 md:flex-row md:items-center md:text-left md:gap-5">
-
-            <div
-                class="w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 bg-white text-navy-800 rounded-full flex items-center justify-center text-3xl md:text-4xl shadow-lg">
-                📚
-            </div>
-
-            <!-- Content -->
-            <div>
-                <h1 class="text-white text-2xl sm:text-3xl md:text-4xl font-semibold md:font-bold">
-                    All Products Collection
-                </h1>
-
-                <p class="mt-2 text-slate-200 text-sm sm:text-base">
-                    Explore high-quality school essentials, books, uniforms, bags, and baby wear.
-                </p>
-
-                <div class="mt-4 inline-flex bg-white/20 text-white px-4 py-2 rounded-full text-xs sm:text-sm">
-                    {{ $products->total() }} Products Available
-                </div>
-            </div>
-
+    {{-- Page Title --}}
+    <div class="mb-2">
+        <div class="flex items-center gap-2 mb-1">
+            <span class="text-2xl">🔥</span>
+            <h1 class="text-2xl font-extrabold text-navy-800 tracking-tight">Trending Now</h1>
         </div>
-    </section>
-
-    <!-- Description Banner -->
-    <div class="bg-white rounded-3xl shadow-sm border border-slate-200 p-3 sm:p-4 md:p-6 mb-10">
-        <div class="flex flex-col items-center text-center gap-4 md:flex-row md:items-center md:text-left">
-            <div class="hidden md:block text-3xl sm:text-4xl md:text-5xl shrink-0">
-                🎒
-            </div>
-            <!-- Content -->
-            <div>
-                <h2 class="text-lg sm:text-xl md:text-2xl font-semibold md:font-bold text-navy-950">
-                    Everything Your Child Needs For School
-                </h2>
-
-                <p class="text-sm sm:text-base text-gray-500 mt-2">
-                    Find books, uniforms, bags, stationery and other school items carefully selected for students.
-                </p>
-            </div>
-
-        </div>
+        <p class="text-slate-500 text-sm ml-9">Explore high-quality school essentials, books, uniforms, bags, and baby wear.
+        </p>
     </div>
 
-    <!-- Products Grid -->
+    {{-- Count Row + Sort --}}
+    <div class="flex items-center justify-between mt-6 mb-6">
+        <p class="text-sm font-semibold text-slate-600">
+            {{ $products->total() }} Popular Products
+        </p>
+        <form method="GET" action="{{ route('products.index') }}" id="sort-form">
+            <div class="relative inline-flex items-center">
+                <label class="text-sm text-slate-500 mr-2 font-medium whitespace-nowrap"></label>
+                <select name="sort" id="sort-select"
+                    onchange="document.getElementById('sort-form').submit()"
+                    class="appearance-none bg-white border border-slate-200 text-sm text-slate-900 font-semibold rounded-xl px-4 py-2 pr-8 focus:outline-none focus:ring-2 focus:ring-slate-900/20 cursor-pointer shadow-sm">
+                    <option value="latest" {{ request('sort') == 'latest' || !request('sort') ? 'selected' : '' }}>Sort by: Popularity</option>
+                    <option value="price_asc" {{ request('sort') == 'price_asc' ? 'selected' : '' }}>Price: Low to High</option>
+                    <option value="price_desc" {{ request('sort') == 'price_desc' ? 'selected' : '' }}>Price: High to Low</option>
+                    <option value="name_asc" {{ request('sort') == 'name_asc' ? 'selected' : '' }}>Name: A–Z</option>
+                </select>
+                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-slate-400">
+                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    {{-- Products Grid --}}
     @if ($products->count())
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             @foreach ($products as $product)
-                @include('partials.product-card', ['product' => $product])
+                @include('storefront.partials.product-card', ['product' => $product])
             @endforeach
         </div>
     @else
-        <!-- Empty State -->
-        <div class="bg-white rounded-3xl shadow p-12 text-center">
-            <div class="text-8xl mb-5">
-                📦
-            </div>
-            <h2 class="text-3xl font-bold mb-3">
-                No Products Found
-            </h2>
-            <p class="text-gray-500 max-w-lg mx-auto">
-                No products have been added yet. Please check back later.
-            </p>
+        {{-- Empty State --}}
+        <div class="bg-white rounded-3xl p-12 text-center">
+            <div class="text-6xl mb-5">📦</div>
+            <h2 class="text-3xl font-bold mb-3">No Products Found</h2>
+            <p class="text-gray-500 max-w-lg mx-auto">No products have been added yet. Please check back later.</p>
         </div>
     @endif
 
-    <!-- Pagination -->
+    {{-- Pagination --}}
     @if ($products->hasPages())
         <div class="mt-12 flex justify-center">
-            {{ $products->links() }}
+            {{ $products->appends(request()->query())->links() }}
         </div>
     @endif
 
+    @include('partials.trust-section')
 @endsection
