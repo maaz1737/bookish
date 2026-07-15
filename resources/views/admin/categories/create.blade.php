@@ -14,7 +14,7 @@
             <label class="block text-sm font-medium text-gray-700 mb-1">
                 Category Name
             </label>
-            <input type="text" name="name" placeholder="Enter category name" required
+            <input type="text" name="name" placeholder="Enter category name" required value="{{ old('name') }}"
                 class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">
         </div>
 
@@ -40,9 +40,15 @@
                 Description
             </label>
             <textarea name="description" rows="4" placeholder="Write a short description..."
-                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none"></textarea>
+                class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none">{{ old('description') }}</textarea>
         </div>
-
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+                Order
+            </label>
+            <input type="text" name="order" placeholder="Order Number" required value="{{ old('order') }}"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 file:bg-indigo-600 file:text-white file:border-0 file:px-4 file:py-2 file:rounded-md file:cursor-pointer">
+        </div>
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
                 Category Image

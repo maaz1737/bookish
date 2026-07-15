@@ -31,27 +31,25 @@ class PaymentVerificationController extends Controller
     public function approve(Request $request, PaymentProof $proof)
     {
         $proof->update([
-            'status'      => 'approved',
+            'status' => 'approved',
             'reviewed_by' => $request->user()->id,
-            'admin_note'  => $request->input('note'),
+            'admin_note' => $request->input('note'),
         ]);
 
         // Stage 04: Paid -> unlock fulfillment (Financial Clearance rule)
         $proof->order->update([
             'payment_status' => 'paid',
-            'order_status'   => 'processing',
-            'paid_at'        => now(),
+            'paid_at' => now(),
         ]);
-
         return redirect()->route('admin.payments.index')->with('success', 'Payment approved; order unlocked.');
     }
 
     public function reject(Request $request, PaymentProof $proof)
     {
         $proof->update([
-            'status'      => 'rejected',
+            'status' => 'rejected',
             'reviewed_by' => $request->user()->id,
-            'admin_note'  => $request->input('note'),
+            'admin_note' => $request->input('note'),
         ]);
 
         $proof->order->update(['payment_status' => 'pending']);

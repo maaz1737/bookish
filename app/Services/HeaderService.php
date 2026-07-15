@@ -24,7 +24,12 @@ class HeaderService
                 function () {
                     return Category::whereNull('parent_id')
                         ->where('show_on_menu', true)
-                        ->with('children')
+                        ->with([
+                            'children' => function ($q) {
+                                $q->orderBy('order', 'Asc');
+                            }
+                        ])
+                        ->orderBy('order', 'Asc')
                         ->get();
                 }
             )

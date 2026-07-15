@@ -14,11 +14,11 @@
         $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())->where('product_id', $product->id)->exists();
     }
 @endphp
-<div class="product-card relative group bg-white">
+<div class="product-card relative group bg-white card">
 
     <!-- Discount / Badge -->
-    <span
-        class="{{ $badgeClass ?? '' }} absolute top-2 left-2 md:top-4 md:left-4 z-10 shadow-sm text-[10px] md:text-xs px-2 py-1 md:px-2.5 md:py-1.5">
+    <span class=" {{ $badgeClass ?? '' }} absolute top-2 left-2 md:top-4 md:left-4 z-10 shadow-sm text-[10px] md:text-xs
+    px-2 py-1 md:px-2.5 md:py-1.5">
         {{ $badgeText ?? "" }}
     </span>
 
@@ -43,7 +43,7 @@
 
     <!-- Product Info -->
     <div class="text-[#001F54] px-2.5 py-2 font-semibold text-sm md:text-base lg:text-lg">
-        <a href="{{ route('product.show', $product) }}">
+        <a href="{{ route('product.show', $product) }}" class="hover:text-blue-700 hover:underline">
             <h3>{{ ucfirst($product->name) }}</h3>
         </a>
 
@@ -77,7 +77,7 @@
         <form action="{{ route('cart.addProduct', $product) }}" method="POST" class="cart-form hidden md:inline">
             @csrf
             <button type="submit"
-                class="relative w-full rounded-lg bg-[#001F54] py-2 md:py-2.5 text-sm md:text-base font-medium text-white transition-all duration-200 hover:opacity-90 hover:shadow-md active:scale-[0.98]">
+                class="relative w-full rounded-lg bg-[#001F54] py-2 md:py-2.5 text-sm md:text-base font-medium text-white transition-all duration-200 hover:bg-[#223a8f] hover:shadow-md active:scale-[0.98]">
                 <i class="fa-solid fa-cart-shopping mr-1 md:mr-2"></i>
                 <span class="lg:hidden">Add</span>
                 <span class="hidden lg:inline">Add To Cart</span>

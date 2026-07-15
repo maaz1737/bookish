@@ -15,6 +15,7 @@ class Category extends Model
         'is_active',
         'show_on_dashboard',
         'show_on_menu',
+        'order'
     ];
     protected $casts = [
         'is_active' => 'boolean',

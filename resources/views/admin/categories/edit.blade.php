@@ -45,7 +45,13 @@
             <textarea name="description" rows="4"
                 class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none">{{ old('description', $category->description) }}</textarea>
         </div>
-
+        <div>
+            <label class="block text-sm font-medium text-gray-700 mb-1">
+                Order
+            </label>
+            <input type="text" name="order" placeholder="Order Number" required value="{{ $category->order }}"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 file:bg-indigo-600 file:text-white file:border-0 file:px-4 file:py-2 file:rounded-md file:cursor-pointer">
+        </div>
         <div>
             <label class="block text-sm font-medium text-gray-700 mb-1">
                 Category Image

@@ -13,7 +13,7 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        $categories = Category::withCount('products')->paginate(10);
+        $categories = Category::withCount('products')->orderBy('order', 'ASC')->paginate(10);
         return view('admin.categories', compact('categories'));
     }
 
@@ -40,6 +40,7 @@ class CategoryController extends Controller
             'parent_id' => ['nullable', 'integer', 'exists:categories,id'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'order' => ['required', 'integer']
         ]);
 
         if (!empty($data['parent_id'])) {
@@ -82,6 +83,7 @@ class CategoryController extends Controller
             'parent_id' => ['nullable', 'integer', 'exists:categories,id'],
             'description' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'order' => ['required', 'integer']
         ]);
 
         if (!empty($data['parent_id']) && $data['parent_id'] == $category->id) {

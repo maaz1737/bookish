@@ -247,8 +247,6 @@
                 transform: rotate(360deg);
             }
         }
-
-        }
     </style>
     <style>
         .product-card {
@@ -257,7 +255,10 @@
             border: 1px solid #f0f0f0;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-card:hover {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
         }
 
         .image-container {
