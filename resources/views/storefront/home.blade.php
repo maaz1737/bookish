@@ -25,26 +25,25 @@
                                         Books, Uniforms, Bags, Attar & Thoughtful Gifts – All Handpicked for Quality You Can
                                         Trust.
                                     </p>
-                                    <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mt-6 w-full">
+                                    <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mt-6 w-full ">
                                         <a href="#school-section"
-                                            class="inline-flex items-center justify-center whitespace-nowrap
-                                                                                                                                                                                                                                                w-full sm:w-auto
-                                                                                                                                                                                                                                                px-4 py-2.5 text-sm rounded-lg
-                                                                                                                                                                                                                                                bg-navy-800 text-white shadow-md
-                                                                                                                                                                                                                                                hover:bg-navy-900 hover:shadow-lg
-                                                                                                                                                                                                                                                transition-all duration-200
-                                                                                                                                                                                                                                                lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
+                                            class="inline-flex items-center justify-center whitespace-nowrap 
+                                                                                         w-full sm:w-auto
+                                                                                         px-4 py-2.5 text-sm rounded-lg
+                                                                                         bg-navy-800 text-white shadow-md hover:shadow-lg
+                                                                                         transition-all duration-200
+                                                                                         lg:px-6 lg:py-3 lg:text-base lg:rounded-xl hover:bg-[#223a8f]">
                                             Shop by School <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
                                         </a>
 
                                         <a href="#category-section"
                                             class="inline-flex items-center justify-center whitespace-nowrap
-                                                                                                                                                                                                                                                w-full sm:w-auto
-                                                                                                                                                                                                                                                border-2 border-[#001F54] text-[#001F54]
-                                                                                                                                                                                                                                                hover:bg-[#001F54] hover:text-white
-                                                                                                                                                                                                                                                px-4 py-2.5 text-sm rounded-lg font-semibold
-                                                                                                                                                                                                                                                transition-all duration-200
-                                                                                                                                                                                                                                                lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
+                                                                                        w-full sm:w-auto
+                                                                                           border-2 border-[#001F54] text-[#001F54]
+                                                                                           hover:bg-[#001F54] hover:text-white
+                                                                                           px-4 py-2.5 text-sm rounded-lg font-semibold
+                                                                                           transition-all duration-200
+                                                                                           lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
                                             Shop All Categories
                                         </a>
                                     </div>
@@ -102,7 +101,7 @@
 
         <div class="grid-3">
             @foreach ($schools as $school)
-                <div class="school-card card p-6 flex flex-col justify-between h-full group filter-card">
+                <div class="school-card card p-6 flex flex-col justify-between h-full group filter-card hover:shadow-md">
                     <div>
                         <div
                             class="w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
@@ -120,7 +119,7 @@
                             Shop books, uniforms & essentials
                         </p>
                     </div>
-                    <a href="{{ route('schools.show', $school) }}" class="primary-btn w-full justify-center">
+                    <a href="{{ route('schools.show', $school) }}" class="primary-btn w-full justify-center hover:bg-[#223a8f]">
                         Explore Now →
                     </a>
                 </div>
