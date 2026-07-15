@@ -334,7 +334,7 @@
 
     {{-- ===== HEADER ===== --}}
     <header class="bg-white border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-2 xs:gap-6  justify-between">
+        <div class="max-w-7xl mx-auto px-4 flex items-center gap-2 xs:gap-6  justify-between">
             <a href="{{ url('/') }}" class="shrink-0">
                 {{-- <h1 class="text-xl sm:text-2xl font-extrabold text-navy-800">Bookish <span class="text-gold-500">&
                         Beyond</span>
@@ -342,7 +342,7 @@
                 <p class="text-[12px] sm:text-xs text-slate-500">School Essentials<span class="hidden sm:inline">,
                         Baby
                         Wear & Gifts</span> </p> --}}
-                <div class="w-24 h-24 bg-cover bg-center bg-no-repeat"
+                <div class="w-24 h-24 bg-contain bg-center bg-no-repeat"
                     style="background-image: url('{{ asset('images/bookish_logo.jpg') }}');">
                 </div>
             </a>

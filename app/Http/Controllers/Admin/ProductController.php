@@ -11,6 +11,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\School;
 use App\Models\SchoolClass;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
@@ -172,6 +173,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         $product->delete();
+        $inWishlist = Wishlist::where('product_id', $product->id)->delete();
         return back()->with('success', 'Product deleted.');
     }
 
