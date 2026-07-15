@@ -65,4 +65,5 @@
         </div>
     @endif
 
+    @include('partials.trust-section')
 @endsection
