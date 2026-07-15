@@ -40,12 +40,6 @@ class OrderCheckoutRequest extends FormRequest
                 'required',
                 'exists:shipping_zones,id',
             ],
-
-            'shipping_rate_id' => [
-                'required',
-                'exists:shipping_rates,id',
-            ],
-
             'address' => [
                 'required',
                 'string',

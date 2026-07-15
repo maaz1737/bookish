@@ -107,7 +107,7 @@
                             </svg>
                             <span class="text-sm">Delivery Location</span>
                         </div>
-                        <span class="text-sm text-gray-900">{{ $order->shippingArea->name }}</span>
+                        <span class="text-sm text-gray-900">{{ $order->shippingArea->name ?? 'Free Shipping' }}</span>
                     </div>
                 </div>
             </div>
