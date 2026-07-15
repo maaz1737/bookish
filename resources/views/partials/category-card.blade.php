@@ -15,7 +15,7 @@
         </div>
     </div>
     <div class="px-3 pb-4">
-        <a href="{{ route('category.show', $category->slug) }}" class="primary-btn block">
+        <a href="{{ route('category.show', $category->slug) }}" class="primary-btn block hover:bg-[#223a8f]">
             Explore Now →
         </a>
     </div>

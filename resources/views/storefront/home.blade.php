@@ -26,23 +26,25 @@
                                         Trust.
                                     </p>
                                     <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mt-6 w-full">
-                                        <a href="#school-section" class="inline-flex items-center justify-center whitespace-nowrap
-                                                            w-full sm:w-auto
-                                                            px-4 py-2.5 text-sm rounded-lg
-                                                            bg-navy-800 text-white shadow-md
-                                                            hover:bg-navy-900 hover:shadow-lg
-                                                            transition-all duration-200
-                                                            lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
+                                        <a href="#school-section"
+                                            class="inline-flex items-center justify-center whitespace-nowrap
+                                                                                                                                                w-full sm:w-auto
+                                                                                                                                                px-4 py-2.5 text-sm rounded-lg
+                                                                                                                                                bg-navy-800 text-white shadow-md
+                                                                                                                                                hover:bg-navy-900 hover:shadow-lg
+                                                                                                                                                transition-all duration-200
+                                                                                                                                                lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
                                             Shop by School <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
                                         </a>
 
-                                        <a href="#category-section" class="inline-flex items-center justify-center whitespace-nowrap
-                                                            w-full sm:w-auto
-                                                            border-2 border-[#001F54] text-[#001F54]
-                                                            hover:bg-[#001F54] hover:text-white
-                                                            px-4 py-2.5 text-sm rounded-lg font-semibold
-                                                            transition-all duration-200
-                                                            lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
+                                        <a href="#category-section"
+                                            class="inline-flex items-center justify-center whitespace-nowrap
+                                                                                                                                                w-full sm:w-auto
+                                                                                                                                                border-2 border-[#001F54] text-[#001F54]
+                                                                                                                                                hover:bg-[#001F54] hover:text-white
+                                                                                                                                                px-4 py-2.5 text-sm rounded-lg font-semibold
+                                                                                                                                                transition-all duration-200
+                                                                                                                                                lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
                                             Shop All Categories
                                         </a>
                                     </div>
@@ -297,7 +299,7 @@
 
                             <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class="cart-form w-full mt-auto">
                                 @csrf
-                                <button type="submit" class="primary-btn">
+                                <button type="submit" class="primary-btn hover:bg-[#223a8f]">
                                     <i class="fa-solid fa-cart-shopping text-sm"></i> Add to Cart
                                 </button>
                             </form>
