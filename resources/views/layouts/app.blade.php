@@ -336,23 +336,22 @@
     <header class="bg-white border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 py-4 flex items-center gap-2 xs:gap-6  justify-between">
             <a href="{{ url('/') }}" class="shrink-0">
-                <h1 class="text-xl sm:text-2xl font-extrabold text-navy-800">Bookish <span class="text-gold-500">&
+                {{-- <h1 class="text-xl sm:text-2xl font-extrabold text-navy-800">Bookish <span class="text-gold-500">&
                         Beyond</span>
                 </h1>
                 <p class="text-[12px] sm:text-xs text-slate-500">School Essentials<span class="hidden sm:inline">,
                         Baby
-                        Wear & Gifts</span> </p>
+                        Wear & Gifts</span> </p> --}}
+                <div class="w-24 h-24 bg-cover bg-center bg-no-repeat"
+                    style="background-image: url('{{ asset('images/bookish_logo.jpg') }}');">
+                </div>
             </a>
 
-            <form action="#" class="flex-1 hidden lg:flex border border-slate-300 rounded-lg overflow-hidden">
+            <form action="#" class="w-2/3 hidden lg:flex border border-slate-300 rounded-lg overflow-hidden">
                 <input type="text" placeholder="Search books, uniforms, bags, accessories..."
                     class="filter-search flex-1 px-4 py-2 text-sm outline-none">
-                <select class="border-l border-slate-300 px-3 text-sm bg-white">
-                    <option>All Categories</option>
-                </select>
                 <button class="bg-navy-800 text-white px-5"><i class="fa-solid fa-magnifying-glass"></i></button>
             </form>
-
             @php
                 $wishlistCount = 0;
                 if (auth()->check()) {
@@ -362,10 +361,10 @@
                 }
             @endphp
             <div class="flex items-center gap-6 text-slate-700">
-                <a href="#" class="hidden sm:flex flex-col items-center text-xs">
+                {{-- <a href="#" class="hidden sm:flex flex-col items-center text-xs">
                     <i class="fa-regular fa-user text-lg"></i>
                     <span class="hidden lg:inline">Login / Register</span>
-                </a>
+                </a> --}}
                 <a href="{{ route('wishlist.index') }}" class="relative flex flex-col items-center text-xs"><i
                         class="fa-regular fa-heart text-lg"></i>
                     <span class="hidden lg:inline">Wishlist</span>
@@ -1109,6 +1108,44 @@
 
             });
 
+        });
+
+        $(".filter-search").change(function () {
+            let inputVal = $(this).val();
+        })
+    </script>
+    <script>
+        // $(".filter-search").on("input", function () {
+        //     let inputVal = $(this).val().toLowerCase();
+
+        //     $(".filter-card").each(function () {
+        //         let productName = $(this).find(".filter-name").text().toLowerCase();
+        //         $(this).toggle(productName.includes(inputVal));
+        //     });
+        // });
+    </script>
+
+
+    <script>
+        $(".filter-search").on("input", function () {
+            let keyword = $(this).val().trim().toLowerCase();
+
+            $(".filter-container").each(function () {
+                let visibleCards = 0;
+
+                $(this).find(".filter-card").each(function () {
+                    let name = $(this).find(".filter-name").text().trim().toLowerCase();
+                    let matched = name.includes(keyword);
+
+                    $(this).toggle(matched);
+
+                    if (matched) {
+                        visibleCards++;
+                    }
+                });
+
+                $(this).toggle(visibleCards > 0);
+            });
         });
     </script>
 </body>

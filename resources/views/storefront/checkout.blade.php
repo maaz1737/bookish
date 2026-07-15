@@ -115,11 +115,7 @@
                             class="mt-6 bg-blue-50 border border-blue-100 text-sm text-[#0a1f44] rounded-md px-4 py-3 flex items-center gap-2">
                             🛡️ Your information is safe with us. We never share your details with third parties.
                         </div>
-                        <div id="shipping-method-container" class="hidden mt-6 border rounded-lg p-4 bg-gray-50">
-
-                            <h3 class="font-semibold text-[#0a1f44] mb-3">
-                                Select Shipping Method
-                            </h3>
+                        <div id="shipping-method-container" class="hidden">
 
                             <div id="shipping-methods">
 
@@ -142,9 +138,9 @@
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center relative">
                                 🛍️ <span
-                                        class="absolute -top-1 -right-1 w-5 h-5 bg-amber-400 text-[#0a1f44] text-xs font-bold rounded-full flex items-center justify-center">
-                                        {{ count($cart['items']) }}
-                                    </span>
+                                    class="absolute -top-1 -right-1 w-5 h-5 bg-amber-400 text-[#0a1f44] text-xs font-bold rounded-full flex items-center justify-center">
+                                    {{ count($cart['items']) }}
+                                </span>
                             </div>
                             <h3 class="text-lg font-bold text-[#0a1f44]">Order Summary</h3>
                         </div>
@@ -202,7 +198,6 @@
         const $shippingMethods = $('#shipping-methods');
         const $shippingCharge = $('#shipping-charge');
         const $grandTotal = $('#grand-total');
-
         function formatPrice(price) {
             return 'PKR ' + price.toLocaleString();
         }
@@ -224,6 +219,8 @@
 
                     $shippingContainer.removeClass('hidden');
                     $shippingMethods.html(response);
+
+                    console.log(response);
 
                     resetTotals();
                 },

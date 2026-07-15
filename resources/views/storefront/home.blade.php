@@ -6,8 +6,8 @@
     {{-- ===== HERO BANNER ===== --}}
     @if ($heroBanners->count() > 0)
         <section
-            class="rounded-[24px] overflow-hidden bg-transparent sm:bg-gradient-to-br sm:from-navy-50 sm:to-slate-100 mb-10 relative">
-            <div class="swiper heroSwiper">
+            class="rounded-[24px] overflow-hidden bg-transparent sm:bg-gradient-to-br sm:from-navy-50 sm:to-slate-100 mb-10 relative filter-container">
+            <div class="swiper heroSwiper filter-card">
                 <div class="swiper-wrapper">
                     @foreach ($heroBanners as $banner)
                         <div class="swiper-slide">
@@ -25,26 +25,25 @@
                                         Books, Uniforms, Bags, Attar & Thoughtful Gifts – All Handpicked for Quality You Can
                                         Trust.
                                     </p>
-                                    <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mt-6 w-full">
+                                    <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mt-6 w-full ">
                                         <a href="#school-section"
-                                            class="inline-flex items-center justify-center whitespace-nowrap
-                                                                                                                                                w-full sm:w-auto
-                                                                                                                                                px-4 py-2.5 text-sm rounded-lg
-                                                                                                                                                bg-navy-800 text-white shadow-md
-                                                                                                                                                hover:bg-navy-900 hover:shadow-lg
-                                                                                                                                                transition-all duration-200
-                                                                                                                                                lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
+                                            class="inline-flex items-center justify-center whitespace-nowrap 
+                                                                                         w-full sm:w-auto
+                                                                                         px-4 py-2.5 text-sm rounded-lg
+                                                                                         bg-navy-800 text-white shadow-md hover:shadow-lg
+                                                                                         transition-all duration-200
+                                                                                         lg:px-6 lg:py-3 lg:text-base lg:rounded-xl hover:bg-[#223a8f]">
                                             Shop by School <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
                                         </a>
 
                                         <a href="#category-section"
                                             class="inline-flex items-center justify-center whitespace-nowrap
-                                                                                                                                                w-full sm:w-auto
-                                                                                                                                                border-2 border-[#001F54] text-[#001F54]
-                                                                                                                                                hover:bg-[#001F54] hover:text-white
-                                                                                                                                                px-4 py-2.5 text-sm rounded-lg font-semibold
-                                                                                                                                                transition-all duration-200
-                                                                                                                                                lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
+                                                                                        w-full sm:w-auto
+                                                                                           border-2 border-[#001F54] text-[#001F54]
+                                                                                           hover:bg-[#001F54] hover:text-white
+                                                                                           px-4 py-2.5 text-sm rounded-lg font-semibold
+                                                                                           transition-all duration-200
+                                                                                           lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
                                             Shop All Categories
                                         </a>
                                     </div>
@@ -88,7 +87,7 @@
 
 
     {{-- ===== POPULAR SCHOOLS ===== --}}
-    <section class="mb-12" id="school-section">
+    <section class="mb-12 filter-container" id="school-section">
         <div class="flex items-center justify-between mb-6">
             <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
                 <i class="fa-solid fa-school text-[#001F54]"></i> Popular Schools
@@ -102,7 +101,7 @@
 
         <div class="grid-3">
             @foreach ($schools as $school)
-                <div class="school-card card p-6 flex flex-col justify-between h-full group filter-con">
+                <div class="school-card card p-6 flex flex-col justify-between h-full group filter-card hover:shadow-md">
                     <div>
                         <div
                             class="w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
@@ -120,7 +119,7 @@
                             Shop books, uniforms & essentials
                         </p>
                     </div>
-                    <a href="{{ route('schools.show', $school) }}" class="primary-btn w-full justify-center">
+                    <a href="{{ route('schools.show', $school) }}" class="primary-btn w-full justify-center hover:bg-[#223a8f]">
                         Explore Now →
                     </a>
                 </div>
@@ -131,7 +130,7 @@
 
     {{-- ===== TRENDING NOW ===== --}}
     @if (isset($bestSellers) && $bestSellers->count())
-        <section class="mb-8 md:mb-12">
+        <section class="mb-8 md:mb-12 filter-container">
             <div class="flex items-center justify-between gap-3 mb-4 md:mb-6">
 
                 <!-- Section Title -->
@@ -148,7 +147,6 @@
                 </a>
 
             </div>
-
             <!-- Products -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-3 gap-4 md:gap-6">
                 @foreach ($bestSellers as $product)
@@ -162,7 +160,7 @@
     {{-- ===== SHOP BY CATEGORY ===== --}}
 
     @if($categories->count())
-        <section class="mb-12" id="category-section">
+        <section class="mb-12 filter-container" id="category-section">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
                     <i class="fa-solid fa-layer-group text-[#001F54]"></i> Shop by Category
@@ -173,7 +171,6 @@
                         class="fa-solid fa-arrow-right text-xs"></i>
                 </a>
             </div>
-
             <div class="grid-3">
                 @foreach ($categories as $category)
                     @include('partials.category-card', ['category' => $category])
@@ -187,7 +184,7 @@
 
     {{-- ===== SMART SAVER BUNDLES ===== --}}
     @if ($bundles->count())
-        <section class="">
+        <section class="filter-container">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
                     <i class="fa-solid fa-boxes-stacked text-[#001F54]"></i> Smart Saver Bundles
@@ -209,7 +206,7 @@
                         $imgSrc = fn($path) => url('storage/' . $path);
                     @endphp
 
-                    <div class="relative bundle-card card product-card filter-con">
+                    <div class="relative bundle-card card product-card filter-card">
 
                         <!-- Badges -->
                         @if ($discount > 0)
@@ -314,32 +311,5 @@
     {{-- ===== TRUST / BENEFITS STRIP ===== --}}
 
     @include('partials.trust-section')
-
-    {{-- Swiper --}}
-    <script>
-        new Swiper('.heroSwiper', {
-            loop: true,
-            pagination: { el: '.swiper-pagination', clickable: true },
-            autoplay: { delay: 4500 },
-        });
-    </script>
-
-    {{-- Live Search Filter --}}
-    <script>
-        $(document).ready(function () {
-            // Prevent form submit from reloading the page
-            $(".filter-search").closest("form").on("submit", function (e) {
-                e.preventDefault();
-            });
-
-            $(".filter-search").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $(".filter-con").each(function () {
-                    var text = $(this).find(".filter-name").text().toLowerCase();
-                    $(this).toggle(text.indexOf(value) > -1);
-                });
-            });
-        });
-    </script>
 
 @endsection

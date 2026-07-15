@@ -21,7 +21,7 @@
                     <div class="flex flex-col items-center flex-1">
                         <div
                             class="w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300
-                                                                                    {{ $s['active'] || $s['completed'] ? 'bg-[#0a1f44] text-white border-[#0a1f44] shadow-sm' : 'bg-white text-gray-400 border-gray-300' }}">
+                                                                                                                    {{ $s['active'] || $s['completed'] ? 'bg-[#0a1f44] text-white border-[#0a1f44] shadow-sm' : 'bg-white text-gray-400 border-gray-300' }}">
                             @if ($s['completed'])
                                 <i class="fa-solid fa-check text-xs"></i>
                             @else
@@ -467,12 +467,12 @@
 
                         <div class="mt-6">
                             <button type="submit" class="w-full bg-[#0a1f44] hover:bg-[#0d2a5c] text-white font-semibold
-                                                py-2.5 sm:py-3
-                                                px-3 sm:px-4
-                                                rounded-xl
-                                                flex items-center justify-center gap-2 sm:gap-3
-                                                text-sm sm:text-base
-                                                transition shadow-md">
+                                                                                py-2.5 sm:py-3
+                                                                                px-3 sm:px-4
+                                                                                rounded-xl
+                                                                                flex items-center justify-center gap-2 sm:gap-3
+                                                                                text-sm sm:text-base
+                                                                                transition shadow-md">
                                 <i class="fa-solid fa-lock text-sm"></i>
 
                                 <span class="truncate">
@@ -545,8 +545,11 @@
                     <div class="flex justify-between text-sm">
                         <span class="text-gray-600 flex items-center gap-1">Delivery Charges <i
                                 class="fa-regular fa-circle-question text-xs"></i></span>
-                        <span class="font-semibold text-[#0a1f44]">PKR
-                            {{ number_format($order->shippingRate->price) }}</span>
+                        <span class="font-semibold text-[#0a1f44]">
+                            {{ optional($order->shippingRate)->price
+        ? 'PKR ' . number_format($order->shippingRate->price)
+        : 'Free Shipping' }}
+                        </span>
                     </div>
                 </div>
 
