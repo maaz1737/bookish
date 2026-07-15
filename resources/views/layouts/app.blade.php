@@ -1050,6 +1050,21 @@
             });
 
         });
+
+        $(".filter-search").change(function () {
+            let inputVal = $(this).val();
+        })
+    </script>
+    <script>
+        $(".filter-search").on("input", function () {
+            let inputVal = $(this).val().toLowerCase();
+
+            $(".product-card").each(function () {
+                let productName = $(this).find(".filter-name").text().toLowerCase();
+
+                $(this).toggle(productName.includes(inputVal));
+            });
+        });
     </script>
 </body>
 

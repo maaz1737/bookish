@@ -44,7 +44,7 @@
     <!-- Product Info -->
     <div class="text-[#001F54] px-2.5 py-2 font-semibold text-sm md:text-base lg:text-lg">
         <a href="{{ route('product.show', $product) }}" class="hover:text-blue-700 hover:underline">
-            <h3>{{ ucfirst($product->name) }}</h3>
+            <h3 class="filter-name">{{ ucfirst($product->name) }}</h3>
         </a>
 
         <div class="flex justify-between">
