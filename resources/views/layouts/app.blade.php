@@ -326,7 +326,7 @@
         <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
         <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
             Products</span>
-        <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support 0321 1234567</span>
+        <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support : 0321 1234567</span>
         </div>
     </marquee>
 
