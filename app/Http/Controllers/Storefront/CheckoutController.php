@@ -31,16 +31,21 @@ class CheckoutController extends Controller
     // Step 2: create the order, then redirect to bank details page
     public function place(OrderCheckoutRequest $request)
     {
-
         $data = $request->validated();
 
         $cart = $request->session()->get('cart', []);
         if (empty($cart)) {
             return redirect()->back()->with('error', 'Cart is empty.');
         }
-        $shippingRate = ShippingRate::where('id', $data['shipping_rate_id'])
-            ->where('shipping_zone_id', $data['shipping_zone_id'])
-            ->firstOrFail();
+
+        $shippingRate = null;
+        if ($request->shipping_rate_id) {
+            $shippingRate = ShippingRate::where('id', $request->shipping_rate_id)
+                ->where('shipping_zone_id', $data['shipping_zone_id'])
+                ->firstOrFail();
+        }
+
+
         $order = DB::transaction(function () use ($data, $cart, $request, $shippingRate) {
 
             $subtotal = 0;
@@ -54,9 +59,9 @@ class CheckoutController extends Controller
                 'mobile' => $data['mobile'],
                 'address' => $data['address'],
 
-                'shipping_zone_id' => $shippingRate->shipping_zone_id,
-                'shipping_rate_id' => $shippingRate->id,
-                'shipping_method' => $shippingRate->name,
+                'shipping_zone_id' => $data['shipping_zone_id'],
+                'shipping_rate_id' => $shippingRate->id ?? $shippingRate,
+                'shipping_method' => $shippingRate->name ?? $shippingRate,
 
                 'shipping_cost' => 0,
                 'subtotal' => 0,
@@ -91,10 +96,10 @@ class CheckoutController extends Controller
             }
 
             // Calculate shipping
-            $shippingCost = $shippingRate->price;
+            $shippingCost = $shippingRate->price ?? 0;
 
             if (
-                $shippingRate->free_shipping &&
+                $shippingRate && $shippingRate->free_shipping &&
                 $subtotal >= $shippingRate->min_order_amount
             ) {
                 $shippingCost = 0;
@@ -178,7 +183,7 @@ class CheckoutController extends Controller
         ]);
 
         $order->update([
-            'payment_status' => 'paid',
+            'payment_status' => 'pending',
         ]);
 
         return redirect()
@@ -243,7 +248,13 @@ class CheckoutController extends Controller
             ->where('status', 1)
             ->get();
 
-        return view('partials.shipping_rates', compact('rates'));
+        if ($rates) {
+            return view('partials.shipping_rates', compact('rates'));
+        }
+
+        return response()->json([
+            'message' => 'no rate available',
+        ], 404);
     }
 
 }
