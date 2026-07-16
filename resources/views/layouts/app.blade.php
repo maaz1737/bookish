@@ -551,7 +551,7 @@
                     @endif
                 </div>
             @endforeach
-            <a href="#"
+            <a href="{{ route('products.index') }}"
                 class="ml-auto bg-[#ff7a00] hover:bg-[#e06c00] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md">
                 <i class="fa-solid fa-tag mr-1"></i> Smart Saver
             </a>

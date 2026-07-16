@@ -46,7 +46,7 @@
     @if ($products->count())
         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
             @foreach ($products as $product)
-                @include('storefront.partials.product-card', ['product' => $product])
+                @include('partials.product-card', ['product' => $product])
             @endforeach
         </div>
     @else
