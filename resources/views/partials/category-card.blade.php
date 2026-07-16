@@ -1,4 +1,5 @@
-<div class="category-card card group product-card filter-card cursor-pointer">
+<a href="{{ route('category.show', $category->slug) }}"
+    class="category-card card group product-card filter-card cursor-pointer">
     <div>
         <div class="image-container overflow-hidden" style="background:url({{ $category->imageUrl()}})">
             <img src="{{ $category->imageUrl()}}" alt="{{ $category->name }}" loading="lazy"
@@ -11,8 +12,8 @@
         </div>
     </div>
     <div class="px-3 pb-4">
-        <a href="{{ route('category.show', $category->slug) }}" class="primary-btn block hover:bg-[#223a8f]">
+        <button class="primary-btn block hover:bg-[#223a8f]">
             Explore Now →
-        </a>
+        </button>
     </div>
-</div>
+</a>
