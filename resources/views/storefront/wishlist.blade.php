@@ -39,7 +39,9 @@
 
                         <!-- Product Image -->
                         <a href="{{ route('product.show', $product) }}" class="block">
-                            <div class="image-container" style="background:url({{ $product->imageUrl() }})">
+                            <div class="image-container overflow-hidden" style="background:url({{ $product->imageUrl() }})">
+                                <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" loading="lazy"
+                                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                             </div>
                         </a>
 
@@ -112,17 +114,17 @@
                                     // If no items left, show empty state message
                                     if ($('#wishlist-grid').children().length === 0) {
                                         $('#wishlist-grid').replaceWith(`
-                                                                                      <div class="bg-white rounded-[24px] shadow-sm p-12 text-center border border-slate-200">
-                                                                                          <div class="text-6xl mb-4">❤️</div>
-                                                                                          <h2 class="text-2xl font-bold text-[#001F54] mb-2">Your wishlist is empty</h2>
-                                                                                          <p class="text-slate-500 mb-6">Explore our collections and add products you love to your wishlist.</p>
-                                                                                         <div>
-                                                                                         <a href="{{ route('products.index') }}" class="primary-btn px-6 py-3 hover:bg-[#223a8f] ">
-                                                                                              Start Shopping
-                                                                                          </a>
-                                                                                        </div>
-                                                                                      </div>
-                                                                                  `);
+                                                                                                      <div class="bg-white rounded-[24px] shadow-sm p-12 text-center border border-slate-200">
+                                                                                                          <div class="text-6xl mb-4">❤️</div>
+                                                                                                          <h2 class="text-2xl font-bold text-[#001F54] mb-2">Your wishlist is empty</h2>
+                                                                                                          <p class="text-slate-500 mb-6">Explore our collections and add products you love to your wishlist.</p>
+                                                                                                         <div>
+                                                                                                         <a href="{{ route('products.index') }}" class="primary-btn px-6 py-3 hover:bg-[#223a8f] ">
+                                                                                                              Start Shopping
+                                                                                                          </a>
+                                                                                                        </div>
+                                                                                                      </div>
+                                                                                                  `);
                                     }
                                 });
 
