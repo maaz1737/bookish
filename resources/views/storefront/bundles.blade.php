@@ -127,7 +127,7 @@
                     </div>
 
                     <div class="p-4 flex flex-col flex-grow">
-                        <h3 class="font-bold text-[#0a1f44] text-base leading-tight">{{ $bundle->name }}</h3>
+                        <h3 class="block mb-2 cursor-pointer text-[#001F54] hover:text-[#ff7a00] group-hover:text-[#ff7a00] transition-colors">{{ $bundle->name }}</h3>
                         <p class="text-xs text-slate-400 mt-1 line-clamp-2">{{ $includedNames }}</p>
 
                         <div class="mt-3 flex items-baseline gap-2 flex-wrap">

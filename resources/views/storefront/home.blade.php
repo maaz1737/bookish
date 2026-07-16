@@ -278,7 +278,7 @@
                         <div class="product-info">
                             <div>
                                 <h3
-                                    class="text-sm font-bold text-[#0a1a3d] hover:text-[#1e3a8a] transition-colors leading-snug line-clamp-2 filter-name h-4 py-4 hover:underline">
+                                    class="text-sm font-bold text-[#0a1a3d] hover:text-[#1e3a8a] transition-colors leading-snug line-clamp-2 filter-name h-8 py-6">
                                     {{ ucfirst($bundle->name) }}
                                 </h3>
                                 <p class="text-xs text-slate-400 pb-1 line-clamp-1 h-6">
