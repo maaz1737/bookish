@@ -858,7 +858,7 @@
 
                 <div class="grid grid-cols-2 gap-3 px-3 pb-3 md:flex md:flex-col md:gap-2">
                     {{-- Add to Cart Button --}}
-                    <a href="/"
+                    <a href="{{ route('categories.index')}}"
                         class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-1 md:order-2">
                         🛒 Continue Shoping
                     </a>
