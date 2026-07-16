@@ -8,7 +8,7 @@
         <div class="py-3 pt-5">
             <h3
                 class="text-sm font-bold text-[#0a1a3d] hover:text-[#1e3a8a] transition-colors leading-snug line-clamp-2 filter-name  px-4">
-                {{ $category->name }}
+                {{ ucfirst($category->name )}}
             </h3>
         </div>
     </div>
