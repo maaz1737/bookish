@@ -10,6 +10,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $seo['title'] ?? 'Bookish & Beyond | School Essentials, Baby Wear & Gifts' }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/bookish_logo.jpg') }}">
+
     <meta name="description"
         content="{{ $seo['description'] ?? 'School books, bundles, uniforms & accessories in Pakistan.' }}">
     <meta name="keywords" content="{{ $seo['keywords'] ?? 'school books Pakistan, book bundle, school uniforms' }}">
@@ -328,7 +330,7 @@
             <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
             <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
                 Products</span>
-            <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support 0320-4735908</span>
+            <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support 0321-4735908</span>
         </div>
     </div>
     <marquee class="bg-navy-800 text-white text-xs block md:hidden"">
@@ -516,10 +518,10 @@
                                         <span
                                             class="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
                                             @if ($category->image)
-                                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
-                                                class="w-full h-full object-cover" loading="lazy">
+                                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                                                    class="w-full h-full object-cover" loading="lazy">
                                             @else
-                                            <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
+                                                <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
                                             @endif
                                         </span>
 
