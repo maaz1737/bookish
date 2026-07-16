@@ -1,9 +1,9 @@
 @php
     /* ---------- Badge ---------- */
-    $badgeText  = null;
-    $pctOff     = 0;
+    $badgeText = null;
+    $pctOff = 0;
     if ($product->discount_price && $product->price > 0) {
-        $pctOff    = round((($product->price - $product->discount_price) / $product->price) * 100);
+        $pctOff = round((($product->price - $product->discount_price) / $product->price) * 100);
         $badgeText = "{$pctOff}% OFF";
     } elseif ($product->is_best_seller) {
         $badgeText = 'Best Seller';
@@ -23,11 +23,13 @@
         : $product->variants()->exists();
 @endphp
 
-<div class="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col relative group">
+<div
+    class="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col relative group filter-card">
 
     {{-- Badge --}}
     @if ($badgeText)
-        <span class="absolute top-3 left-3 z-10 bg-[#ff7a00] text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md leading-none shadow-sm">
+        <span
+            class="absolute top-3 left-3 z-10 bg-[#ff7a00] text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md leading-none shadow-sm">
             {{ $badgeText }}
         </span>
     @endif
@@ -43,12 +45,8 @@
     {{-- Product Image --}}
     <a href="{{ route('product.show', $product) }}" class="block" tabindex="-1" aria-hidden="true">
         <div class="w-full bg-[#f8fafc] overflow-hidden" style="aspect-ratio: 4/3;">
-            <img
-                src="{{ $product->imageUrl() }}"
-                alt="{{ $product->name }}"
-                loading="lazy"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
+            <img src="{{ $product->imageUrl() }}" alt="{{ $product->name }}" loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
     </a>
 
@@ -57,7 +55,8 @@
 
         {{-- Name --}}
         <a href="{{ route('product.show', $product) }}" class="block mb-2">
-            <h3 class="text-sm font-bold text-[#0a1a3d] hover:text-[#1e3a8a] transition-colors leading-snug line-clamp-2">
+            <h3
+                class="text-sm font-bold text-[#0a1a3d] hover:text-[#1e3a8a] transition-colors leading-snug line-clamp-2 filter-name">
                 {{ $product->name }}
             </h3>
         </a>
@@ -77,7 +76,7 @@
         {{-- CTA Button --}}
         @if ($productHasVariants)
             <a href="{{ route('product.show', $product) }}"
-               class="w-full bg-[#0a1a3d] hover:bg-[#1e3a8a] text-white text-xs sm:text-sm font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 shadow-sm">
+                class="w-full bg-[#0a1a3d] hover:bg-[#1e3a8a] text-white text-xs sm:text-sm font-semibold py-2.5 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 shadow-sm">
                 <i class="fa-solid fa-swatchbook text-xs"></i> View Options
             </a>
         @else

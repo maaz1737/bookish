@@ -1,12 +1,8 @@
 <div class="category-card card group product-card filter-card">
     <div>
-        <div class="image-container" style="background:url({{ $category->imageUrl()}})">
-            {{-- @if ($category->image ?? false)
-            <img src="{{ url('storage/' . $category->image) }}" alt="{{ $category->name }} category"
-                class="card-img-cover" loading="lazy" />
-            @else
-            <i class="fa-solid fa-book text-4xl text-[#001F54] opacity-30"></i>
-            @endif --}}
+        <div class="image-container overflow-hidden" style="background:url({{ $category->imageUrl()}})">
+            <img src="{{ $category->imageUrl()}}" alt="{{ $category->name }}" loading="lazy"
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
         </div>
         <div class="py-3 pt-5">
             <h3 class="text-base font-bold text-[#001F54] px-4 filter-name hover:text-blue-700 hover:underline">
