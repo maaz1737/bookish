@@ -154,21 +154,32 @@ class CheckoutController extends Controller
     {
         $order = Order::where('order_number', $orderNumber)->firstOrFail();
 
-        if ($request->confirm_method === 'whatsapp') {
-
+        if ($request->proof === 'whatsapp') {
             $request->validate([
-                'whatsapp_agree' => ['required', 'accepted'],
+                'proof' => ['required'],
             ]);
-
             $path = 'whatsapp';
             $source = 'whatsapp';
             $message = 'Order payment confirmation received via WhatsApp. Our team will verify it shortly.';
 
         } else {
 
-            $request->validate([
-                'screenshot' => ['required', 'file', 'mimes:jpg,jpeg,png,webp,pdf', 'max:5120'],
-            ]);
+            $request->validate(
+                [
+                    'screenshot' => [
+                        'required',
+                        'file',
+                        'mimes:jpg,jpeg,png,webp,pdf',
+                        'max:5120',
+                    ],
+                ],
+                [
+                    'screenshot.required' => 'Please upload your payment screenshot or send it via WhatsApp to complete your order.',
+                    'screenshot.file' => 'The uploaded file is invalid.',
+                    'screenshot.mimes' => 'The screenshot must be a JPG, JPEG, PNG, WEBP, or PDF file.',
+                    'screenshot.max' => 'The screenshot must not be larger than 5 MB.',
+                ]
+            );
 
             $path = $request->file('screenshot')->store('payment-proofs', 'public');
             $source = 'web';

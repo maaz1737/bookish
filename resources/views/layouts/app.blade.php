@@ -880,9 +880,11 @@
                 <!-- Company -->
                 <div class="sm:col-span-2">
 
-                    <h3 class="text-white text-2xl font-bold">
-                        Bookish <span class="text-gold-500">& Beyond</span>
-                    </h3>
+                    <div>
+                        <div class="w-24 h-24 bg-contain bg-center bg-no-repeat"
+                    style="background-image: url('{{ asset('images/bookish_logo3.jpg') }}');">
+                </div>
+                    </div>
 
                     <p class="mt-4 text-slate-400 leading-7 max-w-md">
                         School essentials, baby wear & gifts. We provide quality books,
@@ -963,12 +965,25 @@
 
                     <ul class="space-y-3">
 
-                        <li><a href="#" class="hover:text-gold-500">Books</a></li>
-                        <li><a href="#" class="hover:text-gold-500">Uniforms</a></li>
-                        <li><a href="#" class="hover:text-gold-500">Bags & Bottles</a></li>
-                        <li><a href="#" class="hover:text-gold-500">Baby Wear</a></li>
-                        <li><a href="#" class="hover:text-gold-500">Accessories</a></li>
-                        <li><a href="#" class="hover:text-gold-500">Gifts</a></li>
+                 @foreach ($mainCategories as $mainCategory)
+    <li>
+        <a href="{{ route('category.show', $mainCategory->slug) }}"
+            class="hover:text-gold-500">
+            {{ ucfirst($mainCategory->name) }}
+        </a>
+    </li>
+
+    @if ($mainCategory->children->count())
+        @foreach ($mainCategory->children as $category)
+            <li>
+                <a href="{{ route('category.show', $category->slug) }}"
+                    class="hover:text-gold-500">
+                    {{ ucfirst($category->name) }}
+                </a>
+            </li>
+        @endforeach
+    @endif
+@endforeach
 
                     </ul>
 
@@ -985,12 +1000,12 @@
 
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-phone text-gold-400 mt-1"></i>
-                            <span>+92 300 1234567</span>
+                            <span>+92 320 4735908</span>
                         </li>
 
                         <li class="flex items-start gap-3 break-all">
                             <i class="fa-solid fa-envelope text-gold-400 mt-1"></i>
-                            <span>support@bookish.pk</span>
+                            <span>bookishsupport@gmail.com</span>
                         </li>
 
                         <li class="flex items-start gap-3">
