@@ -276,10 +276,10 @@
                         <!-- Bundle Card Content -->
                         <div class="product-info">
                             <div>
-                                <h3 class="filter-name cursor-pointer h-4">
+                                <h3 class="filter-name cursor-pointer h-8">
                                     {{ ucfirst($bundle->name) }}
                                 </h3>
-                                <p class="text-xs text-slate-400 pb-1 line-clamp-1 h-4">
+                                <p class="text-xs text-slate-400 pb-1 line-clamp-1 h-6">
                                     {{ $products->pluck('name')->join(' + ') }}
                                 </p>
                             </div>
