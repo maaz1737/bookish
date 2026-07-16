@@ -90,7 +90,7 @@
     {{-- <section class="mb-12 filter-container" id="school-section">
         <div class="flex items-center justify-between mb-6">
             <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
-                <i class="fa-solid fa-school text-[#001F54]"></i> Popular Schools
+                <i class="fa-solid fa-school text-[#ff7a00]"></i> Popular Schools
             </h2>
             <a href="{{ route('schools.index') }}"
                 class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">
@@ -164,7 +164,7 @@
         <section class="mb-12 filter-container" id="category-section">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
-                    <i class="fa-solid fa-layer-group text-[#001F54]"></i> Shop by Category
+                    <i class="fa-solid fa-layer-group text-[#ff7a00]"></i> Shop by Category
                 </h2>
                 <a href="{{ route('categories.index') }}"
                     class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">
@@ -188,7 +188,7 @@
         <section class="filter-container">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
-                    <i class="fa-solid fa-boxes-stacked text-[#001F54]"></i> Smart Saver Bundles
+                    <i class="fa-solid fa-boxes-stacked text-[#ff7a00]"></i> Smart Saver Bundles
                 </h2>
                 <a href="{{ route('bundles.index') }}"
                     class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">

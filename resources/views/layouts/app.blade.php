@@ -310,8 +310,7 @@
         }
 
         .filter-card:hover .filter-name {
-            color: rgb(12, 12, 204);
-            text-decoration: underline;
+            color: #ff7a00;
         }
 
         .school-card:hover {
