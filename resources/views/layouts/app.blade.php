@@ -333,10 +333,10 @@
     </div>
     <marquee class="bg-navy-800 text-white text-xs block md:hidden"">
         <div class=" max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-8">
-            <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
-            <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
-                Products</span>
-            <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support : 0321 1234567</span>
+        <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
+        <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
+            Products</span>
+        <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support : 0321 1234567</span>
         </div>
     </marquee>
 
@@ -477,7 +477,7 @@
                                     <div class="border-t mt-2">
 
                                         <a href="{{ route('schools.index') }}"
-                                            class="flex items-center justify-center py-4 text-sm font-semibold text-[#3559C7] hover:bg-gray-50">
+                                            class="flex items-center justify-center py-4 text-sm font-semibold text-orange-500 hover:bg-gray-50">
 
                                             View All Schools
                                             <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
@@ -516,11 +516,10 @@
                                         <span
                                             class="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
                                             @if ($category->image)
-                                                <img src="{{ asset('storage/' . $category->image) }}"
-                                                    alt="{{ $category->name }}" class="w-full h-full object-cover"
-                                                    loading="lazy">
+                                            <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
+                                                class="w-full h-full object-cover" loading="lazy">
                                             @else
-                                                <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
+                                            <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
                                             @endif
                                         </span>
 
@@ -541,7 +540,7 @@
 
                                 <div class="border-t border-slate-100 mt-1 pt-1">
                                     <a href="{{ route('category.show', $mainCategory->slug) }}"
-                                        class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-700 hover:bg-slate-50 transition w-full">
+                                        class="flex items-center justify-center text-center py-2 text-xs font-bold text-orange-500 hover:bg-slate-50 transition w-full">
                                         View All {{ ucfirst($mainCategory->name) }} &nbsp;→
                                     </a>
                                 </div>
@@ -551,7 +550,7 @@
                     @endif
                 </div>
             @endforeach
-            <a href="#"
+            <a href="{{ route('products.index') }}"
                 class="ml-auto bg-[#ff7a00] hover:bg-[#e06c00] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md">
                 <i class="fa-solid fa-tag mr-1"></i> Smart Saver
             </a>
@@ -563,8 +562,7 @@
     </div>
 
     <!-- Sidebar -->
-    <div id="mobileSidebar"
-        class="fixed top-0 right-0 h-screen w-[320px] max-w-[90vw] bg-white shadow-2xl z-[999]
+    <div id="mobileSidebar" class="fixed top-0 right-0 h-screen w-[320px] max-w-[90vw] bg-white shadow-2xl z-[999]
     translate-x-full transition-transform duration-300 lg:hidden flex flex-col">
 
         <!-- Header -->
@@ -605,8 +603,7 @@
                             class="flex items-center gap-3 px-8 py-3 hover:bg-slate-50">
 
                             @if ($school->logo)
-                                <img src="{{ asset('storage/' . $school->logo) }}"
-                                    class="w-9 h-9 rounded-full object-cover">
+                                <img src="{{ asset('storage/' . $school->logo) }}" class="w-9 h-9 rounded-full object-cover">
                             @else
                                 <div class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
 
@@ -653,8 +650,7 @@
                         <div class="mobileDropdown hidden">
 
                             @foreach ($mainCategory->children as $category)
-                                <a href="{{ route('category.show', $category->slug) }}"
-                                    class="block px-8 py-3 hover:bg-slate-50">
+                                <a href="{{ route('category.show', $category->slug) }}" class="block px-8 py-3 hover:bg-slate-50">
 
                                     {{ ucfirst($category->name) }}
 
@@ -697,8 +693,7 @@
         </div>
     @endif
     @if (session('error'))
-        <div
-            class="max-w-7xl mx-auto w-full px-4 mt-4 bg-red-50 border border-red-200 text-red-800 rounded-md p-3 text-sm">
+        <div class="max-w-7xl mx-auto w-full px-4 mt-4 bg-red-50 border border-red-200 text-red-800 rounded-md p-3 text-sm">
             ⚠️ {{ session('error') }}
         </div>
     @endif
@@ -714,8 +709,7 @@
     </div>
 
     <!-- Cart Sidebar -->
-    {{-- <div id="cartDrawer"
-        class="fixed top-0 right-0 h-screen w-full md:w-[380px] bg-white shadow-xl
+    {{-- <div id="cartDrawer" class="fixed top-0 right-0 h-screen w-full md:w-[380px] bg-white shadow-xl
            translate-x-full transition-transform duration-300 ease-in-out
            z-[999999]">
 
@@ -786,7 +780,7 @@
                         class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30">
                         🛒 Add to Cart
                     </a>
-                </div> 
+                </div>
                 <div class="grid grid-cols-2 gap-3 px-3 pb-3 md:flex md:flex-col md:gap-2">
 
                     <a href="{{ route('cart.index') }}"
@@ -806,8 +800,7 @@
         </div>
     </div> --}}
 
-    <div id="cartDrawer"
-        class="fixed top-0 right-0 min-h-screen h-full w-full md:w-[380px] bg-white shadow-xl
+    <div id="cartDrawer" class="fixed top-0 right-0 min-h-screen h-full w-full md:w-[380px] bg-white shadow-xl
            translate-x-full transition-transform duration-300 ease-in-out
            z-[999999] overflow-y-auto">
 
@@ -880,15 +873,15 @@
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
 
                 <!-- Company -->
-                <div class="sm:col-span-2">
+                <div class="sm:col-span-2 lg:col-span-4">
 
                     <div>
                         <div class="w-24 h-24 bg-contain bg-center bg-no-repeat"
-                    style="background-image: url('{{ asset('images/bookish_logo3.jpg') }}');">
-                </div>
+                            style="background-image: url('{{ asset('images/bookish_logo3.jpg') }}');">
+                        </div>
                     </div>
 
                     <p class="mt-4 text-slate-400 leading-7 max-w-md">
@@ -931,73 +924,58 @@
                 </div>
 
                 <!-- Quick Links -->
-                <div>
+                <div class="lg:col-span-2">
 
                     <h4 class="text-white font-semibold text-lg mb-4">
                         Quick Links
                     </h4>
-
                     <ul class="space-y-3">
-
                         <li>
                             <a href="{{ route('about') }}" class="hover:text-gold-500 transition">
                                 About Us
                             </a>
                         </li>
-
                         <li>
                             <a href="{{ route('returns-refunds') }}" class="hover:text-gold-500 transition">
                                 Returns & Refunds
                             </a>
                         </li>
-
                         <li>
                             <a href="{{ route('contact') }}" class="hover:text-gold-500 transition">
                                 Contact Us
                             </a>
                         </li>
-
                     </ul>
-
                 </div>
-
                 <!-- Shop -->
-                <div>
-
+                <div class="lg:col-span-3">
                     <h4 class="text-white font-semibold text-lg mb-4">
                         Shop
                     </h4>
-
                     <ul class="space-y-3">
+                        @foreach ($mainCategories as $mainCategory)
+                            <li>
+                                <a href="{{ route('category.show', $mainCategory->slug) }}" class="hover:text-gold-500">
+                                    {{ ucfirst($mainCategory->name) }}
+                                </a>
+                            </li>
 
-                 @foreach ($mainCategories as $mainCategory)
-    <li>
-        <a href="{{ route('category.show', $mainCategory->slug) }}"
-            class="hover:text-gold-500">
-            {{ ucfirst($mainCategory->name) }}
-        </a>
-    </li>
-
-    @if ($mainCategory->children->count())
-        @foreach ($mainCategory->children as $category)
-            <li>
-                <a href="{{ route('category.show', $category->slug) }}"
-                    class="hover:text-gold-500">
-                    {{ ucfirst($category->name) }}
-                </a>
-            </li>
-        @endforeach
-    @endif
-@endforeach
-
+                            @if ($mainCategory->children->count())
+                                @foreach ($mainCategory->children as $category)
+                                    <li>
+                                        <a href="{{ route('category.show', $category->slug) }}" class="hover:text-gold-500">
+                                            {{ ucfirst($category->name) }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        @endforeach
                     </ul>
-
                 </div>
-
                 <!-- Contact -->
-                <div>
+                <div class="lg:col-span-3">
 
-                    <h4 class="text-white font-semibold text-lg mb-4">
+                    <h4 class="text-white font-semibold text-lg mb-4 ">
                         Customer Service
                     </h4>
 
@@ -1005,7 +983,7 @@
 
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-phone text-gold-400 mt-1"></i>
-                            <span>+92 320 4735908</span>
+                            <span>+92 321 4735908</span>
                         </li>
 
                         <li class="flex items-start gap-3 break-all">
@@ -1052,8 +1030,8 @@
 
     <!-- Wishlist Universal Handler -->
     <script>
-        $(document).ready(function() {
-            $(document).on('click', '.wishlist-toggle-btn', function(e) {
+        $(document).ready(function () {
+            $(document).on('click', '.wishlist-toggle-btn', function (e) {
                 e.preventDefault();
                 var btn = $(this);
                 var url = btn.data('url');
@@ -1065,7 +1043,7 @@
                     data: {
                         _token: '{{ csrf_token() }}'
                     },
-                    success: function(response) {
+                    success: function (response) {
                         if (response.success) {
                             if (response.inWishlist) {
                                 btn.removeClass('text-slate-400').addClass('text-rose-500');
@@ -1086,7 +1064,7 @@
                             }
                         }
                     },
-                    error: function() {
+                    error: function () {
                         alert('Something went wrong. Please try again.');
                     }
                 });
@@ -1094,11 +1072,11 @@
         });
     </script>
     <script>
-        $(function() {
+        $(function () {
 
             // Open Sidebar
 
-            $("#mobile-menu-btn").click(function() {
+            $("#mobile-menu-btn").click(function () {
 
                 $("#mobileOverlay").fadeIn(200);
 
@@ -1110,7 +1088,7 @@
 
             // Close Sidebar
 
-            $("#closeMobileMenu,#mobileOverlay").click(function() {
+            $("#closeMobileMenu,#mobileOverlay").click(function () {
 
                 $("#mobileOverlay").fadeOut(200);
 
@@ -1122,7 +1100,7 @@
 
             // Accordion
 
-            $(".mobileDropdownBtn").click(function() {
+            $(".mobileDropdownBtn").click(function () {
 
                 let dropdown = $(this).next(".mobileDropdown");
 
@@ -1139,7 +1117,7 @@
 
         });
 
-        $(".filter-search").change(function() {
+        $(".filter-search").change(function () {
             let inputVal = $(this).val();
         })
     </script>
@@ -1156,13 +1134,13 @@
 
 
     <script>
-        $(".filter-search").on("input", function() {
+        $(".filter-search").on("input", function () {
             let keyword = $(this).val().trim().toLowerCase();
 
-            $(".filter-container").each(function() {
+            $(".filter-container").each(function () {
                 let visibleCards = 0;
 
-                $(this).find(".filter-card").each(function() {
+                $(this).find(".filter-card").each(function () {
                     let name = $(this).find(".filter-name").text().trim().toLowerCase();
                     let matched = name.includes(keyword);
 
