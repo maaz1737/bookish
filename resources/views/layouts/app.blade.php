@@ -334,10 +334,10 @@
     </div>
     <marquee class="bg-navy-800 text-white text-xs block md:hidden"">
         <div class=" max-w-7xl mx-auto px-4 py-2 flex items-center justify-between gap-8">
-        <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
-        <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
-            Products</span>
-        <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support : 0321 1234567</span>
+            <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
+            <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
+                Products</span>
+            <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support : 0321 1234567</span>
         </div>
     </marquee>
 
@@ -843,18 +843,24 @@
                 <div class="px-4 py-3 flex justify-between items-start">
                     <div>
                         <p class="font-semibold text-[13px]">Subtotal</p>
-                        <p class="text-[10px] text-gray-500 mt-1">Shipping & taxes may be re-calculated at checkout</p>
+                        <p class="text-[10px] text-gray-500 mt-1">Shipping &amp; taxes may be re-calculated at checkout
+                        </p>
                     </div>
-                    <div class="font-semibold text-[13px]" id="cart_total">
-                        Rs {{ $carts['total'] }}
+
+                    <div class="flex items-center gap-1">
+                        <span class="text-[11px] font-semibold text-slate-500 tracking-wider">PKR</span>
+
+                        <p class="text-sm font-semibold text-[#0a1f44]" id="cart_total">
+                            {{ number_format($carts['total']) }}
+                        </p>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-3 px-3 pb-3 md:flex md:flex-col md:gap-2">
                     {{-- Add to Cart Button --}}
-                    <a href="{{ route('cart.index') }}"
+                    <a href="/"
                         class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-1 md:order-2">
-                        🛒 Add to Cart
+                        🛒 Continue Shoping
                     </a>
 
                     {{-- Checkout Button --}}
@@ -1119,7 +1125,7 @@
 
         });
 
-        $(".filter-search").change(function () {
+        $(".filter-search").change(function() {
             let inputVal = $(this).val();
         })
     </script>
@@ -1136,13 +1142,13 @@
 
 
     <script>
-        $(".filter-search").on("input", function () {
+        $(".filter-search").on("input", function() {
             let keyword = $(this).val().trim().toLowerCase();
 
-            $(".filter-container").each(function () {
+            $(".filter-container").each(function() {
                 let visibleCards = 0;
 
-                $(this).find(".filter-card").each(function () {
+                $(this).find(".filter-card").each(function() {
                     let name = $(this).find(".filter-name").text().trim().toLowerCase();
                     let matched = name.includes(keyword);
 
