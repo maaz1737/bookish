@@ -26,25 +26,25 @@
                                         Trust.
                                     </p>
                                     <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mt-6 w-full ">
-                                        <a href="#school-section"
+                                        <a href="{{ route('schools.index') }}"
                                             class="inline-flex items-center justify-center whitespace-nowrap 
-                                                                                                                                                                                                                 w-full sm:w-auto
-                                                                                                                                                                                                                 px-4 py-2.5 text-sm rounded-lg
-                                                                                                                                                                                                                 bg-navy-800 text-white shadow-md hover:shadow-lg
-                                                                                                                                                                                                                 transition-all duration-200
-                                                                                                                                                                                                                 lg:px-6 lg:py-3 lg:text-base lg:rounded-xl hover:bg-[#223a8f]">
+                                            w-full sm:w-auto
+                                            px-4 py-2.5 text-sm rounded-lg
+                                            bg-navy-800 text-white shadow-md hover:shadow-lg
+                                            transition-all duration-200
+                                            lg:px-6 lg:py-3 lg:text-base lg:rounded-xl hover:bg-[#223a8f]">
                                             Shop by School <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
                                         </a>
 
-                                        <a href="#category-section"
+                                        <a href="{{ route('categories.index') }}"
                                             class="inline-flex items-center justify-center whitespace-nowrap
-                                                                                                                                                                                                                w-full sm:w-auto
-                                                                                                                                                                                                                   border-2 border-[#001F54] text-[#001F54]
-                                                                                                                                                                                                                   hover:bg-[#001F54] hover:text-white
-                                                                                                                                                                                                                   px-4 py-2.5 text-sm rounded-lg font-semibold
-                                                                                                                                                                                                                   transition-all duration-200
-                                                                                                                                                                                                                   lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
-                                            Shop All Categories
+                                            w-full sm:w-auto
+                                             border-2 border-[#001F54] text-[#001F54]
+                                            hover:bg-[#001F54] hover:text-white
+                                             px-4 py-2.5 text-sm rounded-lg font-semibold
+                                             transition-all duration-200
+                                            lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
+                                            Browse All Categories
                                         </a>
                                     </div>
 
@@ -87,7 +87,7 @@
 
 
     {{-- ===== POPULAR SCHOOLS ===== --}}
-    <section class="mb-12 filter-container" id="school-section">
+    {{-- <section class="mb-12 filter-container" id="school-section">
         <div class="flex items-center justify-between mb-6">
             <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
                 <i class="fa-solid fa-school text-[#001F54]"></i> Popular Schools
@@ -101,32 +101,32 @@
 
         <div class="grid-3">
             @foreach ($schools as $school)
-                <a href="{{ route('schools.show', $school) }}"
-                    class="school-card card p-6 flex flex-col justify-between h-full group filter-card">
-                    <div>
-                        <div
-                            class="w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
-                            @if ($school->logo ?? false)
-                                <img src="{{ asset('storage/' . $school->logo) }}" alt="{{ $school->name }} emblem"
-                                    class="max-w-full max-h-full object-contain" loading="lazy" />
-                            @else
-                                <i class="fa-solid fa-school text-3xl text-[#001F54]"></i>
-                            @endif
-                        </div>
-                        <h3 class="text-lg font-bold text-[#001F54] leading-tight mb-2 filter-name">
-                            {{ $school->name }}
-                        </h3>
-                        <p class="text-sm text-slate-500 mb-6">
-                            Shop books, uniforms & essentials
-                        </p>
+            <a href="{{ route('schools.show', $school) }}"
+                class="school-card card p-6 flex flex-col justify-between h-full group filter-card">
+                <div>
+                    <div
+                        class="w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
+                        @if ($school->logo ?? false)
+                        <img src="{{ asset('storage/' . $school->logo) }}" alt="{{ $school->name }} emblem"
+                            class="max-w-full max-h-full object-contain" loading="lazy" />
+                        @else
+                        <i class="fa-solid fa-school text-3xl text-[#001F54]"></i>
+                        @endif
                     </div>
-                    <button class="primary-btn w-full justify-center hover:bg-[#223a8f]">
-                        Explore Now →
-                    </button>
-                </a>
+                    <h3 class="text-lg font-bold text-[#001F54] leading-tight mb-2 filter-name">
+                        {{ $school->name }}
+                    </h3>
+                    <p class="text-sm text-slate-500 mb-6">
+                        Shop books, uniforms & essentials
+                    </p>
+                </div>
+                <button class="primary-btn w-full justify-center hover:bg-[#223a8f]">
+                    Explore Now →
+                </button>
+            </a>
             @endforeach
         </div>
-    </section>
+    </section> --}}
 
 
     {{-- ===== TRENDING NOW ===== --}}
@@ -211,7 +211,7 @@
 
                         <!-- Badges -->
                         @if ($discount > 0)
-                            <span class="badge badge-orange absolute top-4 left-4 z-20 shadow-md">
+                            <span class="absolute top-4 left-4 z-10 bg-orange-200/80 text-orange-600 text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full leading-none shadow-md border border-orange-300">
                                 Save {{ rtrim(rtrim($discount, '0'), '.') }}%
                             </span>
                         @endif
@@ -277,7 +277,8 @@
                         <!-- Bundle Card Content -->
                         <div class="product-info">
                             <div>
-                                <h3 class="filter-name cursor-pointer h-8">
+                                <h3
+                                    class="text-sm font-bold text-[#0a1a3d] hover:text-[#1e3a8a] transition-colors leading-snug line-clamp-2 filter-name h-4 py-4 hover:underline">
                                     {{ ucfirst($bundle->name) }}
                                 </h3>
                                 <p class="text-xs text-slate-400 pb-1 line-clamp-1 h-6">

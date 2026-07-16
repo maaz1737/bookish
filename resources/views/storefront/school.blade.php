@@ -256,13 +256,17 @@
                             @endif
                             <span class="text-lg font-extrabold text-[#0a1f44]">PKR {{ number_format($bundle->final_price) }}</span>
                         </div>
+                       <div class="mt-auto pt-4">
+                           <a href="{{ route('bundle.show', [$school, optional($bundle->schoolClass)->slug ?? '#']) }}"
+                               class="group w-full bg-[#0a1f44] text-white text-sm font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 hover:bg-[#223a8f]">
 
-                        <div class="mt-auto pt-4">
-                            <a href="{{ route('bundle.show', [$school, optional($bundle->schoolClass)->slug ?? '#']) }}"
-                                class="w-full bg-[#0a1f44] hover:bg-[#0d2a5c] text-white text-sm font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200">
-                                View Bundle <i class="fa-solid fa-arrow-right text-xs"></i>
-                            </a>
-                        </div>
+                               View Bundle
+
+                             <span class="transition-transform duration-300 group-hover:translate-x-1">
+                               <i class="fa-solid fa-arrow-right text-sm"></i>
+                            </span>
+                             </a>
+                           </div>
                     </div>
                 </div>
             @endforeach
