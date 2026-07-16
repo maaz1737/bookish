@@ -983,7 +983,7 @@
 
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-phone text-gold-400 mt-1"></i>
-                            <span>+92 320 4735908</span>
+                            <span>+92 321 4735908</span>
                         </li>
 
                         <li class="flex items-start gap-3 break-all">
