@@ -29,7 +29,7 @@
     {{-- Badge --}}
     @if ($badgeText)
         <span
-            class="absolute top-3 left-3 z-10 bg-[#ff7a00] text-white text-[10px] sm:text-xs font-bold px-2 py-1 rounded-md leading-none shadow-sm">
+            class="absolute top-3 left-3 z-10 bg-orange-200/80 text-orange-600 text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full leading-none shadow-md border border-orange-300">
             {{ $badgeText }}
         </span>
     @endif

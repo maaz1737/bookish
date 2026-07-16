@@ -93,7 +93,7 @@
                         {{-- Product Grid --}}
                         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                             @foreach ($sub->childProducts as $product)
-                                @include('storefront.partials.product-card', ['product' => $product])
+                                @include('partials.product-card', ['product' => $product])
                             @endforeach
                         </div>
                     </section>
@@ -115,7 +115,7 @@
             @endif
             <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
                 @foreach ($category->products as $product)
-                    @include('storefront.partials.product-card', ['product' => $product])
+                    @include('partials.product-card', ['product' => $product])
                 @endforeach
             </div>
         </section>
@@ -125,7 +125,7 @@
     @if ($category->childProducts->count())
         <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 {{ ($category->children->count() || $category->products->count()) ? 'mt-14' : '' }}">
             @foreach ($category->childProducts as $product)
-                @include('storefront.partials.product-card', ['product' => $product])
+                @include('partials.product-card', ['product' => $product])
             @endforeach
         </div>
     @endif
