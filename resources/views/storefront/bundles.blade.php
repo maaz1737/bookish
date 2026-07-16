@@ -5,7 +5,7 @@
 
 @section('content')
     <!-- Header Section -->
-    <section
+    {{-- <section
         class="bg-gradient-to-r from-indigo-900 via-navy-800 to-indigo-900 text-white rounded-3xl p-8 sm:p-12 mb-8 shadow-sm relative overflow-hidden">
         <div
             class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-amber-400/10 via-transparent to-transparent pointer-events-none">
@@ -23,7 +23,7 @@
                 stationery together at exclusive discounted rates to help you save time and money.
             </p>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Breadcrumb -->
     <nav class="text-xs text-gray-500 flex items-center gap-1.5 mb-8">
