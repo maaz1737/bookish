@@ -26,43 +26,59 @@ class ProductController extends Controller
     }
 
 
-    // SEO route: /category/{type}
+    // SEO route: /category/{slug}
     public function category(string $slug)
     {
+        $sort = request('sort', 'latest');
+
+        // Helper closure to apply sort order to a product query
+        $applySortClosure = function ($q) use ($sort) {
+            $q->where('is_active', true)->with('variants');
+            match ($sort) {
+                'price_asc'  => $q->orderBy('price', 'asc'),
+                'price_desc' => $q->orderBy('price', 'desc'),
+                'name_asc'   => $q->orderBy('name', 'asc'),
+                default      => $q->latest(),
+            };
+        };
+
+        // Try as a parent category first
         $category = Category::whereNull('parent_id')
             ->where('slug', $slug)
             ->where('is_active', true)
             ->with([
-                'products' => function ($q) {
-                    $q->where('is_active', true)
-                        ->whereNull('sub_category_id')
-                        ->latest();
+                'products' => function ($q) use ($applySortClosure) {
+                    $applySortClosure($q);
+                    $q->whereNull('sub_category_id');
                 },
-                'children' => function ($q) {
+                'children' => function ($q) use ($applySortClosure) {
                     $q->where('is_active', true)
                         ->with([
-                            'childProducts' => function ($pq) {
-                                $pq->where('is_active', true)
-                                    ->with('variants')
-                                    ->latest()
-                                    ->take(4);
+                            'childProducts' => function ($pq) use ($applySortClosure) {
+                                $applySortClosure($pq);
+                                $pq->take(4);
                             }
                         ]);
-                }
+                },
             ])
             ->first();
 
-        // If not found as parent, try as subcategory
+        // If not found as parent, try as subcategory (leaf)
         if (!$category) {
             $category = Category::where('slug', $slug)
                 ->where('is_active', true)
                 ->whereNotNull('parent_id')
-                ->with('childProducts')
+                ->with([
+                    'childProducts' => function ($q) use ($applySortClosure) {
+                        $applySortClosure($q);
+                    },
+                ])
                 ->first();
-            // dd($subcategory->childProducts);
         }
 
-        return view('storefront.category', compact('category'));
+        abort_if(!$category, 404);
+
+        return view('storefront.category', compact('category', 'sort'));
     }
 
 
@@ -101,12 +117,26 @@ class ProductController extends Controller
         $parentCategories = Category::whereNull('parent_id')
             ->where('is_active', true)
             ->with([
+                'products' => function ($q) {
+                    $q->where('is_active', true)->with('variants')->latest()->take(3);
+                },
                 'children' => function ($q) {
-                    $q->where('is_active', true);
+                    $q->where('is_active', true)
+                        ->with([
+                            'childProducts' => function ($pq) {
+                                $pq->where('is_active', true)->with('variants')->latest()->take(3);
+                            }
+                        ]);
                 }
             ])
             ->get();
 
-        return view('storefront.categories', compact('parentCategories'));
+        $allProducts = Product::active()
+            ->with('variants')
+            ->latest()
+            ->take(3)
+            ->get();
+
+        return view('storefront.categories', compact('parentCategories', 'allProducts'));
     }
 }
