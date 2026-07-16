@@ -307,6 +307,15 @@
             color: gray;
             padding-bottom: 2px;
         }
+
+        .filter-card:hover .filter-name {
+            color: rgb(12, 12, 204);
+            text-decoration: underline;
+        }
+
+        .school-card:hover {
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 

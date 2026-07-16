@@ -9,7 +9,7 @@
             @endif --}}
         </div>
         <div class="py-3 pt-5">
-            <h3 class="text-base font-bold text-[#001F54] text-center filter-name">
+            <h3 class="text-base font-bold text-[#001F54] px-4 filter-name hover:text-blue-700 hover:underline">
                 {{ $category->name }}
             </h3>
         </div>
