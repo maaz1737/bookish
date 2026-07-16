@@ -1,4 +1,4 @@
-<div class="category-card card group product-card filter-card">
+<div class="category-card card group product-card filter-card cursor-pointer">
     <div>
         <div class="image-container overflow-hidden" style="background:url({{ $category->imageUrl()}})">
             <img src="{{ $category->imageUrl()}}" alt="{{ $category->name }}" loading="lazy"

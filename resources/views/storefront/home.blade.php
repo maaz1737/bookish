@@ -28,22 +28,22 @@
                                     <div class="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 mt-6 w-full ">
                                         <a href="#school-section"
                                             class="inline-flex items-center justify-center whitespace-nowrap 
-                                                                                         w-full sm:w-auto
-                                                                                         px-4 py-2.5 text-sm rounded-lg
-                                                                                         bg-navy-800 text-white shadow-md hover:shadow-lg
-                                                                                         transition-all duration-200
-                                                                                         lg:px-6 lg:py-3 lg:text-base lg:rounded-xl hover:bg-[#223a8f]">
+                                                                                                                                                     w-full sm:w-auto
+                                                                                                                                                     px-4 py-2.5 text-sm rounded-lg
+                                                                                                                                                     bg-navy-800 text-white shadow-md hover:shadow-lg
+                                                                                                                                                     transition-all duration-200
+                                                                                                                                                     lg:px-6 lg:py-3 lg:text-base lg:rounded-xl hover:bg-[#223a8f]">
                                             Shop by School <i class="fa-solid fa-arrow-right ml-1.5 text-xs"></i>
                                         </a>
 
                                         <a href="#category-section"
                                             class="inline-flex items-center justify-center whitespace-nowrap
-                                                                                        w-full sm:w-auto
-                                                                                           border-2 border-[#001F54] text-[#001F54]
-                                                                                           hover:bg-[#001F54] hover:text-white
-                                                                                           px-4 py-2.5 text-sm rounded-lg font-semibold
-                                                                                           transition-all duration-200
-                                                                                           lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
+                                                                                                                                                    w-full sm:w-auto
+                                                                                                                                                       border-2 border-[#001F54] text-[#001F54]
+                                                                                                                                                       hover:bg-[#001F54] hover:text-white
+                                                                                                                                                       px-4 py-2.5 text-sm rounded-lg font-semibold
+                                                                                                                                                       transition-all duration-200
+                                                                                                                                                       lg:px-6 lg:py-3 lg:text-base lg:rounded-xl">
                                             Shop All Categories
                                         </a>
                                     </div>
@@ -276,10 +276,10 @@
                         <!-- Bundle Card Content -->
                         <div class="product-info">
                             <div>
-                                <h3 class="filter-name">
+                                <h3 class="filter-name cursor-pointer h-4">
                                     {{ ucfirst($bundle->name) }}
                                 </h3>
-                                <p class="text-xs text-slate-400 pb-1 line-clamp-1">
+                                <p class="text-xs text-slate-400 pb-1 line-clamp-1 h-4">
                                     {{ $products->pluck('name')->join(' + ') }}
                                 </p>
                             </div>
@@ -294,9 +294,10 @@
                                 @endif
                             </div>
 
-                            <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class="cart-form w-full mt-auto">
+                            <form action="{{ route('cart.addBundle', $bundle) }}" method="POST" class="w-full mt-auto">
                                 @csrf
-                                <button type="submit" class="primary-btn relative w-full rounded-lg bg-[#001F54] py-2 md:py-2.5 text-sm md:text-base font-medium text-white transition-all duration-200 hover:bg-[#223a8f] hover:shadow-md active:scale-[0.98]">
+                                <button type="submit"
+                                    class="primary-btn relative w-full rounded-lg bg-[#001F54] py-2 md:py-2.5 text-sm md:text-base font-medium text-white transition-all duration-200 hover:bg-[#223a8f] hover:shadow-md active:scale-[0.98]">
                                     <i class="fa-solid fa-cart-shopping text-sm"></i> Add to Cart
                                 </button>
                             </form>

@@ -24,7 +24,7 @@
 @endphp
 
 <div
-    class="bg-white border border-slate-100 rounded-2xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_30px_rgba(0,0,0,0.10)] hover:-translate-y-0.5 transition-all duration-300 flex flex-col relative group filter-card">
+    class=" hover:-translate-y-0.5 transition-all duration-300 relative group filter-card cursor-pointer product-card">
 
     {{-- Badge --}}
     @if ($badgeText)
