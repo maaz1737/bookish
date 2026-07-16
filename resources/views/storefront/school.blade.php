@@ -170,11 +170,11 @@
                 <div class="bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden group flex flex-col">
 
                     {{-- Bundle collage image area --}}
-                    <div class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50 h-[200px]">
+                    <div class="relative overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/40 to-indigo-50 h-[200px] image-container">
 
                         {{-- Discount badge --}}
                         @if ($discount > 0)
-                            <div class="absolute top-3 left-3 z-20 bg-gradient-to-r from-amber-400 to-orange-400 text-white text-[11px] font-black px-3 py-1 rounded-full shadow-md flex items-center gap-1">
+                            <div class="absolute top-4 left-4 z-10 bg-orange-200/80 text-orange-600 text-[10px] sm:text-xs font-bold px-2 py-1 rounded-full leading-none shadow-md border border-orange-300">
                                 <i class="fa-solid fa-bolt text-[9px]"></i> Save {{ $discount }}%
                             </div>
                         @endif
@@ -244,27 +244,37 @@
 
                     {{-- Bundle details --}}
                     <div class="p-5 flex flex-col flex-1">
-                        <h3 class="font-extrabold text-[#0a1f44] text-base leading-tight">{{ $bundleName }}</h3>
-
-                        @if ($included)
-                            <p class="text-xs text-gray-400 mt-1.5 leading-relaxed">{{ $included }}</p>
-                        @endif
-
-                        <div class="mt-4 flex items-center gap-3">
-                            @if ($bundle->total_price > 0 && $bundle->total_price != $bundle->final_price)
-                                <span class="text-xs text-gray-400 line-through">PKR {{ number_format($bundle->total_price) }}</span>
-                            @endif
-                            <span class="text-lg font-extrabold text-[#0a1f44]">PKR {{ number_format($bundle->final_price) }}</span>
-                        </div>
+                                 <div>
+                                <h3
+                                    class="text-sm font-bold text-[#0a1a3d] hover:text-[#1e3a8a] transition-colors leading-snug line-clamp-2 filter-name h-4 py-4 hover:underline">
+                                    {{ ucfirst($bundle->name) }}
+                                </h3>
+                             @if($included)
+                                <p class="text-xs text-slate-400 pb-1 line-clamp-1 h-6">
+                                    {{ $included }}
+                                </p>
+                             @endif
+                            </div>
+                            <div class="mb-2 amount">
+                                <span class="">
+                                    PKR {{ number_format($bundle->final_price) }}
+                                </span>
+                                @if ($bundle->total_price > 0 && $bundle->total_price != $bundle->final_price)
+                                    <span class="prev-amount">
+                                        PKR {{ number_format($bundle->total_price) }}
+                                    </span>
+                                @endif
+                            </div>
                        <div class="mt-auto pt-4">
                            <a href="{{ route('bundle.show', [$school, optional($bundle->schoolClass)->slug ?? '#']) }}"
-                               class="group w-full bg-[#0a1f44] text-white text-sm font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-colors duration-200 hover:bg-[#223a8f]">
-
-                               View Bundle
-
-                             <span class="transition-transform duration-300 group-hover:translate-x-1">
-                               <i class="fa-solid fa-arrow-right text-sm"></i>
-                            </span>
+                               class="primary-btn group/button inline-flex items-center justify-center gap-2 hover:bg-[#223a8f]">
+                                <span>
+                                     View Bundle
+                                  </span>
+                             <span class="inline-flex transition-transform duration-300 ease-out group-hover/button:translate-x-1">
+                                   <i class="fa-solid fa-arrow-right text-sm"></i>
+                               </span>
+                              </button>
                              </a>
                            </div>
                     </div>
