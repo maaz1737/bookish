@@ -477,7 +477,7 @@
                                     <div class="border-t mt-2">
 
                                         <a href="{{ route('schools.index') }}"
-                                            class="flex items-center justify-center py-4 text-sm font-semibold text-[#3559C7] hover:bg-gray-50">
+                                            class="flex items-center justify-center py-4 text-sm font-semibold text-orange-500 hover:bg-gray-50">
 
                                             View All Schools
                                             <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
@@ -541,7 +541,7 @@
 
                                 <div class="border-t border-slate-100 mt-1 pt-1">
                                     <a href="{{ route('category.show', $mainCategory->slug) }}"
-                                        class="flex items-center justify-center text-center py-2 text-xs font-bold text-blue-700 hover:bg-slate-50 transition w-full">
+                                        class="flex items-center justify-center text-center py-2 text-xs font-bold text-orange-500 hover:bg-slate-50 transition w-full">
                                         View All {{ ucfirst($mainCategory->name) }} &nbsp;→
                                     </a>
                                 </div>
