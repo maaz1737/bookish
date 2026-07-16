@@ -87,10 +87,10 @@
 
 
     {{-- ===== POPULAR SCHOOLS ===== --}}
-    <section class="mb-12 filter-container" id="school-section">
+    {{-- <section class="mb-12 filter-container" id="school-section">
         <div class="flex items-center justify-between mb-6">
             <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
-                <i class="fa-solid fa-school text-[#001F54]"></i> Popular Schools
+                <i class="fa-solid fa-school text-[#ff7a00]"></i> Popular Schools
             </h2>
             <a href="{{ route('schools.index') }}"
                 class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">
@@ -112,7 +112,7 @@
                                 <i class="fa-solid fa-school text-3xl text-[#001F54]"></i>
                             @endif
                         </div>
-                        <h3 class="text-lg font-bold text-[#001F54] leading-tight mb-2 filter-name">
+                        <h3 class="text-lg font-bold text-[#001F54] group-hover:text-[#ff7a00] hover:text-[#ff7a00] leading-tight mb-2 filter-name transition-colors cursor-pointer">
                             {{ $school->name }}
                         </h3>
                         <p class="text-sm text-slate-500 mb-6">
@@ -125,7 +125,7 @@
                 </div>
             @endforeach
         </div>
-    </section>
+    </section> --}}
 
 
     {{-- ===== TRENDING NOW ===== --}}
@@ -163,7 +163,7 @@
         <section class="mb-12 filter-container" id="category-section">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
-                    <i class="fa-solid fa-layer-group text-[#001F54]"></i> Shop by Category
+                    <i class="fa-solid fa-layer-group text-[#ff7a00]"></i> Shop by Category
                 </h2>
                 <a href="{{ route('categories.index') }}"
                     class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">
@@ -187,7 +187,7 @@
         <section class="filter-container">
             <div class="flex items-center justify-between mb-6">
                 <h2 class="flex items-center gap-2 text-xl md:text-2xl font-bold text-[#001F54]">
-                    <i class="fa-solid fa-boxes-stacked text-[#001F54]"></i> Smart Saver Bundles
+                    <i class="fa-solid fa-boxes-stacked text-[#ff7a00]"></i> Smart Saver Bundles
                 </h2>
                 <a href="{{ route('bundles.index') }}"
                     class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-[#001F54] transition-colors hover:text-[#ff7a00]">
@@ -276,7 +276,7 @@
                         <!-- Bundle Card Content -->
                         <div class="product-info">
                             <div>
-                                <h3 class="filter-name cursor-pointer h-8">
+                                <h3 class="filter-name cursor-pointer h-8 text-[#001F54] group-hover:text-[#ff7a00] hover:text-[#ff7a00] transition-colors font-bold">
                                     {{ ucfirst($bundle->name) }}
                                 </h3>
                                 <p class="text-xs text-slate-400 pb-1 line-clamp-1 h-6">
