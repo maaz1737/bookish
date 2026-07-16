@@ -21,7 +21,7 @@
                     <div class="flex flex-col items-center flex-1">
                         <div
                             class="w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300
-                                                                                                                    {{ $s['active'] || $s['completed'] ? 'bg-[#0a1f44] text-white border-[#0a1f44] shadow-sm' : 'bg-white text-gray-400 border-gray-300' }}">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            {{ $s['active'] || $s['completed'] ? 'bg-[#0a1f44] text-white border-[#0a1f44] shadow-sm' : 'bg-white text-gray-400 border-gray-300' }}">
                             @if ($s['completed'])
                                 <i class="fa-solid fa-check text-xs"></i>
                             @else
@@ -43,7 +43,7 @@
         </div>
 
         <!-- Content grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-10 max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-10 max-w-7xl mx-auto">
 
             <!-- Payment methods (2/3) -->
             <section class="lg:col-span-2 bg-white border border-gray-200 rounded-xl p-6 sm:p-8 shadow-sm">
@@ -107,13 +107,14 @@
 
                     @elseif ($currentStep === 'confirm')
                         {{-- STEP 2: CONFIRM YOUR PAYMENT --}}
-                        <div class="flex items-center gap-3 mb-4">
+                        <div class="flex items-center gap-3 pb-4 border-b border-gray-200">
                             <div
                                 class="w-9 h-9 rounded-full bg-[#0a1f44] text-white flex items-center justify-center font-bold text-sm shrink-0">
                                 2</div>
                             <div>
                                 <h2 class="text-xl sm:text-2xl font-extrabold text-[#0a1f44]">Confirm Your Payment</h2>
-                                <p class="text-sm text-gray-500">Please confirm how you have made the payment for your order.</p>
+                                <p class="text-sm text-gray-500">Please send or upload your payment receipt so we can verify your
+                                    order.</p>
                             </div>
                         </div>
 
@@ -129,135 +130,128 @@
                             </div>
                         @endif
 
-                        <p class="text-sm font-bold text-[#0a1f44] mb-4">How would you like to confirm your payment? <span
-                                class="text-gray-400 font-normal">Choose one of the options below.</span></p>
+                        <p class="text-sm font-bold text-[#0a1f44] my-4">Choose a confirmation method</p>
 
                         <form action="{{ route('checkout.proof', $order->order_number) }}" method="post"
                             enctype="multipart/form-data" id="confirm-payment-form">
                             @csrf
-                            <input type="hidden" name="confirm_method" id="confirm_method" value="upload" />
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start relative">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 items-start relative border-b border-gray-200 pb-4">
 
                                 {{-- Option 1: Upload --}}
                                 <div id="card-upload"
-                                    class="flex flex-col border-2 border-[#0a1f44] bg-blue-50/20 rounded-2xl p-5 cursor-pointer transition duration-200">
-                                    <div class="flex items-start gap-3 mb-4">
+                                    class="border-2 border-green-500 bg-green-50 shadow-md rounded-2xl p-5 cursor-pointer h-full proof-card">
+                                    <div class="flex items-start gap-3 mb-4 justify-between">
                                         <div
-                                            class="w-10 h-10 rounded-full bg-blue-100 text-[#0a1f44] flex items-center justify-center shrink-0">
-                                            <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                                            class="w-12 h-12 rounded-full bg-blue-100 text-[#0a1f44] flex items-center justify-center shrink-0">
+                                            <i class="fa-solid fa-cloud-arrow-up text-xl"></i>
                                         </div>
                                         <div>
-                                            <h4 class="font-extrabold text-[#0a1f44] text-sm">Option 1: Upload Payment Receipt</h4>
-                                            <p class="text-xs text-gray-500">Upload a screenshot or photo of your payment receipt.
+                                            <h4 class="font-extrabold text-[#0a1f44] text-sm">Upload Receipt</h4>
+                                            <p class="text-xs text-gray-500  pt-2">Upload your payment screenshot directly.
                                             </p>
                                         </div>
-                                    </div>
-
-                                    <div class="border-2 border-dashed border-gray-200 hover:border-[#0a1f44] rounded-xl p-6 text-center cursor-pointer transition relative bg-white"
-                                        id="upload-box">
-                                        <input type="file" name="screenshot" id="screenshot-input"
-                                            class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                            accept="image/*,application/pdf" onchange="previewFile(this)" />
-                                        <div class="space-y-2" id="upload-placeholder">
-                                            <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-300"></i>
-                                            <p class="text-sm font-bold text-[#0a1f44]">Drag & drop your file here</p>
-                                            <p class="text-[11px] text-gray-400">or <span
-                                                    class="bg-gray-100 border rounded px-2 py-0.5 text-gray-600">Choose File</span>
-                                            </p>
-                                            <p class="text-[10px] text-gray-400">JPG, PNG, PDF (Max. 5MB)</p>
-                                        </div>
-                                        <div class="hidden space-y-2" id="upload-preview-container">
-                                            <i class="fa-regular fa-file-image text-4xl text-green-400 hidden" id="file-icon"></i>
-                                            <img id="upload-preview"
-                                                class="max-h-[100px] mx-auto rounded border shadow-sm hidden" />
-                                            <p class="text-xs text-[#0a1f44] font-semibold break-all" id="filename-label"></p>
-                                            <p class="text-[10px] text-gray-400">Click or drag to change</p>
+                                        <div>
+                                            <input type="radio" name="proof" value="screenshot" checked
+                                                class="proof-radio w-5 h-5 accent-green-600 cursor-pointer">
                                         </div>
                                     </div>
                                     @error('screenshot')
                                         <p class="text-red-500 text-xs mt-1 font-semibold">{{ $message }}</p>
                                     @enderror
-
-                                    <div
-                                        class="mt-3 bg-blue-50 border border-blue-100 rounded-lg p-3 text-xs text-gray-500 flex items-start gap-2">
-                                        <i class="fa-solid fa-circle-info text-[#0a1f44] mt-0.5 shrink-0"></i>
-                                        <span>Please make sure the receipt is clear and shows the transaction details (date, amount,
-                                            reference number).</span>
-                                    </div>
-                                </div>
-
-                                {{-- OR Badge for desktop --}}
-                                <div
-                                    class="hidden md:flex justify-center items-center my-2 md:absolute md:left-1/2 md:top-1/3 md:-translate-x-1/2 md:-translate-y-1/2 z-10 pointer-events-none">
-                                    <div
-                                        class="w-9 h-9 rounded-full bg-white border-2 border-gray-200 flex items-center justify-center text-xs font-bold text-gray-400 shadow-sm">
-                                        OR</div>
                                 </div>
 
                                 {{-- Option 2: WhatsApp --}}
                                 <div id="card-whatsapp"
-                                    class="flex flex-col border border-gray-200 bg-white rounded-2xl p-5 cursor-pointer transition duration-200">
-                                    <div class="flex items-start gap-3 mb-4">
+                                    class="border border-gray-200 rounded-2xl p-5 cursor-pointer h-full proof-card">
+                                    <div class="flex items-start gap-3 mb-4 justify-between">
                                         <div
-                                            class="w-10 h-10 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
-                                            <i class="fa-brands fa-whatsapp text-lg"></i>
+                                            class="w-12 h-12 rounded-full bg-green-100 text-green-600 flex items-center justify-center shrink-0">
+                                            <i class="fa-brands fa-whatsapp text-xl"></i>
                                         </div>
                                         <div>
-                                            <h4 class="font-extrabold text-[#0a1f44] text-sm">Option 2: Shared on WhatsApp</h4>
-                                            <p class="text-xs text-gray-500">Share your payment receipt on WhatsApp using the number
-                                                below.</p>
+                                            <h4 class="font-extrabold text-[#0a1f44] text-sm">WhatsApp</h4>
+                                            <p class="text-xs text-gray-500  pt-2">Send your payment screenshot through WhatsApp.
+                                            </p>
                                         </div>
-                                    </div>
-
-                                    <div
-                                        class="flex items-center justify-between bg-green-50 border border-green-100 rounded-xl p-3 mb-4">
-                                        <div class="flex items-center gap-2">
-                                            <i class="fa-brands fa-whatsapp text-green-600 text-xl"></i>
-                                            <span class="font-mono text-base font-bold text-[#0a1f44]">0320-4735908</span>
+                                        <div>
+                                            <input type="radio" name="proof" value="whatsapp"
+                                                class="proof-radio w-5 h-5 accent-green-600 cursor-pointer">
                                         </div>
-                                        <button type="button" id="copy-whatsapp"
-                                            onclick="copyToClipboard('03204735908','copy-whatsapp')"
-                                            class="bg-white border border-gray-200 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm transition hover:border-gray-300 shrink-0">
-                                            <i class="fa-regular fa-copy"></i>
-                                        </button>
-                                    </div>
-
-                                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs space-y-2">
-                                        <h5 class="font-bold text-red-600 flex items-center gap-1.5">
-                                            <i class="fa-solid fa-triangle-exclamation"></i> Acknowledgement <span
-                                                class="text-red-600">(Required)</span>
-                                        </h5>
-                                        <p class="text-gray-500">By selecting this option, you acknowledge and agree that:</p>
-                                        <ul class="space-y-1.5 text-gray-700">
-                                            <li class="flex items-start gap-1.5">
-                                                <i class="fa-solid fa-circle-check text-amber-500 mt-0.5 shrink-0"></i>
-                                                <span>I have shared the payment receipt on WhatsApp at 0320-4735908.</span>
-                                            </li>
-                                            <li class="flex items-start gap-1.5">
-                                                <i class="fa-solid fa-circle-check text-amber-500 mt-0.5 shrink-0"></i>
-                                                <span>My order will remain pending until Bookish & Beyond verifies my
-                                                    payment.</span>
-                                            </li>
-                                            <li class="flex items-start gap-1.5">
-                                                <i class="fa-solid fa-circle-check text-amber-500 mt-0.5 shrink-0"></i>
-                                                <span>Bookish & Beyond will contact me once the payment is verified.</span>
-                                            </li>
-                                        </ul>
-                                        <label
-                                            class="flex items-center gap-2 mt-3 pt-2 border-t border-amber-200/60 cursor-pointer">
-                                            <input type="checkbox" name="whatsapp_agree" id="whatsapp_agree" value="1"
-                                                class="rounded" onclick="event.stopPropagation()" />
-                                            <span class="font-bold text-gray-700">I understand and agree to the above. <span
-                                                    class="text-red-600">*</span></span>
-                                        </label>
-                                        @error('whatsapp_agree')
-                                            <p class="text-red-500 text-[10px] mt-1 font-semibold">{{ $message }}</p>
-                                        @enderror
                                     </div>
                                 </div>
                             </div>
+                            <div class="mt-4" id="payment-upload">
+                                <p class="font-semibold">Upload your payment receipt</p>
+                                <div class="border-2 border-dashed border-gray-200 hover:border-[#0a1f44] rounded-xl p-6 text-center cursor-pointer transition relative bg-white mt-3"
+                                    id="upload-box">
+                                    <input type="file" name="screenshot" id="screenshot-input"
+                                        class="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                        accept="image/*,application/pdf" onchange="previewFile(this)" />
+                                    <div class="space-y-2" id="upload-placeholder">
+                                        <i class="fa-solid fa-cloud-arrow-up text-3xl text-gray-300"></i>
+                                        <p class="text-sm font-bold text-[#0a1f44]">Drag & drop your file here</p>
+                                        <p class="text-[11px] text-gray-400">or <span
+                                                class="bg-gray-100 border rounded mx-2 px-3 py-0.5 text-gray-700 font-semibold">Choose
+                                                File</span>
+                                        </p>
+                                        <p class="text-[10px] text-gray-400">JPG, PNG, PDF (Max. 5MB)</p>
+                                    </div>
+                                    <div class="hidden space-y-2" id="upload-preview-container">
+                                        <i class="fa-regular fa-file-image text-4xl text-green-400 hidden" id="file-icon"></i>
+                                        <img id="upload-preview" class="max-h-[100px] mx-auto rounded border shadow-sm hidden" />
+                                        <p class="text-xs text-[#0a1f44] font-semibold break-all" id="filename-label"></p>
+                                        <p class="text-[10px] text-gray-400">Click or drag to change</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-4" id="payment-whatsapp" style="display: none;">
+                                <div class="flex items-center gap-5 rounded-xl border border-green-100 bg-[#f5fbf7] px-6 py-10">
 
+                                    <!-- Left Icon -->
+                                    <div class="flex h-16 w-16 items-center justify-center rounded-xl bg-green-100">
+                                        <i class="fa-regular fa-file-lines text-4xl text-green-600 relative">
+                                            <span
+                                                class="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full bg-[#25D366] border-2 border-white">
+                                                <i class="fa-brands fa-whatsapp text-[11px] text-white"></i>
+                                            </span>
+                                        </i>
+                                    </div>
+
+                                    <!-- Content -->
+                                    <div class="flex-1">
+                                        <h4 class="text-[15px] font-bold text-[#1b2d4b]">
+                                            Send your payment receipt on WhatsApp
+                                        </h4>
+
+                                        <p class="mt-1 text-xs text-gray-500">
+                                            Send your payment screenshot to the WhatsApp number below.
+                                        </p>
+                                        <div
+                                            class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 bg-white border border-gray-200 rounded-xl p-3 mt-3 max-w-sm">
+
+                                            <!-- Number -->
+                                            <div class="flex items-center gap-2">
+                                                <i class="fa-brands fa-whatsapp text-green-600 text-lg sm:text-xl"></i>
+
+                                                <span
+                                                    class="text-lg xs:text-xl sm:text-[22px] font-semibold tracking-wide text-[#1b2d4b]">
+                                                    0320-4735908
+                                                </span>
+                                            </div>
+
+                                            <!-- Copy Button -->
+                                            <button type="button" id="copy-whatsapp"
+                                                onclick="copyToClipboard('03204735908','copy-whatsapp')"
+                                                class="self-end sm:self-auto bg-white border border-gray-200 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm hover:border-gray-300 transition shrink-0">
+                                                <i class="fa-regular fa-copy"></i>
+                                                <span>Copy</span>
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                             <div class="mt-8">
                                 <button type="submit"
                                     class="w-full bg-[#0a1f44] hover:bg-[#0d2a5c] text-white font-bold py-4 rounded-xl flex items-center justify-center gap-3 transition shadow-md text-base">
@@ -344,40 +338,6 @@
                                     <i class="fa-regular fa-copy"></i> Copy
                                 </button>
                             </div>
-                            {{-- <div
-                                class="flex items-center justify-between gap-4 p-4 bg-slate-50 border border-gray-100 rounded-xl">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-11 h-11 rounded-xl bg-green-50 flex items-center justify-center shrink-0">
-                                        <i class="fa-solid fa-mobile-screen-button text-green-600 text-lg"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs text-gray-400">Easypaisa Number <span
-                                                class="text-gray-300">(optional)</span></p>
-                                        <p class="font-bold text-[#0a1f44] font-mono text-sm">{{ $bank['raast_id'] }}</p>
-                                    </div>
-                                </div>
-                                <button id="copy-ep" onclick="copyToClipboard('{{ $bank['raast_id'] }}','copy-ep')"
-                                    class="bg-white border border-gray-200 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition shrink-0 hover:border-gray-300">
-                                    <i class="fa-regular fa-copy"></i> Copy
-                                </button>
-                            </div> --}}
-                            {{-- <div
-                                class="flex items-center justify-between gap-4 p-4 bg-slate-50 border border-gray-100 rounded-xl">
-                                <div class="flex items-center gap-4">
-                                    <div class="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
-                                        <i class="fa-solid fa-mobile-screen-button text-red-500 text-lg"></i>
-                                    </div>
-                                    <div>
-                                        <p class="text-xs text-gray-400">JazzCash Number <span
-                                                class="text-gray-300">(optional)</span></p>
-                                        <p class="font-bold text-[#0a1f44] font-mono text-sm">{{ $bank['raast_id'] }}</p>
-                                    </div>
-                                </div>
-                                <button id="copy-jc" onclick="copyToClipboard('{{ $bank['raast_id'] }}','copy-jc')"
-                                    class="bg-white border border-gray-200 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1 shadow-sm transition shrink-0 hover:border-gray-300">
-                                    <i class="fa-regular fa-copy"></i> Copy
-                                </button>
-                            </div> --}}
                         </div>
 
                         {{-- Info notice --}}
@@ -466,13 +426,14 @@
                         </label>
 
                         <div class="mt-6">
-                            <button type="submit" class="w-full bg-[#0a1f44] hover:bg-[#0d2a5c] text-white font-semibold
-                                                                                py-2.5 sm:py-3
-                                                                                px-3 sm:px-4
-                                                                                rounded-xl
-                                                                                flex items-center justify-center gap-2 sm:gap-3
-                                                                                text-sm sm:text-base
-                                                                                transition shadow-md">
+                            <button type="submit"
+                                class="w-full bg-[#0a1f44] hover:bg-[#0d2a5c] text-white font-semibold
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        py-2.5 sm:py-3
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        px-3 sm:px-4
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        rounded-xl
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        flex items-center justify-center gap-2 sm:gap-3
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        text-sm sm:text-base
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        transition shadow-md">
                                 <i class="fa-solid fa-lock text-sm"></i>
 
                                 <span class="truncate">
@@ -629,22 +590,51 @@
             }
         }
 
-        $(document).ready(function () {
-            $('#card-upload').click(function () {
-                $('#confirm_method').val('upload');
-                $(this).removeClass('border border-gray-200 bg-white').addClass('border-2 border-[#0a1f44] bg-blue-50/20');
-                $('#card-whatsapp').removeClass('border-2 border-[#0a1f44] bg-blue-50/20').addClass('border border-gray-200 bg-white');
-                $('#screenshot-input').prop('required', true);
-                $('#whatsapp_agree').prop('required', false);
+        $(function () {
+            function updateProofCards() {
+                $('.proof-card').each(function () {
+
+                    const radio = $(this).find('.proof-radio');
+
+                    if (radio.is(':checked')) {
+                        $(this)
+                            .removeClass('border-gray-200 bg-white')
+                            .addClass('border-2 border-green-500 bg-green-50 shadow-md');
+                    } else {
+                        $(this)
+                            .removeClass('border-2 border-green-500 bg-green-50 shadow-md')
+                            .addClass('border border-gray-200 bg-white');
+                    }
+                });
+            }
+            $('.proof-card').on('click', function (e) {
+
+                // Ignore if user directly clicked the radio
+                if (!$(e.target).is('.proof-radio')) {
+                    $(this).find('.proof-radio').prop('checked', true).trigger('change');
+                }
+            });
+            $('.proof-radio').on('change', function () {
+                updateProofCards();
+            });
+            updateProofCards();
+
+        });
+
+        $(function () {
+
+            $('#card-upload').on('click', function () {
+                console.log('test')
+                $('#payment-upload').show();
+                $('#payment-whatsapp').hide();
             });
 
-            $('#card-whatsapp').click(function () {
-                $('#confirm_method').val('whatsapp');
-                $(this).removeClass('border border-gray-200 bg-white').addClass('border-2 border-[#0a1f44] bg-blue-50/20');
-                $('#card-upload').removeClass('border-2 border-[#0a1f44] bg-blue-50/20').addClass('border border-gray-200 bg-white');
-                $('#screenshot-input').prop('required', false);
-                $('#whatsapp_agree').prop('required', true);
+            $('#card-whatsapp').on('click', function () {
+                console.log('hellow')
+                $('#payment-whatsapp').show();
+                $('#payment-upload').hide();
             });
+
         });
     </script>
 @endsection
