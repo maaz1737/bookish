@@ -101,7 +101,7 @@
 
         <div class="grid-3">
             @foreach ($schools as $school)
-                <div class="school-card card p-6 flex flex-col justify-between h-full group filter-card hover:shadow-md">
+                <div class="school-card card p-6 flex flex-col justify-between h-full group filter-card">
                     <div>
                         <div
                             class="w-20 h-20 bg-slate-50 rounded-2xl p-2 mb-4 border border-slate-100 flex items-center justify-center overflow-hidden transition-all duration-300 group-hover:scale-105">
