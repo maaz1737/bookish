@@ -710,7 +710,7 @@
                         </div>
                     @else
                         {{-- No sub-categories: clicking goes to home page --}}
-                        <a href="{{ route('home') }}"
+                        <a href="{{ route('categories.index') }}"
                             class="w-full flex justify-between items-center px-5 py-4 text-left font-medium text-slate-700 hover:text-[#001F54] hover:bg-slate-50 transition-colors">
                             <span>{{ ucfirst($mainCategory->name) }}</span>
                         </a>
