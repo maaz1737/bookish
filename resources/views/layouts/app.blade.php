@@ -678,9 +678,10 @@
 
             <!-- Offers -->
 
-            <a href="#" class="block m-5 rounded-lg bg-orange-500 text-white text-center py-3 font-semibold">
+            <a href="{{ route('products.index') }}"
+                class="block m-5 rounded-lg bg-orange-500 text-white text-center py-3 font-semibold">
 
-                Offers
+                Smart Saver
 
             </a>
 
