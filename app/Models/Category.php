@@ -61,6 +61,31 @@ class Category extends Model
         return asset('images/category.png');
 
     }
+
+    /**
+     * Check if this category or any of its children have products.
+     * Checks both category_id (direct) and sub_category_id (sub-category) columns.
+     */
+    public function hasAnyProducts(): bool
+    {
+        // Direct products under this category
+        if ($this->products()->exists()) {
+            return true;
+        }
+
+        // Products linked via sub_category_id to any child
+        if ($this->children()->exists()) {
+            $childIds = $this->children()->pluck('id');
+            if (\App\Models\Product::whereIn('sub_category_id', $childIds)->exists()) {
+                return true;
+            }
+            if (\App\Models\Product::whereIn('category_id', $childIds)->exists()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
 
 

@@ -14,6 +14,7 @@ use App\Models\SchoolClass;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Laravel\Facades\Image;
@@ -67,6 +68,9 @@ class ProductController extends Controller
             $this->syncProductBundle($product);
 
             DB::commit();
+
+            // Clear nav menu cache so the new product appears in the dropdown immediately
+            // Cache::forget('menu.main_categories');
 
             if ($request->input('has_variant') && count($attribute) > 0) {
 
@@ -165,6 +169,9 @@ class ProductController extends Controller
 
         $this->syncProductBundle($product);
 
+        // Clear nav enu mcache so product count changes reflect immediately
+        // Cache::forget('menu.main_categories');
+
         return redirect()
             ->route('admin.products.index')
             ->with('success', 'Product updated.');
@@ -174,6 +181,7 @@ class ProductController extends Controller
     {
         $product->delete();
         $inWishlist = Wishlist::where('product_id', $product->id)->delete();
+        // Cache::forget('menu.main_categories');
         return back()->with('success', 'Product deleted.');
     }
 
@@ -197,6 +205,8 @@ class ProductController extends Controller
         }
 
         $products->each->delete();
+
+        // Cache::forget('menu.main_categories');
 
         return back()->with('success', count($products) . ' product(s) deleted.');
     }
@@ -544,6 +554,9 @@ class ProductController extends Controller
             DB::commit();
 
             session()->forget('bulk_import_products');
+
+            // Clear nav menu cache after bulk import
+            // Cache::forget('menu.main_categories');
 
             return redirect()->route('admin.products.index')
                 ->with('success', count($products) . ' products imported successfully.');
