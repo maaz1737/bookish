@@ -338,7 +338,7 @@
             <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
             <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
                 Products</span>
-            <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support : 0321 1234567</span>
+            <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support : 03204735908</span>
         </div>
     </marquee>
 
@@ -504,7 +504,7 @@
                 @endphp
                 <div class="category-dropdown relative">
                     {{-- If no products anywhere in this category tree, clicking goes to home --}}
-                    <a href="{{ $hasProducts ? route('category.show', $mainCategory->slug) : route('home') }}"
+                    <a href="{{ $hasProducts ? route('category.show', $mainCategory->slug) : route('categories.index') }}"
                         class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
                         <span>{{ ucfirst($mainCategory->name) }}</span>
                         @if ($mainCategory->children->isNotEmpty())
@@ -667,7 +667,7 @@
                     @endforeach
 
                     <a href="{{ route('schools.index') }}"
-                        class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-orange-800 transition-colors hover:text-[#ff7a00] px-8 py-3">
+                        class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-orange-500 transition-colors hover:text-[#ff7a00] px-8 py-3">
 
                         View All Schools →
 
