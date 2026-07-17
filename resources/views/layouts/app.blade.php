@@ -619,7 +619,8 @@
                         </a>
                     @endforeach
 
-                    <a href="{{ route('schools.index') }}" class="block px-8 py-3 font-semibold text-blue-700">
+                    <a href="{{ route('schools.index') }}"
+                        class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-blue-800 transition-colors hover:text-[#ff7a00] px-8 py-3">
 
                         View All Schools →
 
@@ -664,9 +665,9 @@
                             @endforeach
 
                             <a href="{{ route('category.show', $mainCategory->slug) }}"
-                                class="block px-8 py-3 font-semibold text-blue-700">
+                                class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-blue-800 transition-colors hover:text-[#ff7a00] px-8 py-3 ">
 
-                                View All
+                                View All →
 
                             </a>
 
@@ -680,9 +681,7 @@
 
             <a href="{{ route('products.index') }}"
                 class="block m-5 rounded-lg bg-orange-500 text-white text-center py-3 font-semibold">
-
                 Smart Saver
-
             </a>
 
         </div>
