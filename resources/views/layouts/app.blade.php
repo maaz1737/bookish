@@ -750,8 +750,8 @@
 
 
     <!-- Overlay -->
-    <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-[99999]">
-    </div>
+    {{-- <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-[99999]">
+    </div> --}}
 
     <!-- Cart Sidebar -->
     {{-- <div id="cartDrawer" class="fixed top-0 right-0 h-screen w-full md:w-[380px] bg-white shadow-xl
@@ -912,69 +912,70 @@
         </div>
     </div> --}}
 
-    <div id="cartDrawer" class="fixed top-0 right-0 h-screen max-h-screen w-full md:w-[380px] bg-white shadow-xl
-           translate-x-full transition-transform duration-300 ease-in-out
-           z-[999999] flex flex-col justify-between overflow-hidden"> {{-- Flex box layout aur overflow hidden lagaya --}}
+   <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-[99999]"></div>
 
-        <div class="flex flex-col h-full max-h-full bg-white overflow-hidden w-full">
+    {{-- Main Drawer --}}
+    <div id="cartDrawer" class="fixed top-0 bottom-0 right-0 w-full md:w-[380px] bg-white shadow-xl
+               translate-x-full transition-transform duration-300 ease-in-out
+               z-[999999] flex flex-col"> {{-- h-screen ki jagah bottom-0 aur top-0 lagaya --}}
 
-            {{-- Header (Humesha Top Par Fix) --}}
-            <div class="flex items-center justify-between px-4 py-3 border-b shrink-0">
-                <h2 class="text-[15px] font-semibold text-gray-800">
-                    Review Your Cart (<span id="review_cart">{{ count($carts['items']) }}</span>)
-                </h2>
-                <button id="closeCart" class="text-gray-500 text-xl leading-none px-2 py-1">
-                    ×
-                </button>
+        {{-- Header (Humesha Top Par Fix) --}}
+        <div class="flex items-center justify-between px-4 py-3 border-b shrink-0 bg-white">
+            <h2 class="text-[15px] font-semibold text-gray-800">
+                Review Your Cart (<span id="review_cart">{{ count($carts['items']) }}</span>)
+            </h2>
+            <button id="closeCart" class="text-gray-500 text-xl leading-none px-2 py-1">
+                ×
+            </button>
+        </div>
+
+        {{-- Products Area (Sirf yeh hissa scroll hoga) --}}
+        <div class="flex-1 overflow-y-auto bg-white">
+            <div class="px-3 py-3" id="cart-container">
+                {{-- Cart Items --}}
+            </div>
+        </div>
+
+        {{-- Footer (Humesha Screen ke Bottom Par Fix, extra padding ke sath taake mobile bar se na takraye) --}}
+        <div class="border-t bg-white shrink-0 pb-4 md:pb-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+
+            <button class="w-full flex items-center justify-between px-4 py-3 text-[13px] text-gray-700">
+                <span>Got a discount code?</span>
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+            </button>
+
+            <div class="border-t"></div>
+
+            <div class="px-4 py-3 flex justify-between items-start">
+                <div>
+                    <p class="font-semibold text-[13px]">Subtotal</p>
+                    <p class="text-[10px] text-gray-500 mt-1">Shipping &amp; taxes may be re-calculated at checkout
+                    </p>
+                </div>
+
+                <div class="flex items-center gap-1">
+                    <span class="text-[11px] font-semibold text-slate-500 tracking-wider">PKR</span>
+
+                    <p class="text-sm font-semibold text-[#0a1f44]" id="cart_total">
+                        {{ number_format($carts['total']) }}
+                    </p>
+                </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto">
-                <div class="px-3 py-3" id="cart-container">
-                    {{-- Cart Items --}}
-                </div>
-            </div>
+            <div class="grid grid-cols-2 gap-3 px-3 pb-3 md:flex md:flex-col md:gap-2">
+                {{-- Continue Shopping Button --}}
+                <a href="{{ route('categories.index')}}"
+                    class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-1 md:order-2">
+                    🛒 Continue Shoping
+                </a>
 
-            <div class="border-t bg-white shrink-0 pb-safe">
-
-                <button class="w-full flex items-center justify-between px-4 py-3 text-[13px] text-gray-700">
-                    <span>Got a discount code?</span>
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                    </svg>
-                </button>
-
-                <div class="border-t"></div>
-
-                <div class="px-4 py-3 flex justify-between items-start">
-                    <div>
-                        <p class="font-semibold text-[13px]">Subtotal</p>
-                        <p class="text-[10px] text-gray-500 mt-1">Shipping &amp; taxes may be re-calculated at checkout
-                        </p>
-                    </div>
-
-                    <div class="flex items-center gap-1">
-                        <span class="text-[11px] font-semibold text-slate-500 tracking-wider">PKR</span>
-
-                        <p class="text-sm font-semibold text-[#0a1f44]" id="cart_total">
-                            {{ number_format($carts['total']) }}
-                        </p>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-3 px-3 pb-3 md:flex md:flex-col md:gap-2">
-                    {{-- Add to Cart / Continue Shopping Button --}}
-                    <a href="{{ route('categories.index')}}"
-                        class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-1 md:order-2">
-                        🛒 Continue Shoping
-                    </a>
-
-                    {{-- Checkout Button --}}
-                    <a href="{{ url('/checkout') }}"
-                        class="w-full h-11 rounded-xl bg-[#163A6B] hover:bg-[#102F59] text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-2 md:order-1">
-                        💳 Checkout
-                    </a>
-                </div>
-
+                {{-- Checkout Button --}}
+                <a href="{{ url('/checkout') }}"
+                    class="w-full h-11 rounded-xl bg-[#163A6B] hover:bg-[#102F59] text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-2 md:order-1">
+                    💳 Checkout
+                </a>
             </div>
 
         </div>
