@@ -703,7 +703,7 @@
                             @endforeach
 
                             <a href="{{ route('category.show', $mainCategory->slug) }}"
-                                class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-blue-800 transition-colors hover:text-[#ff7a00] px-8 py-3">
+                                class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-orange-500 transition-colors hover:text-[#ff7a00] px-8 py-3">
                                 View All →
                             </a>
 
