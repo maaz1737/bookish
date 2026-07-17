@@ -916,7 +916,7 @@
            translate-x-full transition-transform duration-300 ease-in-out
            z-[999999] flex flex-col justify-between overflow-hidden"> {{-- Flex box layout aur overflow hidden lagaya --}}
 
-        <div class="flex flex-col max-h-full bg-white overflow-hidden w-full">
+        <div class="flex flex-col h-full max-h-full bg-white overflow-hidden w-full">
 
             {{-- Header (Humesha Top Par Fix) --}}
             <div class="flex items-center justify-between px-4 py-3 border-b shrink-0">
