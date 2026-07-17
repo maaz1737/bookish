@@ -498,53 +498,92 @@
             </div>
 
             @foreach ($mainCategories as $mainCategory)
+                @php
+                    // Check both category_id and sub_category_id for any products
+                    $hasProducts = $mainCategory->hasAnyProducts();
+                @endphp
                 <div class="category-dropdown relative">
-                    <a href="{{ route('category.show', $mainCategory->slug) }}"
-                        class="px-4 py-2.5 inline-block text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
+                    {{-- If no products anywhere in this category tree, clicking goes to home --}}
+                    <a href="{{ $hasProducts ? route('category.show', $mainCategory->slug) : route('home') }}"
+                        class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
                         <span>{{ ucfirst($mainCategory->name) }}</span>
-                        <i
-                            class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+                        @if ($mainCategory->children->isNotEmpty())
+                            <i class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+                        @endif
                     </a>
 
-                    @if (count($mainCategory->children) > 0)
-                        <div
-                            class="categoryDropdownMenu absolute left-0 w-64 hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
+                    @if ($mainCategory->children->isNotEmpty())
+                        <div class="categoryDropdownMenu absolute left-0 w-[430px] hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
 
-                            <div class="bg-white rounded-xl shadow-xl border border-slate-200/80 mt-2">
-                                @forelse ($mainCategory->children as $category)
-                                    <a href="{{ route('category.show', $category->slug) }}"
-                                        class="flex items-center gap-3 px-4 py-2.5 text-sm font-medium text-slate-700 hover:text-blue-900 hover:bg-slate-50 transition border-b border-slate-50 last:border-0">
+                            <div class="mt-2 rounded-xl shadow-2xl border border-slate-200 bg-white">
+                                <div class="grid grid-cols-[160px_1fr]">
 
-                                        <span
-                                            class="w-8 h-8 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
-                                            @if ($category->image)
-                                                <img src="{{ asset('storage/' . $category->image) }}" alt="{{ $category->name }}"
-                                                    class="w-full h-full object-cover" loading="lazy">
+                                    {{-- Left Panel --}}
+                                    <div class="p-5 border-r border-slate-100 flex flex-col gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-[#001F54]">
+                                            @if ($mainCategory->image)
+                                                <img src="{{ asset('storage/' . $mainCategory->image) }}"
+                                                    alt="{{ $mainCategory->name }}"
+                                                    class="w-full h-full object-cover rounded-lg">
                                             @else
-                                                <i class="fa-solid fa-school text-sm text-[#001F54]"></i>
+                                                <i class="fa-solid fa-tag text-lg"></i>
                                             @endif
-                                        </span>
-
-                                        <span class="font-semibold leading-tight text-slate-800">
-                                            {{ ucfirst($category->name) }}
-                                        </span>
-                                    </a>
-                                    @if ($category->allChildren->count())
-                                        @foreach ($category->allChildren as $child)
-                                            @include('admin.categories.link_category', ['cat' => $child])
-                                        @endforeach
-                                    @endif
-                                @empty
-                                    <div class="px-4 py-3 text-xs text-slate-400 italic">
-                                        No Sub-Category Found
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-[15px] text-[#1D3557]">
+                                                {{ ucfirst($mainCategory->name) }}
+                                            </h3>
+                                            <p class="text-xs text-gray-500 leading-5 mt-1">
+                                                {{ $mainCategory->description
+                                                    ? Str::limit($mainCategory->description, 80)
+                                                    : 'Browse all ' . ucfirst($mainCategory->name) . ' sub-categories and products.' }}
+                                            </p>
+                                        </div>
                                     </div>
-                                @endforelse
 
-                                <div class="border-t border-slate-100 mt-1 pt-1">
-                                    <a href="{{ route('category.show', $mainCategory->slug) }}"
-                                        class="flex items-center justify-center text-center py-2 text-xs font-bold text-orange-500 hover:bg-slate-50 transition w-full">
-                                        View All {{ ucfirst($mainCategory->name) }} &nbsp;→
-                                    </a>
+                                    {{-- Right Panel: sub-category list --}}
+                                    <div class="py-3">
+                                        <div class="max-h-[260px] overflow-y-auto">
+                                            @forelse ($mainCategory->children as $category)
+                                                <a href="{{ route('category.show', $category->slug) }}"
+                                                    class="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition">
+
+                                                    <span class="w-9 h-9 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
+                                                        @if ($category->image)
+                                                            <img src="{{ asset('storage/' . $category->image) }}"
+                                                                alt="{{ $category->name }}"
+                                                                class="w-full h-full object-cover" loading="lazy">
+                                                        @else
+                                                            <i class="fa-solid fa-folder text-sm text-[#001F54]"></i>
+                                                        @endif
+                                                    </span>
+
+                                                    <span class="text-[14px] font-medium text-[#22324C] leading-5">
+                                                        {{ ucfirst($category->name) }}
+                                                    </span>
+                                                </a>
+
+                                                @if ($category->allChildren->count())
+                                                    @foreach ($category->allChildren as $child)
+                                                        @include('admin.categories.link_category', ['cat' => $child])
+                                                    @endforeach
+                                                @endif
+                                            @empty
+                                                <div class="px-4 py-4 text-sm text-gray-400">
+                                                    No sub-categories found.
+                                                </div>
+                                            @endforelse
+                                        </div>
+
+                                        <div class="border-t mt-2">
+                                            <a href="{{ route('category.show', $mainCategory->slug) }}"
+                                                class="flex items-center justify-center py-3 text-sm font-semibold text-orange-500 hover:bg-gray-50 transition">
+                                                View All {{ ucfirst($mainCategory->name) }}
+                                                <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
 
@@ -620,7 +659,7 @@
                     @endforeach
 
                     <a href="{{ route('schools.index') }}"
-                        class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-blue-800 transition-colors hover:text-[#ff7a00] px-8 py-3">
+                        class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-orange-800 transition-colors hover:text-[#ff7a00] px-8 py-3">
 
                         View All Schools →
 
@@ -635,28 +674,18 @@
             @foreach ($mainCategories as $mainCategory)
                 <div class="border-b">
 
-                    <button class="mobileDropdownBtn w-full flex justify-between items-center px-5 py-4">
-
-                        <span>
-
-                            {{ ucfirst($mainCategory->name) }}
-
-                        </span>
-
-                        @if ($mainCategory->children->count())
+                    @if ($mainCategory->children->isNotEmpty())
+                        {{-- Has sub-categories: show accordion button --}}
+                        <button class="mobileDropdownBtn w-full flex justify-between items-center px-5 py-4">
+                            <span>{{ ucfirst($mainCategory->name) }}</span>
                             <i class="fa-solid fa-chevron-down duration-300"></i>
-                        @endif
+                        </button>
 
-                    </button>
-
-                    @if ($mainCategory->children->count())
                         <div class="mobileDropdown hidden">
 
                             @foreach ($mainCategory->children as $category)
                                 <a href="{{ route('category.show', $category->slug) }}" class="block px-8 py-3 hover:bg-slate-50">
-
                                     {{ ucfirst($category->name) }}
-
                                 </a>
 
                                 @foreach ($category->allChildren as $child)
@@ -665,13 +694,17 @@
                             @endforeach
 
                             <a href="{{ route('category.show', $mainCategory->slug) }}"
-                                class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-blue-800 transition-colors hover:text-[#ff7a00] px-8 py-3 ">
-
+                                class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-blue-800 transition-colors hover:text-[#ff7a00] px-8 py-3">
                                 View All →
-
                             </a>
 
                         </div>
+                    @else
+                        {{-- No sub-categories: clicking goes to home page --}}
+                        <a href="{{ route('home') }}"
+                            class="w-full flex justify-between items-center px-5 py-4 text-left font-medium text-slate-700 hover:text-[#001F54] hover:bg-slate-50 transition-colors">
+                            <span>{{ ucfirst($mainCategory->name) }}</span>
+                        </a>
                     @endif
 
                 </div>
