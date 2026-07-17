@@ -13,13 +13,12 @@
                         <p class="text-xs text-gray-500">Customer confirmed sharing receipt at 0320-4735908</p>
                     </div>
                 </div>
+            @elseif($proof->screenshot_path)
+                <img src="{{ asset('storage/' . $proof->screenshot_path) }}" class="w-full rounded border">
             @else
-                <img src="{{ asset(
-                    app()->environment('local')
-                        ? 'storage/' . $proof->screenshot_path
-                        : 'storage/' . $proof->screenshot_path,
-                ) }}"
-                    class="w-full rounded border">
+                <p class="flex items-center gap-3 bg-red-50 border border-red-200 rounded-xl p-4 text-red-700">
+                    No Proof has been submitted.
+                </p>
             @endif
         </div>
         <div class="bg-white rounded-lg shadow p-6">
