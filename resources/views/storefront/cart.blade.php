@@ -93,48 +93,45 @@
                     </div>
 
                     {{-- Order Summary --}}
-                    <div class="bg-white rounded-2xl shadow-sm p-6 h-fit">
-                        <div class="flex items-center justify-between mb-6 pb-4 border-b">
-                            <div class="flex items-center gap-3">
-                                <div class="relative">
-                                    <div class="w-12 h-12 bg-blue-50 rounded-lg flex items-center justify-center text-xl">📋
-                                    </div>
-                                    <span
-                                        class="absolute -top-1 -right-1 w-5 h-5 bg-amber-400 text-[#0a1f44] text-xs font-bold rounded-full flex items-center justify-center">
-                                        {{ count($cart['items']) }}
-                                    </span>
-                                </div>
-                                <h2 class="text-xl font-bold text-[#0a1f44]">Order Summary</h2>
+                    <div class="bg-white border border-gray-200/80 rounded-2xl p-4 sm:p-6 shadow-sm h-fit space-y-5">
+                        
+                        <!-- Header -->
+                        <div class="flex items-center gap-3 pb-3 border-b border-gray-50">
+                            <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-500 flex-shrink-0">
+                                <i class="fa-solid fa-cart-shopping text-sm"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-navy-800 text-sm sm:text-base">Order Summary</h3>
+                                <p class="text-xs text-gray-500 font-medium">
+                                    {{ count($cart['items']) }} {{ count($cart['items']) == 1 ? 'item' : 'items' }}
+                                </p>
                             </div>
                         </div>
 
-                        <div class="space-y-3 mb-4 pb-4 border-b">
-                            <div class="flex justify-between text-gray-600">
-                                <span>Subtotal ({{ count($cart['items']) }} items)</span>
-                                <span class="font-medium">PKR {{ number_format($cart['total']) }}</span>
+                        <!-- Subtotal Details -->
+                        <div class="space-y-3 text-xs sm:text-sm">
+                            <div class="flex justify-between items-center text-gray-600">
+                                <span>Subtotal ({{ count($cart['items']) }} {{ count($cart['items']) == 1 ? 'item' : 'items' }})</span>
+                                <span class="font-semibold text-navy-800">PKR {{ number_format($cart['total']) }}</span>
                             </div>
-                            {{-- <div class="flex justify-between text-gray-600">
-                                <span class="flex items-center gap-1">Delivery Charges <span
-                                        class="text-gray-400">ⓘ</span></span>
-                                <span class="font-medium">PKR 150</span>
-                            </div> --}}
                         </div>
 
-                        <div class="bg-amber-50 rounded-lg p-4 mb-6 flex justify-between items-center">
-                            <span class="font-bold text-[#0a1f44]">Total Amount</span>
-                            <span class="text-xl font-bold text-[#0a1f44]">
-                                PKR {{ number_format($cart['total']) }}
-                            </span>
+                        <!-- Grand Total Box -->
+                        <div class="bg-amber-50/60 border border-amber-100/50 p-3.5 rounded-xl flex justify-between items-center font-bold text-navy-800 text-sm sm:text-base">
+                            <span>Total Amount</span>
+                            <span class="text-navy-900">PKR {{ number_format($cart['total']) }}</span>
                         </div>
 
-                        <a href="{{ url('/checkout') }}"
-                            class="block w-full bg-[#0a1f44] hover:bg-[#0a1f44]/90 text-white text-center font-semibold py-4 rounded-lg transition flex items-center justify-center gap-2">
-                            🔒 Proceed to Checkout →
-                        </a>
-
-                        <p class="text-center text-xs text-gray-500 mt-4 flex items-center justify-center gap-1">
-                            🛡️ Secure checkout. Your data is protected.
-                        </p>
+                        <!-- Proceed Button -->
+                        <div>
+                            <a href="{{ url('/checkout') }}"
+                                class="w-full bg-[#0a1f44] hover:bg-[#0d2a5c] text-white text-center font-bold py-4 rounded-xl transition flex items-center justify-center gap-2 text-sm sm:text-base shadow-sm hover:shadow-md">
+                                <i class="fa-solid fa-lock text-amber-400 text-xs"></i> Proceed to Checkout →
+                            </a>
+                            <p class="text-center text-[10px] text-gray-400 mt-2.5 font-medium">
+                                🛡️ Secure checkout. Your data is protected.
+                            </p>
+                        </div>
                     </div>
                 </div>
             @endif

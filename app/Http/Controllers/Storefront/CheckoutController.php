@@ -161,29 +161,30 @@ class CheckoutController extends Controller
             $path = 'whatsapp';
             $source = 'whatsapp';
             $message = 'Order payment confirmation received via WhatsApp. Our team will verify it shortly.';
-
         } else {
 
             $request->validate(
                 [
                     'screenshot' => [
-                        'required',
+                        'nullable',
                         'file',
                         'mimes:jpg,jpeg,png,webp,pdf',
                         'max:5120',
                     ],
                 ],
                 [
-                    'screenshot.required' => 'Please upload your payment screenshot or send it via WhatsApp to complete your order.',
                     'screenshot.file' => 'The uploaded file is invalid.',
                     'screenshot.mimes' => 'The screenshot must be a JPG, JPEG, PNG, WEBP, or PDF file.',
                     'screenshot.max' => 'The screenshot must not be larger than 5 MB.',
                 ]
             );
-
-            $path = $request->file('screenshot')->store('payment-proofs', 'public');
             $source = 'web';
-            $message = 'Payment proof submitted. Our team will verify it shortly.';
+            $path = null;
+            $message = 'No proof is submitted.';
+            if ($request->hasFile('screenshot')) {
+                $path = $request->file('screenshot')->store('payment-proofs', 'public');
+                $message = 'Payment proof submitted. Our team will verify it shortly.';
+            }
         }
 
         PaymentProof::create([
@@ -248,8 +249,6 @@ class CheckoutController extends Controller
         $order = Order::where('order_number', $order)->firstOrFail();
 
         return view('storefront.OrderComplete.order_complete', compact('order'));
-
-
     }
 
 
@@ -267,5 +266,4 @@ class CheckoutController extends Controller
             'message' => 'no rate available',
         ], 404);
     }
-
 }
