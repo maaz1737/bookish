@@ -34,9 +34,7 @@ class AppServiceProvider extends ServiceProvider
 
             $cart = [];
 
-            if (request()->hasSession() && request()->session()->isStarted()) {
-                $cart = app(CartController::class)->cart(request());
-            }
+            $cart = app(CartController::class)->cart(request());
 
             $view->with(app(HeaderService::class)->data());
             $view->with('carts', $cart);
