@@ -338,7 +338,7 @@
             <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
             <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
                 Products</span>
-            <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support : 03204735908</span>
+            <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support : 0321 1234567</span>
         </div>
     </marquee>
 
@@ -504,7 +504,7 @@
                 @endphp
                 <div class="category-dropdown relative">
                     {{-- If no products anywhere in this category tree, clicking goes to home --}}
-                    <a href="{{ $hasProducts ? route('category.show', $mainCategory->slug) : route('categories.index') }}"
+                    <a href="{{ $hasProducts ? route('category.show', $mainCategory->slug) : route('home') }}"
                         class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
                         <span>{{ ucfirst($mainCategory->name) }}</span>
                         @if ($mainCategory->children->isNotEmpty())
@@ -667,7 +667,7 @@
                     @endforeach
 
                     <a href="{{ route('schools.index') }}"
-                        class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-orange-500 transition-colors hover:text-[#ff7a00] px-8 py-3">
+                        class="flex items-center gap-1 whitespace-nowrap text-sm font-semibold text-orange-800 transition-colors hover:text-[#ff7a00] px-8 py-3">
 
                         View All Schools →
 
@@ -710,7 +710,7 @@
                         </div>
                     @else
                         {{-- No sub-categories: clicking goes to home page --}}
-                        <a href="{{ route('categories.index') }}"
+                        <a href="{{ route('home') }}"
                             class="w-full flex justify-between items-center px-5 py-4 text-left font-medium text-slate-700 hover:text-[#001F54] hover:bg-slate-50 transition-colors">
                             <span>{{ ucfirst($mainCategory->name) }}</span>
                         </a>
@@ -750,8 +750,8 @@
 
 
     <!-- Overlay -->
-    {{-- <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-[99999]">
-    </div> --}}
+    <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-[99999]">
+    </div>
 
     <!-- Cart Sidebar -->
     {{-- <div id="cartDrawer" class="fixed top-0 right-0 h-screen w-full md:w-[380px] bg-white shadow-xl
@@ -912,70 +912,69 @@
         </div>
     </div> --}}
 
-   <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-[99999]"></div>
+    <div id="cartDrawer" class="fixed top-0 right-0 h-screen max-h-screen w-full md:w-[380px] bg-white shadow-xl
+           translate-x-full transition-transform duration-300 ease-in-out
+           z-[999999] flex flex-col justify-between overflow-hidden"> {{-- Flex box layout aur overflow hidden lagaya --}}
 
-    {{-- Main Drawer --}}
-    <div id="cartDrawer" class="fixed top-0 bottom-0 right-0 w-full md:w-[380px] bg-white shadow-xl
-               translate-x-full transition-transform duration-300 ease-in-out
-               z-[999999] flex flex-col"> {{-- h-screen ki jagah bottom-0 aur top-0 lagaya --}}
+        <div class="flex flex-col h-full max-h-full bg-white w-full">
 
-        {{-- Header (Humesha Top Par Fix) --}}
-        <div class="flex items-center justify-between px-4 py-3 border-b shrink-0 bg-white">
-            <h2 class="text-[15px] font-semibold text-gray-800">
-                {{-- Review Your Cart (<span id="review_cart">{{ count($carts['items']) }}</span>) --}}
-            </h2>
-            <button id="closeCart" class="text-gray-500 text-xl leading-none px-2 py-1">
-                ×
-            </button>
-        </div>
-
-        {{-- Products Area (Sirf yeh hissa scroll hoga) --}}
-        <div class="flex-1 overflow-y-auto bg-white">
-            <div class="px-3 py-3" id="cart-container">
-                {{-- Cart Items --}}
+            {{-- Header (Humesha Top Par Fix) --}}
+            <div class="flex items-center justify-between px-4 py-3 border-b shrink-0">
+                <h2 class="text-[15px] font-semibold text-gray-800">
+                    Review Your Cart (<span id="review_cart">{{ count($carts['items']) }}</span>)
+                </h2>
+                <button id="closeCart" class="text-gray-500 text-xl leading-none px-2 py-1">
+                    ×
+                </button>
             </div>
-        </div>
 
-        {{-- Footer (Humesha Screen ke Bottom Par Fix, extra padding ke sath taake mobile bar se na takraye) --}}
-        <div class="border-t bg-white shrink-0 pb-4 md:pb-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-
-            <button class="w-full flex items-center justify-between px-4 py-3 text-[13px] text-gray-700">
-                <span>Got a discount code?</span>
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                </svg>
-            </button>
-
-            <div class="border-t"></div>
-
-            <div class="px-4 py-3 flex justify-between items-start">
-                <div>
-                    <p class="font-semibold text-[13px]">Subtotal</p>
-                    <p class="text-[10px] text-gray-500 mt-1">Shipping &amp; taxes may be re-calculated at checkout
-                    </p>
-                </div>
-
-                <div class="flex items-center gap-1">
-                    <span class="text-[11px] font-semibold text-slate-500 tracking-wider">PKR</span>
-
-                    <p class="text-sm font-semibold text-[#0a1f44]" id="cart_total">
-                        {{-- {{ number_format($carts['total']) }} --}}
-                    </p>
+            <div class="flex-1 overflow-y-auto">
+                <div class="px-3 py-3" id="cart-container">
+                    {{-- Cart Items --}}
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3 px-3 pb-3 md:flex md:flex-col md:gap-2">
-                {{-- Continue Shopping Button --}}
-                <a href="{{ route('categories.index')}}"
-                    class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-1 md:order-2">
-                    🛒 Continue Shoping
-                </a>
+            <div class="border-t bg-white shrink-0 pb-safe">
 
-                {{-- Checkout Button --}}
-                <a href="{{ url('/checkout') }}"
-                    class="w-full h-11 rounded-xl bg-[#163A6B] hover:bg-[#102F59] text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-2 md:order-1">
-                    💳 Checkout
-                </a>
+                <button class="w-full flex items-center justify-between px-4 py-3 text-[13px] text-gray-700">
+                    <span>Got a discount code?</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+
+                <div class="border-t"></div>
+
+                <div class="px-4 py-3 flex justify-between items-start">
+                    <div>
+                        <p class="font-semibold text-[13px]">Subtotal</p>
+                        <p class="text-[10px] text-gray-500 mt-1">Shipping &amp; taxes may be re-calculated at checkout
+                        </p>
+                    </div>
+
+                    <div class="flex items-center gap-1">
+                        <span class="text-[11px] font-semibold text-slate-500 tracking-wider">PKR</span>
+
+                        <p class="text-sm font-semibold text-[#0a1f44]" id="cart_total">
+                            {{ number_format($carts['total']) }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 px-3 pb-3 md:flex md:flex-col md:gap-2">
+                    {{-- Add to Cart / Continue Shopping Button --}}
+                    <a href="{{ route('categories.index')}}"
+                        class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-1 md:order-2">
+                        🛒 Continue Shoping
+                    </a>
+
+                    {{-- Checkout Button --}}
+                    <a href="{{ url('/checkout') }}"
+                        class="w-full h-11 rounded-xl bg-[#163A6B] hover:bg-[#102F59] text-white text-sm font-semibold flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-2 md:order-1">
+                        💳 Checkout
+                    </a>
+                </div>
+
             </div>
 
         </div>
@@ -983,100 +982,160 @@
 
     {{-- ===== FOOTER ===== --}}
     <footer class="bg-navy-900 text-slate-300 mt-2 md:mt-6">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
 
-            <!-- Company Description & Social Links -->
-            <div class="sm:col-span-2 lg:col-span-4">
-                <p class="text-slate-400 leading-7 max-w-md">
-                    School essentials, baby wear & gifts. We provide quality books,
-                    uniforms, school accessories, baby wear, gifts and much more.
-                </p>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-                <div class="flex flex-wrap gap-3 mt-6">
-                    <a href="#" class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
+
+                <!-- Company -->
+                <div class="sm:col-span-2 lg:col-span-4">
+
+                    <div>
+                        <div class="w-24 h-24 bg-contain bg-center bg-no-repeat"
+                            style="background-image: url('{{ asset('images/bookish_logo3.jpg') }}');">
+                        </div>
+                    </div>
+
+                    <p class="mt-4 text-slate-400 leading-7 max-w-md">
+                        School essentials, baby wear & gifts. We provide quality books,
+                        uniforms, school accessories, baby wear, gifts and much more.
+                    </p>
+
+                    <div class="flex flex-wrap gap-3 mt-6">
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+
+                            <i class="fa-brands fa-facebook-f"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+
+                            <i class="fa-brands fa-instagram"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+
+                            <i class="fa-brands fa-whatsapp"></i>
+
+                        </a>
+
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+
+                            <i class="fa-brands fa-youtube"></i>
+
+                        </a>
+
+                    </div>
+
                 </div>
-            </div>
 
-            <!-- Quick Links -->
-            <div class="lg:col-span-2">
-                <h4 class="text-white font-semibold text-lg mb-4">Quick Links</h4>
-                <ul class="space-y-3">
-                    <li><a href="{{ route('about') }}" class="hover:text-gold-500 transition">About Us</a></li>
-                    <li><a href="{{ route('returns-refunds') }}" class="hover:text-gold-500 transition">Returns & Refunds</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-gold-500 transition">Contact Us</a></li>
-                </ul>
-            </div>
+                <!-- Quick Links -->
+                <div class="lg:col-span-2">
 
-            <!-- Shop -->
-            <div class="lg:col-span-3">
-                <h4 class="text-white font-semibold text-lg mb-4">Shop</h4>
-                <ul class="space-y-3">
-                    @foreach ($mainCategories as $mainCategory)
+                    <h4 class="text-white font-semibold text-lg mb-4">
+                        Quick Links
+                    </h4>
+                    <ul class="space-y-3">
                         <li>
-                            <a href="{{ route('category.show', $mainCategory->slug) }}" class="hover:text-gold-500">
-                                {{ ucfirst($mainCategory->name) }}
+                            <a href="{{ route('about') }}" class="hover:text-gold-500 transition">
+                                About Us
                             </a>
                         </li>
-                        @if ($mainCategory->children->count())
-                            @foreach ($mainCategory->children as $category)
-                                <li>
-                                    <a href="{{ route('category.show', $category->slug) }}" class="hover:text-gold-500">
-                                        {{ ucfirst($category->name) }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        @endif
-                    @endforeach
-                </ul>
-            </div>
+                        <li>
+                            <a href="{{ route('returns-refunds') }}" class="hover:text-gold-500 transition">
+                                Returns & Refunds
+                            </a>
+                        </li>
+                        <li>
+                            <a href="{{ route('contact') }}" class="hover:text-gold-500 transition">
+                                Contact Us
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Shop -->
+                <div class="lg:col-span-3">
+                    <h4 class="text-white font-semibold text-lg mb-4">
+                        Shop
+                    </h4>
+                    <ul class="space-y-3">
+                        @foreach ($mainCategories as $mainCategory)
+                            <li>
+                                <a href="{{ route('category.show', $mainCategory->slug) }}"
+                                    class="hover:text-gold-500">
+                                    {{ ucfirst($mainCategory->name) }}
+                                </a>
+                            </li>
 
-            <!-- Contact -->
-            <div class="lg:col-span-3">
-                <h4 class="text-white font-semibold text-lg mb-4">Customer Service</h4>
-                <ul class="space-y-4 text-sm">
-                    <li class="flex items-start gap-3">
-                        <i class="fa-solid fa-phone text-gold-400 mt-1"></i>
-                        <span>+92 321 4735908</span>
-                    </li>
-                    <li class="flex items-start gap-3 break-all">
-                        <i class="fa-solid fa-envelope text-gold-400 mt-1"></i>
-                        <span>bookishsupport@gmail.com</span>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i class="fa-solid fa-location-dot text-gold-400 mt-1"></i>
-                        <span>Lahore, Pakistan</span>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i class="fa-regular fa-clock text-gold-400 mt-1"></i>
-                        <span>Mon – Sat (10:00 AM – 8:00 PM)</span>
-                    </li>
-                </ul>
+                            @if ($mainCategory->children->count())
+                                @foreach ($mainCategory->children as $category)
+                                    <li>
+                                        <a href="{{ route('category.show', $category->slug) }}"
+                                            class="hover:text-gold-500">
+                                            {{ ucfirst($category->name) }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+                <!-- Contact -->
+                <div class="lg:col-span-3">
+
+                    <h4 class="text-white font-semibold text-lg mb-4 ">
+                        Customer Service
+                    </h4>
+
+                    <ul class="space-y-4 text-sm">
+
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-phone text-gold-400 mt-1"></i>
+                            <span>+92 321 4735908</span>
+                        </li>
+
+                        <li class="flex items-start gap-3 break-all">
+                            <i class="fa-solid fa-envelope text-gold-400 mt-1"></i>
+                            <span>bookishsupport@gmail.com</span>
+                        </li>
+
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-gold-400 mt-1"></i>
+                            <span>Lahore, Pakistan</span>
+                        </li>
+
+                        <li class="flex items-start gap-3">
+                            <i class="fa-regular fa-clock text-gold-400 mt-1"></i>
+                            <span>Mon – Sat (10:00 AM – 8:00 PM)</span>
+                        </li>
+
+                    </ul>
+
+                </div>
+
             </div>
 
         </div>
-    </div>
 
-    <!-- Copyright Section -->
-    <div class="border-t border-navy-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-            <p class="text-center text-xs sm:text-sm text-slate-400">
-                © {{ date('Y') }} Bookish & Beyond. All Rights Reserved.
-            </p>
+        <div class="border-t border-navy-800">
+
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+
+                <p class="text-center text-xs sm:text-sm text-slate-400">
+                    © {{ date('Y') }} Bookish & Beyond. All Rights Reserved.
+                </p>
+
+            </div>
+
         </div>
-    </div>
-</footer>
+
+    </footer>
 
 
     <script src="/js/category-dropdown.js" defer></script>
