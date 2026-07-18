@@ -109,33 +109,33 @@ class CartController extends Controller
         return back();
     }
 
-    // public function cart(Request $request): array
-    // {
-    //     $items = $request->session()->get('cart', []);
-    //     $productIds = collect($items)->pluck('id');
+    public function cart(Request $request): array
+    {
+        $items = $request->session()->get('cart', []);
+        $productIds = collect($items)->pluck('id');
 
-    //     $products = Product::whereIn('id', $productIds)
-    //         ->get(['id', 'images', 'price', 'discount_price'])
-    //         ->keyBy('id');
+        $products = Product::whereIn('id', $productIds)
+            ->get(['id', 'images', 'price', 'discount_price'])
+            ->keyBy('id');
 
-    //     foreach ($items as &$item) {
-    //         $product = $products->get($item['id']);
+        foreach ($items as &$item) {
+            $product = $products->get($item['id']);
 
-    //         if ($product) {
-    //             $item['image'] = $product->images;
-    //             if (!isset($item['is_bundle_item'])) {
-    //                 $item['price'] = $product->price;
-    //                 $item['discount_price'] = $product->discount_price;
-    //             } else {
-    //                 $item['discount_price'] = $item['price'];
-    //             }
-    //         }
-    //     }
+            if ($product) {
+                $item['image'] = $product->images;
+                if (!isset($item['is_bundle_item'])) {
+                    $item['price'] = $product->price;
+                    $item['discount_price'] = $product->discount_price;
+                } else {
+                    $item['discount_price'] = $item['price'];
+                }
+            }
+        }
 
-    //     $total = collect($items)->sum(function ($item) {
-    //         $price = $item['discount_price'] ?? $item['price'];
-    //         return $price * $item['quantity'];
-    //     });
+        $total = collect($items)->sum(function ($item) {
+            $price = $item['discount_price'] ?? $item['price'];
+            return $price * $item['quantity'];
+        });
 
         return [
             'items' => $items,
