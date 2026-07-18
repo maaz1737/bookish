@@ -111,7 +111,7 @@ class CartController extends Controller
 
     public function cart(Request $request): array
     {
-        $items = $request->hasSession() ? $request->session()->get('cart', []) : [];
+        $items = $request->session()->get('cart', []);
         $productIds = collect($items)->pluck('id');
 
         $products = Product::whereIn('id', $productIds)
