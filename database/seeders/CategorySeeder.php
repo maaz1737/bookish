@@ -8,27 +8,27 @@ use Illuminate\Support\Str;
 
 class CategorySeeder extends Seeder
 {
-    public function run(): void
-    {
-        $categories = [
-            ['Books', 'book'],
-            ['Uniforms', 'uniform'],
-            ['Accessories', 'accessory'],
-            // Uniform sub-categories (Section 6.2)
-            ['Shirts', 'uniform'],
-            ['Pants', 'uniform'],
-            ['Sweaters', 'uniform'],
-            ['Shoes', 'uniform'],
-            ['Ties', 'uniform'],
-            // Accessory items (Section 6.3)
-            ['Bags', 'accessory'],
-            ['Bottles', 'accessory'],
-            ['Lunch Boxes', 'accessory'],
-            ['Gifts', 'accessory'],
-        ];
+    // public function run(): void
+    // {
+    //     $categories = [
+    //         ['Books', 'book'],
+    //         ['Uniforms', 'uniform'],
+    //         ['Accessories', 'accessory'],
+    //         // Uniform sub-categories (Section 6.2)
+    //         ['Shirts', 'uniform'],
+    //         ['Pants', 'uniform'],
+    //         ['Sweaters', 'uniform'],
+    //         ['Shoes', 'uniform'],
+    //         ['Ties', 'uniform'],
+    //         // Accessory items (Section 6.3)
+    //         ['Bags', 'accessory'],
+    //         ['Bottles', 'accessory'],
+    //         ['Lunch Boxes', 'accessory'],
+    //         ['Gifts', 'accessory'],
+    //     ];
 
-        foreach ($categories as [$name, $type]) {
-            Category::firstOrCreate(['slug' => Str::slug($name)], ['name' => $name]);
-        }
-    }
+    //     foreach ($categories as [$name, $type]) {
+    //         Category::firstOrCreate(['slug' => Str::slug($name)], ['name' => $name]);
+    //     }
+    // }
 }
