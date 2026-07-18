@@ -32,14 +32,29 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
 
-            $cart = [];
+            try {
+                // Session may not be available (e.g. during exception rendering on live)
+                $request = request();
+                if (!$request->hasSession() || !$request->session()->isStarted()) {
+                    $view->with('carts', ['items' => [], 'total' => 0]);
+                    $view->with(app(HeaderService::class)->data());
+                    return;
+                }
 
-            if (request()->hasSession() && request()->session()->isStarted()) {
-                $cart = app(CartController::class)->cart(request());
+                $cart = app(CartController::class)->cart($request);
+                $view->with(app(HeaderService::class)->data());
+                $view->with('carts', $cart);
+            } catch (\Throwable $e) {
+                // Fallback: provide empty cart so views don't  
+                $view->with('carts', ['items' => [], 'total' => 0]);
+                try {
+                    $view->with(app(HeaderService::class)->data());
+                } catch (\Throwable $e2) {
+                    // HeaderService also failed — provide defaults
+                    $view->with('mainSchools', collect());
+                    $view->with('mainCategories', collect());
+                }
             }
-
-            $view->with(app(HeaderService::class)->data());
-            $view->with('carts', $cart);
         });
 
 
