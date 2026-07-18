@@ -128,30 +128,7 @@ class ProductController extends Controller
             'quantity' => 1,
         ]);
 
-        $items = $bundle->items()->with('product')->get();
-
-        $totalPrice = 0;
-        $totalDiscountPrice = 0;
-
-        foreach ($items as $item) {
-            if (!$item->product) {
-                $item->delete();
-                continue;
-            }
-
-            $price = $item->product->price * $item->quantity;
-
-            $discountPrice = ($item->product->discount_price ?? $item->product->price)
-                * $item->quantity;
-
-            $totalPrice += $price;
-            $totalDiscountPrice += $discountPrice;
-        }
-        $bundle->update([
-            'total_price' => $totalPrice,
-            'discount' => $totalDiscountPrice,
-            'final_price' => $totalDiscountPrice,
-        ]);
+        app(\App\Services\BundlePricingService::class)->recalculate($bundle);
     }
 
     public function update(StoreProductRequest $request, Product $product)

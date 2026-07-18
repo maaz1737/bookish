@@ -218,9 +218,9 @@
                             </div>
 
                             <div class="flex justify-between items-center text-sm">
-                                <span class="text-gray-500">Bundle Price</span>
+                                <span class="text-gray-500">Bundle Discount</span>
                                 <span class="text-orange-500 font-bold bg-orange-50 px-2 py-0.5 rounded text-xs">
-                                    {{ $bundle->discount }}
+                                    {{ rtrim(rtrim($bundle->discount, '0'), '.') }}%
                                 </span>
                             </div>
 

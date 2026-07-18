@@ -166,7 +166,12 @@
                 totalOriginal += (price * qty);
             });
 
-            const discount = parseFloat(discountInput.value) || 0;
+            let discount = parseFloat(discountInput.value) || 0;
+            if (discount > 100) {
+                discount = 100;
+            } else if (discount < 0) {
+                discount = 0;
+            }
             const discountAmt = totalOriginal * (discount / 100);
             const totalFinal = Math.max(0, totalOriginal - discountAmt);
 
@@ -182,6 +187,12 @@
             el.addEventListener('input', calculatePrices);
         });
         discountInput.addEventListener('input', () => {
+            let discount = parseFloat(discountInput.value) || 0;
+            if (discount > 100) {
+                discountInput.value = 100;
+            } else if (discount < 0) {
+                discountInput.value = 0;
+            }
             calculatePrices();
         });
 
