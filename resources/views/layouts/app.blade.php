@@ -922,7 +922,7 @@
         {{-- Header (Humesha Top Par Fix) --}}
         <div class="flex items-center justify-between px-4 py-3 border-b shrink-0 bg-white">
             <h2 class="text-[15px] font-semibold text-gray-800">
-                Review Your Cart (<span id="review_cart">{{ count($carts['items']) }}</span>)
+                {{-- Review Your Cart (<span id="review_cart">{{ count($carts['items']) }}</span>) --}}
             </h2>
             <button id="closeCart" class="text-gray-500 text-xl leading-none px-2 py-1">
                 ×
@@ -959,7 +959,7 @@
                     <span class="text-[11px] font-semibold text-slate-500 tracking-wider">PKR</span>
 
                     <p class="text-sm font-semibold text-[#0a1f44]" id="cart_total">
-                        {{ number_format($carts['total']) }}
+                        {{-- {{ number_format($carts['total']) }} --}}
                     </p>
                 </div>
             </div>
