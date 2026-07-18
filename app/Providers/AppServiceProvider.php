@@ -32,6 +32,8 @@ class AppServiceProvider extends ServiceProvider
 
         View::composer('*', function ($view) {
 
+            $cart = [];
+
             $cart = app(CartController::class)->cart(request());
 
             $view->with(app(HeaderService::class)->data());
