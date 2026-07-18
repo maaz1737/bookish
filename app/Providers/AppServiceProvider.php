@@ -30,18 +30,18 @@ class AppServiceProvider extends ServiceProvider
             $view->with('globalCategories', Category::all()); // active status filter lagana chahein to scope use karlein  
         });
 
-        View::composer('*', function ($view) {
+        // View::composer('*', function ($view) {
 
-            $view->with(app(HeaderService::class)->data());
+        //     $view->with(app(HeaderService::class)->data());
 
-            $view->with('carts', [
-                'items' => [],
-                'total' => 0,
-            ]);
+        //     $view->with('carts', [
+        //         'items' => [],
+        //         'total' => 0,
+        //     ]);
 
-            // Uncomment later when session issue is fixed
-            // $view->with('carts', app(CartController::class)->cart(request()));
-        });
+        //     // Uncomment later when session issue is fixed
+        //     // $view->with('carts', app(CartController::class)->cart(request()));
+        // });
 
 
     }
