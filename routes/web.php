@@ -41,9 +41,8 @@ use App\Http\Controllers\Admin\AttributeController;
 
 /* ------------------------------ Storefront ------------------------------ */
 
-Route::get('/', function () {
-    dd('ABC ROUTE');
-});
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/cart/json', [CartController::class, 'json']);
 Route::post('/cart/update', [CartController::class, 'update']);
@@ -58,7 +57,6 @@ Route::get('/shipping-rates/{zone}', [CheckoutController::class, 'getShippingRat
 
 
 
-Route::get('/sss', [HomeController::class, 'index'])->name('home');
 
 Route::get('/bundles', [StoreBundleController::class, 'index'])->name('bundles.index');
 Route::get('/schools', [SchoolController::class, 'index'])->name('schools.index');
