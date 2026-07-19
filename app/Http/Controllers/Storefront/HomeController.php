@@ -14,7 +14,6 @@ class HomeController extends Controller
 {
     public function index()
     {
-        dd('HomeController reached');
         $heroBanners = Cache::remember('home.hero_banners', now()->addHour(), function () {
             return Banner::where('is_active', true)
                 ->orderBy('order')

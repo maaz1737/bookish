@@ -41,7 +41,9 @@ use App\Http\Controllers\Admin\AttributeController;
 
 /* ------------------------------ Storefront ------------------------------ */
 
-
+Route::get('/abc123', function () {
+    dd('ABC ROUTE');
+});
 
 Route::get('/cart/json', [CartController::class, 'json']);
 Route::post('/cart/update', [CartController::class, 'update']);
