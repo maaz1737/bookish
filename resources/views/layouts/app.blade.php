@@ -345,7 +345,7 @@
     {{-- ===== HEADER ===== --}}
     <header class="bg-white border-b border-slate-200">
         <div class="max-w-7xl mx-auto px-4 flex items-center gap-2 xs:gap-6  justify-between">
-            <a href="{{ url('/') }}" class="shrink-0">
+            <a href="{{ route('home') }}" class="shrink-0">
                 {{-- <h1 class="text-xl sm:text-2xl font-extrabold text-navy-800">Bookish <span class="text-gold-500">&
                         Beyond</span>
                 </h1>
