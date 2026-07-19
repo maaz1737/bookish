@@ -343,7 +343,267 @@
     </marquee>
 
     {{-- ===== HEADER ===== --}}
-   
+    <header class="bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 flex items-center gap-2 xs:gap-6  justify-between">
+            <a href="{{ url('/') }}" class="shrink-0">
+                {{-- <h1 class="text-xl sm:text-2xl font-extrabold text-navy-800">Bookish <span class="text-gold-500">&
+                        Beyond</span>
+                </h1>
+                <p class="text-[12px] sm:text-xs text-slate-500">School Essentials<span class="hidden sm:inline">,
+                        Baby
+                        Wear & Gifts</span> </p> --}}
+                <div class="w-24 h-24 bg-contain bg-center bg-no-repeat"
+                    style="background-image: url('{{ asset('images/bookish_logo.jpg') }}');">
+                </div>
+            </a>
+
+            <form action="#" class="w-2/3 hidden lg:flex border border-slate-300 rounded-lg overflow-hidden">
+                <input type="text" placeholder="Search books, uniforms, bags, accessories..."
+                    class="filter-search flex-1 px-4 py-2 text-sm outline-none">
+                <button class="bg-navy-800 text-white px-5"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </form>
+            @php
+                $wishlistCount = 0;
+                if (auth()->check()) {
+                    $wishlistCount = \App\Models\Wishlist::where('user_id', auth()->id())->count();
+                } else {
+                    $wishlistCount = \App\Models\Wishlist::where('session_id', session()->getId())->count();
+                }
+            @endphp
+            <div class="flex items-center gap-6 text-slate-700">
+                {{-- <a href="#" class="hidden sm:flex flex-col items-center text-xs">
+                    <i class="fa-regular fa-user text-lg"></i>
+                    <span class="hidden lg:inline">Login / Register</span>
+                </a> --}}
+                <a href="{{ route('wishlist.index') }}" class="relative flex flex-col items-center text-xs"><i
+                        class="fa-regular fa-heart text-lg"></i>
+                    <span class="hidden lg:inline">Wishlist</span>
+                    <span
+                        class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center wishlist-badge"
+                        style="{{ $wishlistCount == 0 ? 'display: none;' : '' }}">{{ $wishlistCount }}</span></a>
+
+                {{-- {{ route('cart.index') }} --}}
+                <a href="#" class="cart relative flex flex-col items-center text-xs"><i
+                        class="fa-solid fa-cart-shopping text-lg"></i>
+                    <span class="hidden lg:inline">Cart</span>
+                    <span
+                        class="absolute -top-1 right-2 bg-gold-500 text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center"
+                        id="cart_count">0</span></a>
+                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-md text-slate-700 hover:bg-slate-100"
+                    aria-label="Open menu">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-7 h-7" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        {{-- nav --}}
+        <nav class="max-w-7xl hidden  mx-auto px-4 lg:flex items-center gap-2 relative pb-2">
+            {{-- Rest of the Nav Links --}}
+            <div class="category-dropdown relative">
+                <a href="#"
+                    class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
+                    <i class="fa-solid fa-school mr-1"></i>
+                    <span>Shop by School</span>
+                    <i
+                        class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+                </a>
+
+                <div class="categoryDropdownMenu absolute left-0 w-[490px]  hidden z-50">
+
+                    <div class="mt-2 rounded-xl shadow-2xl border border-slate-200 bg-white">
+                        <div class="grid grid-cols-[180px_1fr]">
+
+                            {{-- Left Side --}}
+                            <div class="p-5 border-r border-slate-200">
+
+                                <div class="">
+                                    <div
+                                        class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-[#001F54]">
+                                        <i class="fa-solid fa-school text-lg"></i>
+                                    </div>
+
+                                    <div>
+                                        <h3 class="font-semibold text-[15px] text-[#1D3557]">
+                                            Shop By School
+                                        </h3>
+
+                                        <p class="text-xs text-gray-500 leading-5 mt-2">
+                                            Choose your school to find class-wise books,
+                                            uniforms & school-specific items.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            {{-- Right Side --}}
+                            <div class="py-3">
+
+                                <div class="max-h-[260px] overflow-y-auto">
+
+                                    @forelse($mainSchools as $school)
+                                        <a href="{{ route('schools.show', $school->slug) }}"
+                                            class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 transition">
+
+                                            <div
+                                                class="w-11 h-11 rounded-full border border-gray-200 overflow-hidden bg-white flex items-center justify-center shrink-0">
+
+                                                @if ($school->logo)
+                                                    <img src="{{ asset('storage/' . $school->logo) }}"
+                                                        class="w-full h-full object-cover" alt="{{ $school->name }}">
+                                                @else
+                                                    <i class="fa-solid fa-school text-[#001F54]"></i>
+                                                @endif
+
+                                            </div>
+
+                                            <span class="text-[14px] font-medium text-[#22324C] leading-5">
+                                                {{ $school->name }}
+                                            </span>
+
+                                        </a>
+
+                                    @empty
+
+                                        <div class="px-5 py-4 text-sm text-gray-400">
+                                            No schools found.
+                                        </div>
+                                    @endforelse
+
+                                </div>
+
+                                @if ($mainSchools->count())
+                                    <div class="border-t mt-2">
+
+                                        <a href="{{ route('schools.index') }}"
+                                            class="flex items-center justify-center py-4 text-sm font-semibold text-orange-500 hover:bg-gray-50">
+
+                                            View All Schools
+                                            <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+
+                                        </a>
+
+                                    </div>
+                                @endif
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            @foreach ($mainCategories as $mainCategory)
+                @php
+                    // Check both category_id and sub_category_id for any products
+                    $hasProducts = $mainCategory->hasAnyProducts();
+                @endphp
+                <div class="category-dropdown relative">
+                    {{-- If no products anywhere in this category tree, clicking goes to home --}}
+                    <a href="{{ $hasProducts ? route('category.show', $mainCategory->slug) : route('categories.index') }}"
+                        class="px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors flex items-center rounded-md">
+                        <span>{{ ucfirst($mainCategory->name) }}</span>
+                        @if ($mainCategory->children->isNotEmpty())
+                            <i
+                                class="categoryChevronIcon fa-solid fa-chevron-down ml-2 text-xs transition-transform duration-200"></i>
+                        @endif
+                    </a>
+
+                    @if ($mainCategory->children->isNotEmpty())
+                        <div
+                            class="categoryDropdownMenu absolute left-0 w-[430px] hidden opacity-0 transition-all duration-200 -translate-y-2 z-[99]">
+
+                            <div class="mt-2 rounded-xl shadow-2xl border border-slate-200 bg-white">
+                                <div class="grid grid-cols-[160px_1fr]">
+
+                                    {{-- Left Panel --}}
+                                    <div class="p-5 border-r border-slate-100 flex flex-col gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-lg bg-blue-50 flex items-center justify-center text-[#001F54]">
+                                            @if ($mainCategory->image)
+                                                <img src="{{ asset('storage/' . $mainCategory->image) }}"
+                                                    alt="{{ $mainCategory->name }}"
+                                                    class="w-full h-full object-cover rounded-lg">
+                                            @else
+                                                <i class="fa-solid fa-tag text-lg"></i>
+                                            @endif
+                                        </div>
+                                        <div>
+                                            <h3 class="font-semibold text-[15px] text-[#1D3557]">
+                                                {{ ucfirst($mainCategory->name) }}
+                                            </h3>
+                                            <p class="text-xs text-gray-500 leading-5 mt-1">
+                                                {{ $mainCategory->description
+                                                    ? Str::limit($mainCategory->description, 80)
+                                                    : 'Browse all ' . ucfirst($mainCategory->name) . ' sub-categories and products.' }}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {{-- Right Panel: sub-category list --}}
+                                    <div class="py-3">
+                                        <div class="max-h-[260px] overflow-y-auto">
+                                            @forelse ($mainCategory->children as $category)
+                                                <a href="{{ route('category.show', $category->slug) }}"
+                                                    class="flex items-center gap-3 px-4 py-2.5 hover:bg-gray-50 transition">
+
+                                                    <span
+                                                        class="w-9 h-9 shrink-0 rounded-full overflow-hidden bg-slate-50 flex items-center justify-center border border-slate-100">
+                                                        @if ($category->image)
+                                                            <img src="{{ asset('storage/' . $category->image) }}"
+                                                                alt="{{ $category->name }}"
+                                                                class="w-full h-full object-cover" loading="lazy">
+                                                        @else
+                                                            <i class="fa-solid fa-folder text-sm text-[#001F54]"></i>
+                                                        @endif
+                                                    </span>
+
+                                                    <span class="text-[14px] font-medium text-[#22324C] leading-5">
+                                                        {{ ucfirst($category->name) }}
+                                                    </span>
+                                                </a>
+
+                                                @if ($category->allChildren->count())
+                                                    @foreach ($category->allChildren as $child)
+                                                        @include('admin.categories.link_category', [
+                                                            'cat' => $child,
+                                                        ])
+                                                    @endforeach
+                                                @endif
+                                            @empty
+                                                <div class="px-4 py-4 text-sm text-gray-400">
+                                                    No sub-categories found.
+                                                </div>
+                                            @endforelse
+                                        </div>
+
+                                        <div class="border-t mt-2">
+                                            <a href="{{ route('category.show', $mainCategory->slug) }}"
+                                                class="flex items-center justify-center py-3 text-sm font-semibold text-orange-500 hover:bg-gray-50 transition">
+                                                View All {{ ucfirst($mainCategory->name) }}
+                                                <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                    @endif
+                </div>
+            @endforeach
+            <a href="{{ route('products.index') }}"
+                class="ml-auto bg-[#ff7a00] hover:bg-[#e06c00] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md">
+                <i class="fa-solid fa-tag mr-1"></i> Smart Saver
+            </a>
+        </nav>
+
+    </header>
     <!-- Overlay -->
     <div id="mobileOverlay" class="fixed inset-0 bg-black/50 hidden z-[998] lg:hidden">
     </div>
