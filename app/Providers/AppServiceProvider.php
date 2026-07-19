@@ -34,13 +34,11 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with(app(HeaderService::class)->data());
 
-            $view->with('carts', [
-                'items' => [],
-                'total' => 0,
-            ]);
-
-            // Uncomment later when session issue is fixed
-            // $view->with('carts', app(CartController::class)->cart(request()));
+            // $view->with('carts', [
+            //     'items' => [],
+            //     'total' => 0,
+            // ]);
+            $view->with('carts', app(CartController::class)->cart(request()));
         });
 
 
