@@ -42,7 +42,7 @@ use App\Http\Controllers\Admin\AttributeController;
 /* ------------------------------ Storefront ------------------------------ */
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/cart/json', [CartController::class, 'json']);
 Route::post('/cart/update', [CartController::class, 'update']);
