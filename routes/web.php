@@ -45,7 +45,7 @@ use App\Http\Controllers\Admin\AttributeController;
 //     dd('this');
 // });
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index']);
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
