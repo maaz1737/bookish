@@ -1079,8 +1079,8 @@
 </footer>
 
 
-    <script src="/js/category-dropdown.js" defer></script>
-    <script src="/js/cart.js" defer></script>
+    <script src="{{ asset('js/category-dropdown.js') }}" defer></script>
+    <script src="{{ asset('js/cart.js') }}" defer></script>
 
 
     <!-- Wishlist Universal Handler -->
