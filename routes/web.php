@@ -41,21 +41,14 @@ use App\Http\Controllers\Admin\AttributeController;
 
 /* ------------------------------ Storefront ------------------------------ */
 
-// Route::get('/', function () {
-//     dd('this');
-// });
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
-// Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 Route::get('/cart/json', [CartController::class, 'json']);
 Route::post('/cart/update', [CartController::class, 'update']);
 Route::post('/cart/remove', [CartController::class, 'removeCartItem']);
-
-
-
 
 
 Route::get('/shipping-rates/{zone}', [CheckoutController::class, 'getShippingRates'])
