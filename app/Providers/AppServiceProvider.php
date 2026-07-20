@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
-        View::composer('layouts.php', function ($view) {
+        View::composer('*', function ($view) {
             $view->with('globalCategories', Category::all()); // active status filter lagana chahein to scope use karlein  
         });
 
