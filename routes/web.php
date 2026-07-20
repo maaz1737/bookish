@@ -41,9 +41,12 @@ use App\Http\Controllers\Admin\AttributeController;
 
 /* ------------------------------ Storefront ------------------------------ */
 
-Route::get('/', function () {
-    dd('this');
-});
+// Route::get('/', function () {
+//     dd('this');
+// });
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
