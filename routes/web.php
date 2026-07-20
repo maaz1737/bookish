@@ -43,12 +43,12 @@ use App\Http\Controllers\Admin\AttributeController;
 
 
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+
 Route::get('/cart/json', [CartController::class, 'json']);
 Route::post('/cart/update', [CartController::class, 'update']);
 Route::post('/cart/remove', [CartController::class, 'removeCartItem']);
-
-
-
 
 
 Route::get('/shipping-rates/{zone}', [CheckoutController::class, 'getShippingRates'])
@@ -56,7 +56,6 @@ Route::get('/shipping-rates/{zone}', [CheckoutController::class, 'getShippingRat
 
 
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/bundles', [StoreBundleController::class, 'index'])->name('bundles.index');
 Route::get('/schools', [SchoolController::class, 'index'])->name('schools.index');
