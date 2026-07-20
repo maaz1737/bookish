@@ -45,10 +45,10 @@ use App\Http\Controllers\Admin\AttributeController;
 //     dd('this');
 // });
 
-Route::get('/', [HomeController::class, 'index']);
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
+// Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/cart/json', [CartController::class, 'json']);
 Route::post('/cart/update', [CartController::class, 'update']);
