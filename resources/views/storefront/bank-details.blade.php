@@ -25,31 +25,48 @@
             ];
         @endphp
 
-        {{-- <div class="max-w-5xl mx-auto px-4 pt-2">
-            <div class="flex items-center justify-between text-xs text-gray-500">
+        {{-- ===== STEP PROGRESS BAR ===== --}}
+        <div class="max-w-3xl mx-auto px-2 sm:px-4 pt-2 pb-2">
+            <div class="flex items-center justify-between">
                 @foreach ($steps as $i => $s)
-                    <div class="flex flex-col items-center flex-1">
-                        <div
-                            class="w-10 h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    {{ $s['active'] || $s['completed'] ? 'bg-[#0a1f44] text-white border-[#0a1f44] shadow-sm' : 'bg-white text-gray-400 border-gray-300' }}">
+                    {{-- Step Node --}}
+                    <div class="flex flex-col items-center shrink-0">
+                        {{-- Circle --}}
+                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full border-2 flex items-center justify-center transition-all duration-300 text-xs sm:text-sm
+                            {{ $s['active'] || $s['completed']
+                                ? 'bg-[#0a1f44] text-white border-[#0a1f44] shadow-sm'
+                                : 'bg-white text-gray-400 border-gray-300' }}">
                             @if ($s['completed'])
-                                <i class="fa-solid fa-check text-xs"></i>
+                                <i class="fa-solid fa-check text-[10px] sm:text-xs"></i>
                             @else
-                                <span>{{ $s['icon'] }}</span>
+                                <span class="text-sm sm:text-base leading-none">{{ $s['icon'] }}</span>
                             @endif
                         </div>
-                        <div
-                            class="mt-2 text-center text-[11px] transition-all duration-300 {{ $s['active'] ? 'text-[#0a1f44] font-semibold' : 'text-gray-400' }}">
+                        {{-- Label — hidden on mobile for long labels, shown on sm+ --}}
+                        <div class="mt-1.5 text-center transition-all duration-300
+                            {{ $s['active'] ? 'text-[#0a1f44] font-semibold' : 'text-gray-400' }}
+                            {{ in_array($s['label'], ['Payment Method', 'Payment Confirmation'])
+                                ? 'hidden sm:block text-[10px] sm:text-[11px] max-w-[60px] sm:max-w-[80px] leading-tight'
+                                : 'text-[10px] sm:text-[11px] max-w-[48px] sm:max-w-[72px] leading-tight' }}">
                             {{ $s['label'] }}
                         </div>
+                        {{-- Short label on mobile only for long items --}}
+                        @if(in_array($s['label'], ['Payment Method', 'Payment Confirmation']))
+                            <div class="mt-1.5 text-center text-[9px] leading-tight sm:hidden
+                                {{ $s['active'] ? 'text-[#0a1f44] font-semibold' : 'text-gray-400' }}">
+                                @if($s['label'] === 'Payment Method') Pay @elseif($s['label'] === 'Payment Confirmation') Confirm @endif
+                            </div>
+                        @endif
                     </div>
+
+                    {{-- Connector Line between steps --}}
                     @if ($i < count($steps) - 1)
-                        <div
-                            class="flex-1 h-px -mt-6 transition-all duration-300 {{ $s['completed'] ? 'bg-[#0a1f44]' : 'bg-gray-300' }}">
+                        <div class="flex-1 h-px mx-1 sm:mx-2 transition-all duration-300 -mt-5 sm:-mt-6
+                            {{ $s['completed'] ? 'bg-[#0a1f44]' : 'bg-gray-200' }}">
                         </div>
                     @endif
                 @endforeach
-            </div> --}}
+            </div>
         </div>
 
         <!-- Content grid -->
@@ -132,11 +149,58 @@
                                 <span class="text-navy-900">PKR {{ number_format($order->total_amount) }}</span>
                             </div>
 
-                            <!-- Security Box -->
-                            {{-- ===== TRUST / BENEFITS STRIP ===== --}}
-                            @include('partials.trust-section')
+                            {{-- ===== TRUST / BENEFITS STRIP (Sidebar Compact) ===== --}}
+                            <div class="mt-4 border border-slate-100 rounded-xl p-3 bg-slate-50/60">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div class="flex items-center gap-2 p-1.5">
+                                        <div class="w-7 h-7 shrink-0 rounded-lg bg-[#001F54]/5 flex items-center justify-center text-[#001F54]">
+                                            <i class="fa-solid fa-shield-halved text-xs"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <p class="font-bold text-[#001F54] text-[10px] leading-tight">100% Original</p>
+                                            <p class="text-[9px] text-slate-500 leading-tight mt-0.5">Authorized suppliers</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2 p-1.5">
+                                        <div class="w-7 h-7 shrink-0 rounded-lg bg-[#001F54]/5 flex items-center justify-center text-[#001F54]">
+                                            <i class="fa-solid fa-truck text-xs"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <p class="font-bold text-[#001F54] text-[10px] leading-tight">Fast Delivery</p>
+                                            <p class="text-[9px] text-slate-500 leading-tight mt-0.5">Across Pakistan</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2 p-1.5">
+                                        <div class="w-7 h-7 shrink-0 rounded-lg bg-[#001F54]/5 flex items-center justify-center text-[#001F54]">
+                                            <i class="fa-solid fa-lock text-xs"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <p class="font-bold text-[#001F54] text-[10px] leading-tight">Secure Payment</p>
+                                            <p class="text-[9px] text-slate-500 leading-tight mt-0.5">Multiple options</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2 p-1.5">
+                                        <div class="w-7 h-7 shrink-0 rounded-lg bg-[#001F54]/5 flex items-center justify-center text-[#001F54]">
+                                            <i class="fa-solid fa-rotate-left text-xs"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <p class="font-bold text-[#001F54] text-[10px] leading-tight">Easy Returns</p>
+                                            <p class="text-[9px] text-slate-500 leading-tight mt-0.5">7 days hassle-free</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center gap-2 p-1.5 col-span-2">
+                                        <div class="w-7 h-7 shrink-0 rounded-lg bg-[#001F54]/5 flex items-center justify-center text-[#001F54]">
+                                            <i class="fa-solid fa-headset text-xs"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <p class="font-bold text-[#001F54] text-[10px] leading-tight">Dedicated Support</p>
+                                            <p class="text-[9px] text-slate-500 leading-tight mt-0.5">We're here to help you anytime</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <!-- Footer Secure Info -->
+                            {{-- Footer Secure Info --}}
                             <div
                                 class="mt-3 flex items-center gap-1.5 justify-center text-[10px] text-gray-400 font-medium">
                                 <i class="fa-solid fa-lock text-xs"></i> Secure payments. Multiple payment options

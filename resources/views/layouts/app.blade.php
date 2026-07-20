@@ -597,9 +597,16 @@
                     @endif
                 </div>
             @endforeach
-            <a href="{{ route('products.index') }}"
-                class="ml-auto bg-[#ff7a00] hover:bg-[#e06c00] text-white px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md">
-                <i class="fa-solid fa-tag mr-1"></i> Smart Saver
+            <a href="{{ route('bundles.index') }}"
+                class="ml-auto bg-[#ff7a00] hover:bg-[#e06c00] text-white px-3 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-1.5 whitespace-nowrap">
+
+                <i class="fa-solid fa-tag text-xs sm:text-sm"></i>
+
+                {{-- Mobile Text --}}
+                <span class="inline sm:hidden">Bundles</span>
+
+                {{-- Desktop Text --}}
+                <span class="hidden sm:inline">Smart Saver Bundles</span>
             </a>
         </nav>
 
@@ -912,12 +919,14 @@
         </div>
     </div> --}}
 
-   <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-[99999]"></div>
+    <div id="cartOverlay" class="fixed inset-0 bg-black/40 hidden z-[99999]"></div>
 
     {{-- Main Drawer --}}
-    <div id="cartDrawer" class="fixed top-0 bottom-0 right-0 w-full md:w-[380px] bg-white shadow-xl
+    <div id="cartDrawer"
+        class="fixed top-0 bottom-0 right-0 w-full md:w-[380px] bg-white shadow-xl
                translate-x-full transition-transform duration-300 ease-in-out
-               z-[999999] flex flex-col"> {{-- h-screen ki jagah bottom-0 aur top-0 lagaya --}}
+               z-[999999] flex flex-col">
+        {{-- h-screen ki jagah bottom-0 aur top-0 lagaya --}}
 
         {{-- Header (Humesha Top Par Fix) --}}
         <div class="flex items-center justify-between px-4 py-3 border-b shrink-0 bg-white">
@@ -966,7 +975,7 @@
 
             <div class="grid grid-cols-2 gap-3 px-3 pb-3 md:flex md:flex-col md:gap-2">
                 {{-- Continue Shopping Button --}}
-                <a href="{{ route('categories.index')}}"
+                <a href="{{ route('categories.index') }}"
                     class="w-full h-11 rounded-xl bg-white hover:bg-gray-50 border border-[#163A6B] text-[#163A6B] text-sm font-semibold flex items-center justify-center gap-2 shadow-sm hover:shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#163A6B]/30 order-1 md:order-2">
                     🛒 Continue Shoping
                 </a>
@@ -983,100 +992,108 @@
 
     {{-- ===== FOOTER ===== --}}
     <footer class="bg-navy-900 text-slate-300 mt-2 md:mt-6">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-10">
 
-            <!-- Company Description & Social Links -->
-            <div class="sm:col-span-2 lg:col-span-4">
-                <p class="text-slate-400 leading-7 max-w-md">
-                    School essentials, baby wear & gifts. We provide quality books,
-                    uniforms, school accessories, baby wear, gifts and much more.
-                </p>
+                <!-- Company Description & Social Links -->
+                <div class="sm:col-span-2 lg:col-span-4">
+                    <p class="text-slate-400 leading-7 max-w-md">
+                        School essentials, baby wear & gifts. We provide quality books,
+                        uniforms, school accessories, baby wear, gifts and much more.
+                    </p>
 
-                <div class="flex flex-wrap gap-3 mt-6">
-                    <a href="#" class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
-                        <i class="fa-brands fa-facebook-f"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
-                        <i class="fa-brands fa-instagram"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
-                        <i class="fa-brands fa-whatsapp"></i>
-                    </a>
-                    <a href="#" class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
-                        <i class="fa-brands fa-youtube"></i>
-                    </a>
+                    <div class="flex flex-wrap gap-3 mt-6">
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="#"
+                            class="w-10 h-10 rounded-full bg-navy-800 hover:bg-gold-500 transition flex items-center justify-center">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Quick Links -->
-            <div class="lg:col-span-2">
-                <h4 class="text-white font-semibold text-lg mb-4">Quick Links</h4>
-                <ul class="space-y-3">
-                    <li><a href="{{ route('about') }}" class="hover:text-gold-500 transition">About Us</a></li>
-                    <li><a href="{{ route('returns-refunds') }}" class="hover:text-gold-500 transition">Returns & Refunds</a></li>
-                    <li><a href="{{ route('contact') }}" class="hover:text-gold-500 transition">Contact Us</a></li>
-                </ul>
-            </div>
-
-            <!-- Shop -->
-            <div class="lg:col-span-3">
-                <h4 class="text-white font-semibold text-lg mb-4">Shop</h4>
-                <ul class="space-y-3">
-                    @foreach ($mainCategories as $mainCategory)
-                        <li>
-                            <a href="{{ route('category.show', $mainCategory->slug) }}" class="hover:text-gold-500">
-                                {{ ucfirst($mainCategory->name) }}
-                            </a>
+                <!-- Quick Links -->
+                <div class="lg:col-span-2">
+                    <h4 class="text-white font-semibold text-lg mb-4">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="{{ route('about') }}" class="hover:text-gold-500 transition">About Us</a></li>
+                        <li><a href="{{ route('returns-refunds') }}" class="hover:text-gold-500 transition">Returns &
+                                Refunds</a></li>
+                        <li><a href="{{ route('contact') }}" class="hover:text-gold-500 transition">Contact Us</a>
                         </li>
-                        @if ($mainCategory->children->count())
-                            @foreach ($mainCategory->children as $category)
-                                <li>
-                                    <a href="{{ route('category.show', $category->slug) }}" class="hover:text-gold-500">
-                                        {{ ucfirst($category->name) }}
-                                    </a>
-                                </li>
-                            @endforeach
-                        @endif
-                    @endforeach
-                </ul>
+                    </ul>
+                </div>
+
+                <!-- Shop -->
+                <div class="lg:col-span-3">
+                    <h4 class="text-white font-semibold text-lg mb-4">Shop</h4>
+                    <ul class="space-y-3">
+                        @foreach ($mainCategories as $mainCategory)
+                            <li>
+                                <a href="{{ route('category.show', $mainCategory->slug) }}"
+                                    class="hover:text-gold-500">
+                                    {{ ucfirst($mainCategory->name) }}
+                                </a>
+                            </li>
+                            @if ($mainCategory->children->count())
+                                @foreach ($mainCategory->children as $category)
+                                    <li>
+                                        <a href="{{ route('category.show', $category->slug) }}"
+                                            class="hover:text-gold-500">
+                                            {{ ucfirst($category->name) }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div class="lg:col-span-3">
+                    <h4 class="text-white font-semibold text-lg mb-4">Customer Service</h4>
+                    <ul class="space-y-4 text-sm">
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-phone text-gold-400 mt-1"></i>
+                            <span>+92 321 4735908</span>
+                        </li>
+                        <li class="flex items-start gap-3 break-all">
+                            <i class="fa-solid fa-envelope text-gold-400 mt-1"></i>
+                            <span>bookishsupport@gmail.com</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-gold-400 mt-1"></i>
+                            <span>Lahore, Pakistan</span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fa-regular fa-clock text-gold-400 mt-1"></i>
+                            <span>Mon – Sat (10:00 AM – 8:00 PM)</span>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
+        </div>
 
-            <!-- Contact -->
-            <div class="lg:col-span-3">
-                <h4 class="text-white font-semibold text-lg mb-4">Customer Service</h4>
-                <ul class="space-y-4 text-sm">
-                    <li class="flex items-start gap-3">
-                        <i class="fa-solid fa-phone text-gold-400 mt-1"></i>
-                        <span>+92 321 4735908</span>
-                    </li>
-                    <li class="flex items-start gap-3 break-all">
-                        <i class="fa-solid fa-envelope text-gold-400 mt-1"></i>
-                        <span>bookishsupport@gmail.com</span>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i class="fa-solid fa-location-dot text-gold-400 mt-1"></i>
-                        <span>Lahore, Pakistan</span>
-                    </li>
-                    <li class="flex items-start gap-3">
-                        <i class="fa-regular fa-clock text-gold-400 mt-1"></i>
-                        <span>Mon – Sat (10:00 AM – 8:00 PM)</span>
-                    </li>
-                </ul>
+        <!-- Copyright Section -->
+        <div class="border-t border-navy-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+                <p class="text-center text-xs sm:text-sm text-slate-400">
+                    © {{ date('Y') }} Bookish & Beyond. All Rights Reserved.
+                </p>
             </div>
-
         </div>
-    </div>
-
-    <!-- Copyright Section -->
-    <div class="border-t border-navy-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
-            <p class="text-center text-xs sm:text-sm text-slate-400">
-                © {{ date('Y') }} Bookish & Beyond. All Rights Reserved.
-            </p>
-        </div>
-    </div>
-</footer>
+    </footer>
 
 
     <script src="{{ asset('js/category-dropdown.js') }}" defer></script>
