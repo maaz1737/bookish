@@ -32,9 +32,9 @@
                 New Product
             </a>
         </div>
-    </div> --}}
+    </div> 
 
-    <div
+    {{-- <div
         class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-6">
         <div class="flex items-center gap-3.5">
             <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shadow-inner">
@@ -65,7 +65,7 @@
                 New Product
             </a>
         </div>
-    </div>
+    </div> --}}
 
     {{-- Form Bulk Delete & Table --}}
     <form id="bulk-delete-form" method="POST" action="{{ route('admin.products.bulk.destroy') }}"
