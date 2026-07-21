@@ -15,6 +15,8 @@ class DashboardController extends Controller
             'pendingOrders' => Order::where('order_status', 'pending_payment')->count(),
             'lowStock'      => Product::whereColumn('stock', '<=', 'low_stock_threshold')->count(),
             'totalProducts' => Product::count(),
+            'totalOrders'   => Order::count(),
+            'recentOrders'  => Order::latest()->take(6)->get(),
         ]);
     }
 }
