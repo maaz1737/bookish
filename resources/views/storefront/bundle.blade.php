@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <nav class="text-sm text-gray-500 mb-6 flex items-center gap-2">
+    <nav class="text-xs sm:text-sm text-gray-500 mb-4 sm:mb-6 flex flex-wrap items-center gap-1.5 sm:gap-2">
         <a href="/" class="hover:text-indigo-600">Home</a>
         <span>&rsaquo;</span>
         <a href="#" class="hover:text-indigo-600">Schools</a>
         <span>&rsaquo;</span>
-        <a href="{{ route('schools.show', $school) }}" class="hover:text-indigo-600">
+        <a href="{{ route('schools.show', $school) }}" class="hover:text-indigo-600 truncate max-w-[120px] sm:max-w-none">
             {{ $school->name }}
         </a>
         <span>&rsaquo;</span>
@@ -19,17 +19,18 @@
         <form method="POST" action="{{ route('cart.addBundle', $bundle) }}" id="bundle-form">
             @csrf
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
 
                 <div class="lg:col-span-2 space-y-6">
+                    <!-- School & Class Header Banner -->
                     <div
-                        class="bg-white rounded-2xl border border-gray-100 p-6 md:p-8 flex flex-col md:flex-row justify-between items-start gap-8 relative overflow-visible bg-white">
-                        <div class="space-y-5 max-w-full md:max-w-[55%] lg:max-w-[60%] z-10 flex-shrink-0">
-                            <div class="flex items-center gap-4">
+                        class="bg-white rounded-2xl border border-gray-100 p-4 sm:p-6 md:p-8 flex flex-col sm:flex-row justify-between items-start gap-6 relative overflow-visible">
+                        <div class="space-y-4 sm:space-y-5 w-full lg:max-w-[60%] z-10">
+                            <div class="flex items-center gap-3 sm:gap-4">
                                 <div
-                                    class="w-16 h-16 rounded-full flex items-center justify-center text-white relative flex-shrink-0">
+                                    class="w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white relative flex-shrink-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
-                                        class="w-16 h-16 shadow-md rounded-full flex-shrink-0">
+                                        class="w-12 h-12 sm:w-16 sm:h-16 shadow-md rounded-full flex-shrink-0">
                                         <circle cx="50" cy="50" r="48" fill="#0A2540" stroke="#FBBF24"
                                             stroke-width="2" />
                                         <circle cx="50" cy="50" r="43" fill="none" stroke="#FBBF24"
@@ -49,17 +50,18 @@
                                 </div>
 
                                 <div>
-                                    <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider leading-none">
+                                    <p
+                                        class="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider leading-none">
                                         {{ $school->name }}
                                     </p>
                                     <h1
-                                        class="text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mt-1.5 leading-tight">
+                                        class="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight mt-1 leading-tight">
                                         {{ $class->name }} Complete Book Set
                                     </h1>
                                 </div>
                             </div>
 
-                            <p class="text-gray-500 text-sm">
+                            <p class="text-gray-500 text-xs sm:text-sm">
                                 All required books for {{ $class->name }} in one bundle.
                             </p>
 
@@ -72,30 +74,33 @@
                                 Recommended by School
                             </div>
 
-                            <div class="pt-2 grid grid-cols-3 gap-1 md:gap-1 border-t border-gray-100">
-                                <div class="flex items-center gap-1">
-                                    <div class="p-1 bg-gray-50 rounded-xl text-gray-600 flex-shrink-0">🎒</div>
+                            <div class="pt-3 grid grid-cols-3 gap-2 border-t border-gray-100">
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-1.5">
+                                    <div class="p-1 bg-gray-50 rounded-xl text-gray-600 flex-shrink-0 text-xs sm:text-base">
+                                        🎒</div>
                                     <div>
                                         <p
-                                            class="text-[10px] text-gray-400 uppercase font-bold tracking-wider leading-none">
+                                            class="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold tracking-wider leading-none">
                                             Grade</p>
                                         <p class="text-xs font-semibold text-gray-700 mt-0.5">{{ $class->name }}</p>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-1">
-                                    <div class="p-1 bg-gray-50 rounded-xl text-gray-600 flex-shrink-0">🌐</div>
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-1.5">
+                                    <div class="p-1 bg-gray-50 rounded-xl text-gray-600 flex-shrink-0 text-xs sm:text-base">
+                                        🌐</div>
                                     <div>
                                         <p
-                                            class="text-[10px] text-gray-400 uppercase font-bold tracking-wider leading-none">
+                                            class="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold tracking-wider leading-none">
                                             Medium</p>
                                         <p class="text-xs font-semibold text-gray-700 mt-0.5">English</p>
                                     </div>
                                 </div>
-                                <div class="flex items-center gap-1">
-                                    <div class="p-1 bg-gray-50 rounded-xl text-gray-600 flex-shrink-0">📅</div>
+                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-1.5">
+                                    <div class="p-1 bg-gray-50 rounded-xl text-gray-600 flex-shrink-0 text-xs sm:text-base">
+                                        📅</div>
                                     <div>
                                         <p
-                                            class="text-[10px] text-gray-400 uppercase font-bold tracking-wider leading-none">
+                                            class="text-[9px] sm:text-[10px] text-gray-400 uppercase font-bold tracking-wider leading-none">
                                             Academic Year</p>
                                         <p class="text-xs font-semibold text-gray-700 mt-0.5">2024 - 2025</p>
                                     </div>
@@ -104,16 +109,70 @@
                         </div>
                     </div>
 
+                    <!-- Books Container (Mobile Cards + Desktop Table) -->
                     <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-                        {{-- <div class="p-5 border-b border-gray-100 flex items-center justify-between">
-                            <h2 class="font-bold text-gray-800 text-lg">
-                                Books Included in this Set <span
-                                    class="text-indigo-600 font-medium text-sm ml-1">({{ $bundle->items->count() }}
-                                    Items)</span>
-                            </h2>
-                        </div> --}}
 
-                        <div class="overflow-x-auto">
+                        <!-- 1. MOBILE CARD VIEW (Visible only on screens < 640px) -->
+                        <div class="block sm:hidden divide-y divide-gray-100">
+                            @foreach ($bundle->items as $index => $item)
+                                @php
+                                    $itemPrice = $item->product->effectivePrice() * $item->quantity;
+                                @endphp
+                                <div class="p-4 space-y-3">
+                                    <div class="flex items-start gap-3">
+                                        <!-- Checkbox -->
+                                        <input type="checkbox" checked
+                                            class="w-5 h-5 mt-1 rounded text-indigo-600 accent-indigo-600 border-gray-300 focus:ring-indigo-500 bundle-book cursor-pointer flex-shrink-0"
+                                            data-id="{{ $item->product_id }}" data-price="{{ $itemPrice }}">
+
+                                        <!-- Book Image -->
+                                        @if (!empty($item->product->images) && isset($item->product->images[0]))
+                                            <img src="{{ asset(app()->environment('production') ? 'storage/' . $item->product->images[0] : 'storage/' . $item->product->images[0]) }}"
+                                                class="w-12 h-16 rounded object-cover shadow-sm bg-gray-50 border border-gray-100 flex-shrink-0"
+                                                alt="{{ $item->product->name }}">
+                                        @else
+                                            <div
+                                                class="w-12 h-16 rounded bg-gray-100 border border-gray-200 flex items-center justify-center text-[10px] text-gray-500 text-center flex-shrink-0">
+                                                No Image
+                                            </div>
+                                        @endif
+
+                                        <!-- Title & Details -->
+                                        <div class="flex-1 min-w-0">
+                                            <span class="font-bold text-gray-900 text-sm block truncate">
+                                                {{ $item->product->name }}
+                                            </span>
+
+                                            <p class="text-xs text-gray-500 mt-0.5">
+                                                {{ $item->product->publisher ?? 'Oxford University Press' }}
+                                            </p>
+
+                                            <div class="flex items-center gap-2 mt-2">
+                                                <span
+                                                    class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-[11px] font-medium">
+                                                    {{ $item->product->subject ?? 'General' }}
+                                                </span>
+                                                @if ($item->quantity > 1)
+                                                    <span class="text-xs text-gray-400 font-medium">Qty:
+                                                        {{ $item->quantity }}</span>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Price Row -->
+                                    <div class="flex justify-between items-center pt-2 border-t border-gray-50 text-xs">
+                                        <span class="text-gray-400 font-medium">Price:</span>
+                                        <span class="font-bold text-gray-900 text-sm">
+                                            PKR {{ number_format($itemPrice) }}
+                                        </span>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- 2. DESKTOP TABLE VIEW (Visible on screens >= 640px) -->
+                        <div class="hidden sm:block overflow-x-auto min-w-full">
                             <table class="w-full text-left border-collapse">
                                 <thead>
                                     <tr
@@ -132,11 +191,9 @@
                                         @endphp
                                         <tr class="hover:bg-slate-50/70 transition-colors group">
                                             <td class="py-4 px-4 text-center">
-                                                <div class="flex items-center justify-center">
-                                                    <input type="checkbox" checked
-                                                        class="w-4 h-4 rounded text-indigo-600 accent-indigo-600 border-gray-300 focus:ring-indigo-500 bundle-book cursor-pointer"
-                                                        data-id="{{ $item->product_id }}" data-price="{{ $itemPrice }}">
-                                                </div>
+                                                <input type="checkbox" checked
+                                                    class="w-4 h-4 rounded text-indigo-600 accent-indigo-600 border-gray-300 focus:ring-indigo-500 bundle-book cursor-pointer"
+                                                    data-id="{{ $item->product_id }}" data-price="{{ $itemPrice }}">
                                             </td>
 
                                             <td class="py-4 px-4">
@@ -164,18 +221,18 @@
                                                 </div>
                                             </td>
 
-                                            <td class="py-4 px-4 text-gray-500 font-medium">
+                                            <td class="py-4 px-4 text-gray-500 font-medium whitespace-nowrap">
                                                 {{ $item->product->publisher ?? 'Oxford University Press' }}
                                             </td>
 
-                                            <td class="py-4 px-4">
+                                            <td class="py-4 px-4 whitespace-nowrap">
                                                 <span
                                                     class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs font-medium">
                                                     {{ $item->product->subject ?? 'General' }}
                                                 </span>
                                             </td>
 
-                                            <td class="py-4 px-4 text-right font-semibold text-gray-900">
+                                            <td class="py-4 px-4 text-right font-semibold text-gray-900 whitespace-nowrap">
                                                 {{ number_format($itemPrice) }}
                                             </td>
                                         </tr>
@@ -184,11 +241,13 @@
                             </table>
                         </div>
 
-                        <div class="bg-slate-50 p-5 border-t border-gray-100 flex justify-between items-center px-6">
-                            <span class="font-bold text-gray-700 text-sm">
+                        <!-- Subtotal Footer -->
+                        <div
+                            class="bg-slate-50 p-4 sm:p-5 border-t border-gray-100 flex justify-between items-center px-4 sm:px-6">
+                            <span class="font-bold text-gray-700 text-xs sm:text-sm">
                                 Total (<span id="checked-count">{{ $bundle->items->count() }}</span> Items)
                             </span>
-                            <span class="font-extrabold text-slate-900 text-base">
+                            <span class="font-extrabold text-slate-900 text-sm sm:text-base">
                                 PKR <span id="table-raw-total">{{ number_format($bundle->total_price) }}</span>
                             </span>
                         </div>
@@ -197,11 +256,12 @@
                     <div id="exclude-fields"></div>
                 </div>
 
+                <!-- Sidebar (Bundle Summary) -->
                 <div class="lg:col-span-1 space-y-4 lg:sticky lg:top-6">
 
-                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 relative overflow-hidden">
+                    <div class="bg-white rounded-2xl border border-gray-100 shadow-sm p-4 sm:p-6 relative overflow-hidden">
                         <div
-                            class="absolute top-0 right-0 bg-orange-500 text-white text-[11px] font-bold px-3 py-1 rounded-bl-xl tracking-wide uppercase">
+                            class="absolute top-0 right-0 bg-orange-500 text-white text-[10px] sm:text-[11px] font-bold px-2.5 sm:px-3 py-1 rounded-bl-xl tracking-wide uppercase">
                             Save 10%
                         </div>
 
@@ -209,7 +269,7 @@
                             Bundle Summary
                         </h2>
 
-                        <div class="space-y-4">
+                        <div class="space-y-3.5 sm:space-y-4">
                             <div class="flex justify-between items-center text-sm">
                                 <span class="text-gray-500">Total Price</span>
                                 <span class="line-through text-gray-400 font-medium">
@@ -235,7 +295,7 @@
                             <div class="border-t border-dashed border-gray-200 pt-4 flex justify-between items-end">
                                 <div>
                                     <p class="text-xs font-bold text-gray-400 uppercase tracking-wider">Final Payable</p>
-                                    <p class="text-3xl font-black text-slate-900 tracking-tight mt-0.5">
+                                    <p class="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight mt-0.5">
                                         PKR <span id="summary-final-total"
                                             class="text-orange-600">{{ number_format($bundle->final_price) }}</span>
                                     </p>
@@ -243,9 +303,9 @@
                             </div>
                         </div>
 
-                        <div class="mt-6 space-y-3">
+                        <div class="mt-5 sm:mt-6 space-y-3">
                             <button type="submit"
-                                class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3.5 px-4 rounded-xl font-bold shadow-md shadow-orange-500/10 transition-all flex items-center justify-center gap-2 text-sm">
+                                class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 sm:py-3.5 px-4 rounded-xl font-bold shadow-md shadow-orange-500/10 transition-all flex items-center justify-center gap-2 text-sm">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -257,7 +317,7 @@
                         </div>
 
                         <div
-                            class="mt-5 pt-4 border-t border-gray-100 grid grid-cols-2 gap-2 text-[11px] font-medium text-gray-500">
+                            class="mt-4 sm:mt-5 pt-4 border-t border-gray-100 grid grid-cols-2 gap-2 text-[11px] font-medium text-gray-500">
                             <div class="flex items-center gap-1.5">
                                 <span class="text-green-500 text-sm">✓</span> 100% Original Books
                             </div>
@@ -267,33 +327,34 @@
                         </div>
                     </div>
 
-                    <div class="bg-white rounded-2xl border border-gray-100 p-5 space-y-3.5 shadow-sm">
+                    <div class="bg-white rounded-2xl border border-gray-100 p-4 sm:p-5 space-y-3 shadow-sm">
                         <h3 class="font-bold text-sm text-gray-900">Why Buy Complete Set?</h3>
                         <ul class="space-y-2 text-xs text-gray-600 font-medium">
                             <li class="flex items-center gap-2">
                                 <span
-                                    class="w-4 h-4 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-[10px]">✓</span>
+                                    class="w-4 h-4 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-[10px] flex-shrink-0">✓</span>
                                 All books recommended by school
                             </li>
                             <li class="flex items-center gap-2">
                                 <span
-                                    class="w-4 h-4 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-[10px]">✓</span>
+                                    class="w-4 h-4 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-[10px] flex-shrink-0">✓</span>
                                 Bundle discount included
                             </li>
                             <li class="flex items-center gap-2">
                                 <span
-                                    class="w-4 h-4 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-[10px]">✓</span>
+                                    class="w-4 h-4 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-[10px] flex-shrink-0">✓</span>
                                 Save time & money
                             </li>
                             <li class="flex items-center gap-2">
                                 <span
-                                    class="w-4 h-4 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-[10px]">✓</span>
+                                    class="w-4 h-4 rounded-full bg-green-100 text-green-700 flex items-center justify-center text-[10px] flex-shrink-0">✓</span>
                                 All items delivered in one package
                             </li>
                         </ul>
                     </div>
 
-                    <div class="bg-amber-50/60 rounded-2xl border border-amber-100 p-5 text-xs text-amber-800 space-y-1.5">
+                    <div
+                        class="bg-amber-50/60 rounded-2xl border border-amber-100 p-4 sm:p-5 text-xs text-amber-800 space-y-1.5">
                         <p class="font-bold text-amber-900 flex items-center gap-1">
                             ⚠️ Important Notes
                         </p>
@@ -308,11 +369,15 @@
             </div>
         </form>
 
-        <section class="mx-auto max-w-7xl px-4 py-4">
-            <div class="grid grid-cols-2 gap-6 rounded-2xl bg-white border border-gray-100 p-6 md:grid-cols-4 shadow-sm">
+        {{-- ===== WHY CHOOSE US ===== --}}
+
+        @include('partials.trust-section')
+
+        {{-- <section class="mx-auto max-w-7xl py-4 mt-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 rounded-2xl bg-white border border-gray-100 p-4 sm:p-6 shadow-sm">
 
                 <div class="flex items-start gap-3">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-2 text-2xl flex-shrink-0">
+                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-2 text-xl sm:text-2xl flex-shrink-0">
                         🚚
                     </div>
                     <div>
@@ -322,7 +387,7 @@
                 </div>
 
                 <div class="flex items-start gap-3">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-2 text-2xl flex-shrink-0">
+                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-2 text-xl sm:text-2xl flex-shrink-0">
                         📦
                     </div>
                     <div>
@@ -332,7 +397,7 @@
                 </div>
 
                 <div class="flex items-start gap-3">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-2 text-2xl flex-shrink-0">
+                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-2 text-xl sm:text-2xl flex-shrink-0">
                         🔒
                     </div>
                     <div>
@@ -342,7 +407,7 @@
                 </div>
 
                 <div class="flex items-start gap-3">
-                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-2 text-2xl flex-shrink-0">
+                    <div class="rounded-xl bg-slate-50 border border-slate-100 p-2 text-xl sm:text-2xl flex-shrink-0">
                         🔄
                     </div>
                     <div>
@@ -352,15 +417,16 @@
                 </div>
 
             </div>
-        </section>
+        </section> --}}
     @else
         <div
-            class="flex flex-col items-center justify-center py-20 text-center bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
-            <div class="w-20 h-20 rounded-full bg-indigo-50 flex items-center justify-center mb-4 text-3xl">
+            class="flex flex-col items-center justify-center py-12 sm:py-20 text-center bg-white rounded-2xl border border-gray-100 p-6 sm:p-8 shadow-sm">
+            <div
+                class="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-indigo-50 flex items-center justify-center mb-4 text-2xl sm:text-3xl">
                 📖
             </div>
-            <h2 class="text-2xl font-bold text-slate-800">No Bundle Found</h2>
-            <p class="text-gray-500 mt-2 max-w-sm text-sm">
+            <h2 class="text-xl sm:text-2xl font-bold text-slate-800">No Bundle Found</h2>
+            <p class="text-gray-500 mt-2 max-w-sm text-xs sm:text-sm">
                 We couldn't find any book bundle for this class yet. Please check back later or contact the school
                 administration.
             </p>
@@ -382,6 +448,7 @@
                 let rawTotal = 0;
                 let activeItemsCount = 0;
 
+                // Sync duplicates across mobile & desktop views
                 checkboxes.forEach(cb => {
                     if (cb.checked) {
                         rawTotal += parseFloat(cb.dataset.price);
@@ -389,22 +456,48 @@
                     }
                 });
 
-                let calculatedDiscount = rawTotal * DISCOUNT_RATE;
-                let finalTotal = rawTotal - calculatedDiscount;
+                // Since both desktop and mobile rendered elements exist in DOM, 
+                // divide count by 2 if both views are active in DOM
+                const visibleCheckboxesCount = document.body.clientWidth < 640 ?
+                    document.querySelectorAll('.block.sm\\:hidden .bundle-book:checked').length :
+                    document.querySelectorAll('.hidden.sm\\:block .bundle-book:checked').length;
 
-                if (checkedCountEl) checkedCountEl.textContent = activeItemsCount;
-                if (tableRawTotalEl) tableRawTotalEl.textContent = new Intl.NumberFormat().format(rawTotal);
+                const actualRawTotal = document.body.clientWidth < 640 ?
+                    Array.from(document.querySelectorAll('.block.sm\\:hidden .bundle-book:checked')).reduce((acc,
+                        cb) => acc + parseFloat(cb.dataset.price), 0) :
+                    Array.from(document.querySelectorAll('.hidden.sm\\:block .bundle-book:checked')).reduce((acc,
+                        cb) => acc + parseFloat(cb.dataset.price), 0);
+
+                let calculatedDiscount = actualRawTotal * DISCOUNT_RATE;
+                let finalTotal = actualRawTotal - calculatedDiscount;
+
+                if (checkedCountEl) checkedCountEl.textContent = visibleCheckboxesCount;
+                if (tableRawTotalEl) tableRawTotalEl.textContent = new Intl.NumberFormat().format(actualRawTotal);
                 if (summaryOriginalPriceEl) summaryOriginalPriceEl.textContent = new Intl.NumberFormat().format(
-                    rawTotal);
+                    actualRawTotal);
                 if (summarySavingsAmountEl) summarySavingsAmountEl.textContent = new Intl.NumberFormat().format(Math
                     .round(calculatedDiscount));
                 if (summaryFinalTotalEl) summaryFinalTotalEl.textContent = new Intl.NumberFormat().format(Math
                     .round(finalTotal));
             }
 
+            // Sync Desktop & Mobile Checkboxes on toggle
             checkboxes.forEach(cb => {
-                cb.addEventListener('change', updatePricingSummary);
+                cb.addEventListener('change', function() {
+                    const productId = this.dataset.id;
+                    const isChecked = this.checked;
+
+                    document.querySelectorAll(`.bundle-book[data-id="${productId}"]`).forEach(
+                        relatedCb => {
+                            relatedCb.checked = isChecked;
+                        });
+
+                    updatePricingSummary();
+                });
             });
+
+            // Initial calculation run
+            updatePricingSummary();
 
             const form = document.getElementById('bundle-form');
             if (form) {
@@ -412,7 +505,11 @@
                     const wrap = document.getElementById('exclude-fields');
                     wrap.innerHTML = '';
 
-                    checkboxes.forEach(cb => {
+                    const activeCheckboxes = document.body.clientWidth < 640 ?
+                        document.querySelectorAll('.block.sm\\:hidden .bundle-book') :
+                        document.querySelectorAll('.hidden.sm\\:block .bundle-book');
+
+                    activeCheckboxes.forEach(cb => {
                         if (!cb.checked) {
                             const input = document.createElement('input');
                             input.type = 'hidden';
