@@ -32,6 +32,39 @@
                 New Product
             </a>
         </div>
+    </div> --}}
+
+    <div
+        class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm mb-6">
+        <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shadow-inner">
+                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8"
+                        d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+                </svg>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold text-gray-900 tracking-tight">Products</h1>
+                <p class="text-xs text-gray-500 mt-0.5">Manage class products and package discounts school-wise.</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2.5">
+            <a href="{{ route('admin.products.bulk.show') }}"
+                class="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition shadow-md shadow-gray-900/10 active:scale-95">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0l-4 4m4-4v12" />
+                </svg>
+                Bulk Upload
+            </a>
+            <a href="{{ route('admin.products.create') }}"
+                class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition shadow-md shadow-indigo-500/20 active:scale-95">
+                <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4" />
+                </svg>
+                New Product
+            </a>
+        </div>
     </div>
 
     {{-- Form Bulk Delete & Table --}}

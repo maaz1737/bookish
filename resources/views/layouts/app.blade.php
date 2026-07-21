@@ -325,7 +325,8 @@
 
 
     {{-- ===== TOP UTILITY BAR ===== --}}
-    <div class="bg-navy-800 text-white text-xs hidden md:block">
+<div class="top-0 left-0 fixed w-full z-[11] h-[175px]">
+            <div class="bg-navy-800 text-white text-xs hidden md:block">
         <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
             <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
             <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
@@ -611,6 +612,7 @@
         </nav>
 
     </header>
+</div>
     <!-- Overlay -->
     <div id="mobileOverlay" class="fixed inset-0 bg-black/50 hidden z-[998] lg:hidden">
     </div>
@@ -751,7 +753,7 @@
     @endif
 
     {{-- ===== MAIN ===== --}}
-    <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-3  md:py-8">
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-3  md:pb-8 pt-[150px] md:pt-[207px]">
         @yield('content')
     </main>
 

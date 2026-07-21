@@ -177,6 +177,10 @@ Route::prefix('admin')->name('admin.')
         Route::delete('classes/{class}', [ClassController::class, 'destroy'])->name('classes.destroy');
 
         // Module 5: Bundles
+        Route::get('bundles/bulk', [AdminBundleController::class, 'bulkUploadShow'])->name('bundles.bulk.show');
+        Route::post('bundles/bulk', [AdminBundleController::class, 'bulkUploadPost'])->name('bundles.bulk.post');
+        Route::post('bundles/bulk/import', [AdminBundleController::class, 'bulkUploadImport'])->name('bundles.bulk.import');
+        Route::get('bundles/bulk/template', [AdminBundleController::class, 'bulkUploadTemplate'])->name('bundles.bulk.template');
         Route::get('bundles', [AdminBundleController::class, 'index'])->name('bundles.index');
         Route::get('bundles/create', [AdminBundleController::class, 'create'])->name('bundles.create');
         Route::delete('bundles/bulk-delete', [AdminBundleController::class, 'bulkDestroy'])->name('bundles.bulk.destroy');
