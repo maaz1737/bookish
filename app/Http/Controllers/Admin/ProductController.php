@@ -65,7 +65,7 @@ class ProductController extends Controller
 
             $product = Product::create($data);
 
-            $this->syncProductBundle($product);
+            // $this->syncProductBundle($product);
 
             DB::commit();
 
@@ -144,7 +144,7 @@ class ProductController extends Controller
 
         $product->update($data);
 
-        $this->syncProductBundle($product);
+        // $this->syncProductBundle($product);
 
         // Clear nav enu mcache so product count changes reflect immediately
         // Cache::forget('menu.main_categories');
