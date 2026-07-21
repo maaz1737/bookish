@@ -210,7 +210,7 @@
                             </span>
                         @endif
                         @if ($products->count() > 0)
-                            <span class="absolute top-4 right-4 z-20 bg-white/90 text-[#001F54] text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-slate-200">
+                            <span class="absolute top-4 right-4 z-10 bg-white/90 text-[#001F54] text-[11px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-slate-200">
                                 {{ $products->count() }} Items
                             </span>
                         @endif
