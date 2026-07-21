@@ -261,6 +261,7 @@ class ProductController extends Controller
         $headers = [
             'Product Name',
             'Category',
+            'sub_category',
             'School',
             'Class',
             'Publisher',
@@ -279,6 +280,7 @@ class ProductController extends Controller
             fputcsv($file, [
                 'Class 5 Mathematics Book',
                 'Books',
+                'urdu book',
                 'Fazaia School System',
                 'Class 5',
                 'National Book Foundation',
@@ -326,6 +328,7 @@ class ProductController extends Controller
             $expected = [
                 'productname' => 'Product Name',
                 'category' => 'Category',
+                'sub_category' => 'sub_category',
                 'school' => 'School',
                 'class' => 'Class',
                 'publisher' => 'Publisher',
@@ -369,6 +372,7 @@ class ProductController extends Controller
                         $rowErrors[] = "Category '{$categoryName}' does not exist in the system.";
                     }
                 }
+                $subCategory = $row['sub_category'];
 
                 $basePrice = $row['baseprice'];
                 if (empty($basePrice)) {
@@ -459,6 +463,7 @@ class ProductController extends Controller
                     'name' => $name,
                     'category_name' => $categoryName,
                     'category_id' => $category ? $category->id : null,
+                    'sub_category' => $subCategory,
                     'school_name' => $schoolName,
                     'school_id' => $school ? $school->id : null,
                     'class_name' => $className,
@@ -513,6 +518,7 @@ class ProductController extends Controller
                     'name' => $p['name'],
                     'slug' => $slug,
                     'category_id' => $p['category_id'],
+                    'sub_category' => $p['sub_category'],
                     'school_id' => $p['school_id'],
                     'class_id' => $p['class_id'],
                     'price' => $p['price'],
