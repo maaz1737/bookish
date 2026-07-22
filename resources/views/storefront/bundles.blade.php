@@ -75,9 +75,9 @@
                             </div>
 
                         @elseif ($imgCount === 1)
-                            <div class="w-full h-full flex items-center justify-center p-6">
+                            <div class="w-full h-full flex items-center justify-center">
                                 <img src="{{ $imgHelper($prodImages[0]->images[0]) }}"
-                                    class="max-h-full max-w-full object-contain group-hover:scale-110 transition-transform duration-500"
+                                    class="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-500"
                                     alt="{{ $prodImages[0]->name }}"
                                     onerror="this.onerror=null;this.src='{{ asset('images/no-image.png') }}'">
                             </div>
@@ -127,8 +127,8 @@
                     </div>
 
                     <div class="p-4 flex flex-col flex-grow">
-                        <h3 class="block mb-2 cursor-pointer text-[#001F54] hover:text-[#ff7a00] group-hover:text-[#ff7a00] transition-colors">{{ $bundle->name }}</h3>
-                        <p class="text-xs text-slate-400 mt-1 line-clamp-2">{{ $includedNames }}</p>
+                        <h3 class="text-[18px] lg:text-[20px]  font-bold text-[#0a1a3d] hover:text-[#1e3a8a] transition-colors leading-snug line-clamp-2 filter-name h-8 py-6">{{ $bundle->name }}</h3>
+                        <p class="text-[14px] lg:text-[16px]  text-slate-400 pb-1 line-clamp-1 h-6">{{ $includedNames }}</p>
 
                         <div class="mt-3 flex items-baseline gap-2 flex-wrap">
                             <span class="font-extrabold text-[#0a1f44] text-xl">

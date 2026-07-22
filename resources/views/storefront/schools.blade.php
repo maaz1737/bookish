@@ -73,10 +73,10 @@
                     <!-- School Info -->
                     <div>
                         <h2
-                            class="school-name text-lg font-bold text-navy-800 leading-tight group-hover:text-blue-900 transition-colors duration-200">
+                            class="school-name text-[18px] lg:text-[20px] font-bold text-navy-800 leading-tight group-hover:text-blue-900 transition-colors duration-200">
                             {{ $school->name }}
                         </h2>
-                        <p class="text-sm text-slate-400 mt-1 font-medium">
+                        <p class="text-[14px] lg:text-[16px] text-slate-400 mt-1 font-medium">
                             {{ $school->description ?: 'Shop books, uniforms & essentials' }}
                         </p>
                     </div>

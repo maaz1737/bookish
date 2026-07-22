@@ -105,15 +105,15 @@
                             {{-- <div class="space-y-4 max-h-[300px] overflow-y-auto pr-1">
                                 @foreach ($order->items as $item)
                                     <div class="flex gap-3 items-center py-2">
-                                        <div
+                                        {{-- <div
                                             class="w-14 h-14 bg-gray-50 border border-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                                             <img src="{{ $item->product->imageUrl() }}"
                                                 alt="{{ $item->product?->name ?? 'Product' }}"
                                                 class="w-full h-full object-cover">
-                                        </div>
+                                        </div> --}}
                                         <div class="flex-1 min-w-0">
                                             <h4 class="font-bold text-xs sm:text-sm text-navy-800 truncate">
-                                                {{ $item->product->name }}</h4>
+                                                {{-- {{ $item->product->name }}</h4> --}}
                                             <p class="text-[11px] text-gray-400 mt-0.5">Premium Quality • 18 inch</p>
                                             <p class="text-[11px] text-gray-500 font-semibold mt-0.5">Qty:
                                                 {{ $item->quantity }}</p>

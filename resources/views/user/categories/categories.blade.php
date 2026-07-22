@@ -253,7 +253,7 @@
               <div class="p-4 flex flex-col flex-grow">
 
                 <h4
-                  class="text-sm font-semibold text-slate-800 line-clamp-2 min-h-[42px] hover:text-indigo-600 transition-colors filter-name">
+                  class="text-[18px] lg:text-[20px] font-semibold text-slate-800 line-clamp-2 min-h-[42px] hover:text-indigo-600 transition-colors filter-name">
                   {{ $p->name }}
                 </h4>
                 <div class="flex items-center gap-2">

@@ -10,65 +10,45 @@
                 
                 <!-- Order Summary Section (order-1 on mobile to stay at top, order-2 on desktop to be on the right side) -->
                 <div class="order-1 lg:order-2 lg:col-span-1">
-                    <div x-data="{ isOpen: true }" class="bg-white border border-gray-200/80 rounded-2xl overflow-hidden shadow-sm">
-                        <!-- Header / Toggle -->
-                        <div @click="isOpen = !isOpen" class="flex items-center justify-between p-4 cursor-pointer hover:bg-gray-50/50 transition-colors select-none">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-orange-500 flex-shrink-0">
-                                    <i class="fa-solid fa-cart-shopping text-sm"></i>
-                                </div>
-                                <div>
-                                    <h3 class="font-bold text-navy-800 text-sm sm:text-base">Order Summary</h3>
-                                    <p class="text-xs text-gray-500 font-medium">
-                                        {{ count($cart['items']) }} {{ count($cart['items']) == 1 ? 'item' : 'items' }} • Total <span class="text-[#ff7a00] font-bold">PKR {{ number_format($cart['total']) }}</span>
-                                    </p>
-                                </div>
+                    @php
+                        $totalItemsCount = collect($cart['items'])->sum('quantity');
+                    @endphp
+                    <div class="bg-white border border-gray-200/80 rounded-2xl p-5 shadow-sm space-y-4">
+                        <!-- Header -->
+                        <div class="flex items-center gap-3 pb-3 border-b border-gray-100">
+                            <div class="w-10 h-10 rounded-xl bg-orange-50 flex items-center justify-center text-[#ff7a00] flex-shrink-0">
+                                <i class="fa-solid fa-cart-shopping text-sm"></i>
                             </div>
-                            <div class="text-gray-400 pr-1">
-                                <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200" :class="isOpen ? 'rotate-180' : ''"></i>
+                            <div>
+                                <h3 class="font-bold text-navy-800 text-base">Order Summary</h3>
+                                <p class="text-xs text-gray-500 font-medium">
+                                    {{ $totalItemsCount }} {{ $totalItemsCount == 1 ? 'item' : 'items' }} in your order
+                                </p>
                             </div>
                         </div>
 
-                        <!-- Collapsible Content -->
-                        <div x-show="isOpen" x-collapse>
-                            <div class="px-4 pb-4 pt-2">
-                                <!-- Cart Items List -->
-                                {{-- <div class="space-y-4 max-h-[300px] overflow-y-auto pr-1">
-                                    @foreach ($cart['items'] as $p)
-                                        <div class="flex gap-3 items-center py-2">
-                                            <div class="w-14 h-14 bg-gray-50 border border-gray-100 rounded-lg overflow-hidden flex-shrink-0">
-                                                <img src="{{ $p['image'] }}" alt="{{ $p['name'] }}" class="w-full h-full object-cover">
-                                            </div>
-                                            <div class="flex-1 min-w-0">
-                                                <h4 class="font-bold text-xs sm:text-sm text-navy-800 truncate">{{ $p['name'] }}</h4>
-                                                <p class="text-[11px] text-gray-400 mt-0.5">Premium Quality • 18 inch</p>
-                                                <p class="text-[11px] text-gray-500 font-semibold mt-0.5">Qty: {{ $p['quantity'] }}</p>
-                                            </div>
-                                            <div class="text-right flex-shrink-0 pl-2">
-                                                <p class="text-xs sm:text-sm font-bold text-navy-800">PKR {{ number_format($p['price']) }}</p>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div> --}}
-
-                                <!-- Subtotal & Delivery Charges -->
-                                <div class="border-t border-gray-100 mt-3 pt-3 space-y-2.5 text-xs sm:text-sm">
-                                    <div class="flex justify-between items-center text-gray-600">
-                                        <span>Subtotal ({{ count($cart['items']) }} {{ count($cart['items']) == 1 ? 'item' : 'items' }})</span>
-                                        <span class="font-semibold text-[#0a1f44]">PKR {{ number_format($cart['total']) }}</span>
-                                    </div>
-                                    <div class="flex justify-between items-center text-gray-600">
-                                        <span>Delivery Charges</span>
-                                        <span id="shipping-charge" class="font-semibold text-[#0a1f44]">PKR 0</span>
-                                    </div>
-                                </div>
-
-                                <!-- Grand Total Box -->
-                                <div class="bg-amber-50/60 border border-amber-100/50 mt-4 p-3.5 rounded-xl flex justify-between items-center font-bold text-navy-800 text-sm sm:text-base">
-                                    <span>Total Amount</span>
-                                    <span id="grand-total" class="text-navy-900">PKR {{ number_format($cart['total']) }}</span>
-                                </div>
+                        <!-- Summary Breakdown -->
+                        <div class="space-y-3 text-xs sm:text-sm">
+                            <div class="flex justify-between items-center text-gray-600">
+                                <span class="font-medium">Total Items</span>
+                                <span class="font-bold text-navy-800 bg-gray-100 px-2.5 py-1 rounded-lg text-xs">
+                                    {{ $totalItemsCount }} {{ $totalItemsCount == 1 ? 'Item' : 'Items' }}
+                                </span>
                             </div>
+                            <div class="flex justify-between items-center text-gray-600">
+                                <span>Subtotal</span>
+                                <span class="font-semibold text-[#0a1f44]">PKR {{ number_format($cart['total']) }}</span>
+                            </div>
+                            <div class="flex justify-between items-center text-gray-600">
+                                <span>Delivery Charges</span>
+                                <span id="shipping-charge" class="font-semibold text-[#0a1f44]">PKR 0</span>
+                            </div>
+                        </div>
+
+                        <!-- Total Amount Box -->
+                        <div class="bg-amber-50/70 border border-amber-200/60 p-4 rounded-xl flex justify-between items-center font-bold text-navy-800 text-base">
+                            <span class="text-navy-900">Total Amount</span>
+                            <span id="grand-total" class="text-[#ff7a00] font-extrabold text-lg">PKR {{ number_format($cart['total']) }}</span>
                         </div>
                     </div>
                 </div>

@@ -60,8 +60,8 @@ $product — App\Models\Product (with 'variants' relation eager-loaded)
     <div class="p-3 sm:p-4 flex flex-col flex-grow">
 
         {{-- Name --}}
-        <a href="{{ route('product.show', $product) }}" class="block mb-2 cursor-pointer text-[#001F54] hover:text-[#ff7a00] group-hover:text-[#ff7a00] transition-colors">
-            <h3 class="text-sm font-bold leading-snug line-clamp-2">
+        <a href="{{ route('product.show', $product) }}" class="text-[18px] lg:text-[20px] block mb-2 cursor-pointer text-[#001F54] hover:text-[#ff7a00] group-hover:text-[#ff7a00] transition-colors">
+            <h3 class="text-[18px] lg:text-[20px] font-bold leading-snug line-clamp-2">
                 {{ $product->name }}
             </h3>
         </a>
