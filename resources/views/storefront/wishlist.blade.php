@@ -49,7 +49,7 @@
                         <div class="product-info">
                             <div>
                                 <a href="{{ route('product.show', $product) }}" class="hover:no-underline">
-                                    <h3 class="filter-name">
+                                    <h3 class="text-[18px] lg:text-[20px] filter-name">
                                         {{ $product->name }}
                                     </h3>
                                 </a>

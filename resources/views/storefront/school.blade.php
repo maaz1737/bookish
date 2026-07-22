@@ -246,11 +246,11 @@
                     <div class="p-5 flex flex-col flex-1">
                                  <div>
                                 <h3
-                                    class="text-sm font-bold text-[#0a1a3d] hover:text-[#1e3a8a] transition-colors leading-snug line-clamp-2 filter-name h-4 py-4 hover:underline">
+                                    class="text-[18px] lg:text-[20px] font-bold text-[#0a1a3d] hover:text-[#1e3a8a] transition-colors leading-snug line-clamp-2 filter-name h-4 py-4 hover:underline">
                                     {{ ucfirst($bundle->name) }}
                                 </h3>
                              @if($included)
-                                <p class="text-xs text-slate-400 pb-1 line-clamp-1 h-6">
+                                <p class="text-[14px] lg:text-[16px] text-slate-400 pb-1 line-clamp-1 h-6">
                                     {{ $included }}
                                 </p>
                              @endif
