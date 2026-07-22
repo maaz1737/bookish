@@ -61,7 +61,7 @@ class CartController extends Controller
         ]);
     }
 
-    public function addBundle(Request $request)
+    public function addClassProducts(Request $request)
     {
         $validated = $request->validate([
             'product_id' => ['required', 'array', 'min:1'],
@@ -90,7 +90,32 @@ class CartController extends Controller
             ->route('cart.index')
             ->with('success', 'Bundle added to cart.');
     }
+    public function addBundle(Request $request, Bundle $bundle)
+    {
+        $bundle->loadMissing('items.product');
 
+        // Optional: which book ids to exclude (toggle individual books off)
+        $excluded = (array) $request->input('exclude', []);
+
+        $cart = $request->session()->get('cart', []);
+
+        foreach ($bundle->items as $item) {
+            if (in_array($item->product_id, $excluded)) {
+                continue;
+            }
+            $key = "product:{$item->product_id}";
+            $cart[$key] = [
+                'type'     => 'product',
+                'id'       => $item->product_id,
+                'name'     => $item->product->name,
+                'price'    => $item->product->effectivePrice(),
+                'quantity' => ($cart[$key]['quantity'] ?? 0) + $item->quantity,
+            ];
+        }
+
+        $request->session()->put('cart', $cart);
+        return redirect()->route('cart.index')->with('success', 'Bundle added to cart.');
+    }
     public function remove(Request $request, string $key)
     {
         $cart = $request->session()->get('cart', []);

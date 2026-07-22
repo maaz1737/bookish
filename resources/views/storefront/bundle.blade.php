@@ -16,7 +16,7 @@
     </nav>
 
     @if (count($products) > 0)
-        <form method="POST" action="{{ route('cart.addBundle') }}" id="bundle-form">
+        <form method="POST" action="{{ route('cart.classProduct') }}" id="bundle-form">
             @csrf
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 items-start">
@@ -31,11 +31,12 @@
                                     class="w-12 h-12 sm:w-16 sm:h-16 rounded-full flex items-center justify-center text-white relative flex-shrink-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"
                                         class="w-12 h-12 sm:w-16 sm:h-16 shadow-md rounded-full flex-shrink-0">
-                                        <circle cx="50" cy="50" r="48" fill="#0A2540" stroke="#FBBF24" stroke-width="2" />
-                                        <circle cx="50" cy="50" r="43" fill="none" stroke="#FBBF24" stroke-width="1"
-                                            stroke-dasharray="2,2" opacity="0.5" />
-                                        <path d="M25,65 Q35,55 50,55 Q65,55 75,65 Q65,75 50,70 Q35,75 25,65 Z" fill="#1E3A8A"
-                                            opacity="0.4" />
+                                        <circle cx="50" cy="50" r="48" fill="#0A2540" stroke="#FBBF24"
+                                            stroke-width="2" />
+                                        <circle cx="50" cy="50" r="43" fill="none" stroke="#FBBF24"
+                                            stroke-width="1" stroke-dasharray="2,2" opacity="0.5" />
+                                        <path d="M25,65 Q35,55 50,55 Q65,55 75,65 Q65,75 50,70 Q35,75 25,65 Z"
+                                            fill="#1E3A8A" opacity="0.4" />
                                         <path
                                             d="M20,55 C25,40 38,38 50,48 C62,38 75,40 80,55 C70,48 60,48 50,52 C40,48 30,48 20,55 Z"
                                             fill="#FBBF24" opacity="0.8" />
@@ -67,7 +68,8 @@
                             <div
                                 class="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 rounded-md text-xs font-medium border border-green-200">
                                 <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M5 13l4 4L19 7">
                                     </path>
                                 </svg>
                                 Recommended by School
@@ -137,7 +139,7 @@
                                             </span>
 
                                             <p class="text-xs text-gray-500 mt-0.5">
-                                                {{ $product->publisher  }}
+                                                {{ $product->publisher }}
                                             </p>
 
                                             <div class="flex items-center gap-2 mt-2">
@@ -180,7 +182,8 @@
                                         @endphp
                                         <tr class="hover:bg-slate-50/70 transition-colors group">
                                             <td class="py-4 px-4 text-center">
-                                                <input type="checkbox" checked name="product_id[]" value="{{ $product->id }}"
+                                                <input type="checkbox" checked name="product_id[]"
+                                                    value="{{ $product->id }}"
                                                     class="w-4 h-4 rounded text-indigo-600 accent-indigo-600 border-gray-300 focus:ring-indigo-500 bundle-book cursor-pointer"
                                                     data-id="{{ $product->id }}" data-price="{{ $itemPrice }}"
                                                     data-total="{{ $product->price }}">
@@ -207,7 +210,8 @@
                                             </td>
 
                                             <td class="py-4 px-4 whitespace-nowrap">
-                                                <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs font-medium">
+                                                <span
+                                                    class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs font-medium">
                                                     {{ $product->subject ?? 'General' }}
                                                 </span>
                                             </td>
@@ -287,7 +291,8 @@
                         <div class="mt-5 sm:mt-6 space-y-3">
                             <button type="submit"
                                 class="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 sm:py-3.5 px-4 rounded-xl font-bold shadow-md shadow-orange-500/10 transition-all flex items-center justify-center gap-2 text-sm">
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5"
+                                    viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 0a2 2 0 100 4 2 2 0 000-4z">
                                     </path>
@@ -351,7 +356,6 @@
         {{-- ===== WHY CHOOSE US ===== --}}
 
         @include('partials.trust-section')
-
     @else
         <div
             class="flex flex-col items-center justify-center py-12 sm:py-20 text-center bg-white rounded-2xl border border-gray-100 p-6 sm:p-8 shadow-sm">
@@ -373,15 +377,15 @@
             let totalPrice = 0;
             let discountPrice = 0;
 
-            $('.bundle-book:checked').each(function () {
+            $('.bundle-book:checked').each(function() {
                 totalPrice += parseFloat($(this).data('total')) || 0;
                 discountPrice += parseFloat($(this).data('price')) || 0;
             });
 
             let savedAmount = totalPrice - discountPrice;
-            let discount = totalPrice > 0
-                ? ((totalPrice - discountPrice) / totalPrice) * 100
-                : 0;
+            let discount = totalPrice > 0 ?
+                ((totalPrice - discountPrice) / totalPrice) * 100 :
+                0;
 
             $('.total-price-bundle').text(Math.round(totalPrice));
             $('.discount-price-bundle').text(Math.round(discountPrice));
@@ -393,7 +397,7 @@
         updateBundleTotals();
 
         // Recalculate whenever a checkbox is checked/unchecked
-        $(document).on('change', '.bundle-book', function () {
+        $(document).on('change', '.bundle-book', function() {
             updateBundleTotals();
         });
     </script>
