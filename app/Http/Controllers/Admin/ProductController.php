@@ -531,7 +531,7 @@ class ProductController extends Controller
                     'is_active' => true
                 ]);
 
-                $this->syncProductBundle($product);
+                // $this->syncProductBundle($product);
             }
 
             DB::commit();
