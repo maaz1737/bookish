@@ -26,18 +26,22 @@ class BundleController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        $bundle = $class->bundle()->with('items.product.category')->first();
+        $bundle = [];
+
+        $class->load('products');
+
 
 
         // Publisher is hidden automatically by the Product model's $hidden.
         return view('storefront.bundle', [
             'school' => $school,
-            'class'  => $class,
+            'class' => $class,
             'bundle' => $bundle,
-            'seo'    => [
-                'title'       => "{$class->name} books Pakistan | {$school->name} book bundle",
+            'products' => $class->products,
+            'seo' => [
+                'title' => "{$class->name} books Pakistan | {$school->name} book bundle",
                 'description' => "Buy school books online in Pakistan — {$school->name} {$class->name} complete bundle at a discounted price.",
-                'keywords'    => "{$class->name} books Pakistan, {$school->name} book bundle, buy school books online in Pakistan",
+                'keywords' => "{$class->name} books Pakistan, {$school->name} book bundle, buy school books online in Pakistan",
             ],
         ]);
     }

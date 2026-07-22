@@ -61,38 +61,34 @@ class CartController extends Controller
         ]);
     }
 
-    public function addBundle(Request $request, Bundle $bundle)
+    public function addBundle(Request $request)
     {
-        $bundle->loadMissing('items.product');
-        $excluded = (array) $request->input('exclude', []);
+        $validated = $request->validate([
+            'product_id' => ['required', 'array', 'min:1'],
+            'product_id.*' => ['required', 'integer', 'exists:products,id'],
+        ]);
+
         $cart = $request->session()->get('cart', []);
 
-        foreach ($bundle->items as $item) {
-            if (in_array($item->product_id, $excluded)) {
-                continue;
-            }
-            if (!$item->product) {
-                $item->delete();
-                continue;
-            }
-            $key = "product:{$item->product_id}";
-
-            $discountPct = (float) ($bundle->discount ?? 0);
-            $originalPrice = (float) $item->product->effectivePrice();
-            $discountedPrice = $originalPrice - ($originalPrice * ($discountPct / 100));
+        foreach ($validated['product_id'] as $id) {
+            $product = Product::find($id);
+            $key = "product:{$product->id}";
 
             $cart[$key] = [
                 'type' => 'product',
-                'id' => $item->product_id,
-                'name' => $item->product->name,
-                'price' => round($discountedPrice, 2),
-                'quantity' => $item->quantity,
-                'is_bundle_item' => true
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => $product->effectivePrice(),
+                'quantity' => 1,
+                'is_bundle_item' => true,
             ];
         }
 
         $request->session()->put('cart', $cart);
-        return redirect()->route('cart.index')->with('success', 'Bundle added to cart.');
+
+        return redirect()
+            ->route('cart.index')
+            ->with('success', 'Bundle added to cart.');
     }
 
     public function remove(Request $request, string $key)
@@ -158,15 +154,14 @@ class CartController extends Controller
 
         $productIds = collect($items)->pluck('id');
 
-        $products = Product::whereIn('id', $productIds)
-            ->get(['id', 'images', 'price', 'discount_price'])
+        $products = Product::whereIn('id', $productIds)->with('category')
+            ->get(['id', 'images', 'price', 'discount_price', 'category_id'])
             ->keyBy('id');
 
         foreach ($items as &$item) {
             $product = $products->get($item['id']);
-
             if ($product) {
-                $item['image'] = $product->images;
+                $item['image'] = $product->imageUrl();
 
                 if (!isset($item['is_bundle_item'])) {
                     $item['price'] = $product->price;
