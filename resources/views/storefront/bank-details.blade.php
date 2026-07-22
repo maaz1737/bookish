@@ -100,9 +100,9 @@
 
                     <!-- Collapsible Content -->
                     <div x-show="isOpen" x-collapse>
-                        <div class="px-4 pb-4 pt-2 border-t border-gray-100">
+                        <div class="px-4 pb-4 pt-2">
                             <!-- Items List -->
-                            <div class="space-y-4 max-h-[300px] overflow-y-auto pr-1">
+                            {{-- <div class="space-y-4 max-h-[300px] overflow-y-auto pr-1">
                                 @foreach ($order->items as $item)
                                     <div class="flex gap-3 items-center py-2">
                                         {{-- <div
@@ -124,7 +124,7 @@
                                         </div>
                                     </div>
                                 @endforeach
-                            </div>
+                            </div> --}}
 
                             <!-- Subtotal & Delivery Charges -->
                             <div class="border-t border-gray-100 mt-3 pt-3 space-y-2.5 text-xs sm:text-sm">
@@ -149,7 +149,7 @@
                                 <span class="text-navy-900">PKR {{ number_format($order->total_amount) }}</span>
                             </div>
 
-                            {{-- ===== TRUST / BENEFITS STRIP (Sidebar Compact) ===== --}}
+                            {{-- ===== TRUST / BENEFITS STRIP (Sidebar Compact) =====
                             <div class="mt-4 border border-slate-100 rounded-xl p-3 bg-slate-50/60">
                                 <div class="grid grid-cols-2 gap-2">
                                     <div class="flex items-center gap-2 p-1.5">
@@ -198,7 +198,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
 
                             {{-- Footer Secure Info --}}
                             <div
