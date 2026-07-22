@@ -26,7 +26,6 @@ class BundleController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        $bundle = [];
 
         $class->load('products');
 
@@ -36,7 +35,6 @@ class BundleController extends Controller
         return view('storefront.bundle', [
             'school' => $school,
             'class' => $class,
-            'bundle' => $bundle,
             'products' => $class->products,
             'seo' => [
                 'title' => "{$class->name} books Pakistan | {$school->name} book bundle",

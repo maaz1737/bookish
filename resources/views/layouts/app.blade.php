@@ -331,7 +331,7 @@
             <span><i class="fa-solid fa-truck-fast text-gold-400 mr-2"></i>Free Delivery on Orders Above PKR 3000</span>
             <span class="hidden md:inline"><i class="fa-solid fa-shield-halved text-gold-400 mr-2"></i>100% Original
                 Products</span>
-            <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support 0321-4735908</span>
+            <span><i class="fa-solid fa-phone text-gold-400 mr-2"></i>Customer Support 0320-4735908</span>
         </div>
     </div>
     <marquee class="bg-navy-800 text-white text-xs block md:hidden"">
@@ -1067,7 +1067,7 @@
                     <ul class="space-y-4 text-sm">
                         <li class="flex items-start gap-3">
                             <i class="fa-solid fa-phone text-gold-400 mt-1"></i>
-                            <span>+92 321 4735908</span>
+                            <span>+92320-4735908</span>
                         </li>
                         <li class="flex items-start gap-3 break-all">
                             <i class="fa-solid fa-envelope text-gold-400 mt-1"></i>
