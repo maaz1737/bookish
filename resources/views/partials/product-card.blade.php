@@ -12,9 +12,13 @@
     /* ---------- Wishlist ---------- */
     $inWishlist = false;
     if (auth()->check()) {
-        $inWishlist = \App\Models\Wishlist::where('user_id', auth()->id())->where('product_id', $product->id)->exists();
+        $inWishlist = \App\Models\Wishlist::where('user_id', auth()->id())
+            ->where('product_id', $product->id)
+            ->exists();
     } else {
-        $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())->where('product_id', $product->id)->exists();
+        $inWishlist = \App\Models\Wishlist::where('session_id', session()->getId())
+            ->where('product_id', $product->id)
+            ->exists();
     }
 
     /* ---------- Variant flag ---------- */
@@ -24,7 +28,7 @@
 @endphp
 
 <div
-    class=" hover:-translate-y-0.5 transition-all duration-300 relative group filter-card cursor-pointer product-card">
+    class=" hover:-translate-y-0.5 transition-all duration-300 relative group filter-card cursor-pointer product-card flex flex-col h-full">
 
     {{-- Badge --}}
     @if ($badgeText)
@@ -54,7 +58,8 @@
     <div class="p-3 sm:p-4 flex flex-col flex-grow">
 
         {{-- Name --}}
-        <a href="{{ route('product.show', $product) }}" class="text-[18px] lg:text-[20px] block mb-2 cursor-pointer text-[#001F54] hover:text-[#ff7a00] group-hover:text-[#ff7a00] transition-colors">
+        <a href="{{ route('product.show', $product) }}"
+            class="text-[18px] lg:text-[20px] block mb-2 cursor-pointer text-[#001F54] hover:text-[#ff7a00] group-hover:text-[#ff7a00] transition-colors min-h-[3.25rem] lg:min-h-[3.5rem]">
             <h3 class="text-[18px] lg:text-[20px] font-bold leading-snug line-clamp-2 filter-name">
                 {{ $product->name }}
             </h3>
