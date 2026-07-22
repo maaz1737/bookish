@@ -27,7 +27,6 @@ class OrderCheckoutRequest extends FormRequest
 
             'email' => [
                 'required',
-                'email:rfc,dns',
                 'max:255',
             ],
 

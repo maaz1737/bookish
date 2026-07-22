@@ -84,7 +84,7 @@ Route::get('/get-categories/{id}', [CategoryController::class, 'getCategories'])
 // Cart
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/product/{product}', [CartController::class, 'addProduct'])->name('cart.addProduct');
-Route::post('/cart/bundle/{bundle}', [CartController::class, 'addBundle'])->name('cart.addBundle');
+Route::post('/cart/bundle', [CartController::class, 'addBundle'])->name('cart.addBundle');
 Route::delete('/cart/{key}', [CartController::class, 'remove'])->name('cart.remove');
 Route::post('/cart/clear', [CartController::class, 'clear'])->name('cart.clear');
 

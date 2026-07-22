@@ -51,15 +51,12 @@
                                 <p class="text-sm text-gray-500">Review your selected products</p>
                             </div>
                         </div>
-
                         @foreach ($cart['items'] as $key => $item)
                             <div class="flex items-center gap-4 py-4 {{ !$loop->last ? 'border-b border-gray-100' : '' }}">
                                 {{-- Image placeholder --}}
                                 <div class="w-20 h-20 bg-gray-100 rounded-lg flex-shrink-0 overflow-hidden">
                                     @if (!empty($item['image']))
-                                        <img src="{{ app()->environment('local')
-                                            ? asset('storage/' . $item['image'][0])
-                                            : asset('storage/' . $item['image'][0]) }}"
+                                        <img src="{{ $item['image'] }}"
                                             alt="{{ $item['name'] }}" class="w-full h-full object-cover">
                                     @else
                                         <div class="w-full h-full flex items-center justify-center text-2xl">📦</div>
