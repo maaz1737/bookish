@@ -94,7 +94,7 @@
                                         <p class="text-xs font-semibold text-gray-700 mt-0.5">English</p>
                                     </div>
                                 </div>
-                                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-1.5">
+                                {{-- <div class="flex flex-col sm:flex-row items-start sm:items-center gap-1 sm:gap-1.5">
                                     <div class="p-1 bg-gray-50 rounded-xl text-gray-600 flex-shrink-0 text-xs sm:text-base">
                                         📅</div>
                                     <div>
@@ -103,7 +103,7 @@
                                             Academic Year</p>
                                         <p class="text-xs font-semibold text-gray-700 mt-0.5">2024 - 2025</p>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -384,10 +384,10 @@
                 ? ((totalPrice - discountPrice) / totalPrice) * 100
                 : 0;
 
-            $('.total-price-bundle').text(totalPrice.toFixed(2));
-            $('.discount-price-bundle').text(discountPrice.toFixed(2));
+            $('.total-price-bundle').text(Math.round(totalPrice));
+            $('.discount-price-bundle').text(Math.round(discountPrice));
             $('.bundle-discount').text(Math.round(discount));
-            $('.saved-amount').text(savedAmount.toFixed(2));
+            $('.saved-amount').text(Math.round(savedAmount));
         }
 
         // Initial calculation

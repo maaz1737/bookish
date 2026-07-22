@@ -412,13 +412,13 @@
 
                                                 <span
                                                     class="text-lg xs:text-xl sm:text-[22px] font-semibold tracking-wide text-[#1b2d4b]">
-                                                    0321-4735908
+                                                    0320-4735908
                                                 </span>
                                             </div>
 
                                             <!-- Copy Button -->
                                             <button type="button" id="copy-whatsapp"
-                                                onclick="copyToClipboard('0321-4735908','copy-whatsapp')"
+                                                onclick="copyToClipboard('03204735908','copy-whatsapp')"
                                                 class="self-end sm:self-auto bg-white border border-gray-200 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-sm hover:border-gray-300 transition shrink-0">
                                                 <i class="fa-regular fa-copy"></i>
                                                 <span>Copy</span>
@@ -465,8 +465,9 @@
                                 class="flex-1 py-2.5 px-2 rounded-lg font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 transition duration-200 bg-[#0a1f44] text-white shadow-sm"
                                 onclick="switchTab('bank')">
                                 <i class="fa-solid fa-building-columns text-sm sm:text-base"></i>
-                                <span class="hidden sm:inline">Method 2 — </span>Bank Info<span
-                                    class="hidden sm:inline">rmation</span>
+                                <span class="hidden sm:inline">Method 2 — </span>
+                                <span class="hidden sm:inline">Bank Information</span>
+                                <span class="inline sm:hidden">Bank Info</span>
                             </button>
                         </div>
 
