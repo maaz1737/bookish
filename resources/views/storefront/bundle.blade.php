@@ -340,7 +340,6 @@
                         </p>
                         <ul class="list-disc pl-4 space-y-1 text-amber-900/80 font-medium">
                             <li>Books edition & price may vary as per publisher.</li>
-                            <li>This set is for the academic year 2024-2025.</li>
                         </ul>
                     </div>
 
