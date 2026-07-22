@@ -31,9 +31,9 @@
 
                         <!-- Collapsible Content -->
                         <div x-show="isOpen" x-collapse>
-                            <div class="px-4 pb-4 pt-2 border-t border-gray-100">
+                            <div class="px-4 pb-4 pt-2">
                                 <!-- Cart Items List -->
-                                <div class="space-y-4 max-h-[300px] overflow-y-auto pr-1">
+                                {{-- <div class="space-y-4 max-h-[300px] overflow-y-auto pr-1">
                                     @foreach ($cart['items'] as $p)
                                         <div class="flex gap-3 items-center py-2">
                                             <div class="w-14 h-14 bg-gray-50 border border-gray-100 rounded-lg overflow-hidden flex-shrink-0">
@@ -49,7 +49,7 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                </div>
+                                </div> --}}
 
                                 <!-- Subtotal & Delivery Charges -->
                                 <div class="border-t border-gray-100 mt-3 pt-3 space-y-2.5 text-xs sm:text-sm">
