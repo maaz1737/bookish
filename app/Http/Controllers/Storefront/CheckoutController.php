@@ -144,6 +144,8 @@ class CheckoutController extends Controller
                 'account_no' => Setting::get('bank_account_no', '0000-0000000-0'),
                 'raast_id' => Setting::get('raast_id', '03000000000'),
                 'qr_image' => Setting::get('qr_image'),
+                'qr_bank_name' => Setting::get('qr_bank_name'),
+                'qr_account_title' => Setting::get('qr_account_title'),
 
             ],
         ]);

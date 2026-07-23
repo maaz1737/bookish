@@ -102,8 +102,6 @@
                     <div x-show="isOpen" x-collapse>
                         <div class="px-4 pb-4 pt-2">
                             <!-- Items List -->
-                     
-
                             <!-- Subtotal & Delivery Charges -->
                             <div class="border-t border-gray-100 mt-3 pt-3 space-y-2.5 text-xs sm:text-sm">
                                 <div class="flex justify-between items-center text-gray-600">
@@ -126,59 +124,6 @@
                                 <span>Total Amount</span>
                                 <span class="text-navy-900">PKR {{ number_format($order->total_amount) }}</span>
                             </div>
-
-                            {{-- ===== TRUST / BENEFITS STRIP (Sidebar Compact) =====
-                            <div class="mt-4 border border-slate-100 rounded-xl p-3 bg-slate-50/60">
-                                <div class="grid grid-cols-2 gap-2">
-                                    <div class="flex items-center gap-2 p-1.5">
-                                        <div class="w-7 h-7 shrink-0 rounded-lg bg-[#001F54]/5 flex items-center justify-center text-[#001F54]">
-                                            <i class="fa-solid fa-shield-halved text-xs"></i>
-                                        </div>
-                                        <div class="min-w-0">
-                                            <p class="font-bold text-[#001F54] text-[10px] leading-tight">100% Original</p>
-                                            <p class="text-[9px] text-slate-500 leading-tight mt-0.5">Authorized suppliers</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-2 p-1.5">
-                                        <div class="w-7 h-7 shrink-0 rounded-lg bg-[#001F54]/5 flex items-center justify-center text-[#001F54]">
-                                            <i class="fa-solid fa-truck text-xs"></i>
-                                        </div>
-                                        <div class="min-w-0">
-                                            <p class="font-bold text-[#001F54] text-[10px] leading-tight">Fast Delivery</p>
-                                            <p class="text-[9px] text-slate-500 leading-tight mt-0.5">Across Pakistan</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-2 p-1.5">
-                                        <div class="w-7 h-7 shrink-0 rounded-lg bg-[#001F54]/5 flex items-center justify-center text-[#001F54]">
-                                            <i class="fa-solid fa-lock text-xs"></i>
-                                        </div>
-                                        <div class="min-w-0">
-                                            <p class="font-bold text-[#001F54] text-[10px] leading-tight">Secure Payment</p>
-                                            <p class="text-[9px] text-slate-500 leading-tight mt-0.5">Multiple options</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-2 p-1.5">
-                                        <div class="w-7 h-7 shrink-0 rounded-lg bg-[#001F54]/5 flex items-center justify-center text-[#001F54]">
-                                            <i class="fa-solid fa-rotate-left text-xs"></i>
-                                        </div>
-                                        <div class="min-w-0">
-                                            <p class="font-bold text-[#001F54] text-[10px] leading-tight">Easy Returns</p>
-                                            <p class="text-[9px] text-slate-500 leading-tight mt-0.5">7 days hassle-free</p>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-2 p-1.5 col-span-2">
-                                        <div class="w-7 h-7 shrink-0 rounded-lg bg-[#001F54]/5 flex items-center justify-center text-[#001F54]">
-                                            <i class="fa-solid fa-headset text-xs"></i>
-                                        </div>
-                                        <div class="min-w-0">
-                                            <p class="font-bold text-[#001F54] text-[10px] leading-tight">Dedicated Support</p>
-                                            <p class="text-[9px] text-slate-500 leading-tight mt-0.5">We're here to help you anytime</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
-
-                            {{-- Footer Secure Info --}}
                             <div
                                 class="mt-3 flex items-center gap-1.5 justify-center text-[10px] text-gray-400 font-medium">
                                 <i class="fa-solid fa-lock text-xs"></i> Secure payments. Multiple payment options
@@ -451,15 +396,42 @@
 
                         {{-- QR Code Tab --}}
                         <div id="content-qr" class="hidden text-center py-8">
-                            <div
-                                class="max-w-[220px] mx-auto border-4 border-[#0a1f44] rounded-2xl p-3 bg-white shadow-lg">
-                                <img src="{{ asset('storage/' . $bank['qr_image']) }}" alt="Payment QR Code"
-                                    class="w-full h-auto object-contain rounded-xl" />
-                            </div>
-                            <h4 class="text-base font-bold text-[#0a1f44] mt-5">Scan QR Code to Pay</h4>
-                            <p class="text-xs text-gray-500 mt-1 max-w-xs mx-auto">Use Easypaisa, JazzCash, or any
-                                Pakistani banking
-                                app to scan and transfer the payment.</p>
+                        @if(!empty($bank['qr_image']))
+
+    <div class="text-center mb-4">
+        @if(!empty($bank['qr_bank_name']))
+            <h3 class="text-lg font-bold text-[#0a1f44]">
+                {{ $bank['qr_bank_name'] }}
+            </h3>
+        @endif
+
+        @if(!empty($bank['qr_account_title']))
+            <p class="text-sm text-gray-600 mt-1">
+                Account Title:
+                <span class="font-semibold text-gray-800">
+                    {{ $bank['qr_account_title'] }}
+                </span>
+            </p>
+        @endif
+    </div>
+
+    <div
+        class="max-w-[220px] mx-auto border-4 border-[#0a1f44] rounded-2xl p-3 bg-white shadow-lg">
+        <img
+            src="{{ asset('storage/' . $bank['qr_image']) }}"
+            alt="Payment QR Code"
+            class="w-full h-auto object-contain rounded-xl">
+    </div>
+
+    <h4 class="text-base font-bold text-[#0a1f44] mt-5 text-center">
+        Scan QR Code to Pay
+    </h4>
+
+    <p class="text-xs text-gray-500 mt-1 max-w-xs mx-auto text-center">
+        Use Easypaisa, JazzCash, or any Pakistani banking app to scan and transfer the payment.
+    </p>
+
+@endif
                         </div>
 
                         {{-- Bank Info Tab --}}
